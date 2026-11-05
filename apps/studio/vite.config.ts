@@ -7,6 +7,6 @@ export default defineConfig({
   build: {
     outDir: '../../dist/studio',
     emptyOutDir: true,
-    target: ['chrome107', 'edge107', 'firefox104', 'safari16']
+    target: ['chrome114', 'edge114', 'firefox125', 'safari17']
   }
 });

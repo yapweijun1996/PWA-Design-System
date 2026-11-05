@@ -20,7 +20,11 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run tokens:check
+      - run: npm run contracts:check
+      - run: npm run build:core
       - run: npm run build
+      - run: npx playwright install --with-deps --only-shell chromium
+      - run: npm run test:e2e
       - name: Validate deployment artifact
         run: |
           test -s dist/studio/index.html

@@ -1,0 +1,31 @@
+{
+  "name": "@pwa-design-system/core",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "sideEffects": ["**/*.css"],
+  "files": ["dist", "src/**/*.css"],
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./button": { "types": "./dist/foundation/button.d.ts", "import": "./dist/foundation/button.js" },
+    "./icon-button": { "types": "./dist/foundation/icon-button.d.ts", "import": "./dist/foundation/icon-button.js" },
+    "./badge": { "types": "./dist/foundation/badge.d.ts", "import": "./dist/foundation/badge.js" },
+    "./card": { "types": "./dist/foundation/card.d.ts", "import": "./dist/foundation/card.js" },
+    "./separator": { "types": "./dist/foundation/separator.d.ts", "import": "./dist/foundation/separator.js" },
+    "./tooltip": { "types": "./dist/foundation/tooltip.d.ts", "import": "./dist/foundation/tooltip.js" },
+    "./input": { "types": "./dist/forms/input.d.ts", "import": "./dist/forms/input.js" },
+    "./textarea": { "types": "./dist/forms/textarea.d.ts", "import": "./dist/forms/textarea.js" },
+    "./checkbox": { "types": "./dist/forms/checkbox.d.ts", "import": "./dist/forms/checkbox.js" },
+    "./radio-group": { "types": "./dist/forms/radio-group.d.ts", "import": "./dist/forms/radio-group.js" },
+    "./switch": { "types": "./dist/forms/switch.d.ts", "import": "./dist/forms/switch.js" },
+    "./select": { "types": "./dist/forms/select.d.ts", "import": "./dist/forms/select.js" },
+    "./form-field": { "types": "./dist/forms/form-field.d.ts", "import": "./dist/forms/form-field.js" },
+    "./navigation": { "types": "./dist/navigation/index.d.ts", "import": "./dist/navigation/index.js" },
+    "./feedback": { "types": "./dist/feedback/index.d.ts", "import": "./dist/feedback/index.js" },
+    "./foundation.css": "./src/foundation/foundation.css",
+    "./forms.css": "./src/forms/forms.css",
+    "./navigation.css": "./src/navigation/navigation.css",
+    "./feedback.css": "./src/feedback/feedback.css"
+  }
+}

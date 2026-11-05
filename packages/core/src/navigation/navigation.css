@@ -1,0 +1,14 @@
+.ds-tabs [role="tablist"] { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-xs); border-bottom: 1px solid var(--ds-color-border-subtle); }
+.ds-tabs [role="tab"], .ds-menu button, .ds-pagination button { min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-xs) var(--ds-spacing-md); font: inherit; color: var(--ds-color-text); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); }
+.ds-tabs [role="tab"][aria-selected="true"] { color: var(--ds-color-on-primary); background: var(--ds-color-primary); border-color: var(--ds-color-border-control); }
+.ds-tabs [role="tabpanel"] { padding-block: var(--ds-spacing-md); }
+.ds-breadcrumb ol { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-sm); margin: 0; padding: 0; list-style: none; }
+.ds-breadcrumb li + li::before { content: '/'; margin-inline-end: var(--ds-spacing-sm); color: var(--ds-color-text-muted); }
+.ds-breadcrumb a { color: var(--ds-color-link); }
+.ds-menu { position: relative; display: inline-block; }
+.ds-menu [role="menu"] { position: fixed; inset: auto; margin: 0; box-sizing: border-box; z-index: var(--ds-layer-overlay); width: max-content; max-width: calc(100vw - 1rem); max-height: calc(100vh - 1rem); overflow: auto; padding: var(--ds-spacing-xs); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); box-shadow: var(--ds-shadow-card); }
+.ds-menu [role="menu"][hidden] { display: none; }
+.ds-menu [role="menuitem"] { box-sizing: border-box; display: block; width: 100%; overflow-wrap: anywhere; text-align: start; }
+.ds-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-sm); }
+.ds-tabs :focus-visible, .ds-breadcrumb :focus-visible, .ds-menu :focus-visible, .ds-pagination :focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
+.ds-menu [aria-disabled="true"], .ds-pagination button:disabled { opacity: 0.6; cursor: not-allowed; }

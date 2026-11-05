@@ -1,6 +1,7 @@
 {
   "name": "pwa-design-system",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "engines": {
@@ -10,15 +11,21 @@
     "dev": "vite --config apps/studio/vite.config.ts",
     "build": "vite build --config apps/studio/vite.config.ts",
     "preview": "vite preview --config apps/studio/vite.config.ts",
-    "typecheck": "tsc --noEmit",
-    "lint": "biome lint --error-on-warnings apps/studio/src apps/studio/vite.config.ts",
-    "test": "vitest run",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p packages/core/tsconfig.json",
+    "lint": "biome lint --error-on-warnings apps/studio/src apps/studio/vite.config.ts packages/core/src tests/unit tests/e2e playwright.config.ts",
+    "test": "vitest run --exclude 'tests/e2e/**'",
     "tokens:build": "node scripts/tokens.mjs",
-    "tokens:check": "node scripts/tokens.mjs --check"
+    "tokens:check": "node scripts/tokens.mjs --check",
+    "contracts:check": "node scripts/check-component-contracts.mjs",
+    "build:core": "tsc -p packages/core/tsconfig.json",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@biomejs/biome": "2.6.5",
+    "@playwright/test": "1.64.1",
     "@types/node": "22.19.11",
+    "jsdom": "27.4.0",
     "typescript": "5.9.3",
     "vite": "7.3.7",
     "vitest": "4.1.12"

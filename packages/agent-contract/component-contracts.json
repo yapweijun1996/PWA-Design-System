@@ -1,0 +1,340 @@
+{
+  "version": 1,
+  "components": [
+    {
+      "family": "button",
+      "factory": "createButton",
+      "source": "packages/core/src/foundation/button.ts",
+      "entry": "@pwa-design-system/core/button",
+      "optionType": "ButtonOptions",
+      "keyboard": [
+        "Native Tab, Enter and Space"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "loading"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts"
+    },
+    {
+      "family": "icon-button",
+      "factory": "createIconButton",
+      "source": "packages/core/src/foundation/icon-button.ts",
+      "entry": "@pwa-design-system/core/icon-button",
+      "optionType": "IconButtonOptions",
+      "keyboard": [
+        "Native Tab, Enter and Space"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "loading"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts"
+    },
+    {
+      "family": "badge",
+      "factory": "createBadge",
+      "source": "packages/core/src/foundation/badge.ts",
+      "entry": "@pwa-design-system/core/badge",
+      "optionType": "BadgeOptions",
+      "keyboard": [
+        "Noninteractive"
+      ],
+      "states": [
+        "neutral",
+        "primary",
+        "success",
+        "danger"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts"
+    },
+    {
+      "family": "card",
+      "factory": "createCard",
+      "source": "packages/core/src/foundation/card.ts",
+      "entry": "@pwa-design-system/core/card",
+      "optionType": "CardOptions",
+      "keyboard": [
+        "Noninteractive container"
+      ],
+      "states": [
+        "outlined",
+        "elevated"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts"
+    },
+    {
+      "family": "separator",
+      "factory": "createSeparator",
+      "source": "packages/core/src/foundation/separator.ts",
+      "entry": "@pwa-design-system/core/separator",
+      "optionType": "SeparatorOptions",
+      "keyboard": [
+        "Noninteractive"
+      ],
+      "states": [
+        "horizontal",
+        "vertical"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts"
+    },
+    {
+      "family": "tooltip",
+      "factory": "createTooltip",
+      "source": "packages/core/src/foundation/tooltip.ts",
+      "entry": "@pwa-design-system/core/tooltip",
+      "optionType": "TooltipOptions",
+      "keyboard": [
+        "Focus or hover reveals; Escape dismisses"
+      ],
+      "states": [
+        "hidden",
+        "visible"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts"
+    },
+    {
+      "family": "input",
+      "factory": "createInput",
+      "source": "packages/core/src/forms/input.ts",
+      "entry": "@pwa-design-system/core/input",
+      "optionType": "InputOptions",
+      "keyboard": [
+        "Native input keyboard behavior"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "required"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts"
+    },
+    {
+      "family": "textarea",
+      "factory": "createTextarea",
+      "source": "packages/core/src/forms/textarea.ts",
+      "entry": "@pwa-design-system/core/textarea",
+      "optionType": "TextareaOptions",
+      "keyboard": [
+        "Native textarea keyboard behavior"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "required"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts"
+    },
+    {
+      "family": "checkbox",
+      "factory": "createCheckbox",
+      "source": "packages/core/src/forms/checkbox.ts",
+      "entry": "@pwa-design-system/core/checkbox",
+      "optionType": "CheckboxOptions",
+      "keyboard": [
+        "Native Space toggles"
+      ],
+      "states": [
+        "checked",
+        "unchecked",
+        "disabled",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts"
+    },
+    {
+      "family": "radio-group",
+      "factory": "createRadioGroup",
+      "source": "packages/core/src/forms/radio-group.ts",
+      "entry": "@pwa-design-system/core/radio-group",
+      "optionType": "RadioGroupOptions",
+      "keyboard": [
+        "Native same-name arrow navigation"
+      ],
+      "states": [
+        "selected",
+        "unselected",
+        "disabled",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts"
+    },
+    {
+      "family": "switch",
+      "factory": "createSwitch",
+      "source": "packages/core/src/forms/switch.ts",
+      "entry": "@pwa-design-system/core/switch",
+      "optionType": "SwitchOptions",
+      "keyboard": [
+        "Native Space toggles"
+      ],
+      "states": [
+        "checked",
+        "unchecked",
+        "disabled",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts"
+    },
+    {
+      "family": "select",
+      "factory": "createSelect",
+      "source": "packages/core/src/forms/select.ts",
+      "entry": "@pwa-design-system/core/select",
+      "optionType": "SelectOptions",
+      "keyboard": [
+        "Native select keyboard behavior"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "required"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts"
+    },
+    {
+      "family": "form-field",
+      "factory": "createFormField",
+      "source": "packages/core/src/forms/form-field.ts",
+      "entry": "@pwa-design-system/core/form-field",
+      "optionType": "FormFieldOptions",
+      "keyboard": [
+        "Delegates keyboard behavior to native control"
+      ],
+      "states": [
+        "default",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts"
+    },
+    {
+      "family": "tabs",
+      "factory": "createTabs",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "TabsOptions",
+      "keyboard": [
+        "ArrowLeft and ArrowRight wrap; Home and End select"
+      ],
+      "states": [
+        "selected",
+        "unselected"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+    },
+    {
+      "family": "breadcrumb",
+      "factory": "createBreadcrumb",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "BreadcrumbItem[]",
+      "keyboard": [
+        "Native link keyboard behavior"
+      ],
+      "states": [
+        "current page",
+        "link"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+    },
+    {
+      "family": "menu",
+      "factory": "createMenu",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "MenuOptions",
+      "keyboard": [
+        "Arrow keys, Home, End, Escape and Tab"
+      ],
+      "states": [
+        "open",
+        "closed",
+        "disabled item"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+    },
+    {
+      "family": "pagination",
+      "factory": "createPagination",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "PaginationOptions",
+      "keyboard": [
+        "Native button keyboard behavior"
+      ],
+      "states": [
+        "first page",
+        "middle page",
+        "last page"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+    },
+    {
+      "family": "dialog",
+      "factory": "createDialog",
+      "source": "packages/core/src/feedback/index.ts",
+      "entry": "@pwa-design-system/core/feedback",
+      "optionType": "DialogOptions",
+      "keyboard": [
+        "Native modal; Escape closes and restores opener focus"
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+    },
+    {
+      "family": "alert",
+      "factory": "createAlert",
+      "source": "packages/core/src/feedback/index.ts",
+      "entry": "@pwa-design-system/core/feedback",
+      "optionType": "AlertOptions",
+      "keyboard": [
+        "Noninteractive"
+      ],
+      "states": [
+        "static",
+        "assertive update"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+    },
+    {
+      "family": "toast",
+      "factory": "createToast",
+      "source": "packages/core/src/feedback/index.ts",
+      "entry": "@pwa-design-system/core/feedback",
+      "optionType": "ToastOptions",
+      "keyboard": [
+        "Native dismiss button keyboard behavior"
+      ],
+      "states": [
+        "visible",
+        "dismissed"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+    }
+  ]
+}

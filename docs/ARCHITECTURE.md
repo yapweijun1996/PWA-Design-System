@@ -1,33 +1,37 @@
 # Architecture
 
-This document describes the current foundation and planned boundaries. It is not a production-readiness or compatibility certification.
+This document describes the current implementation and planned boundaries. It is not a production-readiness or compatibility certification.
 
 ## Current structure
 
 | Path | Responsibility |
 | --- | --- |
-| `packages/tokens/` | Authoritative JSON token sources and generated CSS, JSON and TypeScript. |
-| `scripts/tokens.mjs` | Node-based token validation, alias resolution, artifact generation and freshness checking. |
-| `apps/studio/` | Vite application, initial theme selection and responsive foundation page. |
-| `tests/unit/` and `apps/studio/tests/` | Token/compiler and theme-preference unit tests. |
-| `.github/workflows/` | Foundation CI and a prepared, deliberately disabled Pages deployment workflow. |
+| `packages/tokens/` | Authoritative JSON sources, generated CSS/JSON/TypeScript and private token package metadata. |
+| `scripts/tokens.mjs` | Node-based token validation, alias resolution, generation and freshness checking. |
+| `packages/core/` | Private, unpublished framework-independent DOM component package with ESM and stylesheet exports. |
+| `packages/agent-contract/component-contracts.json` | Current component inventory: factory identities, option types, documented states and test references. |
+| `scripts/check-component-contracts.mjs` | Checks inventory shape, required identities, source exports, package entries and test-call references. |
+| `apps/studio/` | Vite application, initial theme selection and a foundation page; it is not the completed Studio. |
+| `examples/vanilla/` | Runnable local examples using the built core and generated tokens. |
+| `tests/unit/`, `apps/studio/tests/`, `tests/e2e/` | Unit tests and Playwright browser tests, including selected scoped axe checks. |
+| `.github/workflows/` | Quality checks and a prepared, deliberately disabled Pages deployment workflow. |
 
-Tokens flow in one direction: JSON sources → compiler → generated artifacts → Studio CSS. Token definitions have typed values; semantic tokens can refer to primitive or semantic tokens. The compiler validates references, value types, cycles, forbidden keys and CSS-name collisions. It resolves the supported appearance combinations and checks whether generated files are current. Consumers should not edit generated output.
+Tokens flow in one direction: JSON sources → compiler → generated artifacts → core/Studio styles. Typed semantic tokens can refer to primitive or semantic tokens. The compiler validates references, value types, cycles, forbidden keys and CSS-name collisions, then resolves 96 appearance combinations. Generated artifacts are not edited manually. The compiler runs in Node and is not a validator for future browser imports.
 
-The token compiler currently runs in Node. It is not a browser-side import validator; a future editor must validate untrusted input before committing it. The Studio initializes a saved theme preference before its main application runs and updates the resolved theme for a system preference. Storage failure leaves the current session usable without claiming persistence.
+## Component and application boundaries
 
-## Planned package boundaries
+The core currently provides 20 component families: six foundation, seven form, four navigation and three feedback families. Core owns DOM behavior and semantic-token styling without a React runtime. Factories return an element and `destroy()`; callers own mounting and removal. Some handles expose additional methods or elements. Family guides and the [Vanilla example](../examples/vanilla/README.md) document actual APIs, defaults and limitations. Some families currently expose only one size/style; Tabs accept plain-text panel content, and Dialog has no built-in custom action API.
 
-The reusable core is intended to own framework-independent components and behavior. Optional React adapters should wrap the same public contracts; they must not be a dependency of the core. Studio navigation, browser storage, editing and future service-worker behavior belong to the application, not the reusable packages. A future agent-contract package should publish machine-readable, validated design and component rules. These packages and APIs do not yet exist.
+The component inventory is configuration, not executable code. Its gate validates bounded shape, fixed family identities and paths, source declarations, package re-exports and the presence of factory calls in unit and browser test files. It cannot determine whether those tests pass, whether their assertions cover each state, or whether documented behavior and accessibility are correct.
 
-The token data models light/dark theme, palette, density and kit separately. Generated CSS can express these axes on the document root. The current Studio offers a theme control only; interactive palette, density and kit controls are planned. Imported theme configurations, token exports and component APIs are also planned.
+Studio routing, browser storage, future editing and service-worker behavior belong to the application rather than reusable packages. The current Studio resolves a saved light, dark or system theme before its main application runs; storage failure does not promise persistence. Token output models palette, density and kit independently, but the Studio does not yet offer controls for them. React adapters, browser-side theme import/export, agent rule exports and PWA installation/offline updates remain planned.
 
 ## Build and release boundary
 
-Vite is configured with `/PWA-Design-System/` as its base and writes to `dist/studio/`. CI is configured to install from the lockfile, typecheck, lint, test, check generated tokens, build and inspect the artifact. A separate workflow is prepared to deploy a successful main-branch build using GitHub Pages actions, but its deploy job is deliberately disabled until required production gates exist. Neither a hosted CI result nor a live deployment is established by these files alone.
+`npm run build:core` emits the private core's ESM and declarations; `npm run build` builds the Studio under the configured `/PWA-Design-System/` base into `dist/studio/`. CI is configured to install the lockfile, typecheck, lint, run unit tests, check token and component contracts, build core and Studio, run Chromium Playwright tests and inspect the deployment artifact. The separate Pages deployment job is deliberately disabled until required production gates exist. Configuration alone does not establish a hosted CI result or live deployment.
 
-The Vite build targets Chrome 107, Edge 107, Firefox 104 and Safari 16, but the target configuration is not proof of runtime compatibility. Browser, keyboard, assistive-technology and device verification remains necessary. Automated tests and representative contrast checks do not prove WCAG conformance.
+The intended minimum browsers are Chrome and Edge 114, Firefox 125, and Safari and iOS Safari 17. Tooltip requires the native Popover API and fails explicitly where it is unavailable. The Vite target reflects these minimums, but a build target is not proof of runtime compatibility. Browser, keyboard, assistive-technology and device verification remains necessary. Automated tests and representative contrast checks do not prove WCAG conformance.
 
 ## Remaining work
 
-Implement and document the component families, accessible interactions and integration examples; add Studio editing and preview tools; establish strict import and agent contracts; implement installation, offline support and safe updates; and add the requested security, accessibility, end-to-end and visual release gates. Validate those features in real browsers before enabling deployment or calling the project release-ready. See the [Phase 0 audit](PHASE-0-AUDIT.md) for research and risks.
+Complete the Studio's component playground, token editing, layout playground and theme customization; finish machine-readable design and agent export contracts; add optional React integration and safe PWA offline/update behavior; and close remaining component API, responsive and accessibility gaps. Add reviewed visual regression baselines, broader browser and device evidence, manual assistive-technology checks, security review and the full SSOT and release gates before enabling deployment. See the [Phase 0 audit](PHASE-0-AUDIT.md) for initial research and risks.

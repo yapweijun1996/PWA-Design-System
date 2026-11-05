@@ -1,0 +1,10 @@
+:root { color-scheme: light; font: var(--ds-font-size-body)/1.5 var(--ds-font-body); color: var(--ds-color-text); background: var(--ds-color-background); }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 80rem; margin-inline: auto; padding: var(--ds-spacing-lg); }
+.examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--ds-spacing-md); margin-block: var(--ds-spacing-lg); }
+.example { min-width: 0; padding: var(--ds-spacing-lg); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-card); }
+.example h2 { font-size: var(--ds-font-size-heading); margin-block: 0 var(--ds-spacing-md); }
+.example > :not(h2) + * { margin-block-start: var(--ds-spacing-sm); }
+#reset { min-height: var(--ds-size-control-medium); padding-inline: var(--ds-spacing-md); color: var(--ds-color-text); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); font: inherit; }
+#reset:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
