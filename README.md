@@ -13,7 +13,7 @@ PWA Design System is an in-development, framework-independent component library 
 - The optional [React adapters](packages/react/README.md) wrap all 21 current core families. Core has no React dependency. The [Vanilla example](examples/vanilla/README.md) and [React example](examples/react/README.md) run locally.
 - A production build includes a manifest and service worker for a previously installed application shell and documentation to work offline. See [Offline support](#offline-support).
 
-The Layout Playground's table and dialog are static HTML layout examples; the reusable Data Table is a separate core component. There is no verified WCAG conformance, production release or live deployment.
+The Layout Playground's table and dialog are static HTML layout examples; the reusable Data Table is a separate core component. WCAG conformance and production release readiness remain unverified.
 
 ## Getting started
 
@@ -35,7 +35,7 @@ npm run check:artifact
 npm run preview
 ```
 
-The output is `dist/studio/`. The classic theme and token bootstrap scripts run before application rendering; Vite may warn that a classic script is not bundled as a module. The Pages deployment workflow is deliberately disabled pending release gates. The proposed [live URL](https://yapweijun1996.github.io/PWA-Design-System/) is **NOT VERIFIED** and must not be treated as an active deployment.
+The output is `dist/studio/`. The classic theme and token bootstrap scripts run before application rendering; Vite may warn that a classic script is not bundled as a module. The Pages workflow publishes the development Studio at the [demo URL](https://yapweijun1996.github.io/PWA-Design-System/) after the complete main CI succeeds. See [deployment setup and verification](docs/INSTALLATION.md). Hosting the demo does not establish production release readiness.
 
 The intended minimum browsers are Chrome and Edge 114, Firefox 125, and Safari and iOS Safari 17. Tooltip and Menu require the native Popover API. Targeted Chrome and Playwright WebKit checks have run; minimum releases, Firefox, iOS devices and assistive-technology combinations remain **NOT VERIFIED**. Browser targets and automated tests do not establish compatibility or WCAG conformance.
 

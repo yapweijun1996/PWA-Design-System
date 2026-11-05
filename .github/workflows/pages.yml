@@ -7,9 +7,8 @@ on:
 permissions: {}
 jobs:
   deploy:
-    # Release is deliberately disabled until the required production gates exist.
+    # Publish the development Studio only after the complete main CI succeeds.
     if: >-
-      false &&
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.event == 'push' &&
       github.event.workflow_run.head_branch == 'main' &&
