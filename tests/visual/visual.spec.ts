@@ -19,9 +19,9 @@ async function open(page: Page, route: string, theme: string, density: string): 
   await page.goto(`./#${route}`);
   await page.evaluate(() => document.fonts.ready);
 }
-async function snapshot(page: Page, name: string): Promise<void> {
+async function snapshot(page: Page, name: string, fullPage = true): Promise<void> {
   if (smoke) { await expect(page.locator('main')).toBeVisible(); return; }
-  await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: true });
+  await expect(page).toHaveScreenshot(`${name}.png`, { fullPage });
 }
 
 for (const scenario of [
@@ -60,5 +60,33 @@ for (const scenario of [
       await expect(page.getByRole('dialog', { name: 'Example dialog' })).toBeVisible();
     }
     await snapshot(page, scenario.name);
+  });
+}
+
+for (const scenario of [
+  { name: 'token-editor-desktop-light', width: 1440, height: 900, theme: 'light', density: 'comfortable', view: 'editor' },
+  { name: 'token-editor-tablet-dark', width: 768, height: 900, theme: 'dark', density: 'compact', view: 'editor' },
+  { name: 'token-editor-mobile-light', width: 390, height: 844, theme: 'light', density: 'comfortable', view: 'editor' },
+  { name: 'token-editor-mobile-preview', width: 390, height: 844, theme: 'light', density: 'comfortable', view: 'preview' },
+  { name: 'token-editor-desktop-draft', width: 1440, height: 900, theme: 'light', density: 'comfortable', view: 'draft' }
+]) {
+  test(scenario.name, async ({ page }) => {
+    await page.setViewportSize({ width: scenario.width, height: scenario.height });
+    await open(page, 'design-tokens', scenario.theme, scenario.density);
+    await expect(page.getByRole('heading', { name: 'Design tokens', level: 1 })).toBeVisible();
+    const editor = page.locator('.token-editor');
+    if (scenario.view === 'preview') {
+      await editor.getByRole('button', { name: /^preview$/i }).click();
+      await expect(page.getByLabel('Token preview')).toBeVisible();
+    } else if (scenario.view === 'draft') {
+      await page.getByLabel('color.surface override').fill('#fafafa');
+      await editor.getByLabel(/search tokens/i).fill('color.surface');
+      await expect(page.getByLabel('color.surface override')).toHaveValue('#fafafa');
+      await editor.getByText(/review changes\s*\(1\)/i).click();
+    } else {
+      await expect(page.getByLabel('color.surface override')).toBeVisible();
+    }
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+    await snapshot(page, scenario.name, false);
   });
 }
