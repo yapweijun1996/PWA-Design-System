@@ -90,3 +90,23 @@ for (const scenario of [
     await snapshot(page, scenario.name, false);
   });
 }
+
+for (const scenario of [
+  { name: 'components-desktop-light', width: 1440, height: 900, theme: 'light', density: 'comfortable', picker: false },
+  { name: 'components-tablet-dark', width: 768, height: 1024, theme: 'dark', density: 'compact', picker: false },
+  { name: 'components-mobile-picker-closed', width: 390, height: 844, theme: 'light', density: 'comfortable', picker: false },
+  { name: 'components-mobile-picker-open', width: 390, height: 844, theme: 'light', density: 'comfortable', picker: true }
+]) {
+  test(scenario.name, async ({ page }) => {
+    await page.setViewportSize({ width: scenario.width, height: scenario.height });
+    await open(page, 'components', scenario.theme, scenario.density);
+    await expect(page.getByRole('heading', { name: 'Button', level: 2, exact: true })).toBeVisible();
+    const toggle = page.getByRole('button', { name: 'Choose component: Button', exact: true });
+    if (scenario.picker) {
+      await toggle.click(); await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      await expect(page.getByRole('searchbox', { name: 'Search components' })).toBeFocused();
+    } else if (scenario.width <= 768) await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+    await snapshot(page, scenario.name, false);
+  });
+}
