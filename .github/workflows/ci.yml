@@ -64,27 +64,3 @@ jobs:
           path: test-results/
           if-no-files-found: warn
           retention-days: 7
-  token-editor-candidates-unreviewed:
-    # Temporary capture-only job; screenshots are not approved visual baselines.
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: npm
-      - run: npm ci
-      - run: npm run build:react
-      - run: npx playwright install --with-deps --only-shell chromium
-      - run: mkdir -p tests/visual/baselines
-      - run: node tests/visual/environment.mjs --capture
-      - run: VISUAL_CAPTURE=1 npx playwright test -c tests/visual/playwright.config.ts --grep 'token-editor-' --update-snapshots
-      - uses: actions/upload-artifact@v4
-        with:
-          name: unreviewed-token-editor-candidates
-          path: |
-            tests/visual/baselines/token-editor-*.png
-            tests/visual/baselines/environment.json
-          if-no-files-found: error
-          retention-days: 7
