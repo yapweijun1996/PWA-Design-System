@@ -40,3 +40,20 @@ test('agent page is keyboard accessible and fits mobile', async ({ page }) => {
   const button = page.getByRole('button', { name: 'Export AGENTS.md' }); await button.focus(); await expect(button).toBeFocused();
   const results = await new AxeBuilder({ page }).include('.agent-page').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze(); expect(results.violations).toEqual([]);
 });
+
+test('long license text and a wide native file control fit mobile and desktop', async ({ page }) => {
+  await page.getByText('Third-party license notice').click();
+  const license = page.locator('.agent-license');
+  const original = await license.textContent();
+  expect(original).toContain('Copyright (c) 2015-2021 Evgeny Poberezkin');
+  await license.evaluate(element => { element.append(document.createTextNode(`\n${'unbroken-license-text'.repeat(100)}`)); });
+  await page.locator('.agent-file').evaluate((element: HTMLInputElement) => { element.style.width = '2000px'; });
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 844 });
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+    expect(await license.textContent()).toContain(original);
+    const file = page.getByLabel('Contract file'); await file.focus(); await expect(file).toBeFocused();
+    const results = await new AxeBuilder({ page }).include('.agent-page').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
+    expect(results.violations).toEqual([]);
+  }
+});

@@ -3,7 +3,7 @@
 .agent-rules { padding-inline-start: var(--ds-spacing-lg); }
 .agent-rules li { margin-bottom: var(--ds-spacing-sm); }
 .agent-actions { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-sm); }
-.agent-button, .agent-file { min-height: var(--ds-size-control-medium); max-width: 100%; padding: var(--ds-spacing-sm) var(--ds-spacing-md); color: var(--ds-color-text); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); font: inherit; }
+.agent-button, .agent-file { box-sizing: border-box; min-height: var(--ds-size-control-medium); max-width: 100%; padding: var(--ds-spacing-sm) var(--ds-spacing-md); color: var(--ds-color-text); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); font: inherit; }
 .agent-button { cursor: pointer; }
 .agent-button:hover { background: var(--ds-color-surface-alt); }
 .agent-label { display: block; margin-bottom: var(--ds-spacing-xs); font-weight: var(--ds-font-weight-label); }
