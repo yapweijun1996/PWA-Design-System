@@ -52,9 +52,17 @@ export function mountPlayground(root: HTMLElement): () => void {
   const list = element('div', 'pg-list'); list.setAttribute('role', 'region'); list.setAttribute('aria-label', 'Scrollable component list'); list.setAttribute('aria-describedby', 'pg-list-help'); list.tabIndex = 0;
   const listHelp = element('p', 'pg-list-help', 'Scroll the list to see more components, or use search to filter.'); listHelp.id = 'pg-list-help';
   const empty = element('p', 'pg-empty', 'No matching components.'); empty.hidden = true;
+  catalog.id = 'pg-catalog';
+  const catalogToggle = element('button', 'pg-catalog-toggle', 'Choose component: Button'); catalogToggle.type = 'button'; catalogToggle.setAttribute('aria-controls', catalog.id);
+  const narrow = window.matchMedia(`(max-width: ${sources.primitives['breakpoint.tablet'].$value})`); let catalogOpen = false;
+  const syncCatalog = (): void => { catalog.hidden = narrow.matches && !catalogOpen; catalogToggle.setAttribute('aria-expanded', String(!catalog.hidden)); if (!narrow.matches && document.activeElement === catalogToggle) heading.focus(); };
+  heading.tabIndex = -1;
+  catalogToggle.addEventListener('click', () => { catalogOpen = !catalogOpen; syncCatalog(); if (catalogOpen) search.focus(); }, { signal });
+  catalog.addEventListener('keydown', event => { if (event.key === 'Escape' && narrow.matches) { event.preventDefault(); catalogOpen = false; syncCatalog(); catalogToggle.focus(); } }, { signal });
+  narrow.addEventListener('change', () => { if (narrow.matches && catalog.contains(document.activeElement)) catalogOpen = true; syncCatalog(); }, { signal });
   catalog.append(searchLabel, search, listHelp, list, empty);
   const detail = element('section', 'pg-detail'); detail.setAttribute('aria-label', 'Component playground');
-  layout.append(catalog, detail); page.append(heading, intro, layout); root.append(page);
+  layout.append(catalogToggle, catalog, detail); page.append(heading, intro, layout); root.append(page);
   let selected = entries[0]; let config: PlaygroundConfig = defaultConfig(selected.family);
   let previewTheme = 'studio';
   let active: ReturnType<typeof buildPreview> | undefined;
@@ -67,14 +75,14 @@ export function mountPlayground(root: HTMLElement): () => void {
     empty.hidden = matches.length > 0;
     for (const item of matches) {
       const button = element('button', 'pg-catalog-item', title(item.family)); button.type = 'button'; button.dataset.family = item.family; button.setAttribute('aria-pressed', String(selected.family === item.family));
-      button.addEventListener('click', () => { selected = item; config = defaultConfig(item.family); for (const node of list.querySelectorAll('button')) node.setAttribute('aria-pressed', String(node.dataset.family === item.family)); renderDetail(); }, { signal: listController.signal });
+      button.addEventListener('click', () => { selected = item; config = defaultConfig(item.family); for (const node of list.querySelectorAll('button')) node.setAttribute('aria-pressed', String(node.dataset.family === item.family)); renderDetail(); catalogToggle.textContent = `Choose component: ${title(item.family)}`; if (narrow.matches) { catalogOpen = false; syncCatalog(); detail.querySelector<HTMLElement>('h2')?.focus(); } }, { signal: listController.signal });
       list.append(button);
     }
   }
   function renderDetail(): void {
     detailController.abort(); detailController = new AbortController(); const detailSignal = detailController.signal;
     active?.destroy(); active = undefined; detail.replaceChildren();
-    const name = element('h2', '', title(selected.family));
+    const name = element('h2', '', title(selected.family)); name.tabIndex = -1;
     const spec = specs[selected.family];
     const note = element('p', 'pg-intro', spec.note);
     const api = element('p', 'pg-api', `API: ${selected.factory} · ${selected.optionType} · ${selected.entry}`);
@@ -124,7 +132,13 @@ export function mountPlayground(root: HTMLElement): () => void {
     const codeTitle = element('h3', '', 'Code example'); const codeWrap = element('pre', 'pg-code'); codeWrap.tabIndex = 0; codeWrap.setAttribute('aria-label', 'Code example'); const code = element('code'); codeWrap.append(code);
     const copy = element('button', 'pg-copy', 'Copy code'); copy.type = 'button';
     const copyStatus = element('p', 'pg-api pg-copy-status'); copyStatus.setAttribute('role', 'status');
-    detail.append(name, previewTitle, preview, note, api, apiDetails, key, supported, theme, controls, error, unsupported, codeTitle, codeWrap, copy, copyStatus);
+    const workbench = element('div', 'pg-workbench'), stage = element('section', 'pg-stage'), settings = element('section', 'pg-settings');
+    stage.setAttribute('aria-label', 'Live component preview'); settings.setAttribute('aria-label', 'Preview properties');
+    stage.append(previewTitle, preview); settings.append(element('h3', '', 'Properties'), controls, error); workbench.append(stage, settings);
+    const usage = element('details', 'pg-usage'); usage.append(element('summary', '', 'Usage and accessibility'), note, key, supported, theme, unsupported);
+    apiDetails.insertBefore(api, apiNotes);
+    const codeHeader = element('div', 'pg-code-header'); codeHeader.append(codeTitle, copy);
+    detail.append(name, workbench, codeHeader, codeWrap, copyStatus, usage, apiDetails);
     let ownedTokens: string[] = [];
     function applyPreviewTheme(): void {
       for (const property of ownedTokens) preview.style.removeProperty(property);
@@ -169,6 +183,6 @@ export function mountPlayground(root: HTMLElement): () => void {
     applyPreviewTheme(); update();
   }
   search.addEventListener('input', renderList, { signal });
-  renderList(); renderDetail();
+  renderList(); renderDetail(); syncCatalog();
   return () => { controller.abort(); listController.abort(); detailController.abort(); active?.destroy(); page.remove(); };
 }

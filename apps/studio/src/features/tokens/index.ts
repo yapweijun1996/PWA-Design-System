@@ -1,7 +1,7 @@
 import { createProjectValidator, emptyProject, parseProject, projectCSS, projectJSON, projectMaxBytes, type ProjectTokens, type TokenCombinations } from '../../../../../packages/tokens/src/engine.mjs';
 import { sources } from './sources';
 import { commitProject, contrastFailures, currentCombination, getCommitted, getStorageNotice } from './model';
-import { directUses, draftChanges, scopeNames, tokenPurpose, type Scope, type PreviewTheme } from './editor-utils';
+import { directUses, referenceGraph, inspectReferences, draftChanges, scopeNames, tokenPurpose, type Scope, type PreviewTheme } from './editor-utils';
 import { createTokenScene } from './preview';
 import './styles.css';
 import { setDraftGuard } from '../pwa/guard.js';
@@ -60,11 +60,11 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     const metrics = element('dl'); metrics.className = 'token-editor__values'; metrics.id = `${id}-${key.replaceAll('.', '-')}-values`; const defaults = element('dd'), resolved = element('dd'); metrics.append(element('dt', 'Default'), defaults, element('dt', 'Resolved'), resolved);
     const label = element('label', 'Override (empty = inherited)'), input = element('input'); input.type = 'text'; input.className = 'token-editor__control'; input.autocomplete = 'off'; input.spellcheck = false; input.maxLength = 128; input.dataset.token = key; input.setAttribute('aria-label', `${key} override`); input.setAttribute('aria-describedby', inheritHelp.id); label.append(input);
     const useInherited = button('Use inherited value'); useInherited.setAttribute('aria-label', `Use inherited value for ${key}`);
-    const source = element('details'); source.className = 'token-editor__source-detail'; const uses = element('p'); source.append(element('summary', 'Source and direct uses'), element('p', `Declared semantic source: ${definition.$value}`), uses);
-    row.append(rowHeading, purpose, metrics, label); const controls = element('div'); controls.className = 'token-editor__row-actions'; let swatch: HTMLElement | undefined, picker: HTMLInputElement | undefined;
+    const source = element('details'); source.className = 'token-editor__source-detail'; const uses = element('p'); source.append(element('summary', 'Purpose, source & references'), purpose, element('p', `Declared semantic source: ${definition.$value}`), uses);
+    row.append(rowHeading, metrics, label); const controls = element('div'); controls.className = 'token-editor__row-actions'; let swatch: HTMLElement | undefined, picker: HTMLInputElement | undefined;
     if (definition.$type === 'color') {
       swatch = element('span'); swatch.className = 'token-editor__swatch'; swatch.setAttribute('aria-hidden', 'true');
-      const pickerLabel = element('label', 'Choose HEX'); pickerLabel.className = 'token-editor__picker-label'; picker = element('input'); picker.type = 'color'; picker.className = 'token-editor__color-picker'; picker.setAttribute('aria-label', `Choose ${key} color`); picker.title = 'Choosing a color replaces this scope override with a HEX literal.'; pickerLabel.append(picker); controls.append(swatch, pickerLabel);
+      const pickerLabel = element('label', 'Choose new color'); pickerLabel.className = 'token-editor__picker-label'; picker = element('input'); picker.type = 'color'; picker.className = 'token-editor__color-picker'; picker.setAttribute('aria-label', `Choose ${key} color`); picker.title = 'Choosing a color replaces this scope override with a HEX literal.'; pickerLabel.append(picker); metrics.children[2].append(swatch); controls.append(pickerLabel);
       picker.addEventListener('input', () => changeValue(key, picker?.value ?? ''), { signal });
     }
     controls.append(useInherited); row.append(controls, source); group.append(row); rows.set(key, { row, input, defaults, resolved, sourceUses: uses, swatch, picker, group, descriptionIds: `${inheritHelp.id} ${purpose.id} ${type.id} ${metrics.id}` });
@@ -112,9 +112,11 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   }
   function refreshRows(): void {
     const defaults = currentCombination(inheritedValues, selectedTheme()), resolved = currentCombination(values, selectedTheme()), current = selectedScope();
+    const appearance = { theme: selectedTheme(), palette: document.documentElement.dataset.palette ?? 'blue', density: document.documentElement.dataset.density ?? 'comfortable', kit: document.documentElement.dataset.kit ?? 'default' };
+    const graph = referenceGraph(draft, appearance);
     for (const [key, row] of rows) {
       const raw = draft.overrides[current][key]; if (document.activeElement !== row.input || row.input.value.trim() !== String(raw ?? '')) row.input.value = raw === undefined ? '' : String(raw);
-      row.input.placeholder = 'Leave empty to inherit'; row.defaults.textContent = String(defaults[key]); row.resolved.textContent = `${resolutionValid ? '' : 'Last valid: '}${resolved[key]}`; row.row.dataset.modified = String(Object.hasOwn(draft.overrides[current], key)); row.sourceUses.textContent = `Direct semantic uses: ${directUses(key, draft).join(', ') || 'No direct semantic declarations reference this token.'}`;
+      row.input.placeholder = 'Leave empty to inherit'; row.defaults.textContent = String(defaults[key]); row.resolved.textContent = `${resolutionValid ? '' : 'Last valid: '}${resolved[key]}`; row.row.dataset.modified = String(Object.hasOwn(draft.overrides[current], key)); const references = inspectReferences(graph, `semantic.${key}`); row.sourceUses.textContent = `Reference chain (${appearance.theme}/${appearance.palette}/${appearance.density}/${appearance.kit}): ${references.chain.join(' → ')}. Direct dependents: ${references.direct.join(', ') || 'None'}. Indirect dependents: ${references.indirect.join(', ') || 'None'}.${references.issue ? ` ${references.issue}.` : ''} Declared uses across all scopes (may be overridden): ${directUses(key, draft).join(', ') || 'None'}.`;
       if (row.swatch) row.swatch.style.backgroundColor = String(resolved[key]); if (row.picker && /^#[a-f\d]{6}$/i.test(String(resolved[key]))) row.picker.value = String(resolved[key]); const syntaxInvalid = raw !== undefined && !resolutionValid && (validationMessage.includes(key) || (typeof raw === 'string' && raw.startsWith('{') && validationMessage.includes(raw.slice(1, -1)))); const projectBlocked = raw !== undefined && !isValid; row.input.setAttribute('aria-invalid', String(syntaxInvalid)); row.input.setAttribute('aria-describedby', `${row.descriptionIds}${projectBlocked ? ` ${validation.id}` : ''}`);
     }
     contextText.textContent = `Editing: ${scopeNames[current]} · Preview: ${selectedTheme() === 'light' ? 'Light' : 'Dark'}`; const differs = current !== 'global' && current !== selectedTheme(); mismatch.hidden = !differs; mismatchText.textContent = differs ? `You are editing ${scopeNames[current]} while previewing ${selectedTheme()}. These edits may not appear in this preview.` : ''; filterRows();

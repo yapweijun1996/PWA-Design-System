@@ -78,6 +78,7 @@ test('mobile catalog scroll is discoverable and preview is visible near the top'
   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('./#components');
   const preview = page.locator('.pg-preview'); await expect(preview).toBeVisible(); const box = await preview.boundingBox();
   expect(box).not.toBeNull(); if (!box) throw new Error('Preview has no bounds'); expect(box.y).toBeGreaterThanOrEqual(0); expect(box.y + box.height).toBeLessThanOrEqual(844);
+  await page.getByRole('button', { name: 'Choose component: Button', exact: true }).click();
   const list = page.getByRole('region', { name: 'Scrollable component list' }); await expect(list).toHaveAttribute('tabindex', '0'); await expect(page.getByText('Scroll the list to see more components, or use search to filter.')).toBeVisible();
   const end = await list.evaluate(node => node.scrollHeight - node.clientHeight);
   await list.focus(); await page.keyboard.press('End'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(end); await page.keyboard.press('Home'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(0);

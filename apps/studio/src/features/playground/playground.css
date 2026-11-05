@@ -20,5 +20,33 @@
 .pg-preview { padding: var(--ds-spacing-lg); min-height: 6rem; color: var(--ds-color-text); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-control); background: var(--ds-color-surface-alt); }
 .pg-code { max-width: 100%; overflow: auto; padding: var(--ds-spacing-md); background: var(--ds-color-background); color: var(--ds-color-text); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-control); }
 .pg-page :focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
-@media (max-width: 768px) { .pg-layout { grid-template-columns: 1fr; } .pg-list { max-height: 7rem; } }
 @media (forced-colors: active) { .pg-select { appearance: auto; background-image: none; } }
+
+/* The catalog is the only bounded navigation scroller; the workbench uses page scrolling. */
+.pg-page { display: grid; gap: var(--ds-spacing-md); }
+.pg-page :is(h1,h2,h3,p) { margin: 0; }
+.pg-detail { display: grid; gap: var(--ds-spacing-md); }
+.pg-workbench { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); align-items: start; gap: var(--ds-spacing-lg); }
+.pg-stage, .pg-settings { display: grid; gap: var(--ds-spacing-sm); min-width: 0; }
+.pg-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-spacing-sm); }
+.pg-field { min-width: 0; }
+.pg-preview { min-height: var(--ds-size-control-large); padding: var(--ds-spacing-md); }
+.pg-code-header { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-spacing-sm); }
+.pg-code { margin: 0; max-height: 16rem; }
+.pg-usage, .pg-api-details { margin: 0; padding-block-start: var(--ds-spacing-sm); border-block-start: 1px solid var(--ds-color-border-subtle); overflow-wrap: anywhere; }
+.pg-usage summary, .pg-api-details summary { cursor: pointer; font-weight: var(--ds-font-weight-label); }
+.pg-usage[open] > :not(summary), .pg-api-details[open] > :not(summary) { margin-block-start: var(--ds-spacing-sm); }
+.pg-error:empty, .pg-copy-status:empty, .pg-catalog-toggle { display: none; }
+.pg-page [hidden] { display: none; }
+.pg-catalog { position: sticky; top: calc(68px + var(--ds-spacing-md)); }
+.pg-list { max-height: clamp(8rem, calc(100dvh - 20rem), 30rem); }
+@media (max-width: 768px) {
+  .pg-layout, .pg-workbench { grid-template-columns: minmax(0, 1fr); }
+  .pg-catalog { position: static; }
+  .pg-catalog-toggle { display: block; width: 100%; min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-sm); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); background: var(--ds-color-surface); color: var(--ds-color-text); font: inherit; text-align: start; cursor: pointer; }
+  .pg-catalog-toggle[aria-expanded='true'] { border-color: var(--ds-color-primary); }
+  .pg-list { max-height: 12rem; }
+}
+
+/* A short viewport needs page scrolling to reach the catalog header and every item. */
+@media (max-height: 600px) { .pg-catalog { position: static; } }

@@ -31,3 +31,37 @@ export function directUses(key: string, draft: ProjectTokens): string[] {
   for (const scope of ['global', 'light', 'dark'] as const) for (const [name, value] of Object.entries(draft.overrides[scope])) if (value === alias) result.push(`${name} (${scopeNames[scope]} override)`);
   return result;
 }
+
+export interface ReferenceAppearance { theme: PreviewTheme; palette: string; density: string; kit: string }
+export interface TokenReferenceGraph { edges: Map<string, string>; nodes: Set<string> }
+/** Inspect declarations only, never resolve values. Layer order mirrors engine projectCombinations. */
+export function referenceGraph(draft: ProjectTokens, appearance: ReferenceAppearance): TokenReferenceGraph {
+  const { theme, palette, density, kit } = appearance;
+  const semantic = Object.fromEntries(Object.entries(sources.semantics).map(([name, token]) => [name, token.$value]));
+  Object.assign(semantic, sources.themes[theme], sources.palettes[palette]?.[theme], sources.density[density], sources.kits[kit], draft.overrides.global, draft.overrides[theme]);
+  const declarations = [...Object.entries(sources.primitives).map(([key, token]) => [`primitive.${key}`, token.$value] as const), ...Object.entries(semantic).map(([key, value]) => [`semantic.${key}`, value] as const)];
+  const nodes = new Set(declarations.map(([key]) => key)), edges = new Map<string, string>();
+  for (const [key, value] of declarations) {
+    const alias = typeof value === 'string' ? /^\{((?:primitive|semantic)\.[a-z0-9]+(?:[-.][a-z0-9]+)*)\}$/.exec(value) : null;
+    if (alias) edges.set(key, alias[1]);
+  }
+  return { edges, nodes };
+}
+export interface ReferenceInspection { chain: string[]; direct: string[]; indirect: string[]; issue: string }
+export function inspectReferences(graph: TokenReferenceGraph, key: string): ReferenceInspection {
+  const chain = [key], seen = new Set(chain); let issue = '';
+  while (graph.edges.has(chain[chain.length - 1])) {
+    const target = graph.edges.get(chain[chain.length - 1]); if (!target) break;
+    chain.push(target);
+    if (!graph.nodes.has(target)) { issue = `Missing declaration: ${target}`; break; }
+    if (seen.has(target)) { issue = `Circular reference: ${target}`; break; }
+    seen.add(target);
+  }
+  // Breadth-first reverse traversal reports each affected declaration once, even for invalid cyclic drafts.
+  const visited = new Set([key]), queue = [key], direct: string[] = [], indirect: string[] = [];
+  for (let index = 0; index < queue.length; index++) for (const [dependent, target] of graph.edges) {
+    if (target !== queue[index] || visited.has(dependent)) continue;
+    visited.add(dependent); queue.push(dependent); (index === 0 ? direct : indirect).push(dependent);
+  }
+  return { chain, direct: direct.sort(), indirect: indirect.sort(), issue };
+}
