@@ -11,7 +11,7 @@
 .token-editor__actions, .token-editor__row-actions, .token-editor__preview-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-sm); }
 .token-editor__actions > button:first-child { background: var(--ds-color-primary); color: var(--ds-color-on-primary); border-color: var(--ds-color-primary); }
 .token-editor__draft-count { font-size: var(--ds-font-size-small); font-weight: var(--ds-font-weight-label); }
-.token-editor__status { overflow-wrap: anywhere; line-height: 1.5; }
+.token-editor__status, .token-editor__validation { overflow-wrap: anywhere; line-height: 1.5; }
 .token-editor__status:empty { display: none; }
 .token-editor__context, .token-editor__filter-count, .token-editor__field-help, .token-editor__purpose, .token-editor small { font-size: var(--ds-font-size-small); }
 .token-editor__mismatch { display: grid; justify-items: start; gap: var(--ds-spacing-sm); border-inline-start: var(--ds-focus-ring-width) solid var(--ds-color-warning); padding: var(--ds-spacing-sm); background: var(--ds-color-surface-alt); }

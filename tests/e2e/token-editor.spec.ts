@@ -193,9 +193,33 @@ test('pending imports announce progress and Commit explicitly cancels the unread
 test('a passing local preview explains project-wide contrast failures in another theme', async ({ page }) => {
   await page.getByLabel('Editing scope').selectOption('global'); await page.getByLabel('Preview theme').selectOption('light');
   const surface = page.getByLabel('color.surface override'); await surface.fill('#fafafa');
-  const status = page.locator('.token-editor__status'); await expect(status).toContainText('project-wide checks (96 combinations)'); await expect(status).toContainText('example: dark/'); await expect(status).toContainText('even when this preview passes');
+  const status = page.getByRole('status', { name: 'Draft validation' }); await expect(status).toContainText('project-wide checks (96 combinations)'); await expect(status).toContainText('example: dark/'); await expect(status).toContainText('even when this preview passes');
   await expect(surface).toHaveAttribute('aria-invalid', 'false');
   await expect(page.getByLabel('Token preview', { exact: true }).getByLabel('Preview contrast checks', { exact: true }).getByRole('listitem').first()).toContainText('Pass');
   await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
   const statusId = await status.getAttribute('id'); expect(statusId).toBeTruthy(); await expect(surface).toHaveAttribute('aria-describedby', new RegExp(statusId ?? 'missing-status-id'));
+});
+
+test('alias validation persists through primitive copying, pending imports and navigation warnings', async ({ page }) => {
+  await page.evaluate(() => { Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => {} } }); File.prototype.text = () => new Promise<string>(() => {}); });
+  const surface = page.getByLabel('color.surface override'), validation = page.getByRole('status', { name: 'Draft validation' }), feedback = page.locator('.token-editor__status');
+  await surface.fill('{primitive.color.missing}'); await expect(validation).toContainText('Missing reference: primitive.color.missing'); const diagnostic = await validation.textContent(), id = await validation.getAttribute('id'); expect(id).toBeTruthy(); await expect(surface).toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id'));
+  await page.getByText('View primitive source tokens', { exact: true }).click(); await page.locator('.token-editor__help').filter({ has: page.getByText('View primitive source tokens', { exact: true }) }).locator('details > summary').filter({ hasText: /^color$/ }).click();
+  await page.getByRole('button', { name: 'Copy color.white name', exact: true }).click(); await expect(feedback).toHaveText('Copied color.white.'); await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic');
+  await page.getByText('Import, export & reset', { exact: true }).click(); await page.getByLabel('Import token configuration').setInputFiles({ name: 'pending.json', mimeType: 'application/json', buffer: Buffer.from('{}') }); await expect(feedback).toContainText('Reading token configuration'); await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic');
+  await page.getByRole('link', { name: 'Overview', exact: true }).click(); await expect(feedback).toContainText('before leaving this page'); await expect(page).toHaveURL(/#design-tokens$/); await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic'); await expect(validation).toBeVisible(); await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
+  await surface.fill('#fafafa'); await expect(validation).toHaveCount(0); await expect(page.locator('.token-editor__validation')).toBeHidden(); await expect(page.locator('.token-editor__validation')).toBeEmpty(); await expect(surface).not.toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id'));
+});
+
+test('rejected contrast imports describe the imported combinations while retaining the invalid draft diagnosis', async ({ page }) => {
+  const muted = page.getByLabel('color.text-muted override'), validation = page.getByRole('status', { name: 'Draft validation' }), feedback = page.locator('.token-editor__status');
+  await muted.fill('#757575'); await expect(validation).toContainText('color.text-muted / color.background requires 4.5:1'); const diagnostic = await validation.textContent(), id = await validation.getAttribute('id'); expect(id).toBeTruthy();
+  const before = await page.evaluate(() => ({ stored: localStorage.getItem('pwa-ds-token-overrides-v1'), style: document.documentElement.getAttribute('style') }));
+  const incoming = { schema: 'pwa-design-system/token-overrides', version: 1, overrides: { global: { 'color.surface': '#fafafa' }, light: {}, dark: {} } };
+  await page.getByText('Import, export & reset', { exact: true }).click(); await page.getByLabel('Import token configuration').setInputFiles({ name: 'contrast.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(incoming)) });
+  await expect(feedback).toContainText('Import rejected: Configuration fails project-wide contrast checks'); await expect(feedback).toContainText('color.text / color.surface requires 4.5:1 (example: dark/'); await expect(feedback).not.toContainText('color.text-muted / color.background');
+  await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic'); await expect(validation).toBeVisible(); await expect(muted).toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id')); await expect(muted).toHaveAttribute('aria-invalid', 'false'); await expect(muted).toHaveValue('#757575'); await expect(page.getByLabel('color.surface override')).toHaveValue(''); await expect(page.getByLabel('Unsaved change count')).toContainText('1 unsaved change');
+  expect(await page.evaluate(() => ({ stored: localStorage.getItem('pwa-ds-token-overrides-v1'), style: document.documentElement.getAttribute('style') }))).toEqual(before);
+  for (const name of ['Commit changes', 'Export JSON', 'Export CSS']) await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
+  await page.getByRole('button', { name: 'Cancel draft' }).click(); await expect(page.locator('.token-editor__validation')).toBeHidden(); await expect(page.locator('.token-editor__validation')).toBeEmpty(); await expect(muted).not.toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id'));
 });

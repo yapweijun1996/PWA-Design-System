@@ -260,7 +260,7 @@ describe('visual token workspace', () => {
     const f = fixture();
     try {
       f.select('Editing scope', 'global'); const field = f.edit('color.surface', '#fafafa');
-      const status = f.root.querySelector('.token-editor__status');
+      const status = f.root.querySelector('.token-editor__validation');
       expect(status?.textContent).toContain('project-wide checks (96 combinations)');
       expect(status?.textContent).toContain('example: dark/');
       expect(status?.textContent).toContain('even when this preview passes');
@@ -269,6 +269,41 @@ describe('visual token workspace', () => {
       expect(f.root.querySelector('[aria-label="Token preview"]')?.getAttribute('style')).toContain('--ds-color-surface: #fafafa');
       expect(f.root.querySelector('[aria-label="Preview contrast checks"] li')?.textContent).toContain('Pass');
       expect(f.click('Commit changes').disabled).toBe(true); expect(f.click('Export JSON').disabled).toBe(true);
+    } finally { f.close(); }
+  });
+
+  it('keeps alias validation associated through clipboard, pending import and navigation feedback', async () => {
+    const f = fixture(), originalClipboard = Object.getOwnPropertyDescriptor(navigator, 'clipboard');
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: vi.fn().mockResolvedValue(undefined) } });
+    try {
+      const field = f.edit('color.surface', '{primitive.color.missing}'), validation = f.root.querySelector<HTMLElement>('.token-editor__validation'), status = f.root.querySelector('.token-editor__status');
+      if (!validation) throw new Error('Missing validation diagnostic');
+      const diagnostic = validation.textContent; expect(diagnostic).toContain('Missing reference: primitive.color.missing'); expect(validation.hidden).toBe(false);
+      expect(field.getAttribute('aria-describedby')).toContain(validation.id); expect(field.getAttribute('aria-invalid')).toBe('true');
+      f.click('Copy color.white name'); await Promise.resolve(); expect(status?.textContent).toBe('Copied color.white.'); expect(validation.textContent).toBe(diagnostic);
+      const input = f.root.querySelector<HTMLInputElement>('input[type="file"]'); if (!input) throw new Error('Missing import');
+      const pending = new File(['{}'], 'pending.json', { type: 'application/json' }); Object.defineProperty(pending, 'text', { value: () => new Promise<string>(() => {}) }); Object.defineProperty(input, 'files', { configurable: true, value: [pending] }); input.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(status?.textContent).toContain('Reading token configuration'); expect(validation.textContent).toBe(diagnostic);
+      const { reportUnsafeDraft } = await import('../../apps/studio/src/features/pwa/guard'); reportUnsafeDraft();
+      expect(status?.textContent).toContain('before leaving this page'); expect(validation.textContent).toBe(diagnostic); expect(f.click('Commit changes').disabled).toBe(true);
+      f.edit('color.surface', '#fafafa'); expect(validation.hidden).toBe(true); expect(validation.textContent).toBe(''); expect(field.getAttribute('aria-describedby')).not.toContain(validation.id);
+    } finally { if (originalClipboard) Object.defineProperty(navigator, 'clipboard', originalClipboard); else Reflect.deleteProperty(navigator, 'clipboard'); f.close(); }
+  });
+
+  it('preserves draft contrast diagnosis while a rejected import explains its own failing combinations', async () => {
+    const f = fixture();
+    try {
+      const field = f.edit('color.text-muted', '#757575'), validation = f.root.querySelector<HTMLElement>('.token-editor__validation'), status = f.root.querySelector('.token-editor__status');
+      if (!validation) throw new Error('Missing validation diagnostic');
+      const diagnostic = validation.textContent, stored = localStorage.getItem('pwa-ds-token-overrides-v1'), before = getCommitted();
+      expect(diagnostic).toContain('color.text-muted / color.background requires 4.5:1');
+      const incoming = configuration(); incoming.overrides.global['color.surface'] = '#fafafa'; const input = f.root.querySelector<HTMLInputElement>('input[type="file"]'); if (!input) throw new Error('Missing import');
+      const file = new File(['{}'], 'contrast.json', { type: 'application/json' }); Object.defineProperty(file, 'text', { value: () => Promise.resolve(projectJSON(incoming)) }); Object.defineProperty(input, 'files', { configurable: true, value: [file] }); input.dispatchEvent(new Event('change', { bubbles: true })); await Promise.resolve();
+      expect(status?.textContent).toContain('Import rejected: Configuration fails project-wide contrast checks'); expect(status?.textContent).toContain('color.text / color.surface requires 4.5:1 (example: dark/'); expect(status?.textContent).not.toContain('color.text-muted / color.background');
+      expect(validation.textContent).toBe(diagnostic); expect(validation.hidden).toBe(false); expect(field.getAttribute('aria-describedby')).toContain(validation.id); expect(field.getAttribute('aria-invalid')).toBe('false');
+      expect(field.value).toBe('#757575'); expect(f.count()).toBe('1 unsaved change'); expect(getCommitted()).toEqual(before); expect(localStorage.getItem('pwa-ds-token-overrides-v1')).toBe(stored);
+      expect(f.click('Commit changes').disabled).toBe(true); expect(f.click('Export JSON').disabled).toBe(true); expect(f.click('Export CSS').disabled).toBe(true);
+      f.click('Cancel draft'); expect(validation.hidden).toBe(true); expect(validation.textContent).toBe(''); expect(field.getAttribute('aria-describedby')).not.toContain(validation.id);
     } finally { f.close(); }
   });
 

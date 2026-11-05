@@ -33,6 +33,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   const context = element('div'); context.className = 'token-editor__context'; const contextText = element('p'); context.append(contextText);
   const mismatch = element('div'); mismatch.className = 'token-editor__mismatch'; const mismatchText = element('p'), matchPreview = button('Preview editing theme'); mismatch.append(mismatchText, matchPreview);
   const status = element('p'); status.id = `${id}-status`; status.className = 'token-editor__status'; status.setAttribute('role', 'status');
+  const validation = element('p'); validation.id = `${id}-validation`; validation.className = 'token-editor__validation'; validation.setAttribute('role', 'status'); validation.setAttribute('aria-label', 'Draft validation'); validation.hidden = true;
   const draftCount = element('output'); draftCount.className = 'token-editor__draft-count'; draftCount.setAttribute('aria-label', 'Unsaved change count');
   const actions = element('div'); actions.className = 'token-editor__actions'; const commit = button('Commit changes'), cancel = button('Cancel draft'), undo = button('Undo'); undo.setAttribute('aria-label', 'Undo last change'); actions.append(commit, cancel, undo); context.append(draftCount);
   const diff = element('details'); diff.className = 'token-editor__diff'; const diffSummary = element('summary'), diffList = element('ul'); diff.append(diffSummary, diffList);
@@ -90,7 +91,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     const row = element('div'); row.className = 'token-editor__primitive'; const copyName = button('Copy name'), copyValue = button('Copy value'); copyName.setAttribute('aria-label', `Copy ${key} name`); copyValue.setAttribute('aria-label', `Copy ${key} value`); row.append(element('code', key), element('span', `${definition.$value} (${definition.$type})`), copyName, copyValue); group.append(row);
     copyName.addEventListener('click', () => { void copyText(key); }, { signal }); copyValue.addEventListener('click', () => { void copyText(String(definition.$value)); }, { signal });
   }
-  section.append(heading, toolbar, context, mismatch, actions, more, status, diff, viewSwitch, workspace, help, fixed, sourceList); root.replaceChildren(section);
+  section.append(heading, toolbar, context, mismatch, actions, more, status, validation, diff, viewSwitch, workspace, help, fixed, sourceList); root.replaceChildren(section);
   const media = typeof window.matchMedia === 'function' ? window.matchMedia('(min-width: 900px)') : undefined;
   const clearDraftGuard = setDraftGuard(() => draftChanges(baseline, draft).length > 0 || importPending, () => { status.textContent = 'Save or cancel the token draft and finish importing before leaving this page.'; });
   const selectedScope = (): Scope => scope.value === 'global' || scope.value === 'dark' ? scope.value : 'light'; const selectedTheme = (): PreviewTheme => previewTheme.value === 'dark' ? 'dark' : 'light';
@@ -114,23 +115,24 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     for (const [key, row] of rows) {
       const raw = draft.overrides[current][key]; if (document.activeElement !== row.input || row.input.value.trim() !== String(raw ?? '')) row.input.value = raw === undefined ? '' : String(raw);
       row.input.placeholder = 'Leave empty to inherit'; row.defaults.textContent = String(defaults[key]); row.resolved.textContent = `${resolutionValid ? '' : 'Last valid: '}${resolved[key]}`; row.row.dataset.modified = String(Object.hasOwn(draft.overrides[current], key)); row.sourceUses.textContent = `Direct semantic uses: ${directUses(key, draft).join(', ') || 'No direct semantic declarations reference this token.'}`;
-      if (row.swatch) row.swatch.style.backgroundColor = String(resolved[key]); if (row.picker && /^#[a-f\d]{6}$/i.test(String(resolved[key]))) row.picker.value = String(resolved[key]); const syntaxInvalid = raw !== undefined && !resolutionValid && (validationMessage.includes(key) || (typeof raw === 'string' && raw.startsWith('{') && validationMessage.includes(raw.slice(1, -1)))); const projectBlocked = raw !== undefined && !isValid; row.input.setAttribute('aria-invalid', String(syntaxInvalid)); row.input.setAttribute('aria-describedby', `${row.descriptionIds}${projectBlocked ? ` ${status.id}` : ''}`);
+      if (row.swatch) row.swatch.style.backgroundColor = String(resolved[key]); if (row.picker && /^#[a-f\d]{6}$/i.test(String(resolved[key]))) row.picker.value = String(resolved[key]); const syntaxInvalid = raw !== undefined && !resolutionValid && (validationMessage.includes(key) || (typeof raw === 'string' && raw.startsWith('{') && validationMessage.includes(raw.slice(1, -1)))); const projectBlocked = raw !== undefined && !isValid; row.input.setAttribute('aria-invalid', String(syntaxInvalid)); row.input.setAttribute('aria-describedby', `${row.descriptionIds}${projectBlocked ? ` ${validation.id}` : ''}`);
     }
     contextText.textContent = `Editing: ${scopeNames[current]} · Preview: ${selectedTheme() === 'light' ? 'Light' : 'Dark'}`; const differs = current !== 'global' && current !== selectedTheme(); mismatch.hidden = !differs; mismatchText.textContent = differs ? `You are editing ${scopeNames[current]} while previewing ${selectedTheme()}. These edits may not appear in this preview.` : ''; filterRows();
   }
   function renderPreview(): void { previewNote.textContent = `Palette: ${document.documentElement.dataset.palette ?? 'blue'} · ${document.documentElement.dataset.density ?? 'comfortable'} · ${document.documentElement.dataset.kit ?? 'default'}. Real core components; selected contrast pairs do not establish WCAG conformance.`; primaryScene.update(currentCombination(values, selectedTheme()), selectedTheme(), !resolutionValid, !isValid); const otherTheme = selectedTheme() === 'light' ? 'dark' : 'light'; comparisonScene.update(currentCombination(values, otherTheme), otherTheme, !resolutionValid, !isValid); comparisonScene.element.hidden = !compare.checked; }
-  function formatContrastFailures(failures: string[]): string {
+  function formatContrastFailures(failures: string[], combinations: TokenCombinations): string {
     const pending = new Set(failures), examples = new Map<string, string>();
     // Diagnose only invalid projects, using the same existing checker per combination.
-    for (const [name, combination] of Object.entries(values)) {
+    for (const [name, combination] of Object.entries(combinations)) {
       for (const failure of contrastFailures({ [name]: combination })) if (pending.delete(failure)) examples.set(failure, name);
       if (!pending.size) break;
     }
     return failures.map(failure => `${failure} (example: ${examples.get(failure) ?? 'unavailable'})`).join('; ');
   }
   function updatePreview(message?: string): void {
-    try { values = validateDraft(draft); resolutionValid = true; const failures = contrastFailures(values); isValid = failures.length === 0; validationMessage = failures.join('; '); status.textContent = failures.length ? `Draft has contrast issues in project-wide checks (96 combinations): ${formatContrastFailures(failures)}. Saving and exports are blocked for the whole project, even when this preview passes.` : (message ?? 'Draft preview updated. Commit to save.'); }
-    catch (error) { resolutionValid = false; isValid = false; validationMessage = error instanceof Error ? error.message : 'Invalid token configuration'; status.textContent = `Invalid draft: ${error instanceof Error ? error.message : 'Invalid token configuration'}. Previous preview is retained.`; }
+    try { values = validateDraft(draft); resolutionValid = true; const failures = contrastFailures(values); isValid = failures.length === 0; validationMessage = failures.join('; '); validation.textContent = failures.length ? `Draft has contrast issues in project-wide checks (96 combinations): ${formatContrastFailures(failures, values)}. Saving and exports are blocked for the whole project, even when this preview passes.` : ''; }
+    catch (error) { resolutionValid = false; isValid = false; validationMessage = error instanceof Error ? error.message : 'Invalid token configuration'; validation.textContent = `Invalid draft: ${validationMessage}. Previous preview is retained.`; }
+    validation.hidden = isValid; status.textContent = message ?? (isValid ? 'Draft preview updated. Commit to save.' : '');
     commit.disabled = !isValid; exportJson.disabled = !isValid; exportCss.disabled = !isValid; renderPreview(); refreshRows(); updateDraftSummary();
   }
   function remember(next: ProjectTokens): void { if (draftChanges(draft, next).length) { history.push(structuredClone(draft)); if (history.length > 50) history.shift(); draft = next; } }
@@ -153,7 +155,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     const revision = ++importRevision, selected = file.files?.[0]; if (!selected) { importPending = false; return; } importPending = true;
     if (selected.size > projectMaxBytes) { importPending = false; status.textContent = 'Import rejected: file exceeds 64 KiB. Existing draft and committed tokens are unchanged.'; file.value = ''; return; }
     status.textContent = 'Reading token configuration… It will be validated before preview. Committing cancels this read and saves the current draft.';
-    try { const text = await selected.text(); if (destroyed || revision !== importRevision) return; status.textContent = 'Validating token configuration before preview…'; const parsed = parseProject(sources, text); if (contrastFailures(parsed.combinations).length) throw new Error('Configuration fails representative contrast checks'); importPending = false; remember(parsed.project); updatePreview('Imported configuration previewed. Commit to save.'); }
+    try { const text = await selected.text(); if (destroyed || revision !== importRevision) return; status.textContent = 'Validating token configuration before preview…'; const parsed = parseProject(sources, text), failures = contrastFailures(parsed.combinations); if (failures.length) throw new Error(`Configuration fails project-wide contrast checks: ${formatContrastFailures(failures, parsed.combinations)}`); importPending = false; remember(parsed.project); updatePreview('Imported configuration previewed. Commit to save.'); }
     catch (error) { if (!destroyed && revision === importRevision) status.textContent = `Import rejected: ${error instanceof Error ? error.message : 'Invalid file'}. Existing draft and committed tokens are unchanged.`; }
     finally { if (!destroyed && revision === importRevision) { importPending = false; file.value = ''; } }
   }, { signal });
