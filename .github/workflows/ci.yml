@@ -16,16 +16,21 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: npm run build:react
       - run: npm run typecheck
+      - run: npm run typecheck:react
       - run: npm run lint
       - run: npm test
       - run: npm run tokens:check
       - run: npm run contracts:check
-      - run: npm run build:core
+      - run: npm run agent-validator:check
+      - run: npm run agent-contract:check
       - run: npm run build
       - run: npm run check:artifact
       - run: npx playwright install --with-deps --only-shell chromium
       - run: npm run test:e2e
+      - run: npm run test:react:e2e
+      - run: npm run test:pwa
       - run: npm run test:production
       - name: Validate deployment artifact
         run: |

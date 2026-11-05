@@ -2,6 +2,7 @@ import { emptyProject, parseProject, projectCSS, projectJSON, projectMaxBytes, v
 import { sources } from './sources';
 import { commitProject, contrastFailures, currentCombination, getCommitted, getStorageNotice, setTokenMap } from './model';
 import './styles.css';
+import { setDraftGuard } from '../pwa/guard.js';
 export { initializeTokenOverrides } from './model';
 
 type Scope = 'global' | 'light' | 'dark';
@@ -63,7 +64,8 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   section.append(heading, explanation, scopeLabel, actions, more, help, status, workspace, sourceList); root.replaceChildren(section);
   let draft = getCommitted();
   let values: TokenCombinations = validateProject(sources, draft);
-  let isValid = true; let destroyed = false; let importRevision = 0; let importPending = false;
+  let isValid = true; let destroyed = false; let importRevision = 0; let importPending = false; let dirty = false;
+  const clearDraftGuard = setDraftGuard(() => dirty || importPending, () => { status.textContent = 'Save or cancel the token draft and finish importing before leaving this page.'; });
   function cancelPendingImport(): boolean {
     if (!importPending) return false;
     importPending = false; importRevision++; file.value = ''; return true;
@@ -90,6 +92,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   refreshInputs(); setTokenMap(preview, currentCombination(values));
   scope.addEventListener('change', () => { const canceled = cancelPendingImport(); refreshInputs(); if (canceled) status.textContent = 'Pending import canceled; your draft is unchanged.'; }, { signal });
   for (const [key, input] of inputs) input.addEventListener('input', () => {
+    dirty = true;
     const canceled = cancelPendingImport();
     const text = input.value.trim(), scopeValues = draft.overrides[draftScope()];
     if (!text) delete scopeValues[key];
@@ -103,11 +106,11 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   commit.addEventListener('click', () => {
     cancelPendingImport();
     if (!isValid) return;
-    try { commitProject(draft); status.textContent = 'Token overrides committed and saved in this browser.'; }
+    try { commitProject(draft); dirty = false; status.textContent = 'Token overrides committed and saved in this browser.'; }
     catch { status.textContent = 'Could not save token overrides. The committed configuration is unchanged.'; }
   }, { signal });
-  cancel.addEventListener('click', () => { cancelPendingImport(); draft = getCommitted(); refreshInputs(); updatePreview('Draft discarded; committed overrides restored.'); }, { signal });
-  reset.addEventListener('click', () => { cancelPendingImport(); draft = emptyProject(); refreshInputs(); updatePreview('Defaults are previewed. Commit to save the reset.'); }, { signal });
+  cancel.addEventListener('click', () => { cancelPendingImport(); draft = getCommitted(); dirty = false; refreshInputs(); updatePreview('Draft discarded; committed overrides restored.'); }, { signal });
+  reset.addEventListener('click', () => { cancelPendingImport(); draft = emptyProject(); dirty = true; refreshInputs(); updatePreview('Defaults are previewed. Commit to save the reset.'); }, { signal });
   exportJson.addEventListener('click', () => { if (isValid) download('token-overrides.json', projectJSON(draft), 'application/json'); }, { signal });
   exportCss.addEventListener('click', () => { if (isValid) download('tokens.css', projectCSS(values), 'text/css'); }, { signal });
   file.addEventListener('change', async () => {
@@ -118,12 +121,12 @@ export function mountTokenEditor(root: HTMLElement): () => void {
       const text = await selected.text(); if (destroyed || revision !== importRevision) return;
       const parsed = parseProject(sources, text);
       if (contrastFailures(parsed.combinations).length) throw new Error('Configuration fails representative contrast checks');
-      draft = parsed.project; values = parsed.combinations; refreshInputs(); updatePreview('Imported configuration previewed. Commit to save.');
+      draft = parsed.project; values = parsed.combinations; dirty = true; refreshInputs(); updatePreview('Imported configuration previewed. Commit to save.');
     } catch (error) {
       if (!destroyed && revision === importRevision) status.textContent = `Import rejected: ${error instanceof Error ? error.message : 'Invalid file'}. Existing draft and committed tokens are unchanged.`;
     } finally { if (!destroyed && revision === importRevision) { importPending = false; file.value = ''; } }
   }, { signal });
   const appearanceObserver = new MutationObserver(() => { if (isValid) setTokenMap(preview, currentCombination(values)); refreshInputs(); });
   appearanceObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-palette', 'data-density', 'data-kit'] });
-  return () => { destroyed = true; importRevision++; appearanceObserver.disconnect(); controller.abort(); section.remove(); };
+  return () => { destroyed = true; importRevision++; clearDraftGuard(); appearanceObserver.disconnect(); controller.abort(); section.remove(); };
 }

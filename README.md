@@ -1,17 +1,18 @@
 # PWA Design System
 
-PWA Design System is an early-stage, framework-independent design system and Studio for developers building consistent interfaces. It combines reusable DOM components, a shared token compiler, interactive previews and a component inventory for tooling. The core and token packages are **private and unpublished**; this is not yet a production release or an installable PWA.
+PWA Design System is an in-development, framework-independent component library and interactive Studio for teams building consistent interfaces. It combines reusable DOM components, a token source of truth, live customization and exportable rules for coding agents. The core, tokens and optional React packages are **private and unpublished**. This is not a production release.
 
 ## What is available
 
-- JSON token sources and a deterministic compiler generate CSS custom properties, JSON and TypeScript for 96 theme, palette, density and visual-kit combinations.
-- The core library contains 20 component families: Button, Icon Button, Badge, Card, Separator, Tooltip, Input, Textarea, Checkbox, Radio Group, Switch, Select, Form Field, Tabs, Breadcrumb, Menu, Pagination, Dialog, Alert and Toast. The [core guide](packages/core/README.md) and family guides document their current APIs and limits.
-- The Studio has hash-linked navigation, a responsive sidebar and mobile drawer, plus light, dark and system appearance. Its component catalog is searchable; the playground shows live components, supported property controls, API and keyboard notes, and code generated from the same preview configuration. Some properties and states are deliberately not editable in the playground.
-- The token editor stages semantic overrides, previews them, and supports validated JSON import and JSON/CSS export. A Layout Playground previews seven local examples at selectable and adjustable iframe widths.
-- A machine-readable component inventory and an automated check cover required family identities, source exports, package entry points and test-call references. They do not establish that the referenced behavior or tests are complete.
-- A [Vanilla example](examples/vanilla/README.md), unit tests and Playwright tests with scoped axe checks exercise the current library.
+- JSON token sources and a deterministic compiler generate CSS, JSON and TypeScript for 96 combinations of resolved theme, palette, density and visual kit.
+- The [core library](packages/core/README.md) provides 20 component families: Button, Icon Button, Badge, Card, Separator, Tooltip, Input, Textarea, Checkbox, Radio Group, Switch, Select, Form Field, Tabs, Breadcrumb, Menu, Pagination, Dialog, Alert and Toast. Family guides describe their supported APIs and limitations.
+- The Studio offers responsive navigation, a searchable component catalog and a playground with previews, supported controls, API notes and code generated from the same configuration. It also provides a transactional token editor and a Layout Playground with seven local examples.
+- **Theme Builder** independently controls Light, Dark or System; eight palettes; comfortable or compact density; and default, minimal or enterprise visual kits. The top-bar theme selector stays synchronized. Valid selections are restored before the first render when browser storage is available, and committed token overrides remain active.
+- **AI Agent Rules** exports `design-system.json`, `tokens.css`, `AGENTS.md`, `COMPONENT-API.md` and `INTEGRATION.md`. Its strict schema and checks tie the contract to the component registry and token axes. Uploaded contracts are bounded, validated as data and never executed. See the [agent rules](docs/AI-AGENT-RULES.md).
+- The optional [React adapters](packages/react/README.md) wrap all 20 current core families. Core has no React dependency. The [Vanilla example](examples/vanilla/README.md) and [React example](examples/react/README.md) run locally.
+- A production build includes a manifest and service worker for a previously installed application shell and documentation to work offline. See [Offline support](#offline-support).
 
-The separate Theme Builder, Accessibility Lab, AI Agent Rules and Documentation Studio sections are pending. Agent rule exports, React adapters, PWA installation and offline/update behavior are not implemented. Layout Playground's Data Table is a **static HTML layout example**, not the planned enterprise Data Table component; its dialog example is also static. There is no verified WCAG conformance or production release.
+The Accessibility Lab and Documentation sections remain pending. The Layout Playground's Data Table and dialog are static HTML layout examples, not the planned enterprise components. There is no verified WCAG conformance, production release or live deployment.
 
 ## Getting started
 
@@ -19,67 +20,67 @@ Use Node.js `^22.13.0 || >=24.0.0` and npm:
 
 ```sh
 npm ci
+npm run build:react
 npm run dev
 ```
 
-Open the URL printed by Vite. Studio routes use URL fragments, for example `/PWA-Design-System/#components`, so deep links work under the configured GitHub Pages subpath. On desktop, the sidebar can be collapsed for the current session; tablet and mobile use their own responsive navigation. Theme selection is stored in the browser when storage is available, with Light as the default.
+Open the URL printed by Vite. Routes use fragments, for example `/PWA-Design-System/#components`, and the build is configured for the repository subpath. Light, blue, comfortable and default are the appearance defaults; System follows the device only when explicitly selected. Local storage failures are reported in the Studio.
 
 Build and preview the production assets locally:
 
 ```sh
 npm run build
+npm run check:artifact
 npm run preview
 ```
 
-The output is `dist/studio/`. Vite may warn that the classic token prepaint script is not bundled as a module: the build emits that script separately so it can run before the stylesheet. The Pages deployment workflow is deliberately disabled pending release gates; the proposed live site has **not been verified**.
+The output is `dist/studio/`. The classic theme and token bootstrap scripts run before application rendering; Vite may warn that a classic script is not bundled as a module. The Pages deployment workflow is deliberately disabled pending release gates. The proposed [live URL](https://yapweijun1996.github.io/PWA-Design-System/) is **NOT VERIFIED** and must not be treated as an active deployment.
 
-The intended minimum browser versions are Chrome and Edge 114, Firefox 125, and Safari and iOS Safari 17. Tooltip and Menu require the native Popover API and fail explicitly if it is unavailable. These minimum releases and devices have not all been verified.
+The intended minimum browsers are Chrome and Edge 114, Firefox 125, and Safari and iOS Safari 17. Tooltip and Menu require the native Popover API. Targeted Chrome and Playwright WebKit checks have run; minimum releases, Firefox, iOS devices and assistive-technology combinations remain **NOT VERIFIED**. Browser targets and automated tests do not establish compatibility or WCAG conformance.
 
-## Using the Studio token editor
+## Tokens and appearance
 
-Open **Design Tokens**. Primitive values are read-only; semantic fields accept a valid value for their token type or a full alias such as `{semantic.color.primary}`. Choose **All themes**, **Light only** or **Dark only**. Theme-specific overrides take precedence over all-theme overrides, which take precedence over the selected theme, palette, density and visual kit. The current preview follows the Studio's appearance; breakpoint tokens are reference values and do not rewrite CSS media queries.
+The authoritative sources are in `packages/tokens/`. Edit those JSON sources rather than generated files; use `npm run tokens:build` to regenerate and `npm run tokens:check` to verify them. The [token editor guide](apps/studio/src/features/tokens/README.md) documents types, aliases, scope precedence and import/export details.
 
-Edits and imports are staged in the preview. **Commit changes** validates and saves the project overrides in this browser; **Cancel draft** restores the committed configuration, and **Reset draft to defaults** previews a reset until it is committed. A failed storage write leaves the previous committed configuration in place. An import still being read is canceled if the draft is subsequently edited, reset, canceled or committed.
+Studio stages semantic token edits and imports in a preview. Commit validates and saves overrides in browser storage; cancel restores the committed configuration. Invalid imports cannot overwrite the draft or committed settings. JSON input is bounded and treated as data; no imported JavaScript is executed. Selected contrast pairs are checked across the supported combinations, but that is not a complete accessibility audit. Exported CSS contains resolved overrides and should load after the base generated tokens. Breakpoint tokens are reference values; changing them does not rewrite CSS media queries.
 
-**Import token configuration** accepts the versioned override JSON format up to 64 KiB. Parsing checks its shape, duplicate or forbidden keys, known token names, types, aliases and bounds before applying it to the draft. Invalid imports do not replace the draft or committed settings. Representative text, focus and control-border contrast pairs are checked across the 96 combinations; this is not a complete accessibility audit. Imports are data: the editor does not execute imported JavaScript or evaluate expressions.
+## Core and React examples
 
-**Export JSON** downloads project overrides; **Export CSS** downloads validated resolved values for the supported combinations. Load exported CSS after the base generated tokens, and set the documented appearance attributes. Repository source JSON and checked-in generated artifacts are not changed by editor use. The [token editor guide](apps/studio/src/features/tokens/README.md) contains the format, precedence and Content Security Policy considerations.
+From the repository root, `npm run build:core` builds the core ESM and declarations. Load generated token CSS before the relevant core styles; see the [core guide](packages/core/README.md) and [Vanilla example](examples/vanilla/README.md).
 
-## Core and examples
+For React, run `npm run build:react` followed by `npm run dev:react-example`, then open the local URL. The [React guide](packages/react/README.md) documents package peers and integration. Each adapter mounts a block-level host; Card content, Tooltip triggers and FormField controls have limited composition. Server rendering produces an empty host until hydration, not accessible server-rendered component content. These adapters are private pre-release packages, not public registry releases.
 
-Build the private core package from TypeScript:
+## Offline support
 
-```sh
-npm run build:core
-```
+The first visit requires a connection. After installation and a subsequent controlled navigation, the production build can serve its cached shell and existing Studio tools offline. The build records SHA-256 digests of final static assets; installation bypasses the HTTP cache and verifies the files before accepting the new version. Runtime requests and private API data are not added to the cache.
 
-Load generated token CSS before the core styles for the component families in use. The [core guide](packages/core/README.md) describes ESM and stylesheet entry points; the private token package exposes generated CSS, JSON and TypeScript. The [Vanilla example](examples/vanilla/README.md) shows how to serve the built core and generated styles locally without a framework. Publication and stable versioned package integration are not yet established.
+When an update is waiting, finish any pending import, commit or cancel a token draft, and close other Studio tabs before choosing **Prepare update**. Preparation does not reload the page. Unsaved drafts are held in memory: route changes are guarded and the browser is asked to confirm reload or closure, but a crash, forced termination or suppressed prompt can still lose a draft. Browser storage and caches may be evicted. The [PWA guide](apps/studio/src/features/pwa/README.md) explains update and cache cleanup limits.
+
+Local Chromium tests cover offline reload and version updates. An actual OS installation, iOS standalone behavior, offline operation in other browsers and the deployed Pages site are **NOT VERIFIED**.
 
 ## Checks
 
+After `npm ci`, build the local packages before tests that import their output:
+
 ```sh
+npm run build:react
 npm run typecheck
+npm run typecheck:react
 npm run lint
 npm test
 npm run tokens:check
 npm run contracts:check
-npm run build:core
+npm run agent-validator:check
+npm run agent-contract:check
 npm run build
 npm run check:artifact
 npx playwright install chromium
 npm run test:e2e
+npm run test:react:e2e
+npm run test:pwa
 npm run test:production
 ```
 
-`test:e2e` starts a local Vite server. `test:production` requires a current Studio build and starts a local production preview for first-frame and subpath checks. Browser installation may require network access and platform dependencies. Automated tests and scoped axe checks do not prove full accessibility, browser compatibility or visual quality. Manual assistive-technology checks, reviewed visual baselines, broader device coverage and offline/update tests remain outstanding.
+`test:e2e` starts the development server; `test:react:e2e` exercises the React example. `test:pwa` builds two isolated versions and checks offline/update behavior. `test:production` requires a current Studio build and checks production preview behavior. Installing browsers may require network access and platform dependencies. The checks cover specific behaviors; they do not replace manual screen-reader, device, visual, security or release review.
 
-## Token sources
-
-The authoritative repository sources are in `packages/tokens/`: `primitives.json`, `semantics.json`, and theme, palette, density and kit files. Edit those sources, not `packages/tokens/generated/`. Regenerate and verify after a source change:
-
-```sh
-npm run tokens:build
-npm run tokens:check
-```
-
-See [Architecture](docs/ARCHITECTURE.md) for boundaries and remaining work, and the [Phase 0 audit](docs/PHASE-0-AUDIT.md) for initial research. Original project code is available under the [MIT License](LICENSE); dependency notices and distribution obligations remain to be reviewed before release.
+See [Architecture](docs/ARCHITECTURE.md) and the [Phase 0 audit](docs/PHASE-0-AUDIT.md) for boundaries and open work. Original project code is available under the [MIT License](LICENSE); the generated agent validator includes Ajv-derived code, with its notice in [AJV-LICENSE.txt](packages/agent-contract/AJV-LICENSE.txt).

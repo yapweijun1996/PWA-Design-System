@@ -1,0 +1,7 @@
+# AI agent integration rules
+
+Read `packages/agent-contract/design-system.json` before generating UI, and inspect `component-contracts.json` for current APIs. `validation-rules.json` lists the machine-readable guidance; these rules do not grant access, run code or replace current repository instructions. Reuse core components and semantic tokens, preserve responsive behavior and accessible interactions, avoid duplicate components and arbitrary values, and report deviations with actual test evidence. No approved icon registry exists yet.
+
+The design contract and its JSON Schema are generated/validated against the current registry, package metadata, token axes and rules. The static Ajv-generated validator avoids runtime schema compilation; its MIT notice is in `packages/agent-contract/AJV-LICENSE.txt`. Imported contract files are bounded, treated as untrusted JSON and verified against the current registry. They are never evaluated or applied as instructions. Validation confirms structure and current references; it does not prove UI behavior, accessibility conformance or safety of unrelated code.
+
+From the repository root, run `npm run contracts:check`, `node scripts/build-agent-validator.mjs --check` and `node scripts/build-agent-contract.mjs --check` alongside the relevant type, unit and browser tests. The Studio's AI Agent Rules page can export a contract, token CSS, agent instructions, component API reference and integration guide; these exports do not publish packages or deploy the Studio.

@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pwa-design-system.example/schemas/agent-contract-v1.json",
+  "title": "PWA Design System agent contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "project", "packages", "tokens", "components", "rules"],
+  "properties": {
+    "schema": { "const": "pwa-design-system/agent-design-contract" },
+    "version": { "const": 1 },
+    "project": { "type": "string", "const": "PWA-Design-System" },
+    "packages": {
+      "type": "object", "additionalProperties": false, "required": ["core", "tokens"],
+      "properties": { "core": { "$ref": "#/definitions/package" }, "tokens": { "$ref": "#/definitions/package" } }
+    },
+    "tokens": {
+      "type": "object", "additionalProperties": false, "required": ["source", "cssExport", "axes"],
+      "properties": {
+        "source": { "const": "packages/tokens/" },
+        "cssExport": { "const": "@pwa-design-system/tokens/tokens.css" },
+        "axes": {
+          "type": "object", "additionalProperties": false, "required": ["themes", "palettes", "density", "kits"],
+          "properties": {
+            "themes": { "$ref": "#/definitions/axis" }, "palettes": { "$ref": "#/definitions/axis" },
+            "density": { "$ref": "#/definitions/axis" }, "kits": { "$ref": "#/definitions/axis" }
+          }
+        }
+      }
+    },
+    "components": { "type": "array", "minItems": 20, "maxItems": 20, "items": { "$ref": "#/definitions/component" } },
+    "rules": { "type": "array", "minItems": 10, "maxItems": 10, "items": { "$ref": "#/definitions/rule" } }
+  },
+  "definitions": {
+    "package": {
+      "type": "object", "additionalProperties": false, "required": ["name", "version", "private"],
+      "properties": { "name": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^@pwa-design-system/[a-z-]+$" }, "version": { "type": "string", "minLength": 5, "maxLength": 32, "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" }, "private": { "const": true } }
+    },
+    "axis": { "type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 24, "pattern": "^[a-z-]+$" } },
+    "boundedText": { "type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[^\\u0000-\\u001F\\u007F]+$" },
+    "texts": { "type": "array", "minItems": 1, "maxItems": 12, "items": { "$ref": "#/definitions/boundedText" } },
+    "property": {
+      "type": "object", "additionalProperties": false, "required": ["name", "type", "required", "defaultValue"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[A-Za-z][A-Za-z0-9]*$" },
+        "type": { "$ref": "#/definitions/boundedText" }, "required": { "type": "boolean" }, "defaultValue": { "$ref": "#/definitions/boundedText" }
+      }
+    },
+    "component": {
+      "type": "object", "additionalProperties": false, "required": ["family", "factory", "entry", "optionType", "keyboard", "states", "apiNotes", "properties"],
+      "properties": {
+        "family": { "type": "string", "minLength": 1, "maxLength": 40, "pattern": "^[a-z]+(?:-[a-z]+)*$" },
+        "factory": { "type": "string", "minLength": 7, "maxLength": 80, "pattern": "^create[A-Za-z]+$" },
+        "entry": { "type": "string", "minLength": 1, "maxLength": 100, "pattern": "^@pwa-design-system/core/[a-z-]+$" },
+        "optionType": { "$ref": "#/definitions/boundedText" }, "keyboard": { "$ref": "#/definitions/texts" }, "states": { "$ref": "#/definitions/texts" },
+        "apiNotes": { "$ref": "#/definitions/boundedText" },
+        "properties": { "type": "array", "minItems": 1, "maxItems": 20, "items": { "$ref": "#/definitions/property" } }
+      }
+    },
+    "rule": {
+      "type": "object", "additionalProperties": false, "required": ["id", "description"],
+      "properties": { "id": { "type": "string", "minLength": 1, "maxLength": 40, "pattern": "^[a-z]+(?:-[a-z]+)*$" }, "description": { "$ref": "#/definitions/boundedText" } }
+    }
+  }
+}

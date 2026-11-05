@@ -2,6 +2,8 @@ import '../../../packages/tokens/generated/tokens.css';
 import './styles.css';
 import { resolveRoute, routes, type RouteId } from './app/routes.js';
 import { initializeTokenOverrides } from './features/tokens/index.js';
+import { initializePwa } from './features/pwa/index.js';
+import { isDraftUnsafe, reportUnsafeDraft } from './features/pwa/guard.js';
 
 type Theme = 'light' | 'dark' | 'system';
 type Cleanup = () => void;
@@ -26,6 +28,7 @@ const mobile = window.matchMedia('(max-width: 699px)');
 
 // Keep the override observer alive for the document lifetime, including bfcache restores.
 initializeTokenOverrides();
+initializePwa();
 
 function isTheme(value: string | undefined): value is Theme {
   return value === 'light' || value === 'dark' || value === 'system';
@@ -175,7 +178,9 @@ async function renderRoute(focus = false): Promise<void> {
   const loaders: Partial<Record<RouteId, () => Promise<(root: HTMLElement) => Cleanup>>> = {
     'design-tokens': async () => (await import('./features/tokens/index.js')).mountTokenEditor,
     'components': async () => (await import('./features/playground/index.js')).mountPlayground,
-    'layout-playground': async () => (await import('./features/layout/index.js')).mountLayoutPlayground
+    'layout-playground': async () => (await import('./features/layout/index.js')).mountLayoutPlayground,
+    'theme-builder': async () => (await import('./features/theme/index.js')).mountThemeBuilder,
+    'ai-agent-rules': async () => (await import('./features/agent/index.js')).mountAgentRules
   };
   const load = loaders[current];
   if (!load) { renderPending(page, name); return; }
@@ -189,5 +194,19 @@ async function renderRoute(focus = false): Promise<void> {
     page.replaceChildren(); pageHeading(page, 'WORKSPACE', name, 'This section could not be loaded. Refresh the page to try again.');
   }
 }
-window.addEventListener('hashchange', () => { if (drawer.open) { restoreDrawerFocus = false; drawer.close(); } void renderRoute(true); });
+let currentHash = location.hash;
+window.addEventListener('beforeunload', event => {
+  if (isDraftUnsafe()) { event.preventDefault(); event.returnValue = ''; }
+});
+window.addEventListener('hashchange', () => {
+  if (isDraftUnsafe()) {
+    history.replaceState(history.state, '', `${location.pathname}${location.search}${currentHash}`);
+    reportUnsafeDraft();
+    main.focus({ preventScroll: true });
+    return;
+  }
+  currentHash = location.hash;
+  if (drawer.open) { restoreDrawerFocus = false; drawer.close(); }
+  void renderRoute(true);
+});
 void renderRoute();

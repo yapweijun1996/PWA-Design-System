@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "rules": [
+    { "id": "read-contract", "description": "Read the current design system contract before generating UI." },
+    { "id": "reuse-components", "description": "Reuse approved core components and their documented APIs." },
+    { "id": "semantic-tokens", "description": "Use semantic design tokens rather than introducing arbitrary visual values." },
+    { "id": "no-arbitrary-values", "description": "Do not introduce arbitrary colors or spacing; document justified exceptions." },
+    { "id": "responsive", "description": "Use the design system breakpoints and verify responsive behavior." },
+    { "id": "accessibility", "description": "Preserve accessible names, semantic HTML, keyboard support and visible focus." },
+    { "id": "icons", "description": "Reuse approved icons when available; no approved icon registry exists yet, so report this gap." },
+    { "id": "no-duplicates", "description": "Search for an existing component before introducing a duplicate." },
+    { "id": "validate", "description": "Validate the implementation against the contract and run applicable tests." },
+    { "id": "report-deviations", "description": "Report deviations, test evidence and unverified limitations explicitly." }
+  ]
+}

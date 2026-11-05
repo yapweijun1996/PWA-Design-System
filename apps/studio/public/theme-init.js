@@ -1,15 +1,24 @@
-// Apply the saved preference before the stylesheet is rendered.
+// Resolve stored appearance before styles and token overrides are painted.
 (() => {
-  let preference = 'light';
-  try {
-    const saved = localStorage.getItem('pwa-ds-theme');
-    if (saved === 'light' || saved === 'dark' || saved === 'system') preference = saved;
-  } catch {
-    // The default remains usable when storage is unavailable.
-  }
-  const resolved = preference === 'system'
+  const choices = {
+    theme: ['light', 'dark', 'system'],
+    palette: ['blue', 'indigo', 'violet', 'emerald', 'teal', 'rose', 'orange', 'slate'],
+    density: ['comfortable', 'compact'],
+    kit: ['default', 'minimal', 'enterprise']
+  };
+  const read = (name) => {
+    try {
+      const value = localStorage.getItem(`pwa-ds-${name}`);
+      return choices[name].includes(value) ? value : choices[name][0];
+    } catch {
+      return choices[name][0];
+    }
+  };
+  const preference = read('theme');
+  const data = document.documentElement.dataset;
+  data.themePreference = preference;
+  data.theme = preference === 'system'
     ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
     : preference;
-  document.documentElement.dataset.themePreference = preference;
-  document.documentElement.dataset.theme = resolved;
+  for (const name of ['palette', 'density', 'kit']) data[name] = read(name);
 })();
