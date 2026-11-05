@@ -13,3 +13,5 @@ Separate feature authors, cross-review and manager acceptance provide agent revi
 See [release acceptance evidence](RELEASE-ACCEPTANCE.md) for T4–T8, actual browser limitations, Lighthouse lab measurements and human/device checklists. Manual screen-reader, physical-device/iOS installation, independent human visual approval and field Core Web Vitals require actual evidence; unknown is not failed.
 
 Rollback uses a focused revert PR to preceding `fe5b6f0` behavior. Preserve shared history and browser-local token configurations; never reset or force-push main.
+
+Final release evidence: [Studio delivery](STUDIO-DELIVERY-2026-11-05.md) and [hosted independent QA](HOSTED-QA-2026-11-05.md).

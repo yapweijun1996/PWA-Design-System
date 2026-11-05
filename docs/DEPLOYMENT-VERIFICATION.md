@@ -1,5 +1,7 @@
 # Pages verification record
 
+For the later Components/Token usability amendment, see [5 November delivery evidence](STUDIO-DELIVERY-2026-11-05.md). The record below describes the earlier PR #2 deployment.
+
 Observed on 2026-11-05 at [PWA Design System Studio](https://yapweijun1996.github.io/PWA-Design-System/). This is a development preview. Production release readiness and WCAG conformance remain unverified.
 
 - Source commit: `3aea88305247ecfa65b2230b559365d43a65b22c`, merged through [PR #2](https://github.com/yapweijun1996/PWA-Design-System/pull/2).
