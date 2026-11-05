@@ -9,9 +9,9 @@ let observer: MutationObserver | undefined;
 const originals = new Map<string, { value: string; priority: string }>();
 const lastApplied = new Map<string, string>();
 
-export function currentCombination(values: TokenCombinations): TokenMap {
+export function currentCombination(values: TokenCombinations, previewTheme?: 'light' | 'dark'): TokenMap {
   const data = document.documentElement.dataset;
-  const theme = axes.themes.includes(data.theme ?? '') ? data.theme : 'light';
+  const theme = previewTheme ?? (axes.themes.includes(data.theme ?? '') ? data.theme : 'light');
   const palette = axes.palettes.includes(data.palette ?? '') ? data.palette : 'blue';
   const density = axes.density.includes(data.density ?? '') ? data.density : 'comfortable';
   const kit = axes.kits.includes(data.kit ?? '') ? data.kit : 'default';
