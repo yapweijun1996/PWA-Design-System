@@ -1,6 +1,6 @@
 # Visual regression fixtures
 
-**Status: NOT VERIFIED.** No reviewed Linux baselines are committed. The strict comparison command below must fail until the candidate images and their environment record have been reviewed and committed. Do not enable this as a required passing gate or claim a visual pass before that review.
+Six Linux baseline images were inspected individually by the coding agent, including the corrected tablet layout, and are committed with their environment record. They came from [CI run 41968248720](https://github.com/yapweijun1996/PWA-Design-System/actions/runs/41968248720) at source commit `1fc3d299425cdbf097ea59f63c4da19fc57437f3`. This is an agent visual review, not independent human design approval. The first strict CI comparison after committing these baselines is **NOT VERIFIED** until its result is observed.
 
 The six fixtures exercise Theme Builder at 390, 768 and 1440 pixels in light/dark and comfortable/compact configurations, plus a disabled button, an open menu and an open dialog. They use the actual Studio routes and core controls. Screenshots use full-page Chromium output, disabled animations, hidden carets, reduced motion, device scale 1, `en-US` and UTC. They supplement, rather than replace, keyboard, accessibility, responsive and manual visual review. Local Chrome fixture smoke checks have been run without comparing screenshots.
 
@@ -28,7 +28,7 @@ On the same recorded Linux environment:
 npx playwright test -c tests/visual/playwright.config.ts
 ```
 
-Missing images or environment metadata and environment drift fail the run. The test threshold permits at most 0.1% differing pixels; investigate any failure rather than automatically accepting it. Screenshot updates require `VISUAL_CAPTURE=1` and the explicit review process above. Add this strict command to required CI only after reviewed baselines are committed.
+Missing images or environment metadata and environment drift fail the run. The test threshold permits at most 0.1% differing pixels; investigate any failure rather than automatically accepting it. Screenshot updates require `VISUAL_CAPTURE=1` and the explicit review process above. The CI visual-regression job runs this strict command on pull requests and main.
 
 For local fixture debugging only, a non-baseline smoke run can use an installed Chrome:
 
