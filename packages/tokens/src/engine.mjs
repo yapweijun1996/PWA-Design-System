@@ -138,7 +138,7 @@ export function validateProject(sources, project) {
   keys(project.overrides, ['global', 'light', 'dark'], 'project.overrides');
   for (const [scope, overrides] of Object.entries(project.overrides)) {
     if (Object.keys(overrides).length > Object.keys(sources.semantics).length) throw new Error('Too many token overrides');
-    validateOverrides(overrides, sources.semantics, `project.${scope}`, new Set(Object.keys(sources.semantics)));
+    validateOverrides(overrides, sources.semantics, `project.${scope}`, new Set(Object.keys(sources.semantics).filter(key => !key.startsWith('breakpoint.'))));
     for (const value of Object.values(overrides)) if (typeof value === 'string' && value.length > 128) throw new Error('Token value is too long');
   }
   compile(sources);
@@ -191,13 +191,32 @@ function scanJSON(text) {
   }
   value(0); whitespace(); if (i !== text.length) throw new Error('Unexpected JSON content');
 }
-export function parseProject(sources, text) {
+function parseProjectJSON(text) {
   if (typeof text !== 'string' || new TextEncoder().encode(text).length > projectMaxBytes) throw new Error('Token configuration exceeds 64 KiB');
   scanJSON(text);
-  let data;
-  try { data = JSON.parse(text); } catch { throw new Error('Token configuration is not valid JSON'); }
-  const combinations = validateProject(sources, data);
+  try { return JSON.parse(text); } catch { throw new Error('Token configuration is not valid JSON'); }
+}
+export function parseProject(sources, text) {
+  const data = parseProjectJSON(text), combinations = validateProject(sources, data);
   return { project: data, combinations };
+}
+/** Load an older saved project without applying legacy runtime breakpoint overrides. */
+export function parseStoredProject(sources, text) {
+  const data = parseProjectJSON(text);
+  keys(data, ['schema', 'version', 'overrides'], 'project');
+  if (data.schema !== projectSchema || data.version !== 1) throw new Error('Unsupported token configuration schema or version');
+  keys(data.overrides, ['global', 'light', 'dark'], 'project.overrides');
+  const legacy = new Set(['breakpoint.mobile', 'breakpoint.tablet', 'breakpoint.desktop']);
+  const removed = new Set();
+  for (const [scope, values] of Object.entries(data.overrides)) {
+    object(values, `project.${scope}`);
+    for (const key of Object.keys(values)) if (legacy.has(key)) {
+      validateOverrides({ [key]: values[key] }, sources.semantics, `project.${scope}`, legacy);
+      if (typeof values[key] === 'string' && values[key].length > 128) throw new Error('Token value is too long');
+      removed.add(key); delete values[key];
+    }
+  }
+  return { project: data, combinations: validateProject(sources, data), removedBreakpoints: [...removed].sort() };
 }
 export function projectJSON(project) {
   const overrides = Object.fromEntries(['global', 'light', 'dark'].map(scope => [scope, Object.fromEntries(Object.entries(project.overrides[scope]).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0))]));

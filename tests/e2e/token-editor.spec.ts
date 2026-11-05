@@ -157,3 +157,16 @@ test('mobile editor starts with editable tokens and keeps optional information a
   await page.getByText('Live preview', { exact: true }).first().click();
   await expect(page.getByRole('heading', { name: 'Workspace preview' })).toBeHidden();
 });
+
+test('legacy saved breakpoint overrides migrate without losing other values before paint', async ({ page }) => {
+  const saved = JSON.stringify({ schema: 'pwa-design-system/token-overrides', version: 1, overrides: { global: { 'breakpoint.tablet': '1024px' }, light: { 'color.surface': '#fafafa' }, dark: {} } });
+  await page.addInitScript(value => { localStorage.setItem('pwa-ds-token-overrides-v1', value); requestAnimationFrame(() => { (window as unknown as { firstSurface: string }).firstSurface = getComputedStyle(document.documentElement).getPropertyValue('--ds-color-surface').trim(); }); }, saved);
+  await page.reload();
+  await expect(page.getByLabel('color.surface override')).toHaveValue('#fafafa');
+  await expect(page.locator('.token-editor__status')).toContainText('Legacy breakpoint overrides are no longer applied');
+  await expect(page.getByText('Layout breakpoints and viewport presets (read-only)')).toBeVisible();
+  await expect(page.getByLabel('breakpoint.tablet override')).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => (window as unknown as { firstSurface?: string }).firstSurface)).toBe('#fafafa');
+  expect(await page.evaluate(() => localStorage.getItem('pwa-ds-token-overrides-v1'))).toBe(saved);
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ds-breakpoint-tablet').trim())).toBe('768px');
+});

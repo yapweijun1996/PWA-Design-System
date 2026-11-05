@@ -72,5 +72,43 @@ describe('DataTable', () => {
     expect(item.getSelectedIds()).toEqual(['one', 'three']); expect(() => item.setSort({ column: 'team', direction: 'ascending' })).toThrow();
     item.setSort(null); expect(item.getSort()).toBeNull(); item.destroy();
   });
+  it('reuses sorted rows across selection and invalidates them for changed rows or sort', () => {
+    const getter = Object.getOwnPropertyDescriptor(Intl.Collator.prototype, 'compare')?.get;
+    if (!getter) throw new Error('Missing collator compare getter');
+    let comparisons = 0;
+    const spy = vi.spyOn(Intl.Collator.prototype, 'compare', 'get').mockImplementation(function (this: Intl.Collator) {
+      const compare = getter.call(this) as (a: string, b: string) => number;
+      return (a: string, b: string) => { comparisons++; return compare(a, b); };
+    });
+    const source = Array.from({ length: 12 }, (_, index) => ({ id: `row-${index}`, cells: { name: `Item ${12 - index}` } }));
+    const item = createDataTable({ label: 'Items', columns: [{ id: 'name', label: 'Name', sortable: true }], rows: source, selectable: true });
+    document.body.append(item.element);
+    try {
+      click(item.element, 'Sort by Name');
+      expect(item.element.querySelector('tbody tr')?.textContent).toContain('Item 1');
+      const initialComparisons = comparisons; expect(initialComparisons).toBeGreaterThan(0);
+      const row = item.element.querySelector<HTMLInputElement>('tbody input'); if (!row) throw new Error('Missing row selection');
+      row.click(); expect(item.getSelectedIds()).toEqual(['row-11']);
+      const all = item.element.querySelector<HTMLInputElement>('thead input'); if (!all) throw new Error('Missing page selection');
+      all.click(); expect(item.getSelectedIds()).toHaveLength(10);
+      item.setPage(2); item.setLoading(true); item.setLoading(false); item.setSelectedIds(['row-0']);
+      item.setSort({ column: 'name', direction: 'ascending' });
+      expect(comparisons).toBe(initialComparisons);
+
+      const changed = source.map((entry, index) => index === 0 ? { ...entry, cells: { name: 'Item 0' } } : entry);
+      item.setRows(changed); item.setPage(1);
+      expect(comparisons).toBeGreaterThan(initialComparisons);
+      expect(item.element.querySelector('tbody tr')?.textContent).toContain('Item 0');
+      expect(item.getSelectedIds()).toEqual(['row-0']);
+      const afterRows = comparisons;
+      click(item.element, 'Sort by Name');
+      expect(comparisons).toBeGreaterThan(afterRows);
+      expect(item.element.querySelector('tbody tr')?.textContent).toContain('Item 11');
+      const afterDescending = comparisons;
+      item.setSort(null); expect(comparisons).toBe(afterDescending);
+      expect(item.element.querySelector('tbody tr')?.textContent).toContain('Item 0');
+      item.setSort({ column: 'name', direction: 'ascending' }); expect(comparisons).toBeGreaterThan(afterDescending);
+    } finally { item.destroy(); spy.mockRestore(); }
+  });
 
 });

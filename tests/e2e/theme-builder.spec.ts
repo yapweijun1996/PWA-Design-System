@@ -76,6 +76,16 @@ test('System follows the device while preserving its explicit preference', async
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
+test('tablet preview retains usable width without horizontal overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.goto('./#theme-builder');
+  const preview = page.locator('.theme-builder__preview');
+  await expect(preview).toBeVisible();
+  const box = await preview.boundingBox();
+  expect(box?.width).toBeGreaterThanOrEqual(320);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+});
+
 test('prepaint rejects corrupt settings and restores valid axes before token bootstrap', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('pwa-ds-theme', 'dark'); localStorage.setItem('pwa-ds-palette', 'rose');

@@ -15,5 +15,6 @@ export function compile(sources: TokenSources): Record<string, string>;
 export function emptyProject(): ProjectTokens;
 export function validateProject(sources: TokenSources, project: ProjectTokens): TokenCombinations;
 export function parseProject(sources: TokenSources, text: string): { project: ProjectTokens; combinations: TokenCombinations };
+export function parseStoredProject(sources: TokenSources, text: string): { project: ProjectTokens; combinations: TokenCombinations; removedBreakpoints: string[] };
 export function projectJSON(project: ProjectTokens): string;
 export function projectCSS(combinations: TokenCombinations): string;

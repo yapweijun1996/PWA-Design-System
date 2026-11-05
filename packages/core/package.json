@@ -10,7 +10,7 @@
   "files": [
     "dist",
     "src/**/*.css",
-    "src/table/README.md"
+    "src/**/README.md"
   ],
   "exports": {
     ".": {

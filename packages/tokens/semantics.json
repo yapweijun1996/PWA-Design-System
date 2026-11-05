@@ -202,5 +202,9 @@
   "focus.ring-offset": {
     "$type": "dimension",
     "$value": "{primitive.focus.offset}"
+  },
+  "breakpoint.preview": {
+    "$type": "dimension",
+    "$value": "{primitive.breakpoint.preview}"
   }
 }

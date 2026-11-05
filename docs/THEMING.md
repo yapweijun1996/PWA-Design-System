@@ -1,6 +1,6 @@
 # Tokens and theming
 
-JSON sources in `packages/tokens/` are authoritative. Run `npm run tokens:build` after editing sources and `npm run tokens:check` to detect stale generated CSS, JSON and TypeScript. Components consume semantic CSS custom properties. Breakpoint tokens are reference values and do not rewrite CSS media queries.
+JSON sources in `packages/tokens/` are authoritative. Run `npm run tokens:build` after editing sources and `npm run tokens:check` to detect stale generated CSS, JSON and TypeScript. Components consume semantic CSS custom properties. Layout breakpoints are build-time constants, generated or checked against the authoritative token JSON; they cannot be edited in the Studio. Viewport presets are separate example widths. Older saved breakpoint overrides are ignored with a notice, preserving other valid overrides.
 
 Studio supports Light, Dark or explicit System preference, eight palettes, comfortable or compact density, and default, minimal or enterprise visual kits. System resolves to light or dark before paint; the default is light. The Theme Builder controls these axes independently and stores valid preferences locally when storage is available.
 

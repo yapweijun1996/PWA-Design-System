@@ -1,7 +1,7 @@
 .theme-builder { max-width: 80rem; }
 .theme-builder h1 { margin-top: 0; }
 .theme-builder__intro { color: var(--ds-color-text-muted); }
-.theme-builder__workspace { display: grid; grid-template-columns: minmax(14rem, 20rem) minmax(0, 1fr); gap: var(--ds-spacing-lg); align-items: start; }
+.theme-builder__workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--ds-spacing-lg); align-items: start; }
 .theme-builder__controls, .theme-builder__preview { min-width: 0; padding: var(--ds-spacing-lg); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-card); background: var(--ds-color-surface); }
 .theme-builder__controls h2, .theme-builder__preview h2 { margin-top: 0; }
 .theme-builder__field, .theme-builder__sample-field { display: grid; gap: var(--ds-spacing-xs); margin-bottom: var(--ds-spacing-md); }

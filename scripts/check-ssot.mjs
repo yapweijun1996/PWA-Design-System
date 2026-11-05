@@ -7,6 +7,7 @@ import { generate } from './tokens.mjs';
 import { readContract, validateContracts } from './check-component-contracts.mjs';
 import { buildAgentValidator } from './build-agent-validator.mjs';
 import { buildAgentContract } from './build-agent-contract.mjs';
+import { generateIcons } from './icons.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const core = 'packages/core/src';
@@ -91,8 +92,9 @@ export function checkInlineAssets(path, source) {
   if (/<(?:svg|img)\b|createElementNS\s*\(|createElement\s*\(\s*['"]img['"]|data:image\//i.test(source) || (path.endsWith('.css') && /\burl\s*\(/i.test(source))) throw new Error(`Inline or referenced image requires review: ${path}`);
 }
 
-export async function checkArtifacts({ tokens = generate, validator = buildAgentValidator, contract = buildAgentContract } = {}) {
+export async function checkArtifacts({ tokens = generate, validator = buildAgentValidator, contract = buildAgentContract, icons = generateIcons } = {}) {
   await tokens(true);
+  await icons(true);
   await validator(true);
   await contract(true);
 }

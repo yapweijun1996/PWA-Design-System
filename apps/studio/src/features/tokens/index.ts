@@ -22,7 +22,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   const heading = element('h1', 'Design tokens');
   const explanation = element('p', 'Edit a token, preview it, then commit your changes.');
   const help = element('details'); help.className = 'token-editor__help';
-  help.append(element('summary', 'How token overrides work'), element('p', 'Theme-specific overrides take precedence over all-theme overrides, which take precedence over the selected palette, density and kit. Breakpoint values are reference tokens and do not rewrite CSS media queries. Repository JSON files are never changed. Representative contrast checks do not establish WCAG conformance.'));
+  help.append(element('summary', 'How token overrides work'), element('p', 'Theme-specific overrides take precedence over all-theme overrides, which take precedence over the selected palette, density and kit. Layout breakpoints are build-time constants; viewport presets are separate example sizes. Neither can be edited here. Repository JSON files are never changed. Representative contrast checks do not establish WCAG conformance.'));
   const scopeLabel = element('label', 'Edit overrides for '), scope = element('select');
   for (const [value, label] of [['global', 'All themes'], ['light', 'Light only'], ['dark', 'Dark only']]) { const option = element('option', label); option.value = value; scope.append(option); }
   scope.value = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'; scopeLabel.append(scope);
@@ -45,7 +45,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   const inputs = new Map<string, HTMLInputElement>();
   const categories = ['color', 'font', 'spacing', 'radius', 'shadow', 'elevation', 'layer', 'motion', 'size', 'focus', 'breakpoint'];
   const order = (key: string): number => { const index = categories.indexOf(key.split('.')[0]); return index < 0 ? categories.length : index; };
-  const definitions = Object.entries(sources.semantics).sort(([a], [b]) => order(a) - order(b) || a.localeCompare(b));
+  const definitions = Object.entries(sources.semantics).filter(([key]) => !key.startsWith('breakpoint.')).sort(([a], [b]) => order(a) - order(b) || a.localeCompare(b));
   let currentCategory = ''; let group: HTMLFieldSetElement | undefined;
   for (const [key, definition] of definitions) {
     const category = key.split('.')[0];
@@ -56,6 +56,11 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     input.setAttribute('aria-label', `${key} override`);
     label.append(title, type, input); group?.append(label); inputs.set(key, input);
   }
+  const fixed = element('fieldset'); fixed.append(element('legend', 'Layout breakpoints and viewport presets (read-only)'));
+  fixed.append(element('p', 'Breakpoints are applied at build time; viewport presets are examples and do not change the layout rules.'));
+  const fixedValues = element('dl');
+  for (const [key, definition] of Object.entries(sources.primitives).filter(([key]) => key.startsWith('breakpoint.') || key.startsWith('viewport.')).sort(([a], [b]) => a.localeCompare(b))) fixedValues.append(element('dt', key), element('dd', String(definition.$value)));
+  fixed.append(fixedValues); fields.append(fixed);
   const sourceList = element('details'); const sourceSummary = element('summary', 'View primitive source tokens'); sourceList.append(sourceSummary);
   const sourceContent = element('dl'); sourceContent.className = 'token-editor__source';
   for (const [key, value] of Object.entries(sources.primitives).sort(([a], [b]) => a.localeCompare(b))) { sourceContent.append(element('dt', key), element('dd', `${value.$value} (${value.$type})`)); }

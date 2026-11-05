@@ -53,9 +53,10 @@ describe('SSOT static checks', () => {
     expect(() => checkInlineAssets('apps/studio/src/example.css', '.x { background: url(x.svg); }')).toThrow(/requires review/);
   });
   it('requires all generated-artifact checks in check-only mode and propagates stale failures', async () => {
-    const tokens = vi.fn(), validator = vi.fn(), contract = vi.fn();
-    await checkArtifacts({ tokens, validator, contract });
-    for (const check of [tokens, validator, contract]) expect(check).toHaveBeenCalledWith(true);
+    const tokens = vi.fn(), validator = vi.fn(), contract = vi.fn(), icons = vi.fn();
+    await checkArtifacts({ tokens, validator, contract, icons });
+    for (const check of [tokens, validator, contract, icons]) expect(check).toHaveBeenCalledWith(true);
+    await expect(checkArtifacts({ tokens, validator, contract, icons: () => { throw new Error('stale icons'); } })).rejects.toThrow('stale icons');
     await expect(checkArtifacts({ tokens: () => { throw new Error('stale tokens'); }, validator, contract })).rejects.toThrow('stale tokens');
     await expect(checkArtifacts({ tokens, validator: () => { throw new Error('stale validator'); }, contract })).rejects.toThrow('stale validator');
     await expect(checkArtifacts({ tokens, validator, contract: () => { throw new Error('stale contract'); } })).rejects.toThrow('stale contract');
@@ -69,6 +70,7 @@ describe('SSOT static checks', () => {
       const baseline = run(); expect(baseline.status, baseline.stderr).toBe(0);
       for (const [path, message] of [
         ['packages/tokens/generated/tokens.css', /Stale or missing generated artifact/],
+        ['packages/icons/generated/index.js', /Approved icon output is stale/],
         ['packages/agent-contract/generated-validator.mjs', /Agent validator is stale/],
         ['packages/agent-contract/design-system.json', /Design contract is stale/]
       ]) {

@@ -20,5 +20,5 @@
 .pg-preview { padding: var(--ds-spacing-lg); min-height: 6rem; color: var(--ds-color-text); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-control); background: var(--ds-color-surface-alt); }
 .pg-code { max-width: 100%; overflow: auto; padding: var(--ds-spacing-md); background: var(--ds-color-background); color: var(--ds-color-text); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-control); }
 .pg-page :focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
-@media (max-width: 48rem) { .pg-layout { grid-template-columns: 1fr; } .pg-list { max-height: 7rem; } }
+@media (max-width: 768px) { .pg-layout { grid-template-columns: 1fr; } .pg-list { max-height: 7rem; } }
 @media (forced-colors: active) { .pg-select { appearance: auto; background-image: none; } }

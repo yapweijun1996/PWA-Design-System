@@ -1,4 +1,4 @@
-import { parseProject, projectCSS, projectJSON } from '../../../../../packages/tokens/src/engine.mjs';
+import { parseStoredProject, projectCSS, projectJSON } from '../../../../../packages/tokens/src/engine.mjs';
 import { contrastFailures } from './model';
 import { sources } from './sources';
 
@@ -6,10 +6,11 @@ import { sources } from './sources';
 try {
   const text = localStorage.getItem('pwa-ds-token-overrides-v1');
   if (text !== null) {
-    const { project, combinations } = parseProject(sources, text);
+    const { project, combinations, removedBreakpoints } = parseStoredProject(sources, text);
     if (Object.values(project.overrides).some(scope => Object.keys(scope).length) && contrastFailures(combinations).length === 0) {
       const style = document.createElement('style');
       style.id = 'pwa-ds-prepaint-overrides';
+      if (removedBreakpoints.length) style.dataset.legacyBreakpoints = 'true';
       style.dataset.tokenConfig = projectJSON(project);
       style.textContent = projectCSS(combinations);
       document.head.append(style);

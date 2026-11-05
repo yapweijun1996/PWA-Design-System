@@ -1,4 +1,16 @@
 import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+test('mobile shell and representative routes pass whole-page accessibility checks', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const [route, heading] of [['overview', 'A shared foundation for better interfaces.'], ['accessibility-lab', 'Accessibility Lab'], ['documentation', 'Documentation']] as const) {
+    await page.goto(`/PWA-Design-System/#${route}`);
+    await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+    await expect(page.getByRole('combobox', { name: 'Theme', exact: true })).toBeVisible();
+    const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
+    expect(results.violations).toEqual([]);
+  }
+});
 
 for (const width of [768, 1440]) {
   test(`Studio sidebar navigation works at ${width}px`, async ({ page }) => {

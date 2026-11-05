@@ -68,6 +68,11 @@ export function createDataTable(options: DataTableOptions): DataTable {
     });
   }
   let rows = copyRows(options.rows), page = 1, loading = options.loading ?? false, sort: DataTableSort | undefined;
+  let sortedRows: DataTableRow[] | undefined;
+  function changeSort(next: DataTableSort | undefined): void {
+    if (sort?.column !== next?.column || sort?.direction !== next?.direction) sortedRows = undefined;
+    sort = next;
+  }
   const selected = new Set<string>(); const controller = new AbortController(); let destroyed = false;
   const element = document.createElement('section'); element.className = 'ds-data-table'; element.setAttribute('aria-label', options.label);
   const heading = document.createElement('h2'); heading.className = 'ds-data-table__heading'; heading.textContent = options.label;
@@ -86,8 +91,9 @@ export function createDataTable(options: DataTableOptions): DataTable {
     if (column.sortable) {
       const button = document.createElement('button'); button.type = 'button'; button.className = 'ds-data-table__sort'; button.textContent = column.label; button.setAttribute('aria-label', `Sort by ${column.label}`);
       button.addEventListener('click', () => {
-        sort = { column: column.id, direction: sort?.column === column.id && sort?.direction === 'ascending' ? 'descending' : 'ascending' };
-        render(); options.onSortChange?.({ ...sort });
+        const nextSort: DataTableSort = { column: column.id, direction: sort?.column === column.id && sort?.direction === 'ascending' ? 'descending' : 'ascending' };
+        changeSort(nextSort);
+        render(); options.onSortChange?.({ ...nextSort });
       }, { signal: controller.signal });
       const indicator = document.createElement('span'); indicator.setAttribute('aria-hidden', 'true');
       headers.set(column.id, { cell, button, indicator }); cell.append(button, indicator);
@@ -105,9 +111,11 @@ export function createDataTable(options: DataTableOptions): DataTable {
   }
   pagination = makePagination(); controls.append(pagination.element);
   function orderedRows(): DataTableRow[] {
-    if (!sort) return [...rows];
+    if (!sort) return rows;
+    if (sortedRows) return sortedRows;
     const { column, direction } = sort; const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
-    return rows.map((row, index) => ({ row, index })).sort((a, b) => (direction === 'ascending' ? 1 : -1) * collator.compare(a.row.cells[column], b.row.cells[column]) || a.index - b.index).map(item => item.row);
+    sortedRows = rows.map((row, index) => ({ row, index })).sort((a, b) => (direction === 'ascending' ? 1 : -1) * collator.compare(a.row.cells[column], b.row.cells[column]) || a.index - b.index).map(item => item.row);
+    return sortedRows;
   }
   function visibleRows(): DataTableRow[] { return orderedRows().slice((page - 1) * pageSize, page * pageSize); }
   function notifySelection(): void { options.onSelectionChange?.([...selected]); }
@@ -162,7 +170,7 @@ export function createDataTable(options: DataTableOptions): DataTable {
     setRows(input) {
       ensureAlive(); const replacement = copyRows(input); const nextIds = new Set(replacement.map(row => row.id));
       const before = selected.size; for (const id of selected) if (!nextIds.has(id)) selected.delete(id);
-      rows = replacement; page = Math.min(page, totalPages());
+      rows = replacement; sortedRows = undefined; page = Math.min(page, totalPages());
       const oldPagination = pagination; const activeButton = pagination.element.contains(document.activeElement) ? [...pagination.element.querySelectorAll('button')].indexOf(document.activeElement as HTMLButtonElement) : -1;
       pagination = makePagination(); oldPagination.element.replaceWith(pagination.element); oldPagination.destroy(); render();
       if (activeButton >= 0) { const button = pagination.element.querySelectorAll('button')[activeButton]; if (button && !button.disabled) button.focus(); else scroll.focus(); }
@@ -190,7 +198,7 @@ export function createDataTable(options: DataTableOptions): DataTable {
     setSort(value) {
       ensureAlive();
       if (value !== null && (!value || typeof value !== 'object' || !columns.some(column => column.sortable && column.id === value.column) || !['ascending', 'descending'].includes(value.direction))) throw new Error('Invalid sort');
-      sort = value ? { column: value.column, direction: value.direction } : undefined; render();
+      changeSort(value ? { column: value.column, direction: value.direction } : undefined); render();
     },
     destroy() { if (destroyed) return; destroyed = true; controller.abort(); pagination.destroy(); }
   };

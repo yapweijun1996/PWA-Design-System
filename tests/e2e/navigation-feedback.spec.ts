@@ -119,6 +119,11 @@ test('pagination buttons update the current page and boundaries', async ({ page 
 });
 test('native dialog closes with Escape and restores focus', async ({ page }) => {
   const open = page.getByRole('button', { name: 'Open dialog' }); await open.click(); const dialog = page.getByRole('dialog', { name: 'Dialog title' }); await expect(dialog).toBeVisible(); await expect(dialog.getByRole('button', { name: 'Close' })).toBeFocused();
+  await page.keyboard.press('Tab'); await expect(dialog.getByRole('button', { name: 'Close' })).toBeFocused();
+  await page.keyboard.press('Shift+Tab'); await expect(dialog.getByRole('button', { name: 'Close' })).toBeFocused();
+  await dialog.evaluate(element => { const button = document.createElement('button'); button.textContent = 'Extra action'; element.append(button); });
+  await page.keyboard.press('Shift+Tab'); await expect(dialog.getByRole('button', { name: 'Extra action' })).toBeFocused();
+  await page.keyboard.press('Tab'); await expect(dialog.getByRole('button', { name: 'Close' })).toBeFocused();
   await page.keyboard.press('Escape'); await expect(dialog).not.toBeVisible(); await expect(open).toBeFocused(); await open.click(); await dialog.getByRole('button', { name: 'Close' }).click(); await expect(open).toBeFocused();
   await open.click(); await page.evaluate(() => (window as unknown as { fixtureDialog: { destroy(): void } }).fixtureDialog.destroy()); await expect(dialog).not.toBeVisible(); await expect(open).toBeFocused();
 });

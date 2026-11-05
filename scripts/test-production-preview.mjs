@@ -62,6 +62,26 @@ try {
     if (failures.length || errors.length || external.length) throw new Error(`Production preview had ${failures.length} failed resources, ${errors.length} console/page errors and ${external.length} external requests`);
     console.log(`Production preview passed first-frame validation, subpath navigation and ${assets.length} asset responses.`);
   } finally { await context.close(); }
+  const securityContext = await browser.newContext();
+  try {
+    const page = await securityContext.newPage();
+    await page.route('**/csp-probe.js', route => route.fulfill({ contentType: 'text/javascript', body: "try { eval('window.cspEvalRan = true'); } catch { window.cspEvalBlocked = true; }" }));
+    await page.goto(base);
+    const result = await page.evaluate(async () => {
+      const violations = [];
+      document.addEventListener('securitypolicyviolation', event => violations.push(event.violatedDirective));
+      const inline = document.createElement('script'); inline.textContent = 'window.cspInlineRan = true'; document.head.append(inline);
+      // Run the eval probe in a same-origin script, not DevTools' CSP-exempt evaluation context.
+      await new Promise((resolveLoad, rejectLoad) => {
+        const probe = document.createElement('script'); probe.src = 'csp-probe.js';
+        probe.onload = resolveLoad; probe.onerror = rejectLoad; document.head.append(probe);
+      });
+      await new Promise(resolveWait => setTimeout(resolveWait, 100));
+      return { inlineRan: Boolean(window.cspInlineRan), evalBlocked: Boolean(window.cspEvalBlocked) && !window.cspEvalRan, violations };
+    });
+    if (result.inlineRan || !result.evalBlocked || !result.violations.some(value => value.startsWith('script-src'))) throw new Error(`Production script CSP check failed: ${JSON.stringify(result)}`);
+    console.log('Production script policy blocked inline execution and eval.');
+  } finally { await securityContext.close(); }
 } finally {
   if (browser) await browser.close();
   await new Promise((resolveClose, reject) => server.httpServer.close(error => error ? reject(error) : resolveClose()));

@@ -14,4 +14,6 @@ The following checks are **NOT VERIFIED**. For every completed run record date, 
 | 200% browser zoom, text resizing, mobile orientation, touch targets and no document overflow | NOT VERIFIED |
 | Reduced motion, light/dark themes and contrast for relevant adjacent states | NOT VERIFIED |
 
+On 2026-11-05, an agent operated visible Chrome 156.0.8078.80 on macOS 27.0.1 against a changing development working tree based on `1a9af15`. At 200% browser zoom it checked keyboard navigation, token draft protection, the navigation drawer and Dialog focus. A Dialog Tab escape to the browser address bar was fixed, then the single-button Tab, Shift+Tab, Escape and focus restoration were rechecked in the same environment. A 390px responsive-emulation view was also inspected. This bounded agent-operated observation is not a human or screen-reader verification, does not cover all workflows and is not evidence for a fixed release commit.
+
 The optional React adapters render empty hosts during server rendering until client hydration; they do not offer an accessible no-JavaScript fallback. Tooltip and Menu depend on native Popover support. Report accessibility defects with a reproducible scenario and environment in the project issue tracker.

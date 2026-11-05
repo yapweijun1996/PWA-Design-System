@@ -1,4 +1,7 @@
 import './layout.css';
+import { sources } from '../tokens/sources.js';
+
+const preset = (name: 'mobile' | 'tablet' | 'desktop'): number => Number.parseInt(String(sources.primitives[`viewport.${name}`].$value), 10);
 
 type Sample = 'dashboard' | 'erp-form' | 'data-table' | 'settings' | 'card-grid' | 'dialog' | 'mobile-navigation';
 const samples: readonly { value: Sample; label: string }[] = [
@@ -89,9 +92,9 @@ export function mountLayoutPlayground(root: HTMLElement): () => void {
   header.append(element(document, 'p', 'layout-eyebrow', 'WORKSPACE / RESPONSIVE'), element(document, 'h1', 'layout-title', 'Layout Playground'), element(document, 'p', 'layout-description', 'Inspect local layout examples in an isolated, adjustable viewport.'));
   const controls = element(document, 'section', 'layout-controls'); controls.setAttribute('aria-label', 'Preview controls');
   const presetGroup = element(document, 'div', 'layout-presets'); presetGroup.setAttribute('role', 'group'); presetGroup.setAttribute('aria-label', 'Viewport presets');
-  let width = 768; let current: Sample = 'dashboard';
+  let width = preset('tablet'); let current: Sample = 'dashboard';
   const presetButtons: HTMLButtonElement[] = [];
-  for (const [name, value] of [['Mobile', 390], ['Tablet', 768], ['Desktop', 1440]] as const) {
+  for (const [name, value] of [['Mobile', preset('mobile')], ['Tablet', preset('tablet')], ['Desktop', preset('desktop')]] as const) {
     const button = element(document, 'button', 'layout-preset', `${name} · ${value}px`); button.type = 'button'; button.dataset.width = String(value);
     button.addEventListener('click', () => setWidth(value), { signal }); presetButtons.push(button); presetGroup.append(button);
   }

@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from 'vitest';
-import { emptyProject, parseProject, projectCSS, projectJSON, validateProject } from '../../packages/tokens/src/engine.mjs';
+import { emptyProject, parseProject, parseStoredProject, projectCSS, projectJSON, validateProject } from '../../packages/tokens/src/engine.mjs';
 import { sources } from '../../apps/studio/src/features/tokens/sources';
-import { commitProject, contrastFailures, getCommitted, initializeTokenOverrides } from '../../apps/studio/src/features/tokens/model';
+import { commitProject, contrastFailures, getCommitted, getStorageNotice, initializeTokenOverrides } from '../../apps/studio/src/features/tokens/model';
 import { mountTokenEditor } from '../../apps/studio/src/features/tokens/index';
 
 function configuration() { return emptyProject(); }
@@ -72,7 +72,7 @@ describe('token override validation', () => {
     expect(document.documentElement.style.getPropertyValue('--ds-color-surface')).toBe('#fafafa');
     click('Reset draft to defaults'); expect(document.documentElement.style.getPropertyValue('--ds-color-surface')).toBe('#fafafa');
     click('Commit changes'); expect(document.documentElement.style.getPropertyValue('--ds-color-surface')).toBe('');
-    expect(container.querySelectorAll('[data-token]').length).toBe(Object.keys(sources.semantics).length);
+    expect(container.querySelectorAll('[data-token]').length).toBe(Object.keys(sources.semantics).filter(key => !key.startsWith('breakpoint.')).length);
     destroy(); teardown(); container.remove(); localStorage.clear();
   });
   it('revalidates a prepaint snapshot if storage becomes unavailable before app initialization', () => {
@@ -121,6 +121,19 @@ describe('token override validation', () => {
       expect(field.value, action).toBe(expected); expect(field.value, action).not.toBe('#fafafa');
     }
     destroy(); teardown(); root.remove(); localStorage.clear();
+  });
+
+  it('migrates legacy stored breakpoints without discarding other settings or rewriting storage', () => {
+    const legacy = configuration(); legacy.overrides.global['breakpoint.tablet'] = '1024px'; legacy.overrides.light['color.surface'] = '#fafafa';
+    const original = projectJSON(legacy); expect(() => parseProject(sources, original)).toThrow(/Invalid override/);
+    const migrated = parseStoredProject(sources, original); expect(migrated.removedBreakpoints).toEqual(['breakpoint.tablet']);
+    expect(migrated.project.overrides.light['color.surface']).toBe('#fafafa'); expect(migrated.project.overrides.global['breakpoint.tablet']).toBeUndefined();
+    localStorage.setItem('pwa-ds-token-overrides-v1', original); const teardown = initializeTokenOverrides();
+    expect(getCommitted()).toEqual(migrated.project); expect(getStorageNotice()).toMatch(/Legacy breakpoint overrides/);
+    expect(localStorage.getItem('pwa-ds-token-overrides-v1')).toBe(original);
+    const root = document.createElement('main'); document.body.append(root); const destroy = mountTokenEditor(root);
+    expect(root.querySelector('[data-token="breakpoint.tablet"]')).toBeNull(); expect(root.textContent).toContain('Layout breakpoints and viewport presets (read-only)');
+    destroy(); root.remove(); commitProject(configuration()); teardown(); localStorage.clear();
   });
 
 });

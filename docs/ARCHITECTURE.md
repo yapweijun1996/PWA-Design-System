@@ -33,7 +33,7 @@ The token editor uses the same engine as the compiler. Semantic edits, imports a
 
 The Accessibility Lab computes relative luminance and contrast for two user-entered opaque sRGB colors. It exposes thresholds and manual-test reminders, not an automatic WCAG assessment. The Documentation page is built from trusted static text with DOM APIs. Both are lazy-loaded Studio features included in the production precache. Their [accessibility record](ACCESSIBILITY.md) marks manual screen-reader and device checks as **NOT VERIFIED**.
 
-A second parser-blocking `token-prepaint.js` bundle validates saved overrides and emits a temporary style before the application starts. The application revalidates the data and removes that temporary style. The [token editor guide](../apps/studio/src/features/tokens/README.md) explains export and Content Security Policy considerations; arbitrary saved overrides require dynamic inline styles, so a deployment policy must be designed and tested accordingly.
+A second parser-blocking `token-prepaint.js` bundle validates saved overrides and emits a temporary style before the application starts. The application revalidates the data and removes that temporary style. A meta Content Security Policy limits scripts and network requests to the same origin, blocks objects and restricts base and form URLs. Dynamic token overrides and layout previews require inline styles, so the style policy permits them; it is not a complete defense against all injection. Meta policies cannot provide every response-header protection. The production preview test checks the first paint and blocks inline script and eval. See the [token editor guide](../apps/studio/src/features/tokens/README.md) for customization details.
 
 ## Agent contract
 
@@ -41,7 +41,7 @@ A second parser-blocking `token-prepaint.js` bundle validates saved overrides an
 
 `design-system.json` is generated from the registry, validation rules, package metadata and token axes, and checked against `design-system.schema.json`. The standalone Ajv-generated validator is built ahead of time and does not compile schemas at runtime. Imported JSON is size-bounded, scanned for duplicate and prototype-polluting keys, validated and compared with the current contract; it is not executed or applied as instructions. `npm run agent-validator:check` and `npm run agent-contract:check` verify generated artifact freshness. The [agent rules](AI-AGENT-RULES.md) explain usage and limitations.
 
-The Studio exports the contract, resolved token CSS, agent instructions, component API reference and a local integration guide. Exports validate the current contract and committed token configuration, but cannot establish that an external application is configured correctly or conforms to accessibility requirements. An approved icon registry is not yet implemented.
+The Studio exports the contract, resolved token CSS, agent instructions, component API reference and a local integration guide. Exports validate the current contract and committed token configuration, but cannot establish that an external application is configured correctly or conforms to accessibility requirements. A small approved text-glyph registry covers close, menu and settings; it is not a complete vector icon library. The existing string API and external applications are not statically constrained by that registry.
 
 ## PWA and update boundary
 

@@ -27,8 +27,9 @@ export const tokens = {
     ]
   },
   "default": {
-    "breakpoint.desktop": "1440px",
-    "breakpoint.mobile": "390px",
+    "breakpoint.desktop": "1000px",
+    "breakpoint.mobile": "700px",
+    "breakpoint.preview": "900px",
     "breakpoint.tablet": "768px",
     "color.background": "#f8fafc",
     "color.border-control": "#475569",
@@ -81,8 +82,9 @@ export const tokens = {
   },
   "combinations": {
     "light/blue/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -134,8 +136,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/blue/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -187,8 +190,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/blue/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -240,8 +244,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/blue/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -293,8 +298,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/blue/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -346,8 +352,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/blue/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -399,8 +406,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/indigo/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -452,8 +460,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/indigo/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -505,8 +514,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/indigo/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -558,8 +568,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/indigo/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -611,8 +622,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/indigo/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -664,8 +676,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/indigo/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -717,8 +730,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/violet/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -770,8 +784,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/violet/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -823,8 +838,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/violet/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -876,8 +892,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/violet/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -929,8 +946,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/violet/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -982,8 +1000,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/violet/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1035,8 +1054,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/emerald/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1088,8 +1108,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/emerald/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1141,8 +1162,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/emerald/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1194,8 +1216,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/emerald/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1247,8 +1270,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/emerald/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1300,8 +1324,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/emerald/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1353,8 +1378,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/teal/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1406,8 +1432,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/teal/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1459,8 +1486,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/teal/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1512,8 +1540,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/teal/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1565,8 +1594,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/teal/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1618,8 +1648,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/teal/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1671,8 +1702,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/rose/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1724,8 +1756,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/rose/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1777,8 +1810,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/rose/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1830,8 +1864,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/rose/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1883,8 +1918,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/rose/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1936,8 +1972,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/rose/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -1989,8 +2026,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/orange/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2042,8 +2080,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/orange/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2095,8 +2134,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/orange/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2148,8 +2188,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/orange/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2201,8 +2242,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/orange/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2254,8 +2296,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/orange/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2307,8 +2350,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/slate/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2360,8 +2404,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/slate/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2413,8 +2458,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/slate/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2466,8 +2512,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/slate/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2519,8 +2566,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/slate/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2572,8 +2620,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "light/slate/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#f8fafc",
       "color.border-control": "#475569",
@@ -2625,8 +2674,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/blue/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -2678,8 +2728,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/blue/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -2731,8 +2782,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/blue/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -2784,8 +2836,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/blue/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -2837,8 +2890,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/blue/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -2890,8 +2944,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/blue/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -2943,8 +2998,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/indigo/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -2996,8 +3052,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/indigo/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3049,8 +3106,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/indigo/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3102,8 +3160,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/indigo/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3155,8 +3214,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/indigo/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3208,8 +3268,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/indigo/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3261,8 +3322,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/violet/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3314,8 +3376,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/violet/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3367,8 +3430,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/violet/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3420,8 +3484,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/violet/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3473,8 +3538,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/violet/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3526,8 +3592,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/violet/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3579,8 +3646,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/emerald/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3632,8 +3700,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/emerald/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3685,8 +3754,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/emerald/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3738,8 +3808,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/emerald/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3791,8 +3862,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/emerald/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3844,8 +3916,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/emerald/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3897,8 +3970,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/teal/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -3950,8 +4024,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/teal/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4003,8 +4078,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/teal/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4056,8 +4132,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/teal/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4109,8 +4186,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/teal/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4162,8 +4240,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/teal/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4215,8 +4294,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/rose/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4268,8 +4348,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/rose/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4321,8 +4402,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/rose/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4374,8 +4456,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/rose/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4427,8 +4510,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/rose/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4480,8 +4564,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/rose/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4533,8 +4618,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/orange/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4586,8 +4672,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/orange/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4639,8 +4726,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/orange/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4692,8 +4780,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/orange/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4745,8 +4834,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/orange/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4798,8 +4888,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/orange/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4851,8 +4942,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/slate/comfortable/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4904,8 +4996,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/slate/comfortable/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -4957,8 +5050,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/slate/comfortable/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -5010,8 +5104,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/slate/compact/default": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -5063,8 +5158,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/slate/compact/minimal": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",
@@ -5116,8 +5212,9 @@ export const tokens = {
       "spacing.xs": "0.25rem"
     },
     "dark/slate/compact/enterprise": {
-      "breakpoint.desktop": "1440px",
-      "breakpoint.mobile": "390px",
+      "breakpoint.desktop": "1000px",
+      "breakpoint.mobile": "700px",
+      "breakpoint.preview": "900px",
       "breakpoint.tablet": "768px",
       "color.background": "#020617",
       "color.border-control": "#94a3b8",

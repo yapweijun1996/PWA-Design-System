@@ -1,4 +1,4 @@
-import { axes, emptyProject, parseProject, projectJSON, validateProject, type ProjectTokens, type TokenCombinations, type TokenMap } from '../../../../../packages/tokens/src/engine.mjs';
+import { axes, emptyProject, parseProject, parseStoredProject, projectJSON, validateProject, type ProjectTokens, type TokenCombinations, type TokenMap } from '../../../../../packages/tokens/src/engine.mjs';
 import { sources } from './sources';
 
 const storageKey = 'pwa-ds-token-overrides-v1';
@@ -42,9 +42,10 @@ export function initializeTokenOverrides(): () => void {
   try {
     const stored = localStorage.getItem(storageKey);
     if (stored !== null) {
-      const parsed = parseProject(sources, stored);
+      const parsed = parseStoredProject(sources, stored);
       if (contrastFailures(parsed.combinations).length) throw new Error('Stored overrides do not meet required contrast');
       committed = parsed.project; committedValues = parsed.combinations;
+      if (parsed.removedBreakpoints.length) storageNotice = `Legacy breakpoint overrides are no longer applied: ${parsed.removedBreakpoints.join(', ')}. Other saved overrides remain active; commit to save the migrated configuration.`;
     }
   } catch {
     // The blocking bootstrap may have read a valid configuration before storage
@@ -58,7 +59,9 @@ export function initializeTokenOverrides(): () => void {
         committed = parsed.project; committedValues = parsed.combinations;
       }
     } catch { /* Keep the existing in-memory configuration. */ }
-    storageNotice = 'Saved token overrides could not be loaded; existing tokens remain active.';
+    storageNotice = bootstrap?.dataset.legacyBreakpoints === 'true'
+      ? 'Browser storage is unavailable. Legacy breakpoint overrides are no longer applied; other validated overrides remain active for this page.'
+      : 'Saved token overrides could not be loaded; existing tokens remain active.';
   }
   applyCommitted();
   document.getElementById('pwa-ds-prepaint-overrides')?.remove();

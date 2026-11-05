@@ -137,7 +137,7 @@
   },
   "breakpoint.mobile": {
     "$type": "dimension",
-    "$value": "390px"
+    "$value": "700px"
   },
   "breakpoint.tablet": {
     "$type": "dimension",
@@ -145,7 +145,7 @@
   },
   "breakpoint.desktop": {
     "$type": "dimension",
-    "$value": "1440px"
+    "$value": "1000px"
   },
   "size.control.sm": {
     "$type": "dimension",
@@ -314,5 +314,21 @@
   "color.slate.light": {
     "$type": "color",
     "$value": "#cbd5e1"
+  },
+  "breakpoint.preview": {
+    "$type": "dimension",
+    "$value": "900px"
+  },
+  "viewport.mobile": {
+    "$type": "dimension",
+    "$value": "390px"
+  },
+  "viewport.tablet": {
+    "$type": "dimension",
+    "$value": "768px"
+  },
+  "viewport.desktop": {
+    "$type": "dimension",
+    "$value": "1440px"
   }
 }

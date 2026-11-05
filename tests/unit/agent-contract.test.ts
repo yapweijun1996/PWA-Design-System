@@ -48,6 +48,15 @@ describe('agent contract validation and export', () => {
     expect(artifacts['tokens.css']).toContain('--ds-color-surface:'); expect(artifacts['tokens.css']).toContain('[data-kit="enterprise"]');
     expect(artifacts['AGENTS.md']).toContain('Reuse approved core components'); expect(artifacts['COMPONENT-API.md']).toContain('## button');
     expect(artifacts['INTEGRATION.md']).toContain('private'); expect(artifacts['INTEGRATION.md']).toContain('npm run build:core');
+    expect(contract.icons?.package).toBe('@pwa-design-system/icons');
+    expect(contract.icons?.approved.map(icon => icon.name)).toEqual(['close', 'menu', 'settings']);
+    expect(artifacts['AGENTS.md']).toContain('settings (⚙)');
+    const changed = structuredClone(contract); if (!changed.icons) throw new Error('Icon registry missing');
+    changed.icons.approved[0].glyph = '!'; expect(() => verifyContractFile(JSON.stringify(changed))).toThrow(/current component registry/);
+    changed.icons.approved.push(changed.icons.approved[0]); expect(() => verifyContractFile(JSON.stringify(changed))).toThrow();
+    const previous = structuredClone(contract); delete previous.icons;
+    expect(validator(previous)).toBe(true);
+    expect(() => verifyContractFile(JSON.stringify(previous))).toThrow(/current component registry/);
   });
   it('builds the exported vanilla guide from locally packed packages', () => {
     const repo = process.cwd();

@@ -2,6 +2,7 @@
 <html lang="en" data-theme="light" data-palette="blue" data-density="comfortable" data-kit="default">
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A framework-independent design system workspace.">
     <meta name="color-scheme" content="light dark">
@@ -29,7 +30,7 @@
             <button type="button" class="studio-menu-button" id="open-navigation" aria-label="Open navigation" aria-haspopup="dialog" aria-controls="mobile-navigation"><span aria-hidden="true">☰</span></button>
             <div class="studio-breadcrumb"><span>Studio</span><span aria-hidden="true">/</span><strong id="current-page">Overview</strong></div>
           </div>
-          <div class="studio-topbar-actions"><button type="button" class="studio-sidebar-toggle" id="toggle-sidebar" aria-controls="desktop-sidebar" aria-expanded="true">Collapse sidebar</button><label class="studio-theme-label" for="theme-select">Theme</label><span class="studio-select-wrap"><select id="theme-select" class="studio-select" name="theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></span></div>
+          <div class="studio-topbar-actions"><button type="button" class="studio-sidebar-toggle" id="toggle-sidebar" aria-controls="desktop-sidebar" aria-expanded="true">Collapse sidebar</button><label class="studio-theme-label" for="theme-select">Theme</label><span class="studio-select-wrap"><select id="theme-select" class="studio-select" name="theme" aria-label="Theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></span></div>
         </header>
         <p id="preference-status" class="studio-preference-status" role="status"></p>
         <section id="pwa-update" hidden aria-label="Application update"><p role="status"></p><button type="button">Prepare update</button></section>

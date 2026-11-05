@@ -43,6 +43,28 @@
       ]
     }
   },
+  "icons": {
+    "source": "packages/icons/approved-icons.json",
+    "package": "@pwa-design-system/icons",
+    "version": "0.1.0",
+    "approved": [
+      {
+        "name": "close",
+        "glyph": "×",
+        "description": "Close or dismiss an open surface."
+      },
+      {
+        "name": "menu",
+        "glyph": "☰",
+        "description": "Open the application navigation."
+      },
+      {
+        "name": "settings",
+        "glyph": "⚙",
+        "description": "Open settings or preferences."
+      }
+    ]
+  },
   "components": [
     {
       "family": "button",
@@ -1072,7 +1094,7 @@
     },
     {
       "id": "responsive",
-      "description": "Use the design system breakpoints and verify responsive behavior."
+      "description": "Use build-time layout breakpoints from token JSON and verify responsive behavior; viewport presets are examples and CSS custom properties do not alter media-query thresholds at runtime."
     },
     {
       "id": "accessibility",
@@ -1080,7 +1102,7 @@
     },
     {
       "id": "icons",
-      "description": "Reuse approved icons when available; no approved icon registry exists yet, so report this gap."
+      "description": "Reuse approved glyphs from the icon registry; report custom icon deviations."
     },
     {
       "id": "no-duplicates",

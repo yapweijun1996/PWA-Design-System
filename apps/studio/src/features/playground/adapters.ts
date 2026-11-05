@@ -4,6 +4,7 @@ import {
   createTabs, createBreadcrumb, createMenu, createPagination, createDialog, createAlert, createToast, createDataTable
 } from '../../../../../packages/core/src/index.js';
 import type { Component } from '../../../../../packages/core/src/types.js';
+import { getIcon } from '../../../../../packages/icons/generated/index.js';
 
 export interface PlaygroundConfig { family: string; label: string; size: string; variant: string; state: string; extras: Record<string, string> }
 type Field = { key: string; label: string; initial: string; kind?: 'text' | 'select' | 'number' | 'list'; choices?: readonly string[]; min?: number; max?: number; required?: boolean };
@@ -17,7 +18,7 @@ const control: Specs = { size: ['md', 'sm', 'lg'], state: ['enabled', 'disabled'
 const choice: Specs = { size: ['md', 'sm', 'lg'], state: ['unchecked', 'checked', 'disabled'], label: 'Enable option', extras: [field('name', 'Name'), field('value', 'Value', 'on'), field('error', 'Error message'), selectField('required', 'Required', ['false', 'true'])], note: 'Native labeled choice; Space toggles the state.' };
 /** Factory-specific editor capability, not a component inventory. The inventory comes from the contract. */
 export const specs: Record<string, Specs> = {
-  button: action, 'icon-button': { ...action, label: 'Settings', extras: [...(action.extras ?? []), field('icon', 'Icon glyph', '⚙', true)], note: 'The label names the icon-only button. The glyph is hidden from assistive technology.' },
+  button: action, 'icon-button': { ...action, label: 'Settings', extras: [...(action.extras ?? []), field('icon', 'Icon glyph', getIcon('settings'), true)], note: 'The label names the icon-only button. The glyph is hidden from assistive technology.' },
   badge: { label: 'Active', variant: ['neutral', 'primary', 'success', 'danger'], note: 'Noninteractive status text; do not rely on color alone.' },
   card: { label: 'Account', variant: ['outlined', 'elevated'], note: 'A noninteractive section; callers supply content and semantics.' },
   separator: { label: 'Separator', variant: ['horizontal', 'vertical'], note: 'Noninteractive separator. The label is not rendered.' },

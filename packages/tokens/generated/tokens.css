@@ -1,7 +1,8 @@
 /* Generated from packages/tokens JSON. Do not edit. */
 :root {
-  --ds-breakpoint-desktop: 1440px;
-  --ds-breakpoint-mobile: 390px;
+  --ds-breakpoint-desktop: 1000px;
+  --ds-breakpoint-mobile: 700px;
+  --ds-breakpoint-preview: 900px;
   --ds-breakpoint-tablet: 768px;
   --ds-color-background: #f8fafc;
   --ds-color-border-control: #475569;

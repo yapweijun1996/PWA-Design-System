@@ -30,6 +30,7 @@ describe('component playground', () => {
     const radio = core.createRadioGroup({ id: 'default-radio', name: 'choice', legend: 'Choice', options: [{ value: 'a', label: 'A' }] });
     const fieldControl = core.createInput({ id: 'default-field' }); const field = core.createFormField({ label: 'Name', control: fieldControl.element });
     const select = core.createSelect({ id: 'default-select', options: [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }] });
+    const table = core.createDataTable({ label: 'People', columns: [{ id: 'name', label: 'Name' }], rows: Array.from({ length: 11 }, (_, index) => ({ id: `row-${index}`, cells: { name: `Person ${index}` } })) });
     const tooltipRequired = () => core.createTooltip({ trigger: document.createElement('button'), text: '' });
     const checks: [string, string, string][] = [
       ['button', 'variant', core.createButton({ label: 'Save' }).element.dataset.variant ?? ''],
@@ -49,7 +50,10 @@ describe('component playground', () => {
       ['pagination', 'label', core.createPagination({ page: 1, totalPages: 1, onChange() {} }).element.getAttribute('aria-label') ?? ''],
       ['dialog', 'closeLabel', core.createDialog({ title: 'Title', description: 'Description' }).element.querySelector('button')?.textContent ?? ''],
       ['alert', 'tone', core.createAlert({ message: 'Notice' }).element.classList.contains('ds-alert-info') ? 'info' : 'unexpected'],
-      ['toast', 'dismissLabel', toast.element.querySelector('button')?.textContent ?? '']
+      ['toast', 'dismissLabel', toast.element.querySelector('button')?.textContent ?? ''],
+      ['data-table', 'pageSize', String(table.element.querySelectorAll('tbody tr').length)],
+      ['data-table', 'selectable', String(Boolean(table.element.querySelector('input[type=checkbox]')))],
+      ['data-table', 'loading', table.element.querySelector('[aria-busy]')?.getAttribute('aria-busy') ?? '']
     ];
     function checkDefaults(records: typeof entries): void {
       for (const [family, property, observed] of checks) {
@@ -61,7 +65,10 @@ describe('component playground', () => {
     const changed = structuredClone(entries); const button = changed.find(item => item.family === 'button')?.properties.find(item => item.name === 'variant');
     if (!button) throw new Error('Button variant missing'); button.defaultValue = 'ghost';
     expect(() => checkDefaults(changed)).toThrow(/Default drift: button.variant/);
-    toast.destroy(); tabs.destroy(); field.destroy();
+    const changedTable = structuredClone(entries); const pageSize = changedTable.find(item => item.family === 'data-table')?.properties.find(item => item.name === 'pageSize');
+    if (!pageSize) throw new Error('Data table pageSize missing'); pageSize.defaultValue = '999';
+    expect(() => checkDefaults(changedTable)).toThrow(/Default drift: data-table.pageSize/);
+    toast.destroy(); tabs.destroy(); field.destroy(); table.destroy();
   });
   it('loads all 21 contract families, searches, selects and tears down', () => {
     const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);

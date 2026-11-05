@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "icons": [
+    { "name": "close", "glyph": "×", "description": "Close or dismiss an open surface." },
+    { "name": "menu", "glyph": "☰", "description": "Open the application navigation." },
+    { "name": "settings", "glyph": "⚙", "description": "Open settings or preferences." }
+  ]
+}

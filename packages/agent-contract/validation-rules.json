@@ -5,9 +5,9 @@
     { "id": "reuse-components", "description": "Reuse approved core components and their documented APIs." },
     { "id": "semantic-tokens", "description": "Use semantic design tokens rather than introducing arbitrary visual values." },
     { "id": "no-arbitrary-values", "description": "Do not introduce arbitrary colors or spacing; document justified exceptions." },
-    { "id": "responsive", "description": "Use the design system breakpoints and verify responsive behavior." },
+    { "id": "responsive", "description": "Use build-time layout breakpoints from token JSON and verify responsive behavior; viewport presets are examples and CSS custom properties do not alter media-query thresholds at runtime." },
     { "id": "accessibility", "description": "Preserve accessible names, semantic HTML, keyboard support and visible focus." },
-    { "id": "icons", "description": "Reuse approved icons when available; no approved icon registry exists yet, so report this gap." },
+    { "id": "icons", "description": "Reuse approved glyphs from the icon registry; report custom icon deviations." },
     { "id": "no-duplicates", "description": "Search for an existing component before introducing a duplicate." },
     { "id": "validate", "description": "Validate the implementation against the contract and run applicable tests." },
     { "id": "report-deviations", "description": "Report deviations, test evidence and unverified limitations explicitly." }

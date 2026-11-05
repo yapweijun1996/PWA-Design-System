@@ -1,4 +1,6 @@
 import { expect, test, type Frame, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 async function previewFrame(page: Page): Promise<Frame> {
   const handle = await page.getByTitle('Layout preview').elementHandle();
@@ -57,4 +59,14 @@ test('all seven local examples render, the table scrolls locally, and appearance
   await expect.poll(() => frame.locator('body').evaluate(element => getComputedStyle(element).backgroundColor)).not.toBe(before);
   await example.selectOption('dialog'); await expect(frame.getByRole('dialog', { name: 'Example dialog' })).toBeVisible();
   await example.selectOption('mobile-navigation'); await expect(frame.getByRole('navigation', { name: 'Example navigation' })).toBeVisible();
+});
+
+test('Studio layout switches at the authoritative build-time breakpoint', async ({ page }) => {
+  const source = JSON.parse(readFileSync(resolve('packages/tokens/primitives.json'), 'utf8')) as Record<string, { $value: string }>;
+  const tablet = Number.parseInt(source['breakpoint.tablet'].$value, 10);
+  await page.setViewportSize({ width: tablet, height: 900 }); await page.goto('./#components');
+  const layout = page.locator('.pg-layout'); await expect(layout).toBeVisible();
+  expect(await layout.evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length)).toBe(1);
+  await page.setViewportSize({ width: tablet + 1, height: 900 });
+  await expect.poll(() => layout.evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length)).toBe(2);
 });

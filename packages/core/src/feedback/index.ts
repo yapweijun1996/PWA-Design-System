@@ -17,6 +17,17 @@ export function createDialog(options: DialogOptions): Dialog {
   let opener: HTMLElement | null = null; let destroyed = false;
   const controller = new AbortController();
   closeButton.addEventListener('click', () => element.close(), { signal: controller.signal });
+  element.addEventListener('keydown', event => {
+    if (event.key !== 'Tab' || !element.open) return;
+    const focusable = [...element.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]')]
+      .filter(item => item.tabIndex >= 0 && !item.matches(':disabled') && !item.closest('[inert]') && item.getClientRects().length > 0);
+    if (!focusable.length) { event.preventDefault(); element.focus(); return; }
+    const current = focusable.indexOf(document.activeElement as HTMLElement);
+    if (current < 0 || (event.shiftKey && current === 0) || (!event.shiftKey && current === focusable.length - 1)) {
+      event.preventDefault();
+      (event.shiftKey ? focusable[focusable.length - 1] : focusable[0]).focus();
+    }
+  }, { signal: controller.signal });
   element.addEventListener('close', () => { if (!element.open) { if (opener?.isConnected) opener.focus(); opener = null; } options.onClose?.(); }, { signal: controller.signal });
   element.append(heading, description, closeButton);
   return {
