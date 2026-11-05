@@ -65,7 +65,7 @@ test('an alias survives filters and theme changes until the picker explicitly ch
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export JSON' }).click()]);
   const stream = await download.createReadStream(); let text = ''; for await (const chunk of stream) text += chunk.toString();
   expect(JSON.parse(text).overrides.light['color.surface']).toBe('{primitive.color.white}');
-  await page.getByLabel('Choose color.surface color', { exact: true }).fill('#fafafa');
+  await page.getByLabel('Choose new color for color.surface', { exact: true }).fill('#fafafa');
   await expect(surface).toHaveValue('#fafafa');
 });
 

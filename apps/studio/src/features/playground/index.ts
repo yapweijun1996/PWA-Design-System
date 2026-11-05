@@ -54,9 +54,13 @@ export function mountPlayground(root: HTMLElement): () => void {
   const empty = element('p', 'pg-empty', 'No matching components.'); empty.hidden = true;
   catalog.id = 'pg-catalog';
   const catalogToggle = element('button', 'pg-catalog-toggle', 'Choose component: Button'); catalogToggle.type = 'button'; catalogToggle.setAttribute('aria-controls', catalog.id);
-  const narrow = window.matchMedia(`(max-width: ${sources.primitives['breakpoint.tablet'].$value})`); let catalogOpen = false;
-  const syncCatalog = (): void => { catalog.hidden = narrow.matches && !catalogOpen; catalogToggle.setAttribute('aria-expanded', String(!catalog.hidden)); if (!narrow.matches && document.activeElement === catalogToggle) heading.focus(); };
+  const narrow = window.matchMedia(`(max-width: ${sources.primitives['breakpoint.tablet'].$value})`); let catalogOpen = false, toggleHadFocus = false;
+  const syncCatalog = (): void => { catalog.hidden = narrow.matches && !catalogOpen; catalogToggle.setAttribute('aria-expanded', String(!catalog.hidden)); if (!narrow.matches) { const active = document.activeElement; if (active === catalogToggle || (toggleHadFocus && active === document.body)) heading.focus(); toggleHadFocus = false; } };
   heading.tabIndex = -1;
+  // A media-query CSS change can hide/blur the toggle before its change event fires.
+  catalogToggle.addEventListener('focus', () => { toggleHadFocus = true; }, { signal });
+  catalogToggle.addEventListener('blur', () => { if (narrow.matches) toggleHadFocus = false; }, { signal });
+  document.addEventListener('pointerdown', event => { if (event.target !== catalogToggle) toggleHadFocus = false; }, { signal, capture: true });
   catalogToggle.addEventListener('click', () => { catalogOpen = !catalogOpen; syncCatalog(); if (catalogOpen) search.focus(); }, { signal });
   catalog.addEventListener('keydown', event => { if (event.key === 'Escape' && narrow.matches) { event.preventDefault(); catalogOpen = false; syncCatalog(); catalogToggle.focus(); } }, { signal });
   narrow.addEventListener('change', () => { if (narrow.matches && catalog.contains(document.activeElement)) catalogOpen = true; syncCatalog(); }, { signal });

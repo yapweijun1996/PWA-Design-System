@@ -1,20 +1,27 @@
 import { expect, test } from '@playwright/test';
 
-test('compact mobile rows retain explicit values, descriptions and a distinct color picker', async ({ page }) => {
+test('compact mobile rows retain explicit values, descriptions and a distinct color picker', async ({ page, browserName }) => {
   await page.setViewportSize({ width: 320, height: 844 }); await page.goto('./#design-tokens');
   const row = page.locator('[data-token-row="color.background"]'), input = page.getByLabel('color.background override', { exact: true });
   await expect(input).toBeVisible(); const rect = await input.boundingBox(); expect(rect).toBeTruthy(); expect((rect?.y ?? 999) + (rect?.height ?? 999)).toBeLessThan(844);
   await expect(row.getByText('Default', { exact: true })).toBeVisible(); await expect(row.getByText('Resolved', { exact: true })).toBeVisible();
-  await expect(row.getByText('Page canvas behind surfaces.')).toBeHidden();
-  await row.getByText('Purpose, source & references', { exact: true }).click(); await expect(row.getByText('Page canvas behind surfaces.')).toBeVisible();
+  await expect(row.locator('.token-editor__source-detail').getByText('Page canvas behind surfaces.')).toBeHidden();
+  await row.getByText('Purpose, source & references', { exact: true }).click(); await expect(row.locator('.token-editor__source-detail').getByText('Page canvas behind surfaces.')).toBeVisible();
   const ids = (await input.getAttribute('aria-describedby'))?.split(' ') ?? []; expect(ids.length).toBeGreaterThan(2);
   expect(await input.evaluate((_, ids) => ids.every(id => document.getElementById(id)), ids)).toBe(true);
   await row.getByText('Purpose, source & references', { exact: true }).click();
+  await expect(input).toHaveAccessibleDescription(/Empty override = inherited value.*Page canvas behind surfaces/);
+  if (browserName === 'chromium') {
+    const cdp = await page.context().newCDPSession(page); const tree = await cdp.send('Accessibility.getFullAXTree');
+    const textbox = tree.nodes.find(node => node.role?.value === 'textbox' && node.name?.value === 'color.background override');
+    expect(textbox?.description?.value).toContain('Empty override = inherited value'); expect(textbox?.description?.value).toContain('Page canvas behind surfaces.'); await cdp.detach();
+  }
   await expect(row.getByText('Choose new color', { exact: true })).toBeVisible();
+  await expect(row.locator('input[type="color"]')).toHaveAccessibleName(/^Choose new color for color\.background$/);
   const swatch = row.locator('.token-editor__swatch'); await expect(swatch).toHaveCount(1); expect(await swatch.evaluate(node => node.parentElement?.textContent)).toBe('Resolved');
   await input.fill('{primitive.color.white}'); await expect(input).toHaveValue('{primitive.color.white}');
   await expect(row.locator('.token-editor__swatch')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
-  await page.getByLabel('Choose color.background color', { exact: true }).fill('#fafafa'); await expect(input).toHaveValue('#fafafa');
+  await page.getByLabel('Choose new color for color.background', { exact: true }).fill('#fafafa'); await expect(input).toHaveValue('#fafafa');
   expect(await page.evaluate(() => localStorage.getItem('pwa-ds-token-overrides-v1'))).toBeNull();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

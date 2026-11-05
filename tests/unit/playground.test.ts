@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mountPlayground } from '../../apps/studio/src/features/playground/index';
 import { buildPreview, defaultConfig, specs, validateConfig, validateEditableMetadata } from '../../apps/studio/src/features/playground/adapters';
 import { validateProject } from '../../packages/tokens/src/engine.mjs';
@@ -8,11 +8,27 @@ import { sources } from '../../apps/studio/src/features/tokens/sources';
 import contractText from '../../packages/agent-contract/component-contracts.json?raw';
 import * as core from '../../packages/core/src/index';
 
-afterEach(() => { document.body.replaceChildren(); vi.restoreAllMocks(); });
+let media: MediaQueryList;
+beforeEach(() => {
+  // jsdom omits matchMedia; EventTarget supplies real signal-aware listener cleanup.
+  media = Object.assign(new EventTarget(), { matches: false, media: '(max-width: 768px)', onchange: null }) as MediaQueryList;
+  vi.stubGlobal('matchMedia', vi.fn(() => media));
+});
+afterEach(() => { document.body.replaceChildren(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 function click(root: HTMLElement, selector: string): void {
   const node = root.querySelector<HTMLButtonElement>(selector); if (!node) throw new Error(`Missing ${selector}`); node.click();
 }
 describe('component playground', () => {
+  it('responds to the catalog breakpoint and releases its listener on teardown', () => {
+    const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);
+    const catalog = root.querySelector<HTMLElement>('#pg-catalog'), toggle = root.querySelector<HTMLButtonElement>('.pg-catalog-toggle');
+    if (!catalog || !toggle) throw new Error('Missing catalog');
+    expect(catalog.hidden).toBe(false);
+    Object.defineProperty(media, 'matches', { configurable: true, value: true }); media.dispatchEvent(new Event('change'));
+    expect(catalog.hidden).toBe(true); expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    destroy(); Object.defineProperty(media, 'matches', { configurable: true, value: false }); media.dispatchEvent(new Event('change'));
+    expect(catalog.hidden).toBe(true); expect(toggle.getAttribute('aria-expanded')).toBe('false');
+  });
   it('matches editable contract flags to controls and rejects editability drift', () => {
     const entries = JSON.parse(contractText).components as { family: string; properties: { name: string; editable: boolean }[] }[];
     for (const item of entries) expect(() => validateEditableMetadata(item.family, item.properties), item.family).not.toThrow();

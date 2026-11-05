@@ -34,7 +34,7 @@ export function directUses(key: string, draft: ProjectTokens): string[] {
 
 export interface ReferenceAppearance { theme: PreviewTheme; palette: string; density: string; kit: string }
 export interface TokenReferenceGraph { edges: Map<string, string>; nodes: Set<string> }
-/** Inspect declarations only, never resolve values. Layer order mirrors engine projectCombinations. */
+/** Inspect declarations only, never resolve values. Layer order mirrors engine resolveProject. */
 export function referenceGraph(draft: ProjectTokens, appearance: ReferenceAppearance): TokenReferenceGraph {
   const { theme, palette, density, kit } = appearance;
   const semantic = Object.fromEntries(Object.entries(sources.semantics).map(([name, token]) => [name, token.$value]));
