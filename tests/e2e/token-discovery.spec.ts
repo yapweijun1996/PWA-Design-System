@@ -3,7 +3,12 @@ import { expect, test } from '@playwright/test';
 test('compact mobile rows retain explicit values, descriptions and a distinct color picker', async ({ page, browserName }) => {
   await page.setViewportSize({ width: 320, height: 844 }); await page.goto('./#design-tokens');
   const row = page.locator('[data-token-row="color.background"]'), input = page.getByLabel('color.background override', { exact: true });
-  await expect(input).toBeVisible(); const rect = await input.boundingBox(); expect(rect).toBeTruthy(); expect((rect?.y ?? 999) + (rect?.height ?? 999)).toBeLessThan(844);
+  await expect(input).toBeVisible(); const rect = await input.boundingBox(); expect(rect).toBeTruthy();
+  const layout = await page.evaluate(() => ({ font: getComputedStyle(document.body).font, actions: [...document.querySelectorAll('.token-editor > .token-editor__actions > button')].map(node => { const rect = node.getBoundingClientRect(); return { text: node.textContent, font: getComputedStyle(node).font, x: rect.x, y: rect.y, width: rect.width, height: rect.height }; }), firstField: document.querySelector('[data-token="color.background"]')?.getBoundingClientRect().toJSON() }));
+  expect((rect?.y ?? 999) + (rect?.height ?? 999), JSON.stringify(layout)).toBeLessThan(844);
+  expect(layout.actions).toHaveLength(3); expect(Math.max(...layout.actions.map(item => item.y)) - Math.min(...layout.actions.map(item => item.y)), JSON.stringify(layout)).toBeLessThan(1);
+  for (const action of layout.actions) { expect(action.width).toBeGreaterThanOrEqual(44); expect(action.height).toBeGreaterThanOrEqual(44); }
+
   await expect(row.getByText('Default', { exact: true })).toBeVisible(); await expect(row.getByText('Resolved', { exact: true })).toBeVisible();
   await expect(row.locator('.token-editor__source-detail').getByText('Page canvas behind surfaces.')).toBeHidden();
   await row.getByText('Purpose, source & references', { exact: true }).click(); await expect(row.locator('.token-editor__source-detail').getByText('Page canvas behind surfaces.')).toBeVisible();

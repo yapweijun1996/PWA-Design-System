@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Improved the Components workbench/mobile picker, compacted token rows, added transitive reference inspection and preserved native accessibility descriptions.
+
 - Improved Token Editor discovery, value identity, local theme comparison, draft diff/undo, responsive previews and persistent validation diagnostics. Preserved the existing token engine and transactional import/commit contracts.
 
 - Introduced JSON token sources, deterministic generated artifacts and independent appearance axes.

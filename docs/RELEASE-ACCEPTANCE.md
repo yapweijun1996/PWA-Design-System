@@ -10,7 +10,7 @@ Recorded on 5 November 2026. Automated checks and agent-operated browser evidenc
 | T5 Physical devices and installation | **NOT VERIFIED** | Desktop viewport emulation is available; actual phone/iPad hardware, iOS home-screen installation and OS launch behavior were not accessed. |
 | T6 Independent human visual approval | **NOT VERIFIED** | Coding-agent screenshots/model reviews are evidence, not independent human acceptance. An owner/designer must record a decision. |
 | T7 Performance measurement | Lab measurement complete; field data **NOT VERIFIED** | Lighthouse 13.6.0 measured baseline Components and candidate production Components/Tokens; details below. Field Core Web Vitals remain **NOT VERIFIED**. |
-| T8 Firefox / real Safari | Partial | Installed Firefox Nightly candidate-source smoke passed 10/10 via geckodriver at `6968e399962fa2f7c12801c6412e1efdc43d4b7c`. Actual Safari WebDriver remains blocked by its existing Remote Automation setting. |
+| T8 Firefox / real Safari | Partial | Installed Firefox Nightly final-corrected-source smoke passed 10/10 via geckodriver at `175c2d253a668f632bccef632a2b971bfe7f789b`; targeted Playwright WebKit passed 46/46 on the same source. Actual Safari WebDriver remains blocked by its existing Remote Automation setting. |
 
 ## Available browser environment
 
@@ -26,6 +26,14 @@ On the preceding hosted build `34d9c458c7422cf21e2a`, an isolated headless insta
 ## Candidate Firefox browser evidence
 
 On frozen source `6968e399962fa2f7c12801c6412e1efdc43d4b7c`, actual installed headless Firefox Nightly 160.0a1 with geckodriver 0.37.1 passed **10/10** smoke assertions against an isolated localhost server on port 4193. The eight baseline assertions were repeated; two additional checks exercised the new mobile Choose component flow: selection closed the catalog and focused the detail heading, and reopening then pressing Escape closed the catalog and restored toggle focus. No source changes were made by QA. The geometry probe showed the headless browser clamped the requested 390×844 window to **outer 500×844 / inner 500×759** at device scale 1. The narrow-layout checks therefore cover 500 CSS pixels, not a verified 390px Firefox viewport or a physical device. Firefox-internal sandbox/Remote Settings warnings appeared in driver stderr; this journey does not claim a clean browser console. JSON and screenshot evidence were retained outside the repository. This does not claim stable Firefox or full-suite coverage.
+
+## Corrected-source Firefox and WebKit acceptance
+
+After the candidate review fixes, QA repeated the installed Firefox Nightly journey against frozen source `175c2d253a668f632bccef632a2b971bfe7f789b`: **10/10 passed**. The final measured narrow geometry again was inner **500×759**, outer **500×844**, device scale 1. The same bounds and limitations above apply; this is not a full Firefox suite or a verified 390px Firefox viewport.
+
+On the same frozen source and QA-owned localhost port 4193, Playwright WebKit passed **46/46** tests in 27.1 seconds using one worker across `components-usability`, `playground`, `token-discovery`, `token-editor-workspace` and `token-editor` specs. This covers existing component configuration/code parity, copy-error feedback, new mobile picker/resize focus behavior, compact Token rows/reference browsing, transactional editing/imports, stale-read guards and scoped axe checks. The Chromium-only native accessibility-tree assertion is conditional and was not exercised by WebKit. WebKit is separate engine evidence, not real Safari or iOS standalone validation. No source/tests were edited by QA and no assertion/timeout was weakened.
+
+The final hosted Lighthouse rerun is pending deployment; the earlier candidate measurements below retain their original source/build identity and must not be relabeled as measurements of these corrected sources.
 
 ## Baseline Lighthouse lab measurement
 

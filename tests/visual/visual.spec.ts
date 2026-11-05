@@ -68,7 +68,8 @@ for (const scenario of [
   { name: 'token-editor-tablet-dark', width: 768, height: 900, theme: 'dark', density: 'compact', view: 'editor' },
   { name: 'token-editor-mobile-light', width: 390, height: 844, theme: 'light', density: 'comfortable', view: 'editor' },
   { name: 'token-editor-mobile-preview', width: 390, height: 844, theme: 'light', density: 'comfortable', view: 'preview' },
-  { name: 'token-editor-desktop-draft', width: 1440, height: 900, theme: 'light', density: 'comfortable', view: 'draft' }
+  { name: 'token-editor-desktop-draft', width: 1440, height: 900, theme: 'light', density: 'comfortable', view: 'draft' },
+  { name: 'token-editor-narrow-light', width: 320, height: 844, theme: 'light', density: 'comfortable', view: 'editor' }
 ]) {
   test(scenario.name, async ({ page }) => {
     await page.setViewportSize({ width: scenario.width, height: scenario.height });
