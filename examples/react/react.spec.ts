@@ -62,3 +62,34 @@ test('controlled dialog reopens when its owner rejects dismissal', async ({ page
   await page.keyboard.press('Escape'); await expect(dialog).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as { dialogCloseCalls: number }).dialogCloseCalls)).toBe(2);
 });
+
+
+test('React data table preserves controlled and uncontrolled state across updates', async ({ page }) => {
+  await page.goto('/regression.html');
+  const controlled = page.getByRole('region', { name: 'Controlled people', exact: true });
+  await controlled.getByRole('checkbox', { name: 'Select a', exact: true }).click(); await expect(controlled.getByRole('checkbox', { name: 'Select a', exact: true })).not.toBeChecked();
+  await controlled.getByRole('button', { name: 'Next' }).click(); await expect(controlled.getByText('Page 1 of 2')).toBeVisible();
+  await controlled.getByRole('button', { name: 'Sort by Name' }).click(); await expect(controlled.locator('[aria-sort]')).toHaveCount(0);
+  const uncontrolled = page.getByRole('region', { name: 'Uncontrolled people', exact: true });
+  const checkbox = uncontrolled.getByRole('checkbox', { name: 'Select a', exact: true }); await checkbox.click(); await expect(checkbox).toBeChecked();
+  await checkbox.evaluate(element => Object.assign(window, { originalTable: element.closest('table') }));
+  await page.evaluate(() => (window as unknown as { updateTableRows(): void }).updateTableRows());
+  await expect(uncontrolled.getByText('Page 1 of 3')).toBeVisible(); await expect(uncontrolled.getByRole('checkbox', { name: 'Select a', exact: true })).toBeChecked();
+  expect(await uncontrolled.locator('table').evaluate(element => (window as unknown as { originalTable: Element }).originalTable === element)).toBe(true);
+  await uncontrolled.getByRole('checkbox', { name: 'Select a', exact: true }).focus();
+  await page.evaluate(() => (window as unknown as { updateTableLabel(): void }).updateTableLabel());
+  const renamed = page.getByRole('region', { name: 'Updated people', exact: true }); await expect(renamed.getByRole('checkbox', { name: 'Select a', exact: true })).toBeChecked(); await expect(renamed.getByRole('checkbox', { name: 'Select a', exact: true })).toBeFocused();
+  expect((await new AxeBuilder({ page }).include('.ds-data-table').analyze()).violations).toEqual([]);
+});
+
+
+test('React DataTable rejects invalid callbacks on initial render and updates', async ({ page }) => {
+  for (const name of ['onSelectionChange', 'onPageChange', 'onSortChange']) {
+    await page.goto('/regression.html?invalid-table');
+    await expect(page.getByRole('table', { name: 'Callback validation' })).toBeVisible();
+    await page.evaluate(value => (window as unknown as { setInvalidTableCallback(name: string): void }).setInvalidTableCallback(value), name);
+    await expect(page.getByText('Invalid callback rejected')).toBeVisible(); await expect(page.getByRole('table', { name: 'Callback validation' })).toHaveCount(0);
+  }
+  await page.goto('/regression.html?invalid-table=onSelectionChange');
+  await expect(page.getByText('Invalid callback rejected')).toBeVisible(); await expect(page.getByRole('table', { name: 'Callback validation' })).toHaveCount(0);
+});

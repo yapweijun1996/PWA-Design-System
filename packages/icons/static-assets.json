@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "assets": [
+    { "path": "apps/studio/public/favicon.svg", "sha256": "6dd788c708b7ce464476126f052b56b8914b0241a44a96c6c3a6687e2fc9f458", "purpose": "Studio favicon" },
+    { "path": "apps/studio/public/icons/apple-touch-icon.png", "sha256": "ec9c03f56d53588026178d88310e60d9fbc4fba6f6b1c1ff72edbd9c3583ad3c", "purpose": "Studio Apple touch icon" },
+    { "path": "apps/studio/public/icons/icon-192.png", "sha256": "537f2392c71c8d4e7fb0fbe8d7ca1e12c33f177aa0fdb98f4e54e4d46f8e9cc2", "purpose": "Studio install icon" },
+    { "path": "apps/studio/public/icons/icon-512.png", "sha256": "c5a273ff3dd88cc3b7a12db4df832b8e374dfebf44afddd2802569c2979041dd", "purpose": "Studio install icon" },
+    { "path": "apps/studio/public/icons/icon-maskable-512.png", "sha256": "c5a273ff3dd88cc3b7a12db4df832b8e374dfebf44afddd2802569c2979041dd", "purpose": "Studio maskable install icon" }
+  ]
+}

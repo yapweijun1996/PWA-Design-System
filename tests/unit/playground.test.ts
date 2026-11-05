@@ -63,9 +63,9 @@ describe('component playground', () => {
     expect(() => checkDefaults(changed)).toThrow(/Default drift: button.variant/);
     toast.destroy(); tabs.destroy(); field.destroy();
   });
-  it('loads all 20 contract families, searches, selects and tears down', () => {
+  it('loads all 21 contract families, searches, selects and tears down', () => {
     const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);
-    expect(root.querySelectorAll('.pg-catalog-item')).toHaveLength(20);
+    expect(root.querySelectorAll('.pg-catalog-item')).toHaveLength(21);
     const search = root.querySelector<HTMLInputElement>('#pg-search'); if (!search) throw new Error('Search missing');
     search.value = 'tooltip'; search.dispatchEvent(new Event('input')); expect(root.querySelectorAll('.pg-catalog-item')).toHaveLength(1);
     search.value = 'no-such-component'; search.dispatchEvent(new Event('input')); expect(root.querySelector('.pg-empty')?.hasAttribute('hidden')).toBe(false);

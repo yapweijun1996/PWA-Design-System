@@ -9,11 +9,11 @@ const replace = (path, content) => async requested => requested === path ? conte
 
 describe('component contract gate', () => {
   it('accepts the current source, package exports and test-call references', async () => {
-    await expect(validateContracts(actual)).resolves.toEqual({ families: 20 });
+    await expect(validateContracts(actual)).resolves.toEqual({ families: 21 });
   });
   it('rejects missing and duplicate required families', async () => {
     const missing = clone(); missing.components.pop();
-    await expect(validateContracts(missing)).rejects.toThrow(/Expected 20/);
+    await expect(validateContracts(missing)).rejects.toThrow(/Expected 21/);
     const duplicate = clone(); duplicate.components[1] = structuredClone(duplicate.components[0]);
     await expect(validateContracts(duplicate)).rejects.toThrow(/Duplicate family/);
   });

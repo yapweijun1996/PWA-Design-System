@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 });
 test('catalog searches all families, keyboard selects and route teardown removes preview', async ({ page }) => {
   const catalog = page.getByRole('region', { name: 'Component catalog' });
-  await expect(catalog.locator('.pg-catalog-item')).toHaveCount(20);
+  await expect(catalog.locator('.pg-catalog-item')).toHaveCount(21);
   const search = page.getByRole('searchbox', { name: 'Search components' }); await search.fill('tooltip');
   await expect(catalog.locator('.pg-catalog-item')).toHaveCount(1);
   const tooltip = catalog.getByRole('button', { name: 'Tooltip' }); await tooltip.focus(); await page.keyboard.press('Enter');
@@ -92,4 +92,17 @@ test('desktop preview appears before detailed controls and input heights align',
   const preview = page.locator('.pg-preview'); await expect(preview).toBeVisible(); const box = await preview.boundingBox(); if (!box) throw new Error('Preview has no bounds'); expect(box.y + box.height).toBeLessThanOrEqual(720);
   const heights = await page.locator('.pg-controls').evaluate(node => [...node.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select')].map(item => item.getBoundingClientRect().height));
   expect(heights.length).toBeGreaterThan(1); expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(1);
+});
+
+test('Data Table preview and generated code follow the same configuration', async ({ page }) => {
+  const catalog = page.getByRole('region', { name: 'Component catalog' });
+  await page.getByRole('searchbox', { name: 'Search components' }).fill('data table');
+  await catalog.getByRole('button', { name: 'Data Table' }).click();
+  const detail = page.getByRole('region', { name: 'Component playground' });
+  const preview = detail.locator('.pg-preview'); const code = detail.locator('pre code');
+  await expect(preview.getByRole('table', { name: 'People' })).toBeVisible(); await expect(code).toContainText('createDataTable');
+  await detail.getByLabel('Row selection').selectOption('true'); await expect(preview.getByRole('checkbox', { name: 'Select Ada' })).toBeVisible(); await expect(code).toContainText('"selectable": true');
+  await detail.getByLabel('Page size').fill('1'); await expect(preview.getByText('Page 1 of 3')).toBeVisible(); await expect(code).toContainText('"pageSize": 1');
+  await detail.getByLabel('State').selectOption('empty'); await expect(preview.getByText('No rows to display.')).toBeVisible(); await expect(code).toContainText('"rows": []');
+  await detail.getByLabel('State').selectOption('loading'); await expect(preview.getByText('Loading rows…')).toBeVisible(); await expect(code).toContainText('"loading": true');
 });

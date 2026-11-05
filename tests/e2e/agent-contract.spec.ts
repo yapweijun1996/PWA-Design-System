@@ -15,7 +15,7 @@ test('exports five validated artifacts and round-trips the contract', async ({ p
     artifacts.set(name, await readFile(path, 'utf8'));
   }
   const exported = artifacts.get('design-system.json'); if (!exported) throw new Error('Contract missing');
-  const parsed = JSON.parse(exported); expect(parsed.components).toHaveLength(20); expect(parsed.rules).toHaveLength(10);
+  const parsed = JSON.parse(exported); expect(parsed.components).toHaveLength(21); expect(parsed.rules).toHaveLength(10);
   expect(artifacts.get('tokens.css')).toContain('--ds-color-surface:'); expect(artifacts.get('AGENTS.md')).toContain('Reuse approved core components');
   expect(artifacts.get('COMPONENT-API.md')).toContain('## button'); expect(artifacts.get('INTEGRATION.md')).toContain('private');
   await page.getByLabel('Contract file').setInputFiles({ name: 'design-system.json', mimeType: 'application/json', buffer: Buffer.from(exported) });

@@ -1195,6 +1195,100 @@
         }
       ],
       "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "data-table",
+      "factory": "createDataTable",
+      "source": "packages/core/src/table/index.ts",
+      "entry": "@pwa-design-system/core/table",
+      "optionType": "DataTableOptions",
+      "keyboard": [
+        "Native Tab, Enter and Space; focused scroll region supports horizontal arrow scrolling"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "sorted",
+        "selected"
+      ],
+      "unitTest": "tests/unit/data-table.test.ts",
+      "browserTest": "tests/e2e/data-table.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable table caption."
+        },
+        {
+          "name": "columns",
+          "type": "readonly DataTableColumn[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "The preview supplies fixed columns."
+        },
+        {
+          "name": "rows",
+          "type": "readonly DataTableRow[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "The state selector can show the supplied sample rows or an empty table."
+        },
+        {
+          "name": "pageSize",
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "10",
+          "editable": true,
+          "reason": "Editable page size."
+        },
+        {
+          "name": "selectable",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Controls whether row selection is shown."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "The state selector controls loading."
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "((ids: readonly string[]) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are not editable."
+        },
+        {
+          "name": "onPageChange",
+          "type": "((page: number) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are not editable."
+        },
+        {
+          "name": "onSortChange",
+          "type": "((sort: DataTableSort) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are not editable."
+        }
+      ],
+      "apiNotes": "Rows have stable unique IDs and text cells. Select all affects the current page; sort preserves page and selections. See table guide for updates and limitations."
     }
   ]
 }

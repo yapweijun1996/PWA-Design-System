@@ -17,7 +17,7 @@ This document describes the implemented boundaries and known limitations. It is 
 | `tests/`, `apps/studio/tests/` | Unit, browser, integration and PWA checks for implemented behaviors. |
 | `.github/workflows/` | Quality workflow and a prepared Pages workflow that is deliberately disabled. |
 
-Core, tokens and React are private, unpublished packages. Core owns component behavior without depending on React, Studio routing, storage or PWA infrastructure. Consumers mount and remove factory elements and call `destroy()` to release component resources. The [core guide](../packages/core/README.md) and family guides describe the 20 implemented families, options and limitations.
+Core, tokens and React are private, unpublished packages. Core owns component behavior without depending on React, Studio routing, storage or PWA infrastructure. Consumers mount and remove factory elements and call `destroy()` to release component resources. The [core guide](../packages/core/README.md) and family guides describe the 21 implemented families, options and limitations.
 
 The [React adapters](../packages/react/README.md) use core with React as a peer dependency and mount a block-level host for every family. Controlled and uncontrolled behavior and callback types follow the adapter documentation. Card, Tooltip and FormField do not offer arbitrary React-child composition. Import and server rendering avoid DOM access, but server output is an empty host until hydration; it does not provide server-rendered component content or an accessible no-JavaScript fallback. The [React example](../examples/react/README.md) is local and unpublished.
 
@@ -25,11 +25,13 @@ The [React adapters](../packages/react/README.md) use core with React as a peer 
 
 Repository JSON flows through the shared engine and deterministic compiler into generated artifacts. The engine validates types, aliases, references, cycles, forbidden keys and CSS-name collisions. It resolves 96 combinations: two resolved themes, eight palettes, two densities and three visual kits. System is a preference resolved to Light or Dark, not a third token theme. Components consume semantic CSS custom properties.
 
-The Studio owns the application shell, navigation, token overrides and previews. Its component playground builds real core components and source examples from the same supported configuration; it does not expose every property or certify component states. The Layout Playground renders seven local examples in a sandboxed `srcdoc` iframe without script permission or external assets. Presets use 390, 768 and 1440 pixel widths, with an adjustable 320–1600 pixel width. Its Data Table and dialog are static examples, not enterprise components.
+The Studio owns the application shell, navigation, token overrides and previews. Its component playground builds real core components and source examples from the same supported configuration; it does not expose every property or certify component states. The Layout Playground renders seven local examples in a sandboxed `srcdoc` iframe without script permission or external assets. Presets use 390, 768 and 1440 pixel widths, with an adjustable 320–1600 pixel width. Its table and dialog are static examples; the reusable Data Table is a separate core component.
 
 Theme Builder updates the four independent appearance axes and synchronizes the existing top-bar theme selector. Light, blue, comfortable and default are the defaults; System follows the device only when selected. The classic `theme-init.js` validates stored selections and sets the appearance attributes before styles and token bootstrap. Its startup allowlist is checked against the token engine's axes. The application reapplies committed overrides when attributes change.
 
 The token editor uses the same engine as the compiler. Semantic edits, imports and resets are staged; commit validates and saves to local storage before replacing the applied configuration. A failed write preserves the prior committed overrides. Theme-specific overrides take precedence over all-theme overrides, followed by the selected appearance combination. Imports are bounded to 64 KiB, checked for duplicate/forbidden keys, shape, names, values, aliases, bounds and cycles, and never executed. Selected text, focus and border contrast pairs are checked across combinations; this is not proof of WCAG conformance.
+
+The Accessibility Lab computes relative luminance and contrast for two user-entered opaque sRGB colors. It exposes thresholds and manual-test reminders, not an automatic WCAG assessment. The Documentation page is built from trusted static text with DOM APIs. Both are lazy-loaded Studio features included in the production precache. Their [accessibility record](ACCESSIBILITY.md) marks manual screen-reader and device checks as **NOT VERIFIED**.
 
 A second parser-blocking `token-prepaint.js` bundle validates saved overrides and emits a temporary style before the application starts. The application revalidates the data and removes that temporary style. The [token editor guide](../apps/studio/src/features/tokens/README.md) explains export and Content Security Policy considerations; arbitrary saved overrides require dynamic inline styles, so a deployment policy must be designed and tested accordingly.
 
@@ -47,7 +49,7 @@ The production build emits a manifest, icons and service worker under `/PWA-Desi
 
 A waiting update is prepared only after the current token draft or import is finished and other Studio tabs are closed. Preparation does not reload the page. In-memory drafts guard route changes and request a browser confirmation on reload or closure; crashes, forced termination or suppressed prompts can still lose them. Client enumeration has limitations for frozen or unenumerated historical tabs. Storage and caches may be evicted by the browser. The [PWA guide](../apps/studio/src/features/pwa/README.md) describes lifecycle and limitations.
 
-Local Chromium tests cover offline reload, update, old lazy chunks, cache cleanup and mixed-version installation failures. OS installation, iOS standalone operation, other browsers' offline behavior and the hosted deployment remain **NOT VERIFIED**.
+Local Chromium tests cover offline reload, previously unvisited Documentation and Accessibility Lab chunks, update, old lazy chunks, cache cleanup and mixed-version installation failures. OS installation, iOS standalone operation, other browsers' offline behavior and the hosted deployment remain **NOT VERIFIED**.
 
 ## Build and release boundary
 

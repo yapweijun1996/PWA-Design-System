@@ -25,6 +25,7 @@ jobs:
       - run: npm run contracts:check
       - run: npm run agent-validator:check
       - run: npm run agent-contract:check
+      - run: npm run ssot:check
       - run: npm run build
       - run: npm run check:artifact
       - run: npx playwright install --with-deps --only-shell chromium
@@ -42,5 +43,27 @@ jobs:
         with:
           name: studio-build
           path: dist/studio
+          if-no-files-found: error
+          retention-days: 7
+  visual-candidates-unreviewed:
+    # Capture only: these images are not reviewed baselines or a visual pass.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build:react
+      - run: npx playwright install --with-deps --only-shell chromium
+      - run: mkdir -p tests/visual/baselines
+      - run: node tests/visual/environment.mjs --capture
+      - run: VISUAL_CAPTURE=1 npx playwright test -c tests/visual/playwright.config.ts --update-snapshots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unreviewed-visual-candidates
+          path: tests/visual/baselines/
           if-no-files-found: error
           retention-days: 7

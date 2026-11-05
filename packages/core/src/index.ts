@@ -20,3 +20,5 @@ export * from './forms/select.js';
 export * from './forms/form-field.js';
 export * from './navigation/index.js';
 export * from './feedback/index.js';
+
+export * from './table/index.js';

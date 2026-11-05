@@ -9,7 +9,8 @@ const groups = {
   foundation: { unit: 'tests/unit/foundation.test.ts', browser: 'tests/e2e/foundation.spec.ts' },
   forms: { unit: 'tests/unit/forms.test.ts', browser: 'tests/e2e/forms.spec.ts' },
   navigation: { unit: 'tests/unit/navigation-feedback.test.ts', browser: 'tests/e2e/navigation-feedback.spec.ts' },
-  feedback: { unit: 'tests/unit/navigation-feedback.test.ts', browser: 'tests/e2e/navigation-feedback.spec.ts' }
+  feedback: { unit: 'tests/unit/navigation-feedback.test.ts', browser: 'tests/e2e/navigation-feedback.spec.ts' },
+  table: { unit: 'tests/unit/data-table.test.ts', browser: 'tests/e2e/data-table.spec.ts' }
 };
 // Identity and source paths are fixed here so an imported contract cannot redirect file reads.
 const required = [
@@ -32,7 +33,8 @@ const required = [
   ['pagination', 'createPagination', 'navigation/index', 'PaginationOptions', 'navigation'],
   ['dialog', 'createDialog', 'feedback/index', 'DialogOptions', 'feedback'],
   ['alert', 'createAlert', 'feedback/index', 'AlertOptions', 'feedback'],
-  ['toast', 'createToast', 'feedback/index', 'ToastOptions', 'feedback']
+  ['toast', 'createToast', 'feedback/index', 'ToastOptions', 'feedback'],
+  ['data-table', 'createDataTable', 'table/index', 'DataTableOptions', 'table']
 ];
 const allowed = new Map(required.map(([family, factory, source, optionType, subpath]) => {
   const group = source.split('/')[0];

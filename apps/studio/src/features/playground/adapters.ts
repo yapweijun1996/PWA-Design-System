@@ -1,7 +1,7 @@
 import {
   createButton, createIconButton, createBadge, createCard, createSeparator, createTooltip,
   createInput, createTextarea, createCheckbox, createRadioGroup, createSwitch, createSelect, createFormField,
-  createTabs, createBreadcrumb, createMenu, createPagination, createDialog, createAlert, createToast
+  createTabs, createBreadcrumb, createMenu, createPagination, createDialog, createAlert, createToast, createDataTable
 } from '../../../../../packages/core/src/index.js';
 import type { Component } from '../../../../../packages/core/src/types.js';
 
@@ -33,6 +33,7 @@ export const specs: Record<string, Specs> = {
   pagination: { label: 'Pagination', extras: [numberField('page', 'Page', '1', 1, 100), numberField('totalPages', 'Total pages', '3', 1, 100)], note: 'Native buttons change one-based pages; boundary controls are disabled.' },
   dialog: { label: 'Example dialog', extras: [field('description', 'Description', 'Press Escape or Close.'), field('closeLabel', 'Close label', 'Close', true)], note: 'A native modal. Escape closes it; focus returns to its opener.' },
   alert: { label: 'Review your settings.', variant: ['info', 'success', 'warning', 'danger'], extras: [selectField('assertive', 'Assertive', ['false', 'true'])], note: 'Static by default. Assertive updates require an initially mounted live region.' },
+  'data-table': { label: 'People', state: ['ready', 'loading', 'empty'], extras: [numberField('pageSize', 'Page size', '2', 1, 100), selectField('selectable', 'Row selection', ['false', 'true'])], note: 'Sort a column, navigate pages and optionally select rows on the current page.' },
   toast: { label: 'Changes saved', extras: [field('dismissLabel', 'Dismiss label', 'Dismiss', true)], note: 'Polite status with a dismiss button. Screen-reader behavior requires manual verification.' }
 };
 /** Verify that contract editability matches actual allowlisted controls. */
@@ -44,7 +45,8 @@ export function validateEditableMetadata(family: string, properties: readonly { 
   if (spec.size) expected.add('size');
   if (spec.variant) expected.add(family === 'separator' ? 'orientation' : family === 'alert' ? 'tone' : 'variant');
   if (spec.state) {
-    if (family === 'button' || family === 'icon-button') { expected.add('disabled'); expected.add('loading'); }
+    if (family === 'data-table') { expected.add('rows'); expected.add('loading'); }
+    else if (family === 'button' || family === 'icon-button') { expected.add('disabled'); expected.add('loading'); }
     else if (family === 'checkbox' || family === 'switch') { expected.add('checked'); expected.add('disabled'); }
     else if (family === 'form-field') expected.add('error');
     else expected.add('disabled');
@@ -136,6 +138,12 @@ export function buildPreview(config: PlaygroundConfig, factory: string, entry: s
     case 'pagination': component = createPagination({ page: Number(v.page), totalPages: Number(v.totalPages), label, onChange() {} }); expression = `{ page: ${Number(v.page)}, totalPages: ${Number(v.totalPages)}, label: ${q(label)}, onChange() {} }`; break;
     case 'dialog': { const dialog = createDialog({ title: label, description: v.description, closeLabel: v.closeLabel }); const trigger = document.createElement('button'); trigger.type = 'button'; trigger.textContent = 'Open dialog'; const controller = new AbortController(); trigger.addEventListener('click', () => dialog.open(trigger), { signal: controller.signal }); const wrapper = document.createElement('div'); wrapper.append(dialog.element, trigger); component = { element: wrapper, destroy() { controller.abort(); dialog.destroy(); } }; expression = `{ title: ${q(label)}, description: ${q(v.description)}, closeLabel: ${q(v.closeLabel)} }`; break; }
     case 'alert': { const alert = createAlert({ message: v.assertive === 'true' ? '' : label, tone: variant as 'info' | 'success' | 'warning' | 'danger', assertive: v.assertive === 'true' }); component = alert; if (v.assertive === 'true') afterMount = () => alert.setMessage(label); expression = `{ message: ${q(v.assertive === 'true' ? '' : label)}, tone: ${q(variant)}, assertive: ${v.assertive === 'true'} }`; break; }
+    case 'data-table': {
+      const columns = [{ id: 'name', label: 'Name', sortable: true }, { id: 'team', label: 'Team' }];
+      const rows = state === 'empty' ? [] : [{ id: 'a', label: 'Ada', cells: { name: 'Ada', team: 'Design' } }, { id: 'b', label: 'Bea', cells: { name: 'Bea', team: 'Engineering' } }, { id: 'c', label: 'Cleo', cells: { name: 'Cleo', team: 'Operations' } }];
+      const opts = { label, columns, rows, pageSize: Number(v.pageSize), selectable: v.selectable === 'true', loading: state === 'loading' };
+      component = createDataTable(opts); expression = JSON.stringify(opts, null, 2); break;
+    }
     case 'toast': component = createToast({ message: label, dismissLabel: v.dismissLabel }); expression = `{ message: ${q(label)}, dismissLabel: ${q(v.dismissLabel)} }`; break;
     default: throw new Error('Unknown component');
   }

@@ -5,14 +5,15 @@ PWA Design System is an in-development, framework-independent component library 
 ## What is available
 
 - JSON token sources and a deterministic compiler generate CSS, JSON and TypeScript for 96 combinations of resolved theme, palette, density and visual kit.
-- The [core library](packages/core/README.md) provides 20 component families: Button, Icon Button, Badge, Card, Separator, Tooltip, Input, Textarea, Checkbox, Radio Group, Switch, Select, Form Field, Tabs, Breadcrumb, Menu, Pagination, Dialog, Alert and Toast. Family guides describe their supported APIs and limitations.
+- The [core library](packages/core/README.md) provides 21 component families: Button, Icon Button, Badge, Card, Separator, Tooltip, Input, Textarea, Checkbox, Radio Group, Switch, Select, Form Field, Tabs, Breadcrumb, Menu, Pagination, Dialog, Alert, Toast and Data Table. Family guides describe their supported APIs and limitations.
 - The Studio offers responsive navigation, a searchable component catalog and a playground with previews, supported controls, API notes and code generated from the same configuration. It also provides a transactional token editor and a Layout Playground with seven local examples.
 - **Theme Builder** independently controls Light, Dark or System; eight palettes; comfortable or compact density; and default, minimal or enterprise visual kits. The top-bar theme selector stays synchronized. Valid selections are restored before the first render when browser storage is available, and committed token overrides remain active.
 - **AI Agent Rules** exports `design-system.json`, `tokens.css`, `AGENTS.md`, `COMPONENT-API.md` and `INTEGRATION.md`. Its strict schema and checks tie the contract to the component registry and token axes. Uploaded contracts are bounded, validated as data and never executed. See the [agent rules](docs/AI-AGENT-RULES.md).
-- The optional [React adapters](packages/react/README.md) wrap all 20 current core families. Core has no React dependency. The [Vanilla example](examples/vanilla/README.md) and [React example](examples/react/README.md) run locally.
+- **Accessibility Lab** checks contrast for two opaque sRGB colors and lists manual checks; **Documentation** provides local guidance on installation, components, themes and offline use. Neither establishes WCAG conformance.
+- The optional [React adapters](packages/react/README.md) wrap all 21 current core families. Core has no React dependency. The [Vanilla example](examples/vanilla/README.md) and [React example](examples/react/README.md) run locally.
 - A production build includes a manifest and service worker for a previously installed application shell and documentation to work offline. See [Offline support](#offline-support).
 
-The Accessibility Lab and Documentation sections remain pending. The Layout Playground's Data Table and dialog are static HTML layout examples, not the planned enterprise components. There is no verified WCAG conformance, production release or live deployment.
+The Layout Playground's table and dialog are static HTML layout examples; the reusable Data Table is a separate core component. There is no verified WCAG conformance, production release or live deployment.
 
 ## Getting started
 
@@ -52,7 +53,7 @@ For React, run `npm run build:react` followed by `npm run dev:react-example`, th
 
 ## Offline support
 
-The first visit requires a connection. After installation and a subsequent controlled navigation, the production build can serve its cached shell and existing Studio tools offline. The build records SHA-256 digests of final static assets; installation bypasses the HTTP cache and verifies the files before accepting the new version. Runtime requests and private API data are not added to the cache.
+The first visit requires a connection. After service-worker installation and a subsequent controlled navigation, the production build can serve its cached shell and existing Studio tools, including Documentation and Accessibility Lab, offline. The build records SHA-256 digests of final static assets; installation bypasses the HTTP cache and verifies the files before accepting the new version. Runtime requests and private API data are not added to the cache.
 
 When an update is waiting, finish any pending import, commit or cancel a token draft, and close other Studio tabs before choosing **Prepare update**. Preparation does not reload the page. Unsaved drafts are held in memory: route changes are guarded and the browser is asked to confirm reload or closure, but a crash, forced termination or suppressed prompt can still lose a draft. Browser storage and caches may be evicted. The [PWA guide](apps/studio/src/features/pwa/README.md) explains update and cache cleanup limits.
 
@@ -70,6 +71,7 @@ npm run lint
 npm test
 npm run tokens:check
 npm run contracts:check
+npm run ssot:check
 npm run agent-validator:check
 npm run agent-contract:check
 npm run build
@@ -81,6 +83,6 @@ npm run test:pwa
 npm run test:production
 ```
 
-`test:e2e` starts the development server; `test:react:e2e` exercises the React example. `test:pwa` builds two isolated versions and checks offline/update behavior. `test:production` requires a current Studio build and checks production preview behavior. Installing browsers may require network access and platform dependencies. The checks cover specific behaviors; they do not replace manual screen-reader, device, visual, security or release review.
+`test:e2e` starts the development server; `test:react:e2e` exercises the React example. `test:pwa` builds two isolated versions and checks offline/update behavior. `test:production` requires a current Studio build and checks production preview behavior. Installing browsers may require network access and platform dependencies. [Visual fixtures](tests/visual/README.md) currently generate unreviewed candidates; reviewed baselines and a visual regression pass are **NOT VERIFIED**. The checks cover specific behaviors; they do not replace manual screen-reader, device, visual, security or release review.
 
-See [Architecture](docs/ARCHITECTURE.md) and the [Phase 0 audit](docs/PHASE-0-AUDIT.md) for boundaries and open work. Original project code is available under the [MIT License](LICENSE); the generated agent validator includes Ajv-derived code, with its notice in [AJV-LICENSE.txt](packages/agent-contract/AJV-LICENSE.txt).
+See [Installation](docs/INSTALLATION.md), [Component API](docs/COMPONENT-API.md), [Theming](docs/THEMING.md), [PWA](docs/PWA.md), [Accessibility](docs/ACCESSIBILITY.md), [Testing](docs/TESTING.md), [Architecture](docs/ARCHITECTURE.md), [Contributing](CONTRIBUTING.md), [Changelog](CHANGELOG.md) and the [Phase 0 audit](docs/PHASE-0-AUDIT.md) for current behavior and open work. Original project code is available under the [MIT License](LICENSE); the generated agent validator includes Ajv-derived code, with its notice in [AJV-LICENSE.txt](packages/agent-contract/AJV-LICENSE.txt).

@@ -2,10 +2,10 @@ import { createElement, useEffect, useRef, type DependencyList, type ReactElemen
 import {
   createButton, createIconButton, createBadge, createCard, createSeparator, createTooltip,
   createInput, createTextarea, createCheckbox, createSwitch, createRadioGroup, createSelect, createFormField,
-  createTabs, createBreadcrumb, createMenu, createPagination, createDialog, createAlert, createToast,
+  createTabs, createBreadcrumb, createMenu, createPagination, createDialog, createAlert, createToast, createDataTable,
   type Component, type ButtonOptions, type IconButtonOptions, type BadgeOptions, type CardOptions, type SeparatorOptions,
   type InputOptions, type TextareaOptions, type CheckboxOptions, type RadioGroupOptions, type SelectOptions,
-  type TabsOptions, type BreadcrumbItem, type MenuItem, type PaginationOptions, type DialogOptions, type AlertOptions, type ToastOptions
+  type TabsOptions, type BreadcrumbItem, type MenuItem, type PaginationOptions, type DialogOptions, type AlertOptions, type ToastOptions, type DataTableOptions, type DataTable as CoreDataTable, type DataTableSort
 } from '@pwa-design-system/core';
 
 /** Effects are client-only; SSR emits an empty host, filled after hydration. */
@@ -275,4 +275,83 @@ export function Alert(props: AlertOptions): ReactElement {
 export function Toast(props: ToastOptions): ReactElement {
   const callback = useLatest(props.onDismiss);
   return useCore(() => createToast({ ...props, onDismiss: () => callback.current?.() }), [props.message, props.dismissLabel]);
+}
+
+
+/** Stable core table with optionally controlled selection, page and sort. */
+export interface DataTableProps extends DataTableOptions {
+  selectedIds?: readonly string[];
+  page?: number;
+  sort?: DataTableSort | null;
+}
+function tableSelection(props: DataTableProps): string[] {
+  if (!Array.isArray(props.selectedIds)) throw new TypeError('selectedIds must be an array');
+  const available = new Set(props.rows.map(row => row.id)), seen = new Set<string>();
+  for (const id of props.selectedIds) { if (typeof id !== 'string' || seen.has(id)) throw new TypeError('selectedIds must contain unique strings'); seen.add(id); }
+  return props.selectedIds.filter(id => available.has(id));
+}
+function tablePage(props: DataTableProps): number {
+  if (!Number.isInteger(props.page) || (props.page ?? 0) < 1) throw new RangeError('page must be a positive integer');
+  return Math.min(props.page as number, Math.max(1, Math.ceil(props.rows.length / (props.pageSize ?? 10))));
+}
+interface TableRestore { selected: string[]; page: number; sort: DataTableSort | null; focus: string | null; scrollLeft: number }
+export function DataTable(props: DataTableProps): ReactElement {
+  for (const name of ['onSelectionChange', 'onPageChange', 'onSortChange'] as const) {
+    if (props[name] !== undefined && typeof props[name] !== 'function') throw new TypeError(`${name} must be a function`);
+  }
+  const host = useRef<HTMLDivElement>(null), latest = useLatest(props), instance = useRef<CoreDataTable | null>(null);
+  const saved = useRef<TableRestore | null>(null), rowsVersion = useRef('');
+  const applied = useRef<{ loading: boolean | undefined; selection: string | undefined; sort: string | undefined; page: number | undefined }>({ loading: undefined, selection: undefined, sort: undefined, page: undefined });
+  const structure = JSON.stringify([props.label, props.columns, props.pageSize, props.selectable]);
+  const rowsKey = JSON.stringify(props.rows), selectionKey = JSON.stringify(props.selectedIds), sortKey = JSON.stringify(props.sort);
+  useEffect(() => {
+    const root = host.current; if (!root) return;
+    if (!structure) throw new Error('Table configuration cannot be serialized');
+    let alive = true; let table: CoreDataTable;
+    const queue = (operation: () => void): void => { queueMicrotask(() => { if (alive) operation(); }); };
+    table = createDataTable({ ...latest.current,
+      onSelectionChange(ids) { latest.current.onSelectionChange?.(ids); queue(() => { if (latest.current.selectedIds !== undefined) table.setSelectedIds(tableSelection(latest.current)); }); },
+      onPageChange(page) { latest.current.onPageChange?.(page); queue(() => { if (latest.current.page !== undefined) table.setPage(tablePage(latest.current)); }); },
+      onSortChange(sort) { latest.current.onSortChange?.(sort); queue(() => { if (latest.current.sort !== undefined) table.setSort(latest.current.sort); }); }
+    });
+    instance.current = table; root.append(table.element); rowsVersion.current = JSON.stringify(latest.current.rows);
+    const previous = saved.current;
+    if (previous) {
+      const validIds = new Set(latest.current.rows.map(row => row.id));
+      if (latest.current.selectable) table.setSelectedIds(previous.selected.filter(id => validIds.has(id)));
+      if (previous.sort && latest.current.columns.some(column => column.id === previous.sort?.column && column.sortable)) table.setSort(previous.sort);
+      table.setPage(Math.min(previous.page, Math.max(1, Math.ceil(latest.current.rows.length / (latest.current.pageSize ?? 10)))));
+    }
+    if (latest.current.selectedIds !== undefined) table.setSelectedIds(tableSelection(latest.current));
+    if (latest.current.sort !== undefined) table.setSort(latest.current.sort);
+    if (latest.current.page !== undefined) table.setPage(tablePage(latest.current));
+    applied.current = { loading: latest.current.loading, selection: JSON.stringify(latest.current.selectedIds), sort: JSON.stringify(latest.current.sort), page: latest.current.page };
+    if (previous) {
+      const scroll = table.element.querySelector<HTMLElement>('.ds-data-table__scroll'); if (scroll) scroll.scrollLeft = previous.scrollLeft;
+      if (previous.focus) {
+        const candidates = [...table.element.querySelectorAll<HTMLElement>('button,input,[tabindex]')];
+        const target = candidates.find(node => (node.dataset.rowId ? `row:${node.dataset.rowId}` : node.getAttribute('aria-label') ?? node.textContent) === previous.focus && !node.matches(':disabled'));
+        (target ?? scroll)?.focus({ preventScroll: true });
+      }
+      saved.current = null;
+    }
+    return () => {
+      alive = false;
+      const active = document.activeElement instanceof HTMLElement && table.element.contains(document.activeElement) ? document.activeElement : null;
+      saved.current = { selected: table.getSelectedIds(), page: table.getPage(), sort: table.getSort(), focus: active ? active.dataset.rowId ? `row:${active.dataset.rowId}` : active.getAttribute('aria-label') ?? active.textContent : null, scrollLeft: table.element.querySelector<HTMLElement>('.ds-data-table__scroll')?.scrollLeft ?? 0 };
+      instance.current = null; table.destroy(); table.element.remove();
+    };
+  }, [structure, latest]);
+  useEffect(() => {
+    const table = instance.current; if (!table) return;
+    const changedRows = rowsVersion.current !== rowsKey;
+    if (changedRows) { table.setRows(props.rows); rowsVersion.current = rowsKey; }
+    if (props.loading !== applied.current.loading) table.setLoading(props.loading ?? false);
+    if (props.selectedIds !== undefined && (changedRows || selectionKey !== applied.current.selection)) table.setSelectedIds(tableSelection(props));
+    if (props.sort !== undefined && sortKey !== applied.current.sort) table.setSort(props.sort);
+    if (props.page !== undefined && (changedRows || props.page !== applied.current.page)) table.setPage(tablePage(props));
+    if (changedRows && props.page !== undefined && tablePage(props) !== props.page) props.onPageChange?.(tablePage(props));
+    applied.current = { loading: props.loading, selection: selectionKey, sort: sortKey, page: props.page };
+  });
+  return createElement('div', { ref: host, 'data-ds-react-host': '' });
 }

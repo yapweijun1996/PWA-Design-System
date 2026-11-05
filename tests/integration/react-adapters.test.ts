@@ -2,7 +2,7 @@
 import { act, createElement, StrictMode, useState, type ReactElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Alert, Badge, Breadcrumb, Button, Card, Checkbox, Dialog, FormField, IconButton, Input, Menu, Pagination, RadioGroup, Select, Separator, Switch, Tabs, Textarea, Toast, Tooltip } from '../../packages/react/src/index';
+import { Alert, Badge, Breadcrumb, Button, Card, Checkbox, DataTable, Dialog, FormField, IconButton, Input, Menu, Pagination, RadioGroup, Select, Separator, Switch, Tabs, Textarea, Toast, Tooltip } from '../../packages/react/src/index';
 
 let container: HTMLDivElement; let root: Root;
 beforeEach(() => {
@@ -15,6 +15,12 @@ afterEach(() => { act(() => root.unmount()); container.remove(); vi.unstubAllGlo
 function Controlled() {
   const [value, setValue] = useState('A');
   return createElement(Input, { id: 'name', ariaLabel: 'Name', value, onValueChange: setValue });
+}
+function AcceptedTable({ changed }: { changed(ids: readonly string[]): void }) {
+  const columns = [{ id: 'name', label: 'Name', sortable: true }]; const rows = [{ id: 'a', cells: { name: 'Ada' } }, { id: 'b', cells: { name: 'Bea' } }];
+  const [selectedIds, setSelected] = useState<readonly string[]>([]); const [page, setPage] = useState(1);
+  const [sort, setSort] = useState<{ column: string; direction: 'ascending' | 'descending' } | null>(null);
+  return createElement(DataTable, { label: 'People', columns, rows, pageSize: 1, selectable: true, selectedIds, page, sort, onSelectionChange(ids) { changed(ids); setSelected(ids); }, onPageChange: setPage, onSortChange: setSort });
 }
 async function render(value: ReactElement) { await act(async () => { root.render(createElement(StrictMode, null, value)); }); }
 
@@ -126,6 +132,62 @@ describe('React adapters integrate with core', () => {
     const pageChanged = vi.fn(); await render(createElement(Pagination, { page: 1, totalPages: 3, onChange: pageChanged }));
     const next = [...container.querySelectorAll('button')].find(button => button.textContent === 'Next'); if (!next) throw new Error('Next button missing');
     await act(async () => { next.click(); await Promise.resolve(); }); expect(pageChanged).toHaveBeenCalledWith(2); expect(container.querySelector('[aria-live="polite"]')?.textContent).toBe('Page 1 of 3');
+  });
+
+  it('retains table identity and rolls back rejected controlled state', async () => {
+    const columns = [{ id: 'name', label: 'Name', sortable: true }];
+    const rows = [{ id: 'a', cells: { name: 'Ada' } }, { id: 'b', cells: { name: 'Bea' } }];
+    const selection = vi.fn(), sorting = vi.fn(), paging = vi.fn();
+    const table = (loading = false) => createElement(DataTable, { label: 'People', columns, rows, pageSize: 1, selectable: true, selectedIds: [], page: 1, sort: null, loading, onSelectionChange: selection, onPageChange: paging, onSortChange: sorting });
+    await render(table()); const rootTable = container.querySelector('table'); const row = container.querySelector<HTMLInputElement>('tbody input'); if (!row) throw new Error('Missing row');
+    await act(async () => { row.click(); await Promise.resolve(); }); expect(selection).toHaveBeenCalledWith(['a']); expect(container.querySelector<HTMLInputElement>('tbody input')?.checked).toBe(false);
+    const sort = container.querySelector<HTMLButtonElement>('[aria-label="Sort by Name"]'); if (!sort) throw new Error('Missing sort');
+    await act(async () => { sort.click(); await Promise.resolve(); }); expect(sorting).toHaveBeenCalledWith({ column: 'name', direction: 'ascending' }); expect(container.querySelector('[aria-sort]')).toBeNull();
+    const next = [...container.querySelectorAll('button')].find(button => button.textContent === 'Next'); if (!next) throw new Error('Missing next');
+    await act(async () => { next.click(); await Promise.resolve(); }); expect(paging).toHaveBeenCalledWith(2); expect(container.querySelector('[aria-live=polite]')?.textContent).toBe('Page 1 of 2');
+    await render(table(true)); expect(container.querySelector('table')).toBe(rootTable); expect(container.querySelector('[aria-busy]')?.getAttribute('aria-busy')).toBe('true');
+  });
+  it('retains uncontrolled table state when rows or structural props update', async () => {
+    const columns = [{ id: 'name', label: 'Name', sortable: true }];
+    const rows = [{ id: 'a', cells: { name: 'Ada' } }, { id: 'b', cells: { name: 'Bea' } }];
+    const table = (label: string, data = rows) => createElement(DataTable, { label, columns, rows: data, pageSize: 1, selectable: true });
+    await render(table('People')); const original = container.querySelector('table'); const input = container.querySelector<HTMLInputElement>('tbody input'); if (!input) throw new Error('Missing row');
+    input.focus(); await act(async () => { input.click(); await Promise.resolve(); });
+    await render(table('People', [...rows, { id: 'c', cells: { name: 'Cleo' } }])); expect(container.querySelector('table')).toBe(original); expect(container.querySelector<HTMLInputElement>('tbody input')?.checked).toBe(true);
+    await render(table('Members', [...rows, { id: 'c', cells: { name: 'Cleo' } }])); expect(container.querySelector<HTMLInputElement>('tbody input')?.checked).toBe(true); expect(document.activeElement?.getAttribute('aria-label')).toBe('Select a');
+  });
+
+  it('accepts controlled table updates and releases old handlers on unmount', async () => {
+    const changed = vi.fn();
+    await render(createElement(AcceptedTable, { changed })); const oldTable = container.querySelector('table'); const input = container.querySelector<HTMLInputElement>('tbody input'); if (!input) throw new Error('Missing row');
+    await act(async () => { input.click(); await Promise.resolve(); }); expect(container.querySelector<HTMLInputElement>('tbody input')?.checked).toBe(true);
+    const sort = container.querySelector<HTMLButtonElement>('[aria-label="Sort by Name"]'); if (!sort) throw new Error('Missing sort');
+    await act(async () => { sort.click(); await Promise.resolve(); }); expect(container.querySelector('[aria-sort]')?.getAttribute('aria-sort')).toBe('ascending');
+    const next = [...container.querySelectorAll('button')].find(button => button.textContent === 'Next'); if (!next) throw new Error('Missing next');
+    await act(async () => { next.click(); await Promise.resolve(); }); expect(container.querySelector('[aria-live=polite]')?.textContent).toBe('Page 2 of 2'); expect(container.querySelector('table')).toBe(oldTable);
+    await render(createElement('p', null, 'Gone')); const before = changed.mock.calls.length; input.click(); expect(changed).toHaveBeenCalledTimes(before);
+  });
+
+  it('clamps controlled page and prunes unavailable selection when data shrinks', async () => {
+    const columns = [{ id: 'name', label: 'Name' }], rows = [{ id: 'a', cells: { name: 'Ada' } }, { id: 'b', cells: { name: 'Bea' } }];
+    const selection = vi.fn(), pagination = vi.fn();
+    const table = (data: typeof rows) => createElement(DataTable, { label: 'People', columns, rows: data, pageSize: 1, selectable: true, selectedIds: ['b'], page: 2, onSelectionChange: selection, onPageChange: pagination });
+    await render(table(rows)); await render(table([rows[0]])); await act(async () => { await Promise.resolve(); });
+    expect(selection).toHaveBeenCalledWith([]); expect(pagination).toHaveBeenCalledWith(1); expect(container.querySelector('[aria-live=polite]')?.textContent).toBe('Page 1 of 1');
+    expect(container.querySelector<HTMLInputElement>('tbody input')?.checked).toBe(false);
+  });
+
+  it.each(['onSelectionChange', 'onPageChange', 'onSortChange'] as const)('rejects invalid %s on prop updates', async name => {
+    const valid = { label: 'People', columns: [{ id: 'name', label: 'Name' }], rows: [] };
+    await render(createElement(DataTable, valid)); expect(container.querySelector('table')).not.toBeNull();
+    const invalid = { ...valid, [name]: 'not a function' };
+    await expect(render(createElement(DataTable, invalid))).rejects.toThrow(`${name} must be a function`);
+    expect(container.querySelector('table')).toBeNull();
+  });
+
+  it.each(['onSelectionChange', 'onPageChange', 'onSortChange'] as const)('rejects invalid %s at initial render', async name => {
+    const invalid = { label: 'People', columns: [{ id: 'name', label: 'Name' }], rows: [], [name]: null };
+    await expect(render(createElement(DataTable, invalid))).rejects.toThrow(`${name} must be a function`); expect(container.querySelector('table')).toBeNull();
   });
 
 });

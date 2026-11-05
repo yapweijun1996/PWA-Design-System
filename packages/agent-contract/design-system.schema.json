@@ -27,7 +27,7 @@
         }
       }
     },
-    "components": { "type": "array", "minItems": 20, "maxItems": 20, "items": { "$ref": "#/definitions/component" } },
+    "components": { "type": "array", "minItems": 21, "maxItems": 21, "items": { "$ref": "#/definitions/component" } },
     "rules": { "type": "array", "minItems": 10, "maxItems": 10, "items": { "$ref": "#/definitions/rule" } }
   },
   "definitions": {

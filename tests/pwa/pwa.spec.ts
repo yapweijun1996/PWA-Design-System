@@ -80,6 +80,11 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   expect(await page.evaluate(async () => (await Promise.all((await caches.keys()).map(async name => (await (await caches.open(name)).keys()).map(request => request.url)))).flat().some(url => url.includes('private.json')))).toBe(false);
   await context.setOffline(true);
   await page.reload();
+  await page.goto(`${origin}${base}#documentation`);
+  await expect(page.getByRole('heading', { name: 'Documentation', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Open Accessibility Lab' }).click();
+  await expect(page.getByRole('heading', { name: 'Accessibility Lab', exact: true })).toBeVisible();
+  await expect(page.getByRole('status').filter({ hasText: '21.00:1' })).toBeVisible();
   await page.getByRole('link', { name: /Components/ }).first().click();
   await expect(page.getByRole('heading', { name: 'Components', exact: true })).toBeVisible();
   await page.getByRole('link', { name: /Design Tokens/ }).first().click();

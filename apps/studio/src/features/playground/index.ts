@@ -3,6 +3,7 @@ import '../../../../../packages/core/src/foundation/foundation.css';
 import '../../../../../packages/core/src/forms/forms.css';
 import '../../../../../packages/core/src/navigation/navigation.css';
 import '../../../../../packages/core/src/feedback/feedback.css';
+import '../../../../../packages/core/src/table/table.css';
 import './playground.css';
 import { buildPreview, defaultConfig, specs, validateConfig, validateEditableMetadata, type PlaygroundConfig } from './adapters.js';
 import { axes, validateProject } from '../../../../../packages/tokens/src/engine.mjs';

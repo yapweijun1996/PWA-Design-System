@@ -978,6 +978,79 @@
           "defaultValue": "not supplied"
         }
       ]
+    },
+    {
+      "family": "data-table",
+      "factory": "createDataTable",
+      "entry": "@pwa-design-system/core/table",
+      "optionType": "DataTableOptions",
+      "keyboard": [
+        "Native Tab, Enter and Space; focused scroll region supports horizontal arrow scrolling"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "sorted",
+        "selected"
+      ],
+      "apiNotes": "Rows have stable unique IDs and text cells. Select all affects the current page; sort preserves page and selections. See table guide for updates and limitations.",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required"
+        },
+        {
+          "name": "columns",
+          "type": "readonly DataTableColumn[]",
+          "required": true,
+          "defaultValue": "required"
+        },
+        {
+          "name": "rows",
+          "type": "readonly DataTableRow[]",
+          "required": true,
+          "defaultValue": "required"
+        },
+        {
+          "name": "pageSize",
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "10"
+        },
+        {
+          "name": "selectable",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false"
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "((ids: readonly string[]) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied"
+        },
+        {
+          "name": "onPageChange",
+          "type": "((page: number) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied"
+        },
+        {
+          "name": "onSortChange",
+          "type": "((sort: DataTableSort) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied"
+        }
+      ]
     }
   ],
   "rules": [

@@ -1,0 +1,1 @@
+export function visualEnvironment(): Promise<{ platform: string; arch: string; osId: string; osVersion: string; playwright: string; chromium: string; fontsSha256: string; deviceScaleFactor: number; locale: string; timezone: string; reducedMotion: string }>;

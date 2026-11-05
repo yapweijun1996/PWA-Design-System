@@ -180,6 +180,8 @@ async function renderRoute(focus = false): Promise<void> {
     'components': async () => (await import('./features/playground/index.js')).mountPlayground,
     'layout-playground': async () => (await import('./features/layout/index.js')).mountLayoutPlayground,
     'theme-builder': async () => (await import('./features/theme/index.js')).mountThemeBuilder,
+    'accessibility-lab': async () => (await import('./features/accessibility/index.js')).mountAccessibilityLab,
+    'documentation': async () => (await import('./features/documentation/index.js')).mountDocumentation,
     'ai-agent-rules': async () => (await import('./features/agent/index.js')).mountAgentRules
   };
   const load = loaders[current];
