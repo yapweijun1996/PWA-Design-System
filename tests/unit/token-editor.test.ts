@@ -187,7 +187,7 @@ describe('visual token workspace', () => {
       expect((row as HTMLElement).hidden).toBe(true);
       f.click('Clear filters'); f.select('Preview theme', 'light');
       expect(f.root.querySelector<HTMLInputElement>('[data-token="color.link"]')?.value).toBe('{semantic.color.primary}');
-      const picker = f.root.querySelector<HTMLInputElement>('[aria-label="Choose color.link color"]'); if (!picker) throw new Error('Missing picker');
+      const picker = f.root.querySelector<HTMLInputElement>('[aria-label="Choose new color for color.link"]'); if (!picker) throw new Error('Missing picker');
       picker.value = '#123456'; picker.dispatchEvent(new Event('input', { bubbles: true }));
       expect(f.root.querySelector<HTMLInputElement>('[data-token="color.link"]')?.value).toBe('#123456');
     } finally { f.close(); }

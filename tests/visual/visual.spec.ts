@@ -21,6 +21,7 @@ async function open(page: Page, route: string, theme: string, density: string): 
 }
 async function snapshot(page: Page, name: string, fullPage = true): Promise<void> {
   if (smoke) { await expect(page.locator('main')).toBeVisible(); return; }
+  if (!fullPage) await page.evaluate(() => window.scrollTo(0, 0));
   await expect(page).toHaveScreenshot(`${name}.png`, { fullPage });
 }
 
@@ -68,7 +69,8 @@ for (const scenario of [
   { name: 'token-editor-tablet-dark', width: 768, height: 900, theme: 'dark', density: 'compact', view: 'editor' },
   { name: 'token-editor-mobile-light', width: 390, height: 844, theme: 'light', density: 'comfortable', view: 'editor' },
   { name: 'token-editor-mobile-preview', width: 390, height: 844, theme: 'light', density: 'comfortable', view: 'preview' },
-  { name: 'token-editor-desktop-draft', width: 1440, height: 900, theme: 'light', density: 'comfortable', view: 'draft' }
+  { name: 'token-editor-desktop-draft', width: 1440, height: 900, theme: 'light', density: 'comfortable', view: 'draft' },
+  { name: 'token-editor-narrow-light', width: 320, height: 844, theme: 'light', density: 'comfortable', view: 'editor' }
 ]) {
   test(scenario.name, async ({ page }) => {
     await page.setViewportSize({ width: scenario.width, height: scenario.height });
@@ -86,6 +88,26 @@ for (const scenario of [
     } else {
       await expect(page.getByLabel('color.surface override')).toBeVisible();
     }
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+    await snapshot(page, scenario.name, false);
+  });
+}
+
+for (const scenario of [
+  { name: 'components-desktop-light', width: 1440, height: 900, theme: 'light', density: 'comfortable', picker: false },
+  { name: 'components-tablet-dark', width: 768, height: 1024, theme: 'dark', density: 'compact', picker: false },
+  { name: 'components-mobile-picker-closed', width: 390, height: 844, theme: 'light', density: 'comfortable', picker: false },
+  { name: 'components-mobile-picker-open', width: 390, height: 844, theme: 'light', density: 'comfortable', picker: true }
+]) {
+  test(scenario.name, async ({ page }) => {
+    await page.setViewportSize({ width: scenario.width, height: scenario.height });
+    await open(page, 'components', scenario.theme, scenario.density);
+    await expect(page.getByRole('heading', { name: 'Button', level: 2, exact: true })).toBeVisible();
+    const toggle = page.getByRole('button', { name: 'Choose component: Button', exact: true });
+    if (scenario.picker) {
+      await toggle.click(); await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      await expect(page.getByRole('searchbox', { name: 'Search components' })).toBeFocused();
+    } else if (scenario.width <= 768) await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
     await snapshot(page, scenario.name, false);
   });
