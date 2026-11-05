@@ -1,0 +1,5 @@
+# Offline and installation
+
+See the [Studio PWA implementation guide](../apps/studio/src/features/pwa/README.md) for scope, caching and update behavior. A first online visit and successful service-worker installation are required; an application navigation must become controlled before offline reload can use the cached shell. The production worker caches verified versioned static files and never runtime-caches arbitrary API responses. Browser storage can be unavailable or evicted.
+
+When an update is waiting, save or cancel token drafts, finish imports and close other Studio tabs. **Prepare update** does not reload the page. Reload only when ready. In-memory drafts can still be lost after a crash or forced termination. A local Chromium suite tests offline/update paths; actual operating-system install prompts, iOS standalone behavior, additional browsers and the deployed Pages site are **NOT VERIFIED**.

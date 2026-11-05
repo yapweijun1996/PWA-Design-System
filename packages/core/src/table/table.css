@@ -1,0 +1,17 @@
+.ds-data-table { box-sizing: border-box; min-width: 0; color: var(--ds-color-text); background: var(--ds-color-surface); font-family: var(--ds-font-body); }
+.ds-data-table *, .ds-data-table *::before, .ds-data-table *::after { box-sizing: border-box; }
+.ds-data-table__heading { margin: 0 0 var(--ds-spacing-sm); font-size: var(--ds-font-size-heading); }
+.ds-data-table__message { margin: 0 0 var(--ds-spacing-sm); color: var(--ds-color-text-muted); }
+.ds-data-table__scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--ds-color-border-subtle); }
+.ds-data-table__table { width: 100%; min-width: max-content; border-collapse: collapse; text-align: start; }
+.ds-data-table__table caption { text-align: start; padding: var(--ds-spacing-sm); font-weight: var(--ds-font-weight-label); }
+.ds-data-table__table th, .ds-data-table__table td { padding: var(--ds-spacing-sm) var(--ds-spacing-md); text-align: start; border-bottom: 1px solid var(--ds-color-border-subtle); }
+.ds-data-table__table th { background: var(--ds-color-surface-alt); }
+.ds-data-table__sort, .ds-data-table .ds-pagination button { min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-xs) var(--ds-spacing-sm); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); color: var(--ds-color-text); background: var(--ds-color-surface); font: inherit; cursor: pointer; }
+.ds-data-table :is(button, input, .ds-data-table__scroll):focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
+.ds-data-table button:disabled { opacity: .6; cursor: not-allowed; }
+.ds-data-table input[type='checkbox'] { width: var(--ds-size-control-small); height: var(--ds-size-control-small); accent-color: var(--ds-color-primary); cursor: pointer; }
+.ds-data-table input[type='checkbox']:checked:not(:focus-visible) { outline: var(--ds-focus-ring-width) solid var(--ds-color-border-control); outline-offset: var(--ds-focus-ring-offset); }
+.ds-data-table input[type='checkbox']:disabled { cursor: not-allowed; }
+.ds-data-table__controls { margin-top: var(--ds-spacing-sm); }
+.ds-data-table .ds-pagination { display: flex; align-items: center; flex-wrap: wrap; gap: var(--ds-spacing-sm); }

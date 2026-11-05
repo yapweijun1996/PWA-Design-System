@@ -1,0 +1,10 @@
+.ds-dialog { box-sizing: border-box; max-width: min(90vw, 32rem); color: var(--ds-color-text); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-card); box-shadow: var(--ds-shadow-overlay); padding: var(--ds-spacing-lg); font: inherit; overflow-wrap: anywhere; }
+.ds-dialog::backdrop { background: var(--ds-color-background); opacity: 0.8; }
+.ds-alert, .ds-toast { padding: var(--ds-spacing-md); color: var(--ds-color-text); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); }
+.ds-alert-info { border-inline-start: var(--ds-focus-ring-width) solid var(--ds-color-link); }
+.ds-alert-success { border-inline-start: var(--ds-focus-ring-width) solid var(--ds-color-success); }
+.ds-alert-warning { border-inline-start: var(--ds-focus-ring-width) solid var(--ds-color-warning); }
+.ds-alert-danger { border-inline-start: var(--ds-focus-ring-width) solid var(--ds-color-danger); }
+.ds-toast { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-md); }
+.ds-dialog button, .ds-toast button { min-height: var(--ds-size-control-medium); padding-inline: var(--ds-spacing-md); font: inherit; color: var(--ds-color-text); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); }
+.ds-dialog :focus-visible, .ds-toast :focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }

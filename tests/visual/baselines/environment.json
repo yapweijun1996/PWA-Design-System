@@ -1,0 +1,13 @@
+{
+  "platform": "linux",
+  "arch": "x64",
+  "osId": "ubuntu",
+  "osVersion": "24.04",
+  "playwright": "1.64.1",
+  "chromium": "156.0.8078.4",
+  "fontsSha256": "19046633cf2be18efb8fa0520dddec60dfbc95b30d719c47533fb2d8df22b5f4",
+  "deviceScaleFactor": 1,
+  "locale": "en-US",
+  "timezone": "UTC",
+  "reducedMotion": "reduce"
+}

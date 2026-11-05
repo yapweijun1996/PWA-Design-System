@@ -1,0 +1,1294 @@
+{
+  "version": 1,
+  "components": [
+    {
+      "family": "button",
+      "factory": "createButton",
+      "source": "packages/core/src/foundation/button.ts",
+      "entry": "@pwa-design-system/core/button",
+      "optionType": "ButtonOptions",
+      "keyboard": [
+        "Native Tab, Enter and Space"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "loading"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "Size | undefined",
+          "required": false,
+          "defaultValue": "medium",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "ActionVariant | undefined",
+          "required": false,
+          "defaultValue": "primary",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"submit\" | \"reset\" | undefined",
+          "required": false,
+          "defaultValue": "button",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onClick",
+          "type": "((event: MouseEvent) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "icon-button",
+      "factory": "createIconButton",
+      "source": "packages/core/src/foundation/icon-button.ts",
+      "entry": "@pwa-design-system/core/icon-button",
+      "optionType": "IconButtonOptions",
+      "keyboard": [
+        "Native Tab, Enter and Space"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "loading"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "Size | undefined",
+          "required": false,
+          "defaultValue": "medium",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "ActionVariant | undefined",
+          "required": false,
+          "defaultValue": "primary",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"submit\" | \"reset\" | undefined",
+          "required": false,
+          "defaultValue": "button",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onClick",
+          "type": "((event: MouseEvent) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "badge",
+      "factory": "createBadge",
+      "source": "packages/core/src/foundation/badge.ts",
+      "entry": "@pwa-design-system/core/badge",
+      "optionType": "BadgeOptions",
+      "keyboard": [
+        "Noninteractive"
+      ],
+      "states": [
+        "neutral",
+        "primary",
+        "success",
+        "danger"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "\"primary\" | \"neutral\" | \"success\" | \"danger\" | undefined",
+          "required": false,
+          "defaultValue": "neutral",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "card",
+      "factory": "createCard",
+      "source": "packages/core/src/foundation/card.ts",
+      "entry": "@pwa-design-system/core/card",
+      "optionType": "CardOptions",
+      "keyboard": [
+        "Noninteractive container"
+      ],
+      "states": [
+        "outlined",
+        "elevated"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "\"outlined\" | \"elevated\" | undefined",
+          "required": false,
+          "defaultValue": "outlined",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "separator",
+      "factory": "createSeparator",
+      "source": "packages/core/src/foundation/separator.ts",
+      "entry": "@pwa-design-system/core/separator",
+      "optionType": "SeparatorOptions",
+      "keyboard": [
+        "Noninteractive"
+      ],
+      "states": [
+        "horizontal",
+        "vertical"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\" | undefined",
+          "required": false,
+          "defaultValue": "horizontal",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "tooltip",
+      "factory": "createTooltip",
+      "source": "packages/core/src/foundation/tooltip.ts",
+      "entry": "@pwa-design-system/core/tooltip",
+      "optionType": "TooltipOptions",
+      "keyboard": [
+        "Focus or hover reveals; Escape dismisses"
+      ],
+      "states": [
+        "hidden",
+        "visible"
+      ],
+      "unitTest": "tests/unit/foundation.test.ts",
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "trigger",
+          "type": "HTMLElement",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "The playground supplies this DOM element; arbitrary DOM input is not accepted."
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "input",
+      "factory": "createInput",
+      "source": "packages/core/src/forms/input.ts",
+      "entry": "@pwa-design-system/core/input",
+      "optionType": "InputOptions",
+      "keyboard": [
+        "Native input keyboard behavior"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "required"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "type",
+          "type": "\"text\" | \"email\" | \"password\" | \"search\" | \"tel\" | \"url\" | undefined",
+          "required": false,
+          "defaultValue": "text",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "empty string",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "textarea",
+      "factory": "createTextarea",
+      "source": "packages/core/src/forms/textarea.ts",
+      "entry": "@pwa-design-system/core/textarea",
+      "optionType": "TextareaOptions",
+      "keyboard": [
+        "Native textarea keyboard behavior"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "required"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "empty string",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "rows",
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "3",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "checkbox",
+      "factory": "createCheckbox",
+      "source": "packages/core/src/forms/checkbox.ts",
+      "entry": "@pwa-design-system/core/checkbox",
+      "optionType": "CheckboxOptions",
+      "keyboard": [
+        "Native Space toggles"
+      ],
+      "states": [
+        "checked",
+        "unchecked",
+        "disabled",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "checked",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "native checkbox default",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "radio-group",
+      "factory": "createRadioGroup",
+      "source": "packages/core/src/forms/radio-group.ts",
+      "entry": "@pwa-design-system/core/radio-group",
+      "optionType": "RadioGroupOptions",
+      "keyboard": [
+        "Native same-name arrow navigation"
+      ],
+      "states": [
+        "selected",
+        "unselected",
+        "disabled",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "legend",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "options",
+          "type": "readonly RadioOption[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable as bounded text lines; callback code remains fixed."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "switch",
+      "factory": "createSwitch",
+      "source": "packages/core/src/forms/switch.ts",
+      "entry": "@pwa-design-system/core/switch",
+      "optionType": "SwitchOptions",
+      "keyboard": [
+        "Native Space toggles"
+      ],
+      "states": [
+        "checked",
+        "unchecked",
+        "disabled",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "checked",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "native checkbox default",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "select",
+      "factory": "createSelect",
+      "source": "packages/core/src/forms/select.ts",
+      "entry": "@pwa-design-system/core/select",
+      "optionType": "SelectOptions",
+      "keyboard": [
+        "Native select keyboard behavior"
+      ],
+      "states": [
+        "enabled",
+        "disabled",
+        "required"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "options",
+          "type": "readonly SelectOption[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable as bounded text lines; callback code remains fixed."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "first available option",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "form-field",
+      "factory": "createFormField",
+      "source": "packages/core/src/forms/form-field.ts",
+      "entry": "@pwa-design-system/core/form-field",
+      "optionType": "FormFieldOptions",
+      "keyboard": [
+        "Delegates keyboard behavior to native control"
+      ],
+      "states": [
+        "default",
+        "error"
+      ],
+      "unitTest": "tests/unit/forms.test.ts",
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "control",
+          "type": "HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "The playground supplies this DOM element; arbitrary DOM input is not accepted."
+        },
+        {
+          "name": "description",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable when the error state is selected."
+        }
+      ],
+      "apiNotes": "Returns setError(message?) and restores owned description state on destroy."
+    },
+    {
+      "family": "tabs",
+      "factory": "createTabs",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "TabsOptions",
+      "keyboard": [
+        "ArrowLeft and ArrowRight wrap; Home and End select"
+      ],
+      "states": [
+        "selected",
+        "unselected"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "tabs",
+          "type": "readonly { label: string; content: string; }[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable as bounded text lines; callback code remains fixed."
+        },
+        {
+          "name": "selectedIndex",
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "0",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onChange",
+          "type": "((index: number) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "select(index) is silent; user selection calls onChange when provided."
+    },
+    {
+      "family": "breadcrumb",
+      "factory": "createBreadcrumb",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "BreadcrumbItem[]",
+      "keyboard": [
+        "Native link keyboard behavior"
+      ],
+      "states": [
+        "current page",
+        "link"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Current page label is editable; the Home item is fixed."
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "The optional second navigation label is editable; default Breadcrumb. The current page label and Home href are editable."
+    },
+    {
+      "family": "menu",
+      "factory": "createMenu",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "MenuOptions",
+      "keyboard": [
+        "Arrow keys, Home, End, Escape and Tab"
+      ],
+      "states": [
+        "open",
+        "closed",
+        "disabled item"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "items",
+          "type": "readonly MenuItem[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Edit item labels and disabled states as bounded text lines; callback code remains fixed."
+        }
+      ],
+      "apiNotes": "Items use one label per line, optionally followed by | disabled. Callbacks are fixed no-ops. Menu requires the native Popover API."
+    },
+    {
+      "family": "pagination",
+      "factory": "createPagination",
+      "source": "packages/core/src/navigation/index.ts",
+      "entry": "@pwa-design-system/core/navigation",
+      "optionType": "PaginationOptions",
+      "keyboard": [
+        "Native button keyboard behavior"
+      ],
+      "states": [
+        "first page",
+        "middle page",
+        "last page"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "page",
+          "type": "number",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "totalPages",
+          "type": "number",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onChange",
+          "type": "(page: number) => void",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "Pagination",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "dialog",
+      "factory": "createDialog",
+      "source": "packages/core/src/feedback/index.ts",
+      "entry": "@pwa-design-system/core/feedback",
+      "optionType": "DialogOptions",
+      "keyboard": [
+        "Native modal; Escape closes and restores opener focus"
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "Close",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onClose",
+          "type": "(() => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "open(opener?) accepts a connected opener for focus restoration; close() dismisses."
+    },
+    {
+      "family": "alert",
+      "factory": "createAlert",
+      "source": "packages/core/src/feedback/index.ts",
+      "entry": "@pwa-design-system/core/feedback",
+      "optionType": "AlertOptions",
+      "keyboard": [
+        "Noninteractive"
+      ],
+      "states": [
+        "static",
+        "assertive update"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "tone",
+          "type": "AlertTone | undefined",
+          "required": false,
+          "defaultValue": "info",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "assertive",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "toast",
+      "factory": "createToast",
+      "source": "packages/core/src/feedback/index.ts",
+      "entry": "@pwa-design-system/core/feedback",
+      "optionType": "ToastOptions",
+      "keyboard": [
+        "Native dismiss button keyboard behavior"
+      ],
+      "states": [
+        "visible",
+        "dismissed"
+      ],
+      "unitTest": "tests/unit/navigation-feedback.test.ts",
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "dismissLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "Dismiss",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onDismiss",
+          "type": "(() => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
+    },
+    {
+      "family": "data-table",
+      "factory": "createDataTable",
+      "source": "packages/core/src/table/index.ts",
+      "entry": "@pwa-design-system/core/table",
+      "optionType": "DataTableOptions",
+      "keyboard": [
+        "Native Tab, Enter and Space; focused scroll region supports horizontal arrow scrolling"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "sorted",
+        "selected"
+      ],
+      "unitTest": "tests/unit/data-table.test.ts",
+      "browserTest": "tests/e2e/data-table.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable table caption."
+        },
+        {
+          "name": "columns",
+          "type": "readonly DataTableColumn[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "The preview supplies fixed columns."
+        },
+        {
+          "name": "rows",
+          "type": "readonly DataTableRow[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "The state selector can show the supplied sample rows or an empty table."
+        },
+        {
+          "name": "pageSize",
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "10",
+          "editable": true,
+          "reason": "Editable page size."
+        },
+        {
+          "name": "selectable",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Controls whether row selection is shown."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "The state selector controls loading."
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "((ids: readonly string[]) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are not editable."
+        },
+        {
+          "name": "onPageChange",
+          "type": "((page: number) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are not editable."
+        },
+        {
+          "name": "onSortChange",
+          "type": "((sort: DataTableSort) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are not editable."
+        }
+      ],
+      "apiNotes": "Rows have stable unique IDs and text cells. Select all affects the current page; sort preserves page and selections. See table guide for updates and limitations."
+    }
+  ]
+}

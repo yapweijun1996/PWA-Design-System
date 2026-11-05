@@ -1,0 +1,12 @@
+{
+  "color.background": "{primitive.color.slate.950}",
+  "color.surface": "{primitive.color.slate.900}",
+  "color.surface-alt": "{primitive.color.slate.800}",
+  "color.text": "{primitive.color.slate.50}",
+  "color.text-muted": "{primitive.color.slate.200}",
+  "color.border-subtle": "{primitive.color.slate.700}",
+  "color.border-control": "{primitive.color.slate.400}",
+  "color.danger": "{primitive.color.danger.300}",
+  "color.success": "{primitive.color.success.300}",
+  "color.warning": "{primitive.color.warning.300}"
+}

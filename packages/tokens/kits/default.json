@@ -1,0 +1,5 @@
+{
+  "radius.control": "{primitive.radius.md}",
+  "radius.card": "{primitive.radius.lg}",
+  "shadow.card": "{primitive.shadow.sm}"
+}

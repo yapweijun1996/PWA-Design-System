@@ -1,0 +1,66 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build:react
+      - run: npm run typecheck
+      - run: npm run typecheck:react
+      - run: npm run lint
+      - run: npm test
+      - run: npm run tokens:check
+      - run: npm run contracts:check
+      - run: npm run agent-validator:check
+      - run: npm run agent-contract:check
+      - run: npm run ssot:check
+      - run: npm run build
+      - run: npm run check:artifact
+      - run: npx playwright install --with-deps --only-shell chromium
+      - run: npm run test:e2e
+      - run: npm run test:react:e2e
+      - run: npm run test:pwa
+      - run: npm run test:production
+      - name: Validate deployment artifact
+        run: |
+          test -s dist/studio/index.html
+          test -s dist/studio/theme-init.js
+          grep -q '/PWA-Design-System/' dist/studio/index.html
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: studio-build
+          path: dist/studio
+          if-no-files-found: error
+          retention-days: 7
+  visual-regression:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build:react
+      - run: npx playwright install --with-deps --only-shell chromium
+      - run: npx playwright test -c tests/visual/playwright.config.ts
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: visual-regression-failure
+          path: test-results/
+          if-no-files-found: warn
+          retention-days: 7

@@ -1,0 +1,5 @@
+:root { font-family: var(--ds-font-body); color: var(--ds-color-text); background: var(--ds-color-background); }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { display: grid; gap: var(--ds-spacing-md); max-width: 48rem; margin: auto; padding: var(--ds-spacing-lg); }
+h1, p { margin: 0; }

@@ -1,0 +1,13 @@
+{
+  "name": "@pwa-design-system/icons",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["approved-icons.json", "generated", "README.md"],
+  "exports": {
+    ".": { "types": "./generated/index.d.ts", "import": "./generated/index.js" },
+    "./registry.json": "./approved-icons.json"
+  }
+}

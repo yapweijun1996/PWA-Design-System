@@ -1,0 +1,14 @@
+{
+  "light": {
+    "color.primary": "{primitive.color.emerald.base}",
+    "color.primary-hover": "{primitive.color.emerald.hover}",
+    "color.link": "{primitive.color.emerald.base}",
+    "color.focus": "{primitive.color.emerald.base}"
+  },
+  "dark": {
+    "color.primary": "{primitive.color.emerald.base}",
+    "color.primary-hover": "{primitive.color.emerald.hover}",
+    "color.link": "{primitive.color.emerald.light}",
+    "color.focus": "{primitive.color.emerald.light}"
+  }
+}

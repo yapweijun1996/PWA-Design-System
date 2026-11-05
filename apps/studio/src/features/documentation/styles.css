@@ -1,0 +1,7 @@
+.studio-documentation { max-width: 70rem; }
+.studio-documentation h1 { margin-top: 0; }
+.studio-documentation__section { margin-top: var(--ds-spacing-lg); padding: var(--ds-spacing-lg); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-card); background: var(--ds-color-surface); }
+.studio-documentation__section h2 { margin-top: 0; }
+.studio-documentation__section pre { max-width: 100%; overflow: auto; padding: var(--ds-spacing-md); background: var(--ds-color-surface-alt); border-radius: var(--ds-radius-control); }
+.studio-documentation__section a { color: var(--ds-color-link); }
+.studio-documentation__section a:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }

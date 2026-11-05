@@ -1,0 +1,17 @@
+.theme-builder { max-width: 80rem; }
+.theme-builder h1 { margin-top: 0; }
+.theme-builder__intro { color: var(--ds-color-text-muted); }
+.theme-builder__workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--ds-spacing-lg); align-items: start; }
+.theme-builder__controls, .theme-builder__preview { min-width: 0; padding: var(--ds-spacing-lg); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-card); background: var(--ds-color-surface); }
+.theme-builder__controls h2, .theme-builder__preview h2 { margin-top: 0; }
+.theme-builder__field, .theme-builder__sample-field { display: grid; gap: var(--ds-spacing-xs); margin-bottom: var(--ds-spacing-md); }
+.theme-builder__field select, .theme-builder__sample-field input { box-sizing: border-box; width: 100%; min-width: 0; min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-sm); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); color: var(--ds-color-text); background: var(--ds-color-surface); font: inherit; }
+.theme-builder__status { min-height: 1.5em; color: var(--ds-color-text); overflow-wrap: anywhere; }
+.theme-builder__eyebrow { color: var(--ds-color-text-muted); }
+.theme-builder__card { padding: var(--ds-spacing-lg); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-card); background: var(--ds-color-surface-alt); box-shadow: var(--ds-shadow-card); }
+.theme-builder__card h3 { margin-top: var(--ds-spacing-md); }
+.theme-builder__badge { display: inline-block; padding: var(--ds-spacing-xs) var(--ds-spacing-sm); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); }
+.theme-builder__action { min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-sm) var(--ds-spacing-md); border: 1px solid var(--ds-color-primary); border-radius: var(--ds-radius-control); color: var(--ds-color-on-primary); background: var(--ds-color-primary); font: inherit; cursor: pointer; }
+.theme-builder a { color: var(--ds-color-link); }
+.theme-builder select:focus-visible, .theme-builder input:focus-visible, .theme-builder button:focus-visible, .theme-builder a:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
+@media (max-width: 700px) { .theme-builder__workspace { grid-template-columns: minmax(0, 1fr); } }

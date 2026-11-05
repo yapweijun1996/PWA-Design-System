@@ -1,0 +1,14 @@
+{
+  "name": "@pwa-design-system/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": ["**/*.css"],
+  "files": ["generated"],
+  "exports": {
+    "./tokens.css": "./generated/tokens.css",
+    "./tokens.json": "./generated/tokens.json",
+    "./tokens.ts": "./generated/tokens.ts"
+  }
+}
