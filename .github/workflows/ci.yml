@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run tokens:check
+      - run: npm run build
+      - name: Validate deployment artifact
+        run: |
+          test -s dist/studio/index.html
+          test -s dist/studio/theme-init.js
+          grep -q '/PWA-Design-System/' dist/studio/index.html
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: studio-build
+          path: dist/studio
+          if-no-files-found: error
+          retention-days: 7

@@ -1,0 +1,14 @@
+{
+  "light": {
+    "color.primary": "{primitive.color.rose.base}",
+    "color.primary-hover": "{primitive.color.rose.hover}",
+    "color.link": "{primitive.color.rose.base}",
+    "color.focus": "{primitive.color.rose.base}"
+  },
+  "dark": {
+    "color.primary": "{primitive.color.rose.base}",
+    "color.primary-hover": "{primitive.color.rose.hover}",
+    "color.link": "{primitive.color.rose.light}",
+    "color.focus": "{primitive.color.rose.light}"
+  }
+}

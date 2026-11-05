@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-palette="blue" data-density="comfortable" data-kit="default">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A framework-independent design system workspace.">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml">
+    <title>PWA Design System Studio</title>
+    <script src="%BASE_URL%theme-init.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Studio navigation">
+        <a class="brand" href="#overview" aria-label="PWA Design System Studio home"><span class="brand-mark" aria-hidden="true">P</span><span><strong>PWA Design System</strong><small>STUDIO / FOUNDATION</small></span></a>
+        <nav aria-label="On this page">
+          <p class="nav-label">WORKSPACE</p>
+          <a href="#overview">Overview</a>
+          <a href="#tokens">Design tokens</a>
+          <a href="#appearance">Appearance</a>
+        </nav>
+        <div class="sidebar-foot">Foundation preview <span>v0.1</span></div>
+      </aside>
+      <div class="app-content">
+        <header class="topbar">
+          <span>Design System <span class="breadcrumb-separator" aria-hidden="true">/</span> <strong>Overview</strong></span>
+          <span class="status"><span class="status-dot" aria-hidden="true"></span> Foundation</span>
+        </header>
+        <main id="main" tabindex="-1">
+          <section id="overview" aria-labelledby="overview-title">
+            <div class="page-heading">
+              <div><p class="eyebrow">DESIGN SYSTEM STUDIO</p><h1 id="overview-title">Build with consistency.</h1><p class="intro">A shared foundation for accessible, adaptable interfaces.</p></div>
+              <a class="button button-primary" href="#tokens">Explore tokens <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="overview-grid">
+              <div class="overview-card"><p class="card-index">01 / FOUNDATION</p><h2>One source of truth</h2><p>Design decisions are defined as tokens and generated for the web.</p><a href="#tokens">View token roles <span aria-hidden="true">↗</span></a></div>
+              <div class="overview-card"><p class="card-index">02 / APPEARANCE</p><h2>Make it your own</h2><p>Choose the appearance that works best for your workspace.</p><a href="#appearance">Change appearance <span aria-hidden="true">↗</span></a></div>
+            </div>
+          </section>
+          <section id="tokens" class="content-section" aria-labelledby="tokens-title">
+            <div class="section-heading"><div><p class="eyebrow">FOUNDATIONS</p><h2 id="tokens-title">Design tokens</h2><p>Semantic roles make visual decisions reusable across interfaces.</p></div><span class="section-count">COLOR / 04</span></div>
+            <div class="token-grid">
+              <div class="token-card"><span class="swatch swatch-background" aria-hidden="true"></span><div><strong>Background</strong><code>color.background</code></div></div>
+              <div class="token-card"><span class="swatch swatch-surface" aria-hidden="true"></span><div><strong>Surface</strong><code>color.surface</code></div></div>
+              <div class="token-card"><span class="swatch swatch-primary" aria-hidden="true"></span><div><strong>Primary</strong><code>color.primary</code></div></div>
+              <div class="token-card"><span class="swatch swatch-focus" aria-hidden="true"></span><div><strong>Focus</strong><code>color.focus</code></div></div>
+            </div>
+          </section>
+          <section id="appearance" class="content-section" aria-labelledby="appearance-title">
+            <div class="section-heading"><div><p class="eyebrow">PREFERENCES</p><h2 id="appearance-title">Appearance</h2><p>Set a theme for this browser. System follows your device preference.</p></div></div>
+            <div class="settings-card"><div><label for="theme-select">Theme</label><p>Choose light, dark, or system appearance.</p></div><select id="theme-select" name="theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></div>
+            <p id="preference-status" class="sr-only" role="status"></p>
+          </section>
+          <footer>Built on a shared design foundation. <span>Studio / 0.1</span></footer>
+        </main>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
