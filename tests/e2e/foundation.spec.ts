@@ -97,6 +97,44 @@ test('tooltip stays inside a narrow viewport and follows scroll and resize', asy
   expect(after.y + after.height).toBeLessThanOrEqual(500);
 });
 
+test('standalone tooltip keeps its full border box and long content inside narrow viewports', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 360 });
+  await page.goto('/PWA-Design-System/');
+  await page.evaluate(() => {
+    document.querySelectorAll('style, link[rel="stylesheet"]').forEach(element => { element.remove(); });
+    document.body.replaceChildren();
+  });
+  await page.addStyleTag({ content: readFileSync(resolve(root, 'packages/tokens/generated/tokens.css'), 'utf8') });
+  await page.addStyleTag({ content: readFileSync(resolve(root, 'packages/core/src/foundation/foundation.css'), 'utf8') });
+  const defaultBoxSizing = await page.evaluate(async (path) => {
+    const { createTooltip } = await import(/* @vite-ignore */ path);
+    const probe = document.createElement('div');
+    document.body.append(probe);
+    const sizing = getComputedStyle(probe).boxSizing;
+    probe.remove();
+    const trigger = document.createElement('button');
+    trigger.textContent = 'Help';
+    const tooltip = createTooltip({ trigger, text: 'Averylongunbrokentooltipmessage'.repeat(15) });
+    tooltip.element.style.position = 'fixed';
+    tooltip.element.style.right = '0';
+    tooltip.element.style.bottom = '0';
+    document.body.append(tooltip.element);
+    return sizing;
+  }, `/PWA-Design-System/@fs${resolve(root, 'packages/core/src/index.ts')}`);
+  expect(defaultBoxSizing).toBe('content-box');
+  await page.getByRole('button', { name: 'Help' }).focus();
+  const tip = page.getByRole('tooltip');
+  await expect(tip).toBeVisible();
+  for (const width of [390, 320, 240, 768]) {
+    await page.setViewportSize({ width, height: 360 });
+    await expect.poll(async () => {
+      const box = await boxOf(tip);
+      return box.x >= 0 && box.y >= 0 && box.x + box.width <= width && box.y + box.height <= 360;
+    }).toBe(true);
+    expect(await tip.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+  }
+});
+
 test('enabled primary button boundary contrasts against the surface across configured axes', async ({ page }) => {
   await page.goto('/PWA-Design-System/');
   await page.addStyleTag({ content: readFileSync(resolve(root, 'packages/tokens/generated/tokens.css'), 'utf8') });
