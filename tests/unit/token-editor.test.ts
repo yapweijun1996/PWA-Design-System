@@ -125,7 +125,7 @@ describe('token override validation', () => {
     const upload = root.querySelector<HTMLInputElement>('input[type=file]');
     if (!field || !upload) throw new Error('Editor fixture missing');
     const buttons = [...root.querySelectorAll('button')];
-    const click = (name: string) => { const item = buttons.find(button => button.textContent === name); if (!item) throw new Error('Button missing'); item.click(); };
+    const click = (name: string) => { const item = buttons.find(button => button.textContent === name || button.getAttribute('aria-label') === name); if (!item) throw new Error('Button missing'); item.click(); };
     const incoming = configuration(); incoming.overrides.light['color.surface'] = '#fafafa';
     const start = () => {
       let finish: (value: string) => void = () => { throw new Error('read not initialized'); };
@@ -160,4 +160,83 @@ describe('token override validation', () => {
     destroy(); root.remove(); commitProject(configuration()); teardown(); localStorage.clear();
   });
 
+});
+
+describe('visual token workspace', () => {
+  function fixture() {
+    localStorage.clear(); commitProject(configuration()); document.documentElement.dataset.theme = 'light';
+    const teardown = initializeTokenOverrides(), root = document.createElement('main'); document.body.append(root); const destroy = mountTokenEditor(root);
+    const edit = (key: string, value: string) => { const input = root.querySelector<HTMLInputElement>(`[data-token="${key}"]`); if (!input) throw new Error(`Missing ${key}`); input.value = value; input.dispatchEvent(new Event('input', { bubbles: true })); return input; };
+    const click = (name: string) => { const control = [...root.querySelectorAll('button')].find(button => button.textContent === name || button.getAttribute('aria-label') === name); if (!control) throw new Error(`Missing ${name}`); control.click(); return control; };
+    const select = (name: string, value: string) => { const label = [...root.querySelectorAll('label')].find(label => label.firstChild?.textContent === name); const control = label?.querySelector('select'); if (!control) throw new Error(`Missing ${name}`); control.value = value; control.dispatchEvent(new Event('change', { bubbles: true })); };
+    const count = () => root.querySelector<HTMLOutputElement>('[aria-label="Unsaved change count"]')?.value;
+    return { root, edit, click, select, count, close() { destroy(); root.remove(); commitProject(configuration()); teardown(); localStorage.clear(); } };
+  }
+  it('keeps preview theme independent, displays current values and preserves aliases through filtering', () => {
+    const f = fixture();
+    try {
+      f.edit('color.surface', '#fafafa'); f.edit('color.link', '{semantic.color.primary}');
+      f.select('Preview theme', 'dark');
+      expect(document.documentElement.dataset.theme).toBe('light');
+      expect(f.root.querySelector('.token-editor__context')?.textContent).toContain('Editing: Light only · Preview: Dark');
+      const row = f.root.querySelector('[data-token-row="color.surface"]');
+      expect(row?.querySelector('.token-editor__values')?.textContent).toContain('#0f172a');
+      expect(f.root.querySelector('[aria-label="Token preview"]')?.getAttribute('style')).toContain('--ds-color-surface: #0f172a');
+      const search = f.root.querySelector<HTMLInputElement>('input[type="search"]'); if (!search) throw new Error('Missing search');
+      search.value = 'font'; search.dispatchEvent(new Event('input', { bubbles: true }));
+      expect((row as HTMLElement).hidden).toBe(true);
+      f.click('Clear filters'); f.select('Preview theme', 'light');
+      expect(f.root.querySelector<HTMLInputElement>('[data-token="color.link"]')?.value).toBe('{semantic.color.primary}');
+      const picker = f.root.querySelector<HTMLInputElement>('[aria-label="Choose color.link color"]'); if (!picker) throw new Error('Missing picker');
+      picker.value = '#123456'; picker.dispatchEvent(new Event('input', { bubbles: true }));
+      expect(f.root.querySelector<HTMLInputElement>('[data-token="color.link"]')?.value).toBe('#123456');
+    } finally { f.close(); }
+  });
+  it('counts actual cross-scope changes, supports undo and treats no-op edits as clean', async () => {
+    const { isDraftUnsafe } = await import('../../apps/studio/src/features/pwa/guard'); const f = fixture();
+    try {
+      f.edit('color.surface', ''); expect(f.count()).toBe('0 unsaved changes'); expect(isDraftUnsafe()).toBe(false);
+      f.edit('color.surface', '#fafafa'); f.select('Editing scope', 'dark'); f.edit('color.surface', '#101827');
+      expect(f.count()).toBe('2 unsaved changes'); expect(isDraftUnsafe()).toBe(true);
+      f.select('Preview theme', 'dark'); f.click('Undo last change'); expect(f.count()).toBe('1 unsaved change');
+      expect(f.root.querySelector<HTMLInputElement>('[data-token="color.surface"]')?.value).toBe('');
+      f.select('Editing scope', 'light'); f.click('Undo last change'); expect(f.count()).toBe('0 unsaved changes'); expect(isDraftUnsafe()).toBe(false);
+      expect(f.root.querySelector<HTMLInputElement>('[data-token="color.surface"]')?.value).toBe('');
+    } finally { f.close(); }
+  });
+  it('retains invalid draft and safety gates while its row is hidden', () => {
+    const f = fixture();
+    try {
+      f.edit('color.surface', '#fafafa'); const field = f.edit('color.surface', 'not-a-color');
+      expect(field.getAttribute('aria-invalid')).toBe('true');
+      expect(f.root.querySelector('[data-token-row="color.surface"] .token-editor__values')?.textContent).toContain('Last valid: #fafafa');
+      expect(f.root.querySelector('[aria-label="Token preview"]')?.textContent).toContain('last valid preview retained');
+      f.select('Category', 'font');
+      expect((f.root.querySelector('[data-token-row="color.surface"]') as HTMLElement).hidden).toBe(true);
+      expect(f.click('Commit changes').disabled).toBe(true); expect(f.click('Export JSON').disabled).toBe(true); expect(f.click('Export CSS').disabled).toBe(true);
+      f.click('Clear filters'); expect(field.value).toBe('not-a-color'); f.click('Undo last change'); expect(field.value).toBe('#fafafa');
+    } finally { f.close(); }
+  });
+  it('retains diff, undo and stable preview controls when saving fails', () => {
+    const f = fixture();
+    try {
+      const input = f.root.querySelector<HTMLInputElement>('[aria-label="Token preview"] .ds-control'); if (!input) throw new Error('Missing preview input'); input.value = 'Keep my text';
+      f.edit('color.surface', '#fafafa'); expect(f.root.querySelector('[aria-label="Token preview"] .ds-control')).toBe(input); expect(input.value).toBe('Keep my text');
+      const before = getCommitted(), stored = localStorage.getItem('pwa-ds-token-overrides-v1');
+      const fail = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+      f.click('Commit changes'); fail.mockRestore();
+      expect(getCommitted()).toEqual(before); expect(localStorage.getItem('pwa-ds-token-overrides-v1')).toBe(stored); expect(f.count()).toBe('1 unsaved change');
+      f.click('Undo last change'); expect(f.count()).toBe('0 unsaved changes');
+    } finally { f.close(); }
+  });
+  it('undo cancels a delayed import without admitting its late result', async () => {
+    const f = fixture(); let finish: (value: string) => void = () => {};
+    const original = Object.getOwnPropertyDescriptor(File.prototype, 'text'); Object.defineProperty(File.prototype, 'text', { configurable: true, value: () => new Promise<string>(resolve => { finish = resolve; }) });
+    try {
+      f.edit('color.surface', '#fafafa'); const input = f.root.querySelector<HTMLInputElement>('input[type="file"]'); if (!input) throw new Error('Missing import');
+      Object.defineProperty(input, 'files', { configurable: true, value: [new File(['{}'], 'theme.json', { type: 'application/json' })] }); input.dispatchEvent(new Event('change', { bubbles: true }));
+      f.click('Undo last change'); const incoming = configuration(); incoming.overrides.light['color.surface'] = '#f8f8f8'; finish(projectJSON(incoming)); await Promise.resolve(); await Promise.resolve();
+      expect(f.root.querySelector<HTMLInputElement>('[data-token="color.surface"]')?.value).toBe(''); expect(f.count()).toBe('0 unsaved changes');
+    } finally { if (original) Object.defineProperty(File.prototype, 'text', original); else Reflect.deleteProperty(File.prototype, 'text'); f.close(); }
+  });
 });

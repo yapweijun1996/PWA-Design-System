@@ -151,11 +151,16 @@ test('mobile editor starts with editable tokens and keeps optional information a
   const help = page.getByText('How token overrides work', { exact: true }); await help.focus(); await page.keyboard.press('Enter');
   await expect(page.getByText(/Theme-specific overrides take precedence/)).toBeVisible();
   await page.keyboard.press('Enter'); await expect(page.getByText(/Theme-specific overrides take precedence/)).toBeHidden();
-  await page.getByText('Live preview', { exact: true }).first().click();
-  await expect(page.getByRole('heading', { name: 'Workspace preview' })).toBeVisible();
-  await first.fill('#f7fafc'); await expect(page.getByLabel('Token preview')).toBeVisible();
-  await page.getByText('Live preview', { exact: true }).first().click();
-  await expect(page.getByRole('heading', { name: 'Workspace preview' })).toBeHidden();
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Workspace preview' }).first()).toBeVisible();
+  await page.getByRole('button', { name: 'Editor', exact: true }).click();
+  await first.fill('#f7fafc');
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(page.getByLabel('Token preview', { exact: true })).toBeVisible();
+  await expect.poll(() => page.getByLabel('Token preview', { exact: true }).evaluate(node => node.style.getPropertyValue('--ds-color-background'))).toBe('#f7fafc');
+  await page.getByRole('button', { name: 'Editor', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Workspace preview' }).first()).toBeHidden();
+  await expect(first).toHaveValue('#f7fafc');
 });
 
 test('legacy saved breakpoint overrides migrate without losing other values before paint', async ({ page }) => {
