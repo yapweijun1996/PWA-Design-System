@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from 'vitest';
-import { emptyProject, parseProject, parseStoredProject, projectCSS, projectJSON, validateProject } from '../../packages/tokens/src/engine.mjs';
+import { createProjectValidator, emptyProject, parseProject, parseStoredProject, projectCSS, projectJSON, validateProject } from '../../packages/tokens/src/engine.mjs';
 import { sources } from '../../apps/studio/src/features/tokens/sources';
 import { commitProject, contrastFailures, getCommitted, getStorageNotice, initializeTokenOverrides } from '../../apps/studio/src/features/tokens/model';
 import { mountTokenEditor } from '../../apps/studio/src/features/tokens/index';
@@ -8,6 +8,30 @@ import { mountTokenEditor } from '../../apps/studio/src/features/tokens/index';
 function configuration() { return emptyProject(); }
 
 describe('token override validation', () => {
+  it('prepares an isolated validated source snapshot without weakening draft checks', () => {
+    const mutable = structuredClone(sources);
+    const prepared = createProjectValidator(mutable);
+    const data = configuration();
+    data.overrides.global['color.primary'] = '#123456';
+    data.overrides.global['color.link'] = '{semantic.color.primary}';
+    data.overrides.light['spacing.md'] = '{primitive.space.2}';
+    data.overrides.dark['radius.card'] = '2rem';
+    const expected = validateProject(mutable, data);
+    expect(prepared(data)).toEqual(expected);
+    expect(Object.keys(expected)).toHaveLength(96);
+    mutable.semantics['color.background'].$value = '{primitive.color.missing}';
+    expect(prepared(data)).toEqual(expected);
+    expect(() => validateProject(mutable, data)).toThrow(/Missing reference/);
+    expect(() => createProjectValidator(mutable)).toThrow(/Missing reference/);
+    const invalid = configuration();
+    invalid.overrides.light['color.background'] = '{semantic.color.text}';
+    invalid.overrides.light['color.text'] = '{semantic.color.background}';
+    expect(() => prepared(invalid)).toThrow(/Circular/);
+    invalid.overrides.light['color.text'] = '{primitive.space.1}';
+    expect(() => prepared(invalid)).toThrow(/Type mismatch/);
+    invalid.overrides.light['color.text'] = '#ffffff; background:url(https://example.invalid)';
+    expect(() => prepared(invalid)).toThrow(/Invalid override/);
+  });
   it('shares deterministic repository resolution and honors scope precedence and aliases in 96 combinations', () => {
     const data = configuration();
     data.overrides.global['color.primary'] = '#123456';

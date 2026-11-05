@@ -132,7 +132,7 @@ export function compile(sources) {
 export const projectSchema = 'pwa-design-system/token-overrides';
 export const projectMaxBytes = 65536;
 export function emptyProject() { return { schema: projectSchema, version: 1, overrides: { global: {}, light: {}, dark: {} } }; }
-export function validateProject(sources, project) {
+function resolveProject(sources, project, validateSources) {
   keys(project, ['schema', 'version', 'overrides'], 'project');
   if (project.schema !== projectSchema || project.version !== 1) throw new Error('Unsupported token configuration schema or version');
   keys(project.overrides, ['global', 'light', 'dark'], 'project.overrides');
@@ -141,12 +141,24 @@ export function validateProject(sources, project) {
     validateOverrides(overrides, sources.semantics, `project.${scope}`, new Set(Object.keys(sources.semantics).filter(key => !key.startsWith('breakpoint.'))));
     for (const value of Object.values(overrides)) if (typeof value === 'string' && value.length > 128) throw new Error('Token value is too long');
   }
-  compile(sources);
+  validateSources();
   const combinations = {};
   for (const theme of axes.themes) for (const palette of axes.palettes) for (const density of axes.density) for (const kit of axes.kits) {
     combinations[`${theme}/${palette}/${density}/${kit}`] = resolved(sources.primitives, overrideDefinitions(sources.semantics, sources.themes[theme], sources.palettes[palette][theme], sources.density[density], sources.kits[kit], project.overrides.global, project.overrides[theme]));
   }
   return combinations;
+}
+export function validateProject(sources, project) {
+  return resolveProject(sources, project, () => { compile(sources); });
+}
+/** Validate and isolate a source snapshot for repeated project validation. */
+export function createProjectValidator(sources) {
+  // Validate both the original and detached snapshot: callers cannot later
+  // mutate the prepared source, and cloning cannot normalize invalid input.
+  compile(sources);
+  const snapshot = structuredClone(sources);
+  compile(snapshot);
+  return project => resolveProject(snapshot, project, () => {});
 }
 // Scan the JSON grammar before parsing so duplicate (including escaped) keys,
 // excessive nesting and overly large structures are rejected instead of merged.

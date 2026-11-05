@@ -1,4 +1,4 @@
-import { emptyProject, parseProject, projectCSS, projectJSON, projectMaxBytes, validateProject, type TokenCombinations, type TokenValue } from '../../../../../packages/tokens/src/engine.mjs';
+import { createProjectValidator, emptyProject, parseProject, projectCSS, projectJSON, projectMaxBytes, type TokenCombinations, type TokenValue } from '../../../../../packages/tokens/src/engine.mjs';
 import { sources } from './sources';
 import { commitProject, contrastFailures, currentCombination, getCommitted, getStorageNotice, setTokenMap } from './model';
 import './styles.css';
@@ -67,8 +67,10 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   sourceList.append(sourceContent);
   const workspace = element('div'); workspace.className = 'token-editor__workspace'; workspace.append(previewPanel, fields);
   section.append(heading, explanation, scopeLabel, actions, more, help, status, workspace, sourceList); root.replaceChildren(section);
+  const validateDraft = createProjectValidator(sources);
+  const inheritedValues = validateDraft(emptyProject());
   let draft = getCommitted();
-  let values: TokenCombinations = validateProject(sources, draft);
+  let values: TokenCombinations = validateDraft(draft);
   let isValid = true; let destroyed = false; let importRevision = 0; let importPending = false; let dirty = false;
   const clearDraftGuard = setDraftGuard(() => dirty || importPending, () => { status.textContent = 'Save or cancel the token draft and finish importing before leaving this page.'; });
   function cancelPendingImport(): boolean {
@@ -78,12 +80,12 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   const draftScope = (): Scope => scope.value === 'global' || scope.value === 'dark' ? scope.value : 'light';
   function refreshInputs(): void {
     const selected = draft.overrides[draftScope()];
-    const inherited = currentCombination(validateProject(sources, emptyProject()));
+    const inherited = currentCombination(inheritedValues);
     for (const [key, input] of inputs) { input.value = selected[key] === undefined ? '' : String(selected[key]); input.placeholder = String(inherited[key]); }
   }
   function updatePreview(message?: string): void {
     try {
-      values = validateProject(sources, draft);
+      values = validateDraft(draft);
       setTokenMap(preview, currentCombination(values));
       const failures = contrastFailures(values);
       isValid = failures.length === 0;

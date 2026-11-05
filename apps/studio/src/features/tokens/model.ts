@@ -88,11 +88,16 @@ export function contrastFailures(combinations: TokenCombinations): string[] {
     ['color.on-primary', 'color.primary', 4.5], ['color.on-primary', 'color.primary-hover', 4.5],
     ...['color.focus', 'color.border-control'].flatMap(foreground => surfaces.map(background => [foreground, background, 3] as [string, string, number]))
   ];
+  const luminances = new Map<string, number>();
   const lum = (color: string): number => {
+    const cached = luminances.get(color);
+    if (cached !== undefined) return cached;
     const rgb = color.slice(1).match(/../g);
     if (rgb?.length !== 3) throw new Error('Contrast requires resolved colors');
     const channels = rgb.map(x => Number.parseInt(x, 16) / 255).map(x => x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4);
-    return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+    const result = channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+    luminances.set(color, result);
+    return result;
   };
   const failures = new Set<string>();
   for (const values of Object.values(combinations)) for (const [foreground, background, minimum] of pairs) {
