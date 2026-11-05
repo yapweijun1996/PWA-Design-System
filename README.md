@@ -57,7 +57,7 @@ The first visit requires a connection. After service-worker installation and a s
 
 When an update is waiting, finish any pending import, commit or cancel a token draft, and close other Studio tabs before choosing **Prepare update**. Preparation does not reload the page. Unsaved drafts are held in memory: route changes are guarded and the browser is asked to confirm reload or closure, but a crash, forced termination or suppressed prompt can still lose a draft. Browser storage and caches may be evicted. The [PWA guide](apps/studio/src/features/pwa/README.md) explains update and cache cleanup limits.
 
-Local Chromium tests cover offline reload and version updates. An actual OS installation, iOS standalone behavior, offline operation in other browsers and the deployed Pages site are **NOT VERIFIED**.
+Local Chromium tests cover offline reload and version updates. The [hosted verification record](docs/DEPLOYMENT-VERIFICATION.md) covers Chrome page loading, navigation, appearance persistence and offline token editing on Pages. Actual OS installation, iOS standalone behavior and offline operation in other browsers remain **NOT VERIFIED**.
 
 ## Checks
 
