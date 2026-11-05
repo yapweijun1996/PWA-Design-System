@@ -239,4 +239,37 @@ describe('visual token workspace', () => {
       expect(f.root.querySelector<HTMLInputElement>('[data-token="color.surface"]')?.value).toBe(''); expect(f.count()).toBe('0 unsaved changes');
     } finally { if (original) Object.defineProperty(File.prototype, 'text', original); else Reflect.deleteProperty(File.prototype, 'text'); f.close(); }
   });
+  it('announces a pending import and explicitly reports commit canceling its read', async () => {
+    const f = fixture(); let finish: (value: string) => void = () => {};
+    const original = Object.getOwnPropertyDescriptor(File.prototype, 'text'); Object.defineProperty(File.prototype, 'text', { configurable: true, value: () => new Promise<string>(resolve => { finish = resolve; }) });
+    try {
+      f.edit('color.surface', '#fafafa'); const input = f.root.querySelector<HTMLInputElement>('input[type="file"]'); if (!input) throw new Error('Missing import');
+      Object.defineProperty(input, 'files', { configurable: true, value: [new File(['{}'], 'theme.json', { type: 'application/json' })] }); input.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(f.root.querySelector('.token-editor__status')?.textContent).toContain('Reading token configuration');
+      expect(f.root.querySelector('.token-editor__status')?.textContent).toContain('validated before preview');
+      expect(f.root.querySelector('.token-editor__status')?.textContent).toContain('Committing cancels this read');
+      f.click('Commit changes');
+      expect(f.root.querySelector('.token-editor__status')?.textContent).toContain('Pending import canceled. Current draft committed');
+      const incoming = configuration(); incoming.overrides.light['color.surface'] = '#f8f8f8'; finish(projectJSON(incoming)); await Promise.resolve(); await Promise.resolve();
+      expect(getCommitted().overrides.light['color.surface']).toBe('#fafafa');
+      expect(f.root.querySelector<HTMLInputElement>('[data-token="color.surface"]')?.value).toBe('#fafafa');
+      expect(f.root.querySelector('.token-editor__status')?.textContent).toContain('Pending import canceled. Current draft committed');
+    } finally { if (original) Object.defineProperty(File.prototype, 'text', original); else Reflect.deleteProperty(File.prototype, 'text'); f.close(); }
+  });
+  it('explains out-of-preview contrast failures without treating a valid HEX as syntax-invalid', () => {
+    const f = fixture();
+    try {
+      f.select('Editing scope', 'global'); const field = f.edit('color.surface', '#fafafa');
+      const status = f.root.querySelector('.token-editor__status');
+      expect(status?.textContent).toContain('project-wide checks (96 combinations)');
+      expect(status?.textContent).toContain('example: dark/');
+      expect(status?.textContent).toContain('even when this preview passes');
+      expect(field.getAttribute('aria-invalid')).toBe('false');
+      expect(field.getAttribute('aria-describedby')).toContain(status?.id);
+      expect(f.root.querySelector('[aria-label="Token preview"]')?.getAttribute('style')).toContain('--ds-color-surface: #fafafa');
+      expect(f.root.querySelector('[aria-label="Preview contrast checks"] li')?.textContent).toContain('Pass');
+      expect(f.click('Commit changes').disabled).toBe(true); expect(f.click('Export JSON').disabled).toBe(true);
+    } finally { f.close(); }
+  });
+
 });

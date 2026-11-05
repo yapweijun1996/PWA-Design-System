@@ -175,3 +175,27 @@ test('legacy saved breakpoint overrides migrate without losing other values befo
   expect(await page.evaluate(() => localStorage.getItem('pwa-ds-token-overrides-v1'))).toBe(saved);
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ds-breakpoint-tablet').trim())).toBe('768px');
 });
+
+test('pending imports announce progress and Commit explicitly cancels the unread configuration', async ({ page }) => {
+  const surface = page.getByLabel('color.surface override'); await surface.fill('#fafafa');
+  await page.evaluate(() => {
+    File.prototype.text = () => new Promise(resolve => { (window as unknown as { finishPendingImport: (text: string) => void }).finishPendingImport = resolve; });
+  });
+  await page.getByText('Import, export & reset', { exact: true }).click();
+  await page.getByLabel('Import token configuration').setInputFiles({ name: 'pending.json', mimeType: 'application/json', buffer: Buffer.from('{}') });
+  const status = page.locator('.token-editor__status'); await expect(status).toContainText('Reading token configuration'); await expect(status).toContainText('validated before preview'); await expect(status).toContainText('Committing cancels this read');
+  await page.getByRole('button', { name: 'Commit changes' }).click(); await expect(status).toContainText('Pending import canceled. Current draft committed');
+  await page.evaluate(() => (window as unknown as { finishPendingImport: (text: string) => void }).finishPendingImport(JSON.stringify({ schema: 'pwa-design-system/token-overrides', version: 1, overrides: { global: {}, light: { 'color.surface': '#f8f8f8' }, dark: {} } })));
+  await expect(surface).toHaveValue('#fafafa'); await expect(status).toContainText('Pending import canceled. Current draft committed');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('pwa-ds-token-overrides-v1') ?? '{}').overrides.light['color.surface'])).toBe('#fafafa');
+});
+
+test('a passing local preview explains project-wide contrast failures in another theme', async ({ page }) => {
+  await page.getByLabel('Editing scope').selectOption('global'); await page.getByLabel('Preview theme').selectOption('light');
+  const surface = page.getByLabel('color.surface override'); await surface.fill('#fafafa');
+  const status = page.locator('.token-editor__status'); await expect(status).toContainText('project-wide checks (96 combinations)'); await expect(status).toContainText('example: dark/'); await expect(status).toContainText('even when this preview passes');
+  await expect(surface).toHaveAttribute('aria-invalid', 'false');
+  await expect(page.getByLabel('Token preview', { exact: true }).getByLabel('Preview contrast checks', { exact: true }).getByRole('listitem').first()).toContainText('Pass');
+  await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
+  const statusId = await status.getAttribute('id'); expect(statusId).toBeTruthy(); await expect(surface).toHaveAttribute('aria-describedby', new RegExp(statusId ?? 'missing-status-id'));
+});

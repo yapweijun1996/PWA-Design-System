@@ -1,4 +1,4 @@
-.token-editor { display: grid; gap: var(--ds-spacing-md); min-width: 0; color: var(--ds-color-text); }
+.token-editor { display: grid; gap: var(--ds-spacing-sm); min-width: 0; color: var(--ds-color-text); }
 .token-editor [hidden] { display: none; }
 .token-editor :is(h1,h2,h3,p) { margin: 0; }
 .token-editor :is(label, fieldset, article, section) { min-width: 0; }
