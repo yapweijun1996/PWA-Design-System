@@ -43,3 +43,7 @@ VISUAL_SMOKE=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE='/path/to/chrome' npx playwright t
 ```
 
 Smoke mode checks that fixtures can be reached and states opened; it does not create or compare images and is never visual-regression evidence. The local machine used for implementation is macOS and its Docker daemon was unavailable, so it cannot establish the Linux baseline.
+
+## Studio usability completion review
+
+[CI capture42008985456](https://github.com/yapweijun1996/PWA-Design-System/actions/runs/42008985456) at `d4b0b33` produced fifteen candidates. On5November2026 the primary agent inspected each individually: four new Components desktop/tablet/mobile-picker fixtures, three updated Components disabled/menu/dialog scenes, five updated Token Editor scenes, and three byte-identical Theme Builder scenes. The Linux environment matched exactly. The hierarchy, picker and density changes were accepted as agent-reviewed baselines, not human design approval. Only twelve new/changed PNGs were copied. Three unchanged Theme Builder PNGs, environment record and strict threshold were preserved. Temporary capture job removed. Later focus/description corrections must pass strict comparison without automatic updates.
