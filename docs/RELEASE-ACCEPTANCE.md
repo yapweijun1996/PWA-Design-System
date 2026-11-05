@@ -92,3 +92,7 @@ An independent human reviewer should inspect the accepted desktop/tablet/mobile 
 - Real Safari tester / version / build / evidence:
 
 Subsequent review corrected a CSS-before-resize focus race and native accessibility description/name gaps. The measurements above retain their exact original source/build identity; they do not claim to measure later revisions. Latest CI and hosted checks are recorded in the delivery PR.
+
+## Hosted follow-up completed
+
+The feature was subsequently merged and deployed as build `2770362a08cd6927577f`. Hosted Lighthouse and actual Firefox checks were completed on that build. See [hosted QA](HOSTED-QA-2026-11-05.md) and [delivery evidence](STUDIO-DELIVERY-2026-11-05.md) for final results, exact source/CI/Pages identities and remaining owner-only acceptance. Earlier measurements retain their original source identities.
