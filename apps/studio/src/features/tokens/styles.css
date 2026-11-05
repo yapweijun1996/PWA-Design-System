@@ -11,7 +11,7 @@
 .token-editor__actions, .token-editor__row-actions, .token-editor__preview-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-sm); }
 .token-editor__actions > button { font-size: var(--ds-font-size-small); padding-inline: var(--ds-spacing-xs); }
 .token-editor > .token-editor__actions { gap: var(--ds-spacing-xs); }
-.token-editor > .token-editor__actions > button { min-width: var(--ds-size-control-medium); }
+:where(.token-editor) > .token-editor__actions > button { min-width: var(--ds-size-control-medium); }
 .token-editor__actions > button:first-child { background: var(--ds-color-primary); color: var(--ds-color-on-primary); border-color: var(--ds-color-primary); }
 .token-editor__draft-count { font-size: var(--ds-font-size-small); font-weight: var(--ds-font-weight-label); }
 .token-editor__status, .token-editor__validation { overflow-wrap: anywhere; line-height: 1.5; }

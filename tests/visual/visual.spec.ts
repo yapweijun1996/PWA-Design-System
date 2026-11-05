@@ -21,6 +21,7 @@ async function open(page: Page, route: string, theme: string, density: string): 
 }
 async function snapshot(page: Page, name: string, fullPage = true): Promise<void> {
   if (smoke) { await expect(page.locator('main')).toBeVisible(); return; }
+  if (!fullPage) await page.evaluate(() => window.scrollTo(0, 0));
   await expect(page).toHaveScreenshot(`${name}.png`, { fullPage });
 }
 
