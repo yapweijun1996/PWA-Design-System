@@ -12,13 +12,15 @@
     "build": "vite build --config apps/studio/vite.config.ts",
     "preview": "vite preview --config apps/studio/vite.config.ts",
     "typecheck": "tsc --noEmit && tsc --noEmit -p packages/core/tsconfig.json",
-    "lint": "biome lint --error-on-warnings apps/studio/src apps/studio/vite.config.ts packages/core/src tests/unit tests/e2e playwright.config.ts",
+    "lint": "biome lint --error-on-warnings apps/studio/src apps/studio/public apps/studio/vite.config.ts scripts packages/core/src packages/tokens/src tests/unit tests/e2e examples/vanilla playwright.config.ts",
     "test": "vitest run --exclude 'tests/e2e/**'",
     "tokens:build": "node scripts/tokens.mjs",
     "tokens:check": "node scripts/tokens.mjs --check",
     "contracts:check": "node scripts/check-component-contracts.mjs",
     "build:core": "tsc -p packages/core/tsconfig.json",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "check:artifact": "node scripts/check-studio-artifact.mjs",
+    "test:production": "node scripts/test-production-preview.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

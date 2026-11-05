@@ -3,8 +3,9 @@
 .ds-tabs [role="tab"][aria-selected="true"] { color: var(--ds-color-on-primary); background: var(--ds-color-primary); border-color: var(--ds-color-border-control); }
 .ds-tabs [role="tabpanel"] { padding-block: var(--ds-spacing-md); }
 .ds-breadcrumb ol { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-sm); margin: 0; padding: 0; list-style: none; }
+.ds-breadcrumb li { display: inline-flex; align-items: center; min-width: 0; max-width: 100%; }
 .ds-breadcrumb li + li::before { content: '/'; margin-inline-end: var(--ds-spacing-sm); color: var(--ds-color-text-muted); }
-.ds-breadcrumb a { color: var(--ds-color-link); }
+.ds-breadcrumb a { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; max-width: 100%; overflow-wrap: anywhere; color: var(--ds-color-link); }
 .ds-menu { position: relative; display: inline-block; }
 .ds-menu [role="menu"] { position: fixed; inset: auto; margin: 0; box-sizing: border-box; z-index: var(--ds-layer-overlay); width: max-content; max-width: calc(100vw - 1rem); max-height: calc(100vh - 1rem); overflow: auto; padding: var(--ds-spacing-xs); background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); box-shadow: var(--ds-shadow-card); }
 .ds-menu [role="menu"][hidden] { display: none; }

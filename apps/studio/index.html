@@ -5,57 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A framework-independent design system workspace.">
     <meta name="color-scheme" content="light dark">
-    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <title>PWA Design System Studio</title>
-    <script src="%BASE_URL%theme-init.js"></script>
+    <script src="/theme-init.js"></script>
+    <script src="/token-prepaint.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="app-shell">
-      <aside class="sidebar" aria-label="Studio navigation">
-        <a class="brand" href="#overview" aria-label="PWA Design System Studio home"><span class="brand-mark" aria-hidden="true">P</span><span><strong>PWA Design System</strong><small>STUDIO / FOUNDATION</small></span></a>
-        <nav aria-label="On this page">
-          <p class="nav-label">WORKSPACE</p>
-          <a href="#overview">Overview</a>
-          <a href="#tokens">Design tokens</a>
-          <a href="#appearance">Appearance</a>
-        </nav>
-        <div class="sidebar-foot">Foundation preview <span>v0.1</span></div>
+    <a class="studio-skip" href="#main">Skip to content</a>
+    <div class="studio-layout">
+      <aside id="desktop-sidebar" class="studio-sidebar" aria-label="Studio sidebar">
+        <a class="studio-brand" href="#overview"><span class="studio-brand-mark" aria-hidden="true">P</span><span><strong>PWA Design System</strong><small>STUDIO</small></span></a>
+        <nav class="studio-nav" aria-label="Studio navigation" data-studio-nav></nav>
+        <div class="studio-sidebar-foot"><span>DESIGN SYSTEM</span><strong>Foundation / v0.1</strong></div>
       </aside>
-      <div class="app-content">
-        <header class="topbar">
-          <span>Design System <span class="breadcrumb-separator" aria-hidden="true">/</span> <strong>Overview</strong></span>
-          <span class="status"><span class="status-dot" aria-hidden="true"></span> Foundation</span>
+      <div class="studio-content">
+        <header class="studio-topbar">
+          <div class="studio-topbar-context">
+            <button type="button" class="studio-menu-button" id="open-navigation" aria-label="Open navigation" aria-haspopup="dialog" aria-controls="mobile-navigation"><span aria-hidden="true">☰</span></button>
+            <div class="studio-breadcrumb"><span>Studio</span><span aria-hidden="true">/</span><strong id="current-page">Overview</strong></div>
+          </div>
+          <div class="studio-topbar-actions"><button type="button" class="studio-sidebar-toggle" id="toggle-sidebar" aria-controls="desktop-sidebar" aria-expanded="true">Collapse sidebar</button><label class="studio-theme-label" for="theme-select">Theme</label><span class="studio-select-wrap"><select id="theme-select" class="studio-select" name="theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></span></div>
         </header>
-        <main id="main" tabindex="-1">
-          <section id="overview" aria-labelledby="overview-title">
-            <div class="page-heading">
-              <div><p class="eyebrow">DESIGN SYSTEM STUDIO</p><h1 id="overview-title">Build with consistency.</h1><p class="intro">A shared foundation for accessible, adaptable interfaces.</p></div>
-              <a class="button button-primary" href="#tokens">Explore tokens <span aria-hidden="true">→</span></a>
-            </div>
-            <div class="overview-grid">
-              <div class="overview-card"><p class="card-index">01 / FOUNDATION</p><h2>One source of truth</h2><p>Design decisions are defined as tokens and generated for the web.</p><a href="#tokens">View token roles <span aria-hidden="true">↗</span></a></div>
-              <div class="overview-card"><p class="card-index">02 / APPEARANCE</p><h2>Make it your own</h2><p>Choose the appearance that works best for your workspace.</p><a href="#appearance">Change appearance <span aria-hidden="true">↗</span></a></div>
-            </div>
-          </section>
-          <section id="tokens" class="content-section" aria-labelledby="tokens-title">
-            <div class="section-heading"><div><p class="eyebrow">FOUNDATIONS</p><h2 id="tokens-title">Design tokens</h2><p>Semantic roles make visual decisions reusable across interfaces.</p></div><span class="section-count">COLOR / 04</span></div>
-            <div class="token-grid">
-              <div class="token-card"><span class="swatch swatch-background" aria-hidden="true"></span><div><strong>Background</strong><code>color.background</code></div></div>
-              <div class="token-card"><span class="swatch swatch-surface" aria-hidden="true"></span><div><strong>Surface</strong><code>color.surface</code></div></div>
-              <div class="token-card"><span class="swatch swatch-primary" aria-hidden="true"></span><div><strong>Primary</strong><code>color.primary</code></div></div>
-              <div class="token-card"><span class="swatch swatch-focus" aria-hidden="true"></span><div><strong>Focus</strong><code>color.focus</code></div></div>
-            </div>
-          </section>
-          <section id="appearance" class="content-section" aria-labelledby="appearance-title">
-            <div class="section-heading"><div><p class="eyebrow">PREFERENCES</p><h2 id="appearance-title">Appearance</h2><p>Set a theme for this browser. System follows your device preference.</p></div></div>
-            <div class="settings-card"><div><label for="theme-select">Theme</label><p>Choose light, dark, or system appearance.</p></div><select id="theme-select" name="theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></div>
-            <p id="preference-status" class="sr-only" role="status"></p>
-          </section>
-          <footer>Built on a shared design foundation. <span>Studio / 0.1</span></footer>
-        </main>
+        <p id="preference-status" class="studio-preference-status" role="status"></p>
+        <main id="main" class="studio-main" tabindex="-1"><p>Loading workspace…</p></main>
       </div>
     </div>
+    <dialog id="mobile-navigation" class="studio-drawer" aria-labelledby="mobile-navigation-title">
+      <div class="studio-drawer-header"><div><span class="studio-eyebrow">WORKSPACE</span><h2 id="mobile-navigation-title">Navigation</h2></div><button id="close-navigation" type="button" class="studio-close-button" aria-label="Close navigation">×</button></div>
+      <nav class="studio-nav studio-drawer-nav" aria-label="Mobile navigation" data-studio-nav></nav>
+    </dialog>
+    <p id="route-announcement" class="studio-sr-only" role="status" aria-live="polite"></p>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

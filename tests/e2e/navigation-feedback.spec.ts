@@ -55,6 +55,26 @@ test('tabs notify only actual user selection changes', async ({ page }) => {
 test('breadcrumb exposes the current page and real links', async ({ page }) => {
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByText('Current')).toHaveAttribute('aria-current', 'page'); await expect(page.getByRole('link', { name: 'Home' })).toHaveAttribute('href', 'https://example.test/');
 });
+test('standalone breadcrumb links have usable targets beside other controls', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 600 });
+  await useStandaloneStyles(page);
+  await page.evaluate(async path => {
+    const { createBreadcrumb, createMenu } = await import(/* @vite-ignore */ path);
+    const breadcrumb = createBreadcrumb([{ label: 'Home', href: '/' }, { label: 'Area', href: '/area' }, { label: 'Current' }]);
+    const menu = createMenu({ label: 'Actions', items: [{ label: 'Run', onSelect() {} }] });
+    document.body.append(breadcrumb.element, menu.element);
+  }, navPath);
+  for (const name of ['Home', 'Area']) {
+    const target = await page.getByRole('link', { name }).boundingBox();
+    if (!target) throw new Error('Expected breadcrumb link geometry');
+    expect(target.width).toBeGreaterThanOrEqual(44);
+    expect(target.height).toBeGreaterThanOrEqual(44);
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  const result = await new AxeBuilder({ page }).include('.ds-breadcrumb').include('.ds-menu').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
+  expect(result.passes.some(rule => rule.id === 'target-size')).toBe(true);
+  expect(result.violations).toEqual([]);
+});
 test('menu blocks disabled activation, wraps, escapes and tabs away', async ({ page, browserName }) => {
   const trigger = page.getByRole('button', { name: 'Actions' }), disabled = page.getByRole('menuitem', { name: 'Disabled' }), run = page.getByRole('menuitem', { name: 'Run' });
   // Probe native macOS WebKit behavior: without full keyboard navigation, Option-Tab visits buttons.

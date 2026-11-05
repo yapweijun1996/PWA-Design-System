@@ -43,4 +43,16 @@ describe('component contract gate', () => {
     await expect(validateContracts(actual, { read: replace(unit, '// createButton() in a comment\n') })).rejects.toThrow(/Missing unitTest factory call/);
     await expect(validateContracts(actual, { read: replace(browser, '// createButton() in a comment\n') })).rejects.toThrow(/Missing browserTest factory call/);
   });
+  it('detects inherited and local option-property additions and removals', async () => {
+    const shared = 'packages/core/src/foundation/shared.ts'; const sharedText = await read(shared);
+    await expect(validateContracts(actual, { read: replace(shared, sharedText.replace('disabled?: boolean;', 'disabled?: boolean; newFlag?: boolean;')) })).rejects.toThrow(/Option property drift/);
+    const input = 'packages/core/src/forms/input.ts'; const inputText = await read(input);
+    await expect(validateContracts(actual, { read: replace(input, inputText.replace('placeholder?: string;', '')) })).rejects.toThrow(/Option property drift/);
+  });
+  it('rejects missing metadata and changed property types', async () => {
+    const missing = clone(); missing.components[0].properties.pop();
+    await expect(validateContracts(missing)).rejects.toThrow(/Option property drift/);
+    const wrongType = clone(); wrongType.components[0].properties[0].type = 'number';
+    await expect(validateContracts(wrongType)).rejects.toThrow(/Option type drift/);
+  });
 });

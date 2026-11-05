@@ -1,46 +1,59 @@
 # PWA Design System
 
-PWA Design System is an early-stage, framework-independent design-system project. It contains a token compiler, a core library with 20 component families, and a small Studio foundation. The core and token packages are **private and unpublished**; the project is not yet production-ready or an installable PWA.
+PWA Design System is an early-stage, framework-independent design system and Studio for developers building consistent interfaces. It combines reusable DOM components, a shared token compiler, interactive previews and a component inventory for tooling. The core and token packages are **private and unpublished**; this is not yet a production release or an installable PWA.
 
 ## What is available
 
-- JSON token sources and a deterministic compiler that emits CSS custom properties, JSON and TypeScript for 96 theme, palette, density and kit combinations.
-- Framework-independent DOM factories for Button, Icon Button, Badge, Card, Separator, Tooltip, Input, Textarea, Checkbox, Radio Group, Switch, Select, Form Field, Tabs, Breadcrumb, Menu, Pagination, Dialog, Alert and Toast.
-- A machine-readable component inventory with a check for required families, source exports, package entry points and unit/browser test-call references. This check does not prove behavior or test execution.
-- A foundation-only Studio with token-role previews and light, dark or system theme selection. Light is the default; browser storage is used for the preference when available. Palette, density and kit controls are not yet exposed in the Studio.
-- A [working Vanilla example](examples/vanilla/README.md) covering the 20 current families, plus unit tests and Playwright browser tests with scoped axe checks.
+- JSON token sources and a deterministic compiler generate CSS custom properties, JSON and TypeScript for 96 theme, palette, density and visual-kit combinations.
+- The core library contains 20 component families: Button, Icon Button, Badge, Card, Separator, Tooltip, Input, Textarea, Checkbox, Radio Group, Switch, Select, Form Field, Tabs, Breadcrumb, Menu, Pagination, Dialog, Alert and Toast. The [core guide](packages/core/README.md) and family guides document their current APIs and limits.
+- The Studio has hash-linked navigation, a responsive sidebar and mobile drawer, plus light, dark and system appearance. Its component catalog is searchable; the playground shows live components, supported property controls, API and keyboard notes, and code generated from the same preview configuration. Some properties and states are deliberately not editable in the playground.
+- The token editor stages semantic overrides, previews them, and supports validated JSON import and JSON/CSS export. A Layout Playground previews seven local examples at selectable and adjustable iframe widths.
+- A machine-readable component inventory and an automated check cover required family identities, source exports, package entry points and test-call references. They do not establish that the referenced behavior or tests are complete.
+- A [Vanilla example](examples/vanilla/README.md), unit tests and Playwright tests with scoped axe checks exercise the current library.
 
-The Studio component playground, token editor, layout playground, AI agent exports, React adapters and offline installation/update features are **not implemented**. Several core components currently offer one size or style, and some interaction APIs are intentionally limited; see the [core guide](packages/core/README.md) and family guides. There is no verified WCAG conformance or production release.
+The separate Theme Builder, Accessibility Lab, AI Agent Rules and Documentation Studio sections are pending. Agent rule exports, React adapters, PWA installation and offline/update behavior are not implemented. Layout Playground's Data Table is a **static HTML layout example**, not the planned enterprise Data Table component; its dialog example is also static. There is no verified WCAG conformance or production release.
 
 ## Getting started
 
-The intended minimum browsers are Chrome and Edge 114, Firefox 125, and Safari and iOS Safari 17. Tooltip requires the native Popover API and reports an error if it is unavailable. These minimum versions have not all been verified on their actual releases or devices.
-
-Use Node.js `^22.13.0 || >=24.0.0` and npm. From the repository root:
+Use Node.js `^22.13.0 || >=24.0.0` and npm:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the URL printed by Vite. The Studio uses `/PWA-Design-System/` as its base path. Build and preview it with:
+Open the URL printed by Vite. Studio routes use URL fragments, for example `/PWA-Design-System/#components`, so deep links work under the configured GitHub Pages subpath. On desktop, the sidebar can be collapsed for the current session; tablet and mobile use their own responsive navigation. Theme selection is stored in the browser when storage is available, with Light as the default.
+
+Build and preview the production assets locally:
 
 ```sh
 npm run build
 npm run preview
 ```
 
-The build output is `dist/studio/`. The GitHub Pages deployment workflow is deliberately disabled pending the remaining release gates; the live target has **not been verified**.
+The output is `dist/studio/`. Vite may warn that the classic token prepaint script is not bundled as a module: the build emits that script separately so it can run before the stylesheet. The Pages deployment workflow is deliberately disabled pending release gates; the proposed live site has **not been verified**.
+
+The intended minimum browser versions are Chrome and Edge 114, Firefox 125, and Safari and iOS Safari 17. Tooltip and Menu require the native Popover API and fail explicitly if it is unavailable. These minimum releases and devices have not all been verified.
+
+## Using the Studio token editor
+
+Open **Design Tokens**. Primitive values are read-only; semantic fields accept a valid value for their token type or a full alias such as `{semantic.color.primary}`. Choose **All themes**, **Light only** or **Dark only**. Theme-specific overrides take precedence over all-theme overrides, which take precedence over the selected theme, palette, density and visual kit. The current preview follows the Studio's appearance; breakpoint tokens are reference values and do not rewrite CSS media queries.
+
+Edits and imports are staged in the preview. **Commit changes** validates and saves the project overrides in this browser; **Cancel draft** restores the committed configuration, and **Reset draft to defaults** previews a reset until it is committed. A failed storage write leaves the previous committed configuration in place. An import still being read is canceled if the draft is subsequently edited, reset, canceled or committed.
+
+**Import token configuration** accepts the versioned override JSON format up to 64 KiB. Parsing checks its shape, duplicate or forbidden keys, known token names, types, aliases and bounds before applying it to the draft. Invalid imports do not replace the draft or committed settings. Representative text, focus and control-border contrast pairs are checked across the 96 combinations; this is not a complete accessibility audit. Imports are data: the editor does not execute imported JavaScript or evaluate expressions.
+
+**Export JSON** downloads project overrides; **Export CSS** downloads validated resolved values for the supported combinations. Load exported CSS after the base generated tokens, and set the documented appearance attributes. Repository source JSON and checked-in generated artifacts are not changed by editor use. The [token editor guide](apps/studio/src/features/tokens/README.md) contains the format, precedence and Content Security Policy considerations.
 
 ## Core and examples
 
-Build the private core package from its TypeScript sources:
+Build the private core package from TypeScript:
 
 ```sh
 npm run build:core
 ```
 
-The [core guide](packages/core/README.md) describes its ESM and stylesheet entry points. The private token package exposes generated CSS, JSON and TypeScript. The [Vanilla example](examples/vanilla/README.md) shows how to serve the built core and generated styles locally; it does not require a framework. Package publication and stable versioned integration are not yet established.
+Load generated token CSS before the core styles for the component families in use. The [core guide](packages/core/README.md) describes ESM and stylesheet entry points; the private token package exposes generated CSS, JSON and TypeScript. The [Vanilla example](examples/vanilla/README.md) shows how to serve the built core and generated styles locally without a framework. Publication and stable versioned package integration are not yet established.
 
 ## Checks
 
@@ -52,21 +65,21 @@ npm run tokens:check
 npm run contracts:check
 npm run build:core
 npm run build
+npm run check:artifact
 npx playwright install chromium
 npm run test:e2e
+npm run test:production
 ```
 
-Playwright's configuration starts a local Vite server. Browser installation may require network access and platform dependencies. The browser suite exercises selected interactions and scoped axe checks; these do not prove full accessibility, browser compatibility or visual quality. Visual regression baselines, manual assistive-technology evidence, complete responsive/state coverage and offline/update tests remain outstanding. See [Architecture](docs/ARCHITECTURE.md) for the exact boundaries.
+`test:e2e` starts a local Vite server. `test:production` requires a current Studio build and starts a local production preview for first-frame and subpath checks. Browser installation may require network access and platform dependencies. Automated tests and scoped axe checks do not prove full accessibility, browser compatibility or visual quality. Manual assistive-technology checks, reviewed visual baselines, broader device coverage and offline/update tests remain outstanding.
 
-## Tokens
+## Token sources
 
-The authoritative sources are in `packages/tokens/`: `primitives.json`, `semantics.json`, and the theme, palette, density and kit files. Edit these sources, not `packages/tokens/generated/`. Regenerate and verify after a source change:
+The authoritative repository sources are in `packages/tokens/`: `primitives.json`, `semantics.json`, and theme, palette, density and kit files. Edit those sources, not `packages/tokens/generated/`. Regenerate and verify after a source change:
 
 ```sh
 npm run tokens:build
 npm run tokens:check
 ```
 
-The compiler validates token values and alias references, rejects cycles and CSS variable-name collisions, and emits a resolved matrix of 96 combinations. The output uses semantic CSS custom properties. Its Node compiler is not a browser-side import validator.
-
-See the [Phase 0 audit](docs/PHASE-0-AUDIT.md) for research and risks. Original project code is available under the [MIT License](LICENSE); dependency notices and distribution obligations remain to be reviewed before release.
+See [Architecture](docs/ARCHITECTURE.md) for boundaries and remaining work, and the [Phase 0 audit](docs/PHASE-0-AUDIT.md) for initial research. Original project code is available under the [MIT License](LICENSE); dependency notices and distribution obligations remain to be reviewed before release.

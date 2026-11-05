@@ -23,8 +23,10 @@ jobs:
       - run: npm run contracts:check
       - run: npm run build:core
       - run: npm run build
+      - run: npm run check:artifact
       - run: npx playwright install --with-deps --only-shell chromium
       - run: npm run test:e2e
+      - run: npm run test:production
       - name: Validate deployment artifact
         run: |
           test -s dist/studio/index.html

@@ -38,7 +38,7 @@ const allowed = new Map(required.map(([family, factory, source, optionType, subp
   const group = source.split('/')[0];
   return [family, { factory, source: `packages/core/src/${source}.ts`, optionType, entry: `@pwa-design-system/core/${subpath}`, unitTest: groups[group].unit, browserTest: groups[group].browser, module: `./${source}.js`, subpath, dist: `./dist/${source}.js`, types: `./dist/${source}.d.ts` }];
 }));
-const componentKeys = ['family', 'factory', 'source', 'entry', 'optionType', 'keyboard', 'states', 'unitTest', 'browserTest'];
+const componentKeys = ['family', 'factory', 'source', 'entry', 'optionType', 'keyboard', 'states', 'unitTest', 'browserTest', 'properties', 'apiNotes'];
 function object(value, label, expected) {
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype) throw new Error(`${label} must be an object`);
   const actual = Object.keys(value).sort(), keys = [...expected].sort();
@@ -72,7 +72,7 @@ function calls(tree, name) {
   visit(tree); return found;
 }
 async function defaultRead(path) { return readFile(join(root, path), 'utf8'); }
-/** Validate data and inspect source/export/test-call presence. This does not prove test execution or behavioral correctness. */
+/** Validate shape, source property signatures, exports and test-call presence. Defaults and behavior require separate runtime tests. */
 export async function validateContracts(data, { read = defaultRead } = {}) {
   object(data, 'Contract', ['version', 'components']);
   if (data.version !== 1) throw new Error('Unsupported contract version');
@@ -82,6 +82,16 @@ export async function validateContracts(data, { read = defaultRead } = {}) {
     object(component, 'Component', componentKeys);
     for (const key of ['family', 'factory', 'source', 'entry', 'optionType', 'unitTest', 'browserTest']) text(component[key], key);
     textList(component.keyboard, 'keyboard'); textList(component.states, 'states');
+    text(component.apiNotes, 'apiNotes');
+    if (!Array.isArray(component.properties) || component.properties.length < 1 || component.properties.length > 20) throw new Error('properties must contain 1 to 20 entries');
+    const properties = new Set();
+    for (const property of component.properties) {
+      object(property, 'Property', ['name', 'type', 'required', 'defaultValue', 'editable', 'reason']);
+      for (const key of ['name', 'type', 'defaultValue', 'reason']) text(property[key], `Property ${key}`);
+      if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(property.name) || properties.has(property.name)) throw new Error(`Invalid or duplicate property for ${component.family}`);
+      if (typeof property.required !== 'boolean' || typeof property.editable !== 'boolean') throw new Error('Property flags must be boolean');
+      properties.add(property.name);
+    }
     if (seen.has(component.family)) throw new Error(`Duplicate family: ${component.family}`);
     seen.add(component.family);
     const expected = allowed.get(component.family);
@@ -105,6 +115,32 @@ export async function validateContracts(data, { read = defaultRead } = {}) {
     if (entry?.import !== expected.dist || entry?.types !== expected.types) throw new Error(`Invalid package entry: ${expected.subpath}`);
     for (const key of ['unitTest', 'browserTest']) if (!calls(await tree(expected[key]), expected.factory)) throw new Error(`Missing ${key} factory call for ${component.family}`);
   }
+  // Resolve inherited interfaces, Omit and type aliases through TypeScript itself.
+  // A snapshot keeps injected test sources authoritative without executing them.
+  const sourcePaths = new Set([...allowed.values()].map(item => item.source));
+  for (const path of ['packages/core/src/index.ts', 'packages/core/src/types.ts', 'packages/core/src/foundation/shared.ts', 'packages/core/src/forms/shared.ts']) sourcePaths.add(path);
+  const snapshot = new Map(await Promise.all([...sourcePaths].map(async path => [resolve(root, path), await readChecked(path)])));
+  const options = { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.NodeNext, moduleResolution: ts.ModuleResolutionKind.NodeNext, skipLibCheck: true, strict: true, noEmit: true };
+  const host = ts.createCompilerHost(options); const originalRead = host.readFile.bind(host);
+  host.readFile = path => snapshot.get(resolve(path)) ?? originalRead(path);
+  const program = ts.createProgram([...snapshot.keys()], options, host), checker = program.getTypeChecker();
+  for (const component of data.components) {
+    const expected = allowed.get(component.family), source = program.getSourceFile(resolve(root, expected.source));
+    const module = source && checker.getSymbolAtLocation(source);
+    const name = expected.optionType.replace(/\[\]$/, '');
+    const symbol = module && checker.getExportsOfModule(module).find(item => item.name === name);
+    if (!symbol) throw new Error(`Cannot resolve option type ${name}`);
+    const type = checker.getDeclaredTypeOfSymbol(symbol), actual = checker.getPropertiesOfType(type);
+    const documented = new Map(component.properties.map(property => [property.name, property]));
+    if (actual.length !== documented.size || actual.some(property => !documented.has(property.name))) throw new Error(`Option property drift: ${component.family}`);
+    for (const property of actual) {
+      const declaration = property.valueDeclaration ?? property.declarations?.[0];
+      if (!declaration) throw new Error(`Cannot resolve property ${property.name}`);
+      const sourceType = checker.typeToString(checker.getTypeOfSymbolAtLocation(property, declaration), undefined, ts.TypeFormatFlags.NoTruncation);
+      const record = documented.get(property.name);
+      if (record.type !== sourceType || record.required !== !(property.flags & ts.SymbolFlags.Optional)) throw new Error(`Option type drift: ${component.family}.${property.name}`);
+    }
+  }
   return { families: seen.size };
 }
 export async function readContract() {
@@ -114,5 +150,5 @@ export async function readContract() {
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   if (process.argv.length !== 2) { console.error('Usage: node scripts/check-component-contracts.mjs'); process.exitCode = 1; }
-  else readContract().then(data => validateContracts(data)).then(result => console.log(`Validated ${result.families} family identities, exports and test-call references; behavior and test execution require separate verification.`)).catch(error => { console.error(error.message); process.exitCode = 1; });
+  else readContract().then(data => validateContracts(data)).then(result => console.log(`Validated ${result.families} family identities, option signatures, exports and test-call references. Defaults, editable behavior and test execution require separate verification.`)).catch(error => { console.error(error.message); process.exitCode = 1; });
 }

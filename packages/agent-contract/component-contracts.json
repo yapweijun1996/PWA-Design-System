@@ -16,7 +16,66 @@
         "loading"
       ],
       "unitTest": "tests/unit/foundation.test.ts",
-      "browserTest": "tests/e2e/foundation.spec.ts"
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "Size | undefined",
+          "required": false,
+          "defaultValue": "medium",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "ActionVariant | undefined",
+          "required": false,
+          "defaultValue": "primary",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"submit\" | \"reset\" | undefined",
+          "required": false,
+          "defaultValue": "button",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onClick",
+          "type": "((event: MouseEvent) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "icon-button",
@@ -33,7 +92,74 @@
         "loading"
       ],
       "unitTest": "tests/unit/foundation.test.ts",
-      "browserTest": "tests/e2e/foundation.spec.ts"
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "Size | undefined",
+          "required": false,
+          "defaultValue": "medium",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "ActionVariant | undefined",
+          "required": false,
+          "defaultValue": "primary",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"submit\" | \"reset\" | undefined",
+          "required": false,
+          "defaultValue": "button",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onClick",
+          "type": "((event: MouseEvent) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "badge",
@@ -51,7 +177,26 @@
         "danger"
       ],
       "unitTest": "tests/unit/foundation.test.ts",
-      "browserTest": "tests/e2e/foundation.spec.ts"
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "\"primary\" | \"neutral\" | \"success\" | \"danger\" | undefined",
+          "required": false,
+          "defaultValue": "neutral",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "card",
@@ -67,7 +212,26 @@
         "elevated"
       ],
       "unitTest": "tests/unit/foundation.test.ts",
-      "browserTest": "tests/e2e/foundation.spec.ts"
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "variant",
+          "type": "\"outlined\" | \"elevated\" | undefined",
+          "required": false,
+          "defaultValue": "outlined",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "separator",
@@ -83,7 +247,18 @@
         "vertical"
       ],
       "unitTest": "tests/unit/foundation.test.ts",
-      "browserTest": "tests/e2e/foundation.spec.ts"
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\" | undefined",
+          "required": false,
+          "defaultValue": "horizontal",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "tooltip",
@@ -99,7 +274,26 @@
         "visible"
       ],
       "unitTest": "tests/unit/foundation.test.ts",
-      "browserTest": "tests/e2e/foundation.spec.ts"
+      "browserTest": "tests/e2e/foundation.spec.ts",
+      "properties": [
+        {
+          "name": "trigger",
+          "type": "HTMLElement",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "The playground supplies this DOM element; arbitrary DOM input is not accepted."
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "input",
@@ -116,7 +310,82 @@
         "required"
       ],
       "unitTest": "tests/unit/forms.test.ts",
-      "browserTest": "tests/e2e/forms.spec.ts"
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "type",
+          "type": "\"text\" | \"email\" | \"password\" | \"search\" | \"tel\" | \"url\" | undefined",
+          "required": false,
+          "defaultValue": "text",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "empty string",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "textarea",
@@ -133,7 +402,82 @@
         "required"
       ],
       "unitTest": "tests/unit/forms.test.ts",
-      "browserTest": "tests/e2e/forms.spec.ts"
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "empty string",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "rows",
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "3",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "checkbox",
@@ -151,7 +495,82 @@
         "error"
       ],
       "unitTest": "tests/unit/forms.test.ts",
-      "browserTest": "tests/e2e/forms.spec.ts"
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "checked",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "native checkbox default",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "radio-group",
@@ -169,7 +588,74 @@
         "error"
       ],
       "unitTest": "tests/unit/forms.test.ts",
-      "browserTest": "tests/e2e/forms.spec.ts"
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "legend",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "options",
+          "type": "readonly RadioOption[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable as bounded text lines; callback code remains fixed."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "switch",
@@ -187,7 +673,82 @@
         "error"
       ],
       "unitTest": "tests/unit/forms.test.ts",
-      "browserTest": "tests/e2e/forms.spec.ts"
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "checked",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "native checkbox default",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "select",
@@ -204,7 +765,74 @@
         "required"
       ],
       "unitTest": "tests/unit/forms.test.ts",
-      "browserTest": "tests/e2e/forms.spec.ts"
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "options",
+          "type": "readonly SelectOption[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable as bounded text lines; callback code remains fixed."
+        },
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "first available option",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Fixed by the playground to avoid document ID collisions."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable through a mutually exclusive state selector."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+          "required": false,
+          "defaultValue": "md",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "form-field",
@@ -220,7 +848,42 @@
         "error"
       ],
       "unitTest": "tests/unit/forms.test.ts",
-      "browserTest": "tests/e2e/forms.spec.ts"
+      "browserTest": "tests/e2e/forms.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "control",
+          "type": "HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "The playground supplies this DOM element; arbitrary DOM input is not accepted."
+        },
+        {
+          "name": "description",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable when the error state is selected."
+        }
+      ],
+      "apiNotes": "Returns setError(message?) and restores owned description state on destroy."
     },
     {
       "family": "tabs",
@@ -236,7 +899,42 @@
         "unselected"
       ],
       "unitTest": "tests/unit/navigation-feedback.test.ts",
-      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "tabs",
+          "type": "readonly { label: string; content: string; }[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable as bounded text lines; callback code remains fixed."
+        },
+        {
+          "name": "selectedIndex",
+          "type": "number | undefined",
+          "required": false,
+          "defaultValue": "0",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onChange",
+          "type": "((index: number) => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "select(index) is silent; user selection calls onChange when provided."
     },
     {
       "family": "breadcrumb",
@@ -252,7 +950,26 @@
         "link"
       ],
       "unitTest": "tests/unit/navigation-feedback.test.ts",
-      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Current page label is editable; the Home item is fixed."
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "The optional second navigation label is editable; default Breadcrumb. The current page label and Home href are editable."
     },
     {
       "family": "menu",
@@ -269,7 +986,26 @@
         "disabled item"
       ],
       "unitTest": "tests/unit/navigation-feedback.test.ts",
-      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "items",
+          "type": "readonly MenuItem[]",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Edit item labels and disabled states as bounded text lines; callback code remains fixed."
+        }
+      ],
+      "apiNotes": "Items use one label per line, optionally followed by | disabled. Callbacks are fixed no-ops. Menu requires the native Popover API."
     },
     {
       "family": "pagination",
@@ -286,7 +1022,42 @@
         "last page"
       ],
       "unitTest": "tests/unit/navigation-feedback.test.ts",
-      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "page",
+          "type": "number",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "totalPages",
+          "type": "number",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onChange",
+          "type": "(page: number) => void",
+          "required": true,
+          "defaultValue": "required",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "Pagination",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "dialog",
@@ -302,7 +1073,42 @@
         "open"
       ],
       "unitTest": "tests/unit/navigation-feedback.test.ts",
-      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "Close",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onClose",
+          "type": "(() => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "open(opener?) accepts a connected opener for focus restoration; close() dismisses."
     },
     {
       "family": "alert",
@@ -318,7 +1124,34 @@
         "assertive update"
       ],
       "unitTest": "tests/unit/navigation-feedback.test.ts",
-      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "tone",
+          "type": "AlertTone | undefined",
+          "required": false,
+          "defaultValue": "info",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "assertive",
+          "type": "boolean | undefined",
+          "required": false,
+          "defaultValue": "false",
+          "editable": true,
+          "reason": "Editable in the preview."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     },
     {
       "family": "toast",
@@ -334,7 +1167,34 @@
         "dismissed"
       ],
       "unitTest": "tests/unit/navigation-feedback.test.ts",
-      "browserTest": "tests/e2e/navigation-feedback.spec.ts"
+      "browserTest": "tests/e2e/navigation-feedback.spec.ts",
+      "properties": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "defaultValue": "required",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "dismissLabel",
+          "type": "string | undefined",
+          "required": false,
+          "defaultValue": "Dismiss",
+          "editable": true,
+          "reason": "Editable in the preview."
+        },
+        {
+          "name": "onDismiss",
+          "type": "(() => void) | undefined",
+          "required": false,
+          "defaultValue": "not supplied",
+          "editable": false,
+          "reason": "Callbacks are code and cannot be entered or executed by the playground."
+        }
+      ],
+      "apiNotes": "See property types and defaults below. Preview values may differ from defaults."
     }
   ]
 }
