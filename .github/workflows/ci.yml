@@ -64,25 +64,3 @@ jobs:
           path: test-results/
           if-no-files-found: warn
           retention-days: 7
-  # Temporary candidate capture; strict visual-regression above remains required.
-  visual-candidate:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: npm
-      - run: npm ci
-      - run: npm run build:react
-      - run: npx playwright install --with-deps --only-shell chromium
-      - run: rm tests/visual/baselines/*.png
-      - run: VISUAL_CAPTURE=1 npx playwright test -c tests/visual/playwright.config.ts --update-snapshots
-      - run: node tests/visual/environment.mjs --capture
-      - uses: actions/upload-artifact@v4
-        with:
-          name: unified-studio-visual-candidates
-          path: tests/visual/baselines/
-          if-no-files-found: error
-          retention-days: 7

@@ -33,3 +33,9 @@ Phone panels are Explorer, Canvas and Properties; the Canvas panel can contain C
 Automated checks cover semantic behavior, pointer/keyboard/non-drag resizing, responsive geometry, focus, import/draft workflows, component code parity and selected axe rules. Reviewed Linux screenshots require the locked environment and strict comparison gate. Automated axe and emulated widths do not establish complete WCAG conformance, physical touch behavior, actual iOS installation/safe-area/keyboard behavior or independent human visual approval.
 
 For update policy, safe-area ownership and route-specific header defaults, see [PWA exceptions](PWA-STANDARD-EXCEPTIONS.md). Release evidence and remaining manual acceptance must identify the tested source/build rather than reuse historical pass counts.
+
+## Reviewed visual baseline
+
+The 19 scenarios cover light/dark, compact/comfortable, mobile/tablet/desktop, Token Details/Preview/draft, Components Explorer/Properties/Code and open menu/dialog states. Fresh candidates were captured by CI run `42176233841` from `67f0f53` on Ubuntu24.04/Playwright1.64.1/Chromium156.0.8078.4. The existing font digest and environment fingerprint are unchanged. All19 images were individually inspected; ten revised final images were re-inspected after the last polish, and nine were byte-identical to already reviewed captures. The temporary capture job was removed after acceptance. Strict `maxDiffPixelRatio: 0.001` and environment checking remain unchanged.
+
+Screenshots represent the captured viewport and state, not full functional or accessibility acceptance. In particular, narrow Token tables intentionally scroll horizontally; a screenshot does not imply every column is simultaneously visible.
