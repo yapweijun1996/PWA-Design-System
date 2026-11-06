@@ -48,6 +48,6 @@ test('tablet token values stay readable inside the deliberate horizontal table s
   expect(geometry.horizontal).toBe(true); expect(geometry.tableWidth).toBeGreaterThanOrEqual(576); expect(geometry.rowHeight).toBeLessThan(100);
   for (const width of geometry.valueWidths) expect(width).toBeGreaterThanOrEqual(128);
   await table.evaluate(node => { node.scrollLeft = node.scrollWidth; });
-  await expect(page.getByRole('columnheader', { name: 'Override', exact: true })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Override status', exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
