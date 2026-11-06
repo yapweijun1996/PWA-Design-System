@@ -96,3 +96,12 @@ Subsequent review corrected a CSS-before-resize focus race and native accessibil
 ## Hosted follow-up completed
 
 The feature was subsequently merged and deployed as build `2770362a08cd6927577f`. Hosted Lighthouse and actual Firefox checks were completed on that build. See [hosted QA](HOSTED-QA-2026-11-05.md) and [delivery evidence](STUDIO-DELIVERY-2026-11-05.md) for final results, exact source/CI/Pages identities and remaining owner-only acceptance. Earlier measurements retain their original source identities.
+
+
+## Unified workspace follow-up — 6 November 2026
+
+Product releaseB is source `3163663ce123b4c91abe79879f60972a107dc803`, hosted build `1170b641fcdfe7977a19`. See the [complete delivery record](UNIFIED-STUDIO-DELIVERY-2026-11-06.md) for 324 CI cases,39 WebKit cases,24 independent Chrome layout journeys,18 final hosted journeys and real old→A→B guarded/offline update evidence. These replace no historical results above; each retains its own source identity.
+
+Actual native Safari 27.0.1 (22625.1.29.11.28) was additionally exercised through the existing Computer Use surface without enabling Remote Automation. Narrow/wide panels, property→preview→code parity, native 200% reflow, invalid-token Commit blocking and Cancel restoration passed.100% zoom was restored and the task tab closed. Exact per-tab build metadata/viewport were not captured during the rollout, and Safari console/network/offline/install/full-suite results remain NOT VERIFIED. This is bounded native Safari evidence, separate from Playwright WebKit 27.2.
+
+Physical iOS/Android installation/standalone/safe-area/keyboard/rotation, manual VoiceOver/NVDA, actual 400% zoom, independent human visual approval and field Core Web Vitals remain NOT VERIFIED. Do not mark those acceptance rows complete based on these agent/automated observations.

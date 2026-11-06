@@ -26,3 +26,10 @@ Observed on 2026-11-05 at [PWA Design System Studio](https://yapweijun1996.githu
 All test settings were confined to the isolated browser context. The intentional uncached offline probe produces an expected network failure. The online console check was recorded separately.
 
 The first deployment has no preceding hosted version. Automated PWA tests cover version upgrades, old chunks, cache cleanup and mixed-version installation rejection. Actual OS installation, iOS standalone operation, Firefox, manual screen-reader workflows and independent human visual approval remain **NOT VERIFIED**. See [ACCESSIBILITY.md](ACCESSIBILITY.md) and the [role-based review](REVIEW-13-PERSONAS.md).
+
+
+## Unified workspace releases — 6 November 2026
+
+PR 9 merge `a04651567456c6d11415c1083dfabdf8fa633c2e` passed main CI 42178963197 and Pages 42179274244, serving build `bc33df665683dc92506b`. PR 10 merge `3163663ce123b4c91abe79879f60972a107dc803` passed main CI 42180325282 and Pages 42180666846, serving build `1170b641fcdfe7977a19`. Both were verified against all 30 downloaded artifact files and all 29 precache digests, including canonical index/worker responses.
+
+Real Chrome retained the earlier build 652 with an unsafe draft, upgraded safely toA, then exercised the new client's A→B loader/actual activation/manual Reload now flow, draft/other-tab/post-ready reload guards, committed token retention and offline reload/Code.18 final hosted navigation/workspace journeys passed. The [delivery report](UNIFIED-STUDIO-DELIVERY-2026-11-06.md) records precise bounds, the initial unreproduced5 second loading observation and remaining manual/device evidence. Builds/tests do not by themselves establish hosted deployment; the above hosted file and browser checks do.
