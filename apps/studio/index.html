@@ -33,7 +33,7 @@
           <div class="studio-topbar-actions"><button type="button" class="studio-sidebar-toggle" id="toggle-sidebar" aria-controls="desktop-sidebar" aria-expanded="true">Collapse sidebar</button><label class="studio-theme-label" for="theme-select">Theme</label><span class="studio-select-wrap"><select id="theme-select" class="studio-select" name="theme" aria-label="Theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></span></div>
         </header>
         <p id="preference-status" class="studio-preference-status" role="status"></p>
-        <section id="pwa-update" hidden aria-label="Application update"><p role="status"></p><button type="button">Prepare update</button></section>
+        <section id="pwa-update" hidden aria-label="Application update"><div class="pwa-update-row"><p id="pwa-update-status" role="status"></p><button type="button" aria-describedby="pwa-update-status">Prepare update</button><details><summary>Update details</summary><p>Save or cancel token drafts and finish any import. Close other Studio tabs. Preparing does not reload this page; reload only after your work is saved.</p></details></div></section>
         <main id="main" class="studio-main" tabindex="-1"><p>Loading workspace…</p></main>
       </div>
     </div>

@@ -23,7 +23,7 @@ export async function generateBreakpoints(check = false, { read = readFile, writ
       [/@media \(max-width: [^)]+\)(?= \{ \.studio-layout \{ grid-template-columns:)/, `@media (max-width: ${desktop}px)`],
       [/@media \(max-width: [^)]+\)(?= \{ \.studio-layout \{ display: block;)/, `@media (max-width: ${mobile - 1}px)`]
     ]],
-    ['apps/studio/src/features/playground/playground.css', [[/@media \(max-width: [^)]+\)/, `@media (max-width: ${tablet}px)`]]],
+    ['apps/studio/src/features/playground/playground.css', [[/@media \(max-width: [^)]+\)/, `@media (max-width: ${mobile - 1}px)`], [/@media \(min-width: [^)]+\)/, `@media (min-width: ${desktop + 1}px)`]]],
     ['apps/studio/src/features/layout/layout.css', [[/@media \(max-width: [^)]+\)/, `@media (max-width: ${mobile}px)`]]],
     ['apps/studio/src/features/accessibility/styles.css', [[/@media \(max-width: [^)]+\)/, `@media (max-width: ${mobile}px)`]]],
     ['apps/studio/src/features/tokens/styles.css', [[/@media \(min-width: [^)]+\)/, `@media (min-width: ${preview}px)`]]],

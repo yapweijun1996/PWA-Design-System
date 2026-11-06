@@ -26,7 +26,7 @@ export function initializePwa(): void {
     const showUpdate = (): void => {
       if (!registration.waiting || !navigator.serviceWorker.controller) return;
       container.hidden = false;
-      message.textContent = 'An update is available. Save or cancel token drafts and close other Studio tabs before preparing it.';
+      message.textContent = 'Update available. Save drafts before preparing.';
     };
     showUpdate();
     registration.addEventListener('updatefound', () => {

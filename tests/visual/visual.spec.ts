@@ -103,7 +103,7 @@ for (const scenario of [
     await page.setViewportSize({ width: scenario.width, height: scenario.height });
     await open(page, 'components', scenario.theme, scenario.density);
     await expect(page.getByRole('heading', { name: 'Button', level: 2, exact: true })).toBeVisible();
-    const toggle = page.getByRole('button', { name: 'Choose component: Button', exact: true });
+    const toggle = page.getByRole('button', { name: 'Explorer: Button', exact: true });
     if (scenario.picker) {
       await toggle.click(); await expect(toggle).toHaveAttribute('aria-expanded', 'true');
       await expect(page.getByRole('searchbox', { name: 'Search components' })).toBeFocused();
@@ -112,3 +112,14 @@ for (const scenario of [
     await snapshot(page, scenario.name, false);
   });
 }
+
+test('components-mobile-properties', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await open(page, 'components', 'light', 'comfortable');
+  await page.getByRole('button', { name: 'Properties', exact: true }).click();
+  await expect(page.getByRole('region', { name: 'Preview properties' })).toBeVisible();
+  await expect(page.getByLabel('Label or message')).toHaveValue('Save');
+  await expect(page.locator('.pg-stage')).toBeHidden();
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  await snapshot(page, 'components-mobile-properties', false);
+});

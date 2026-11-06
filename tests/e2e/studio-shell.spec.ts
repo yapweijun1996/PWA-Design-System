@@ -125,7 +125,7 @@ test('mobile drawer traps focus, scrolls and restores focus on close, Escape and
   await open.click(); await page.mouse.click(380, 240); await expect(drawer).toBeHidden(); await expect(open).toBeFocused();
   await open.click(); await nav.getByRole('link', { name: 'Settings' }).click();
   await expect(drawer).toBeHidden(); await expect(page.getByRole('heading', { name: 'Settings', exact: true })).toBeVisible();
-  await expect(page.getByRole('main')).toBeFocused();
+  await expect(page.getByRole('heading', { name: 'Settings', exact: true })).toBeFocused();
   const geometry = await page.evaluate(() => {
     const header = document.querySelector('.studio-topbar'); const heading = document.querySelector('main h1');
     if (!header || !heading) throw new Error('Expected route heading and header');
@@ -147,4 +147,18 @@ test('theme survives reload and storage failure is announced', async ({ page }) 
   await page.addInitScript(() => { Object.defineProperty(window, 'localStorage', { configurable: true, get() { throw new Error('blocked'); } }); });
   await page.reload(); await theme.selectOption('dark');
   await expect(page.locator('#preference-status')).toContainText('storage is unavailable');
+});
+
+test('skip and route navigation focus a compact heading without outlining the workspace', async ({ page }) => {
+  await page.goto('./#overview');
+  await page.keyboard.press('Tab'); await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
+  await page.keyboard.press('Enter'); await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+  const componentsLink = page.getByRole('navigation', { name: 'Studio navigation', exact: true }).getByRole('link', { name: 'Components', exact: true });
+  await componentsLink.focus(); await page.keyboard.press('Enter');
+  const heading = page.getByRole('heading', { name: 'Components', exact: true });
+  await expect(heading).toBeFocused();
+  expect(await heading.evaluate(element => element.matches(':focus-visible') && Number.parseFloat(getComputedStyle(element).outlineWidth) > 0)).toBe(true);
+  await expect(page.locator('#main')).not.toBeFocused();
+  const full = await page.locator('#main').boundingBox(), focus = await page.getByRole('heading', { name: 'Components', exact: true }).boundingBox();
+  expect((focus?.width ?? 9999)).toBeLessThan(full?.width ?? 0);
 });

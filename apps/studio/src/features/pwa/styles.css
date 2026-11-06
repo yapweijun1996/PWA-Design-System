@@ -1,4 +1,12 @@
-#pwa-update:not([hidden]) { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-md); padding: var(--ds-spacing-md); background: var(--ds-color-surface-alt); color: var(--ds-color-text); border-bottom: 1px solid var(--ds-color-border-subtle); }
+#pwa-update:not([hidden]) { padding: var(--ds-spacing-sm) var(--ds-spacing-lg); background: var(--ds-color-surface-alt); color: var(--ds-color-text); border-bottom: 1px solid var(--ds-color-border-subtle); }
 #pwa-update p { margin: 0; }
 #pwa-update button { min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-sm) var(--ds-spacing-md); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); color: var(--ds-color-text); background: var(--ds-color-surface); font: inherit; cursor: pointer; }
 #pwa-update button:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
+
+.pwa-update-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-sm) var(--ds-spacing-md); }
+#pwa-update details { min-width: 0; color: var(--ds-color-text-muted); font-size: var(--ds-font-size-small); }
+#pwa-update summary { cursor: pointer; padding-block: var(--ds-spacing-sm); color: var(--ds-color-link); }
+#pwa-update details[open] { flex-basis: 100%; }
+#pwa-update details p { max-width: 65ch; padding-block-end: var(--ds-spacing-sm); line-height: 1.5; }
+#pwa-update .pwa-update-row > p { flex: 1 1 16rem; min-width: 0; }
+#pwa-update summary:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
