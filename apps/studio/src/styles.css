@@ -81,3 +81,9 @@ body[data-drawer-open='true'] { overflow: hidden; }
 @media (max-width: 1000px) { .studio-layout { grid-template-columns: 210px minmax(0, 1fr); } .studio-brand { padding-inline: 18px; } .studio-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 699px) { .studio-layout { display: block; } .studio-sidebar { display: none; } .studio-topbar { height: 64px; padding-inline: 16px; } .studio-menu-button { display: inline-flex; flex: none; } .studio-topbar-context, .studio-breadcrumb { gap: 8px; } .studio-breadcrumb > span:first-child, .studio-breadcrumb > span:nth-child(2), .studio-theme-label { display: none; } .studio-select { font-size: max(1rem, var(--ds-font-size-body)); } .studio-main { padding: 32px 20px 64px; scroll-margin-top: 76px; } .studio-page-heading { margin-bottom: 28px; } .studio-card-grid { grid-template-columns: 1fr; } .studio-card { min-height: 180px; } .studio-card-index { margin-bottom: 24px; } }
 @media (prefers-reduced-motion: reduce) { .studio-skip { transition: none; } }
+
+/* Components is a working canvas; other documentation routes retain their reading width. */
+.studio-main[data-workspace='components'] { width: 100%; padding: var(--ds-spacing-lg) clamp(var(--ds-spacing-md), 2vw, var(--ds-spacing-lg)) var(--ds-spacing-xl); }
+.studio-layout[data-workspace='components'] .studio-topbar { padding-inline: clamp(var(--ds-spacing-md), 2vw, var(--ds-spacing-lg)); }
+.studio-route-focus { width: fit-content; max-width: 100%; scroll-margin-top: 80px; }
+.studio-route-focus:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }

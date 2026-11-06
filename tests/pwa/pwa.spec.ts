@@ -102,6 +102,12 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   });
   const update = page.locator('#pwa-update');
   await expect(update).toBeVisible();
+  await expect(update.getByRole('status')).toHaveText('Update available. Save drafts before preparing.');
+  await expect(update.locator('details')).not.toHaveAttribute('open', '');
+  await update.getByText('Update details', { exact: true }).click();
+  await expect(update.locator('details')).toHaveAttribute('open', '');
+  await expect(update.locator('details')).toContainText('Preparing does not reload this page');
+  await update.getByText('Update details', { exact: true }).click();
   expect(await page.locator('html').getAttribute('data-update-checks')).toBe('1');
   await page.getByText('Import, export & reset').click();
   await page.evaluate(() => { File.prototype.text = () => new Promise(() => {}); });

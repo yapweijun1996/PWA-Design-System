@@ -5,6 +5,7 @@ import { buildPreview, defaultConfig, specs, validateConfig, validateEditableMet
 import { validateProject } from '../../packages/tokens/src/engine.mjs';
 import { getCommitted } from '../../apps/studio/src/features/tokens/model';
 import { sources } from '../../apps/studio/src/features/tokens/sources';
+import { contrastRatio } from '../../apps/studio/src/features/accessibility/contrast';
 import contractText from '../../packages/agent-contract/component-contracts.json?raw';
 import * as core from '../../packages/core/src/index';
 
@@ -28,6 +29,32 @@ describe('component playground', () => {
     expect(catalog.hidden).toBe(true); expect(toggle.getAttribute('aria-expanded')).toBe('false');
     destroy(); Object.defineProperty(media, 'matches', { configurable: true, value: false }); media.dispatchEvent(new Event('change'));
     expect(catalog.hidden).toBe(true); expect(toggle.getAttribute('aria-expanded')).toBe('false');
+  });
+  it('filters real registry groups, synchronizes quick options and resets without losing focus', () => {
+    const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);
+    const forms = [...root.querySelectorAll<HTMLButtonElement>('.pg-category')].find(node => node.textContent === 'Forms 7');
+    forms?.click(); expect(root.querySelectorAll('.pg-catalog-item')).toHaveLength(7);
+    click(root, '.pg-category'); click(root, '[data-choice=variant][data-value=secondary]');
+    expect(root.querySelector<HTMLSelectElement>('#pg-variant')?.value).toBe('secondary'); expect(root.querySelector('pre code')?.textContent).toContain('"variant": "secondary"');
+    click(root, '.pg-toolbar button:last-child'); expect(root.querySelector<HTMLSelectElement>('#pg-variant')?.value).toBe('primary'); expect(document.activeElement?.textContent).toBe('Reset properties');
+    click(root, '#pg-tab-API'); expect(root.querySelector('#pg-panel-API')?.hasAttribute('hidden')).toBe(false); expect(root.querySelector('#pg-panel-Preview')?.hasAttribute('hidden')).toBe(true);
+    root.querySelector('#pg-tab-API')?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true })); expect(document.activeElement?.id).toBe('pg-tab-Preview');
+    destroy();
+  });
+  it('shows only the selected phone workspace panel while preserving configuration', () => {
+    Object.defineProperty(media, 'matches', { configurable: true, value: true });
+    const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);
+    click(root, '.pg-catalog-toggle'); expect(root.querySelector<HTMLElement>('.pg-stage')?.hidden).toBe(true); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(true);
+    click(root, '.pg-panel-nav > button:last-child'); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(false); expect(root.querySelector<HTMLElement>('.pg-catalog')?.hidden).toBe(true);
+    const label = root.querySelector<HTMLInputElement>('#pg-label'); if (!label) throw new Error('Label missing'); label.value = 'Retained'; label.dispatchEvent(new Event('input'));
+    click(root, '.pg-panel-nav > button:nth-child(2)'); expect(root.querySelector('.pg-preview button')?.textContent).toBe('Retained'); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(true); destroy();
+  });
+  it('keeps workspace selected text and indicators legible across all token combinations', () => {
+    const combinations = validateProject(sources, getCommitted()); expect(Object.keys(combinations)).toHaveLength(96);
+    for (const [name, values] of Object.entries(combinations)) {
+      expect(contrastRatio(String(values['color.link']), String(values['color.surface-alt'])), name).toBeGreaterThanOrEqual(4.5);
+      for (const surface of ['color.surface', 'color.surface-alt']) expect(contrastRatio(String(values['color.focus']), String(values[surface])), `${name}: ${surface}`).toBeGreaterThanOrEqual(3);
+    }
   });
   it('matches editable contract flags to controls and rejects editability drift', () => {
     const entries = JSON.parse(contractText).components as { family: string; properties: { name: string; editable: boolean }[] }[];
@@ -92,7 +119,7 @@ describe('component playground', () => {
     const search = root.querySelector<HTMLInputElement>('#pg-search'); if (!search) throw new Error('Search missing');
     search.value = 'tooltip'; search.dispatchEvent(new Event('input')); expect(root.querySelectorAll('.pg-catalog-item')).toHaveLength(1);
     search.value = 'no-such-component'; search.dispatchEvent(new Event('input')); expect(root.querySelector('.pg-empty')?.hasAttribute('hidden')).toBe(false);
-    search.value = ''; search.dispatchEvent(new Event('input')); click(root, '[data-family=badge]'); expect(root.querySelector('h2')?.textContent).toBe('Badge');
+    search.value = ''; search.dispatchEvent(new Event('input')); click(root, '[data-family=badge]'); expect(root.querySelector('.pg-stage h2')?.textContent).toBe('Badge');
     destroy(); expect(root.children).toHaveLength(0);
   });
   it('constructs a real preview and code for every catalog family', () => {

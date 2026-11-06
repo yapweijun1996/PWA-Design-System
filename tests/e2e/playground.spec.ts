@@ -17,7 +17,7 @@ test('catalog searches all families, keyboard selects and route teardown removes
 });
 test('supported options and escaped labels update preview and code together', async ({ page }) => {
   const detail = page.getByRole('region', { name: 'Component playground' });
-  await detail.getByLabel('Variant').selectOption('secondary');
+  await detail.getByLabel('Variant', { exact: true }).selectOption('secondary');
   const input = detail.getByLabel('Label or message'); const hostile = '<img src=x onerror=alert(1)>'; await input.fill(hostile);
   const preview = detail.locator('.pg-preview'); const button = preview.getByRole('button', { name: hostile });
   await expect(button).toHaveAttribute('data-variant', 'secondary'); await expect(preview.locator('img')).toHaveCount(0);
@@ -30,8 +30,8 @@ test('copy permission failure gives usable feedback', async ({ page }) => {
 });
 test('API reference and supported scalar and list controls match their previews', async ({ page }) => {
   const catalog = page.getByRole('region', { name: 'Component catalog' }); const detail = page.getByRole('region', { name: 'Component playground' });
-  await catalog.getByRole('button', { name: 'Input', exact: true }).click(); await detail.getByText('Component API and defaults').click();
-  await expect(detail.locator('dl')).toContainText('placeholder'); await expect(detail.locator('dl')).toContainText('not editable');
+  await catalog.getByRole('button', { name: 'Input', exact: true }).click(); await detail.getByRole('tab', { name: 'API', exact: true }).click();
+  await expect(detail.locator('dl')).toContainText('placeholder'); await expect(detail.locator('dl')).toContainText('not editable'); await detail.getByRole('tab', { name: 'Preview', exact: true }).click();
   await detail.getByLabel('Input type').selectOption('email'); await detail.getByLabel('Initial value').fill('sample@example.test');
   await expect(detail.locator('.pg-preview input')).toHaveAttribute('type', 'email'); await expect(detail.locator('.pg-preview input')).toHaveValue('sample@example.test');
   await expect(detail.locator('pre code')).toContainText('"value": "sample@example.test"');
@@ -78,8 +78,8 @@ test('mobile catalog scroll is discoverable and preview is visible near the top'
   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('./#components');
   const preview = page.locator('.pg-preview'); await expect(preview).toBeVisible(); const box = await preview.boundingBox();
   expect(box).not.toBeNull(); if (!box) throw new Error('Preview has no bounds'); expect(box.y).toBeGreaterThanOrEqual(0); expect(box.y + box.height).toBeLessThanOrEqual(844);
-  await page.getByRole('button', { name: 'Choose component: Button', exact: true }).click();
-  const list = page.getByRole('region', { name: 'Scrollable component list' }); await expect(list).toHaveAttribute('tabindex', '0'); await expect(page.getByText('Scroll the list to see more components, or use search to filter.')).toBeVisible();
+  await page.getByRole('button', { name: 'Explorer: Button', exact: true }).click();
+  const list = page.getByRole('region', { name: 'Scrollable component list' }); await expect(list).toHaveAttribute('tabindex', '0'); await expect(page.getByText('21 of 21 components · Search or scroll to explore.')).toBeVisible();
   const end = await list.evaluate(node => node.scrollHeight - node.clientHeight);
   await list.focus(); await page.keyboard.press('End'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(end); await page.keyboard.press('Home'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(0);
   const scroll = await list.evaluate(node => { const max = node.scrollHeight - node.clientHeight; node.scrollTop = 0; const top = node.scrollTop; node.scrollTop = max / 2; const middle = node.scrollTop; node.scrollTop = max; return { top, middle, bottom: node.scrollTop, max }; });
@@ -104,6 +104,6 @@ test('Data Table preview and generated code follow the same configuration', asyn
   await expect(preview.getByRole('table', { name: 'People' })).toBeVisible(); await expect(code).toContainText('createDataTable');
   await detail.getByLabel('Row selection').selectOption('true'); await expect(preview.getByRole('checkbox', { name: 'Select Ada' })).toBeVisible(); await expect(code).toContainText('"selectable": true');
   await detail.getByLabel('Page size').fill('1'); await expect(preview.getByText('Page 1 of 3')).toBeVisible(); await expect(code).toContainText('"pageSize": 1');
-  await detail.getByLabel('State').selectOption('empty'); await expect(preview.getByText('No rows to display.')).toBeVisible(); await expect(code).toContainText('"rows": []');
-  await detail.getByLabel('State').selectOption('loading'); await expect(preview.getByText('Loading rows…')).toBeVisible(); await expect(code).toContainText('"loading": true');
+  await detail.getByLabel('State', { exact: true }).selectOption('empty'); await expect(preview.getByText('No rows to display.')).toBeVisible(); await expect(code).toContainText('"rows": []');
+  await detail.getByLabel('State', { exact: true }).selectOption('loading'); await expect(preview.getByText('Loading rows…')).toBeVisible(); await expect(code).toContainText('"loading": true');
 });

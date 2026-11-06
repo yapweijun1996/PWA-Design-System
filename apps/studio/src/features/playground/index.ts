@@ -35,6 +35,7 @@ function inventory(): Entry[] {
 function element<K extends keyof HTMLElementTagNameMap>(tag: K, className = '', text = ''): HTMLElementTagNameMap[K] {
   const node = document.createElement(tag); if (className) node.className = className; if (text) node.textContent = text; return node;
 }
+const groups: Record<string, string> = { input: 'Forms', textarea: 'Forms', checkbox: 'Forms', 'radio-group': 'Forms', switch: 'Forms', select: 'Forms', 'form-field': 'Forms', tabs: 'Navigation', breadcrumb: 'Navigation', menu: 'Navigation', pagination: 'Navigation', dialog: 'Feedback', alert: 'Feedback', toast: 'Feedback', 'data-table': 'Data' };
 const title = (value: string): string => value.split('-').map(part => part[0].toUpperCase() + part.slice(1)).join(' ');
 
 /** Mount the catalog and playground. Returned teardown releases its component and event listeners. */
@@ -53,9 +54,24 @@ export function mountPlayground(root: HTMLElement): () => void {
   const listHelp = element('p', 'pg-list-help', 'Scroll the list to see more components, or use search to filter.'); listHelp.id = 'pg-list-help';
   const empty = element('p', 'pg-empty', 'No matching components.'); empty.hidden = true;
   catalog.id = 'pg-catalog';
-  const catalogToggle = element('button', 'pg-catalog-toggle', 'Choose component: Button'); catalogToggle.type = 'button'; catalogToggle.setAttribute('aria-controls', catalog.id);
-  const narrow = window.matchMedia(`(max-width: ${sources.primitives['breakpoint.tablet'].$value})`); let catalogOpen = false, toggleHadFocus = false;
-  const syncCatalog = (): void => { catalog.hidden = narrow.matches && !catalogOpen; catalogToggle.setAttribute('aria-expanded', String(!catalog.hidden)); if (!narrow.matches) { const active = document.activeElement; if (active === catalogToggle || (toggleHadFocus && active === document.body)) heading.focus(); toggleHadFocus = false; } };
+  const catalogToggle = element('button', 'pg-catalog-toggle', 'Explorer'); catalogToggle.type = 'button'; catalogToggle.setAttribute('aria-label', 'Explorer: Button'); catalogToggle.setAttribute('aria-controls', catalog.id);
+  const narrow = window.matchMedia(`(max-width: ${sources.primitives['breakpoint.desktop'].$value})`);
+  const phone = window.matchMedia(`(max-width: ${Number.parseInt(String(sources.primitives['breakpoint.mobile'].$value), 10) - 1}px)`); let catalogOpen = false, toggleHadFocus = false, mobilePanel = 'preview';
+  const panelNav = element('div', 'pg-panel-nav'); panelNav.setAttribute('role', 'group'); panelNav.setAttribute('aria-label', 'Workspace panels');
+  const previewPanelButton = element('button', 'pg-tool', 'Preview'), propertiesPanelButton = element('button', 'pg-tool', 'Properties');
+  previewPanelButton.type = propertiesPanelButton.type = 'button'; panelNav.append(catalogToggle, previewPanelButton, propertiesPanelButton);
+  const syncPanels = (): void => { const stage = page.querySelector<HTMLElement>('.pg-stage'), inspector = page.querySelector<HTMLElement>('.pg-settings'); if (stage) stage.hidden = phone.matches && (catalogOpen || mobilePanel !== 'preview'); if (inspector) inspector.hidden = phone.matches && (catalogOpen || mobilePanel !== 'properties'); previewPanelButton.setAttribute('aria-pressed', String(!catalogOpen && mobilePanel === 'preview')); propertiesPanelButton.setAttribute('aria-pressed', String(!catalogOpen && mobilePanel === 'properties')); };
+  previewPanelButton.addEventListener('click', () => { mobilePanel = 'preview'; catalogOpen = false; syncCatalog(); syncPanels(); }, { signal });
+  propertiesPanelButton.addEventListener('click', () => { mobilePanel = 'properties'; catalogOpen = false; syncCatalog(); syncPanels(); }, { signal });
+  const reconcilePanels = (): void => {
+    if (!phone.matches) return;
+    const active = document.activeElement;
+    if (catalog.contains(active)) catalogOpen = true;
+    else if (page.querySelector('.pg-settings')?.contains(active)) { catalogOpen = false; mobilePanel = 'properties'; }
+    else if (page.querySelector('.pg-stage')?.contains(active)) { catalogOpen = false; mobilePanel = 'preview'; }
+  };
+  phone.addEventListener('change', () => { reconcilePanels(); if (!phone.matches && (document.activeElement === previewPanelButton || document.activeElement === propertiesPanelButton)) heading.focus(); syncCatalog(); }, { signal });
+  const syncCatalog = (): void => { catalog.hidden = narrow.matches && !catalogOpen; catalogToggle.setAttribute('aria-expanded', String(!catalog.hidden)); syncPanels(); if (!narrow.matches) { const active = document.activeElement; if (active === catalogToggle || (toggleHadFocus && active === document.body)) heading.focus(); toggleHadFocus = false; } };
   heading.tabIndex = -1;
   // A media-query CSS change can hide/blur the toggle before its change event fires.
   catalogToggle.addEventListener('focus', () => { toggleHadFocus = true; }, { signal });
@@ -63,12 +79,14 @@ export function mountPlayground(root: HTMLElement): () => void {
   document.addEventListener('pointerdown', event => { if (event.target !== catalogToggle) toggleHadFocus = false; }, { signal, capture: true });
   catalogToggle.addEventListener('click', () => { catalogOpen = !catalogOpen; syncCatalog(); if (catalogOpen) search.focus(); }, { signal });
   catalog.addEventListener('keydown', event => { if (event.key === 'Escape' && narrow.matches) { event.preventDefault(); catalogOpen = false; syncCatalog(); catalogToggle.focus(); } }, { signal });
-  narrow.addEventListener('change', () => { if (narrow.matches && catalog.contains(document.activeElement)) catalogOpen = true; syncCatalog(); }, { signal });
-  catalog.append(searchLabel, search, listHelp, list, empty);
+  narrow.addEventListener('change', () => { reconcilePanels(); if (narrow.matches && catalog.contains(document.activeElement)) catalogOpen = true; syncCatalog(); }, { signal });
+  const filters = element('div', 'pg-categories'); filters.setAttribute('role', 'group'); filters.setAttribute('aria-label', 'Component categories'); let category = 'All';
+  for (const value of ['All', 'Foundation', 'Forms', 'Navigation', 'Feedback', 'Data']) { const count = entries.filter(item => value === 'All' || (groups[item.family] ?? 'Foundation') === value).length; const filter = element('button', 'pg-category', `${value} ${count}`); filter.type = 'button'; filter.setAttribute('aria-pressed', String(value === category)); filter.addEventListener('click', () => { category = value; for (const node of filters.querySelectorAll('button')) node.setAttribute('aria-pressed', String(node === filter)); renderList(); }, { signal }); filters.append(filter); }
+  const catalogHeader = element('div', 'pg-catalog-header'); catalogHeader.append(element('h2', '', 'Component Explorer'), searchLabel, search, filters, listHelp); catalog.append(catalogHeader, list, empty);
   const detail = element('section', 'pg-detail'); detail.setAttribute('aria-label', 'Component playground');
-  layout.append(catalogToggle, catalog, detail); page.append(heading, intro, layout); root.append(page);
+  layout.append(catalog, detail); page.append(heading, intro, panelNav, layout); root.append(page);
   let selected = entries[0]; let config: PlaygroundConfig = defaultConfig(selected.family);
-  let previewTheme = 'studio';
+  let previewTheme = 'studio', previewWidth = 'fit';
   let active: ReturnType<typeof buildPreview> | undefined;
   let listController = new AbortController(); let detailController = new AbortController();
 
@@ -76,10 +94,12 @@ export function mountPlayground(root: HTMLElement): () => void {
     listController.abort(); listController = new AbortController();
     list.replaceChildren(); const term = search.value.trim().toLowerCase();
     const matches = entries.filter(entry => title(entry.family).toLowerCase().includes(term) || entry.family.includes(term));
-    empty.hidden = matches.length > 0;
-    for (const item of matches) {
+    const visible = matches.filter(entry => category === 'All' || (groups[entry.family] ?? 'Foundation') === category);
+    empty.hidden = visible.length > 0;
+    listHelp.textContent = `${visible.length} of ${entries.length} components · Search or scroll to explore.`;
+    for (const item of visible) {
       const button = element('button', 'pg-catalog-item', title(item.family)); button.type = 'button'; button.dataset.family = item.family; button.setAttribute('aria-pressed', String(selected.family === item.family));
-      button.addEventListener('click', () => { selected = item; config = defaultConfig(item.family); for (const node of list.querySelectorAll('button')) node.setAttribute('aria-pressed', String(node.dataset.family === item.family)); renderDetail(); catalogToggle.textContent = `Choose component: ${title(item.family)}`; if (narrow.matches) { catalogOpen = false; syncCatalog(); detail.querySelector<HTMLElement>('h2')?.focus(); } }, { signal: listController.signal });
+      button.addEventListener('click', () => { selected = item; config = defaultConfig(item.family); for (const node of list.querySelectorAll('button')) node.setAttribute('aria-pressed', String(node.dataset.family === item.family)); renderDetail(); catalogToggle.setAttribute('aria-label', `Explorer: ${title(item.family)}`); if (narrow.matches) { catalogOpen = false; mobilePanel = 'preview'; syncCatalog(); syncPanels(); detail.querySelector<HTMLElement>('h2')?.focus(); } }, { signal: listController.signal });
       list.append(button);
     }
   }
@@ -132,17 +152,40 @@ export function mountPlayground(root: HTMLElement): () => void {
       input.value = config.extras[item.key]; extraControls[item.key] = input; wrap.append(caption, input); controls.append(wrap);
     }
     const unsupported = element('p', 'pg-api', [!spec.size && 'Size', !spec.variant && 'Variant', !spec.state && 'State'].filter(Boolean).length ? `Not configurable in this preview: ${[!spec.size && 'size', !spec.variant && 'variant', !spec.state && 'state'].filter(Boolean).join(', ')}.` : '');
-    const previewTitle = element('h3', '', 'Live preview'); const preview = element('div', 'pg-preview');
+    const previewTitle = element('h3', '', 'Live preview'); const preview = element('div', 'pg-preview'); preview.dataset.family = selected.family;
     const codeTitle = element('h3', '', 'Code example'); const codeWrap = element('pre', 'pg-code'); codeWrap.tabIndex = 0; codeWrap.setAttribute('aria-label', 'Code example'); const code = element('code'); codeWrap.append(code);
     const copy = element('button', 'pg-copy', 'Copy code'); copy.type = 'button';
     const copyStatus = element('p', 'pg-api pg-copy-status'); copyStatus.setAttribute('role', 'status');
     const workbench = element('div', 'pg-workbench'), stage = element('section', 'pg-stage'), settings = element('section', 'pg-settings');
     stage.setAttribute('aria-label', 'Live component preview'); settings.setAttribute('aria-label', 'Preview properties');
-    stage.append(previewTitle, preview); settings.append(element('h3', '', 'Properties'), controls, error); workbench.append(stage, settings);
-    const usage = element('details', 'pg-usage'); usage.append(element('summary', '', 'Usage and accessibility'), note, key, supported, theme, unsupported);
+    const deviceWrap = element('div', 'pg-device-control'), deviceLabel = element('label', 'pg-label', 'Preview width'), device = element('select', 'pg-select'); device.id = 'pg-device'; deviceLabel.htmlFor = device.id;
+    for (const [value, label] of [['fit', 'Fit workspace'], ['390', 'Mobile · 390px'], ['768', 'Tablet · 768px'], ['1440', 'Desktop · 1440px']]) { const option = element('option', '', label); option.value = value; device.append(option); }
+    device.value = previewWidth; deviceWrap.append(deviceLabel, device); const widthStatus = element('output', 'pg-width-status'); widthStatus.setAttribute('aria-label', 'Preview canvas width');
+    const toolbar = element('div', 'pg-toolbar'); toolbar.setAttribute('aria-label', 'Component tools'); const viewCode = element('button', 'pg-tool', 'View code'), reset = element('button', 'pg-tool', 'Reset properties'); viewCode.type = reset.type = 'button'; toolbar.append(deviceWrap, widthStatus, viewCode, reset);
+    const canvas = element('div', 'pg-canvas-scroll'); canvas.tabIndex = 0; canvas.setAttribute('role', 'region'); canvas.setAttribute('aria-label', 'Scrollable preview canvas'); canvas.append(preview);
+    const canvasHelp = element('details', 'pg-canvas-help'); canvasHelp.append(element('summary', '', 'About canvas sizing'), element('p', 'pg-list-help', 'Canvas width changes component space. Browser media queries and portaled overlays follow the Studio viewport.'));
+    const syncWidth = (): void => { preview.style.width = device.value === 'fit' ? '100%' : `${device.value}px`; preview.dataset.canvasWidth = device.value; widthStatus.value = `${Math.round(preview.getBoundingClientRect().width)}px canvas`; canvas.scrollLeft = 0; };
+    device.addEventListener('change', () => { previewWidth = device.value; syncWidth(); }, { signal: detailSignal }); const resize = typeof ResizeObserver === 'function' ? new ResizeObserver(syncWidth) : undefined; resize?.observe(canvas); detailSignal.addEventListener('abort', () => resize?.disconnect(), { once: true });
+    const tabBar = element('div', 'pg-tabs'); tabBar.setAttribute('role', 'tablist'); tabBar.setAttribute('aria-label', 'Component information');
+    const panels = new Map<string, HTMLElement>(); const previewPanel = element('div', 'pg-preview-panel'), usagePanel = element('div'), apiPanel = element('div'), accessibilityPanel = element('div');
+    previewPanel.append(previewTitle, canvas, canvasHelp); stage.append(name, toolbar, tabBar); settings.append(element('h2', '', 'Properties'), controls, error); workbench.append(stage, settings);
+    const activateTab = (label: string, focus = false): void => { for (const [key, panel] of panels) { panel.hidden = key !== label; const tab = tabBar.querySelector<HTMLButtonElement>(`[data-panel="${key}"]`); tab?.setAttribute('aria-selected', String(key === label)); if (tab) tab.tabIndex = key === label ? 0 : -1; if (focus && key === label) tab?.focus(); } };
+    for (const [label, panel] of [['Preview', previewPanel], ['Usage', usagePanel], ['API', apiPanel], ['Accessibility', accessibilityPanel]] as const) { const tab = element('button', 'pg-tab', label); tab.type = 'button'; tab.setAttribute('role', 'tab'); tab.id = `pg-tab-${label}`; tab.dataset.panel = label; panel.id = `pg-panel-${label}`; panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', tab.id); tab.setAttribute('aria-controls', panel.id); panels.set(label, panel); tab.addEventListener('click', () => activateTab(label), { signal: detailSignal }); tabBar.append(tab); stage.append(panel); }
+    tabBar.addEventListener('keydown', event => { const labels = [...panels.keys()], index = labels.findIndex(label => tabBar.querySelector(`[data-panel="${label}"]`) === document.activeElement); let next = index; if (event.key === 'ArrowRight') next = (index + 1) % labels.length; else if (event.key === 'ArrowLeft') next = (index + labels.length - 1) % labels.length; else if (event.key === 'Home') next = 0; else if (event.key === 'End') next = labels.length - 1; else return; event.preventDefault(); activateTab(labels[next], true); }, { signal: detailSignal });
+    const options = element('div', 'pg-options');
+    for (const property of ['variant', 'size', 'state'] as const) { const values = spec[property]; if (!values) continue; const group = element('div', 'pg-option-group'); group.setAttribute('role', 'group'); group.setAttribute('aria-label', `Quick ${property}`); group.append(element('h4', '', `${title(property)} options`)); for (const value of values) { const option = element('button', 'pg-option', title(value)); option.type = 'button'; option.dataset.choice = property; option.dataset.value = value; option.addEventListener('click', () => { const select = choices[property]; if (select) { select.value = value; update(); } }, { signal: detailSignal }); group.append(option); } options.append(group); }
+    previewPanel.append(options);
+    if (selected.family === 'button') {
+      const examples = element('section', 'pg-examples'); examples.setAttribute('aria-label', 'Button examples'); examples.append(element('h3', '', 'Examples'), element('p', 'pg-list-help', 'Approved button variants in common action contexts. The inspector edits the live preview above.'));
+      for (const [label, variant, state] of [['Create', 'primary', 'enabled'], ['Edit', 'secondary', 'enabled'], ['Saving…', 'primary', 'loading']] as const) { const sample = buildPreview({ ...defaultConfig('button'), label, variant, state }, selected.factory, selected.entry); examples.append(sample.element); detailSignal.addEventListener('abort', () => sample.destroy(), { once: true }); }
+      previewPanel.append(examples);
+    } viewCode.addEventListener('click', () => { mobilePanel = 'properties'; syncPanels(); codeWrap.focus(); codeWrap.scrollIntoView({ block: 'nearest' }); }, { signal: detailSignal }); reset.addEventListener('click', () => { config = defaultConfig(selected.family); renderDetail(); detail.querySelector<HTMLButtonElement>('.pg-toolbar button:last-child')?.focus(); }, { signal: detailSignal });
+    activateTab('Preview');
+
+    const usage = element('details', 'pg-usage'); usage.append(element('summary', '', 'Usage and accessibility'), note, supported, theme, unsupported); usage.open = true; accessibilityPanel.append(element('h3', '', 'Keyboard and accessibility'), key, element('p', 'pg-api', selected.apiNotes), element('p', 'pg-api', 'Automated examples do not establish WCAG conformance. Test assistive technology in your application.'));
     apiDetails.insertBefore(api, apiNotes);
     const codeHeader = element('div', 'pg-code-header'); codeHeader.append(codeTitle, copy);
-    detail.append(name, workbench, codeHeader, codeWrap, copyStatus, usage, apiDetails);
+    usagePanel.append(usage); apiPanel.append(apiDetails); apiDetails.open = true; settings.append(codeHeader, codeWrap, copyStatus); detail.append(workbench);
     let ownedTokens: string[] = [];
     function applyPreviewTheme(): void {
       for (const property of ownedTokens) preview.style.removeProperty(property);
@@ -174,7 +217,7 @@ export function mountPlayground(root: HTMLElement): () => void {
       if (message) return;
       try {
         const next = buildPreview(candidate, selected.factory, selected.entry);
-        active?.destroy(); active = next; preview.replaceChildren(next.element); next.afterMount?.(); config = candidate; code.textContent = next.code; copyStatus.textContent = '';
+        active?.destroy(); active = next; preview.replaceChildren(next.element); next.afterMount?.(); config = candidate; code.textContent = next.code; copyStatus.textContent = ''; for (const option of options.querySelectorAll<HTMLButtonElement>('[data-choice]')) option.setAttribute('aria-pressed', String(candidate[option.dataset.choice as 'variant' | 'size' | 'state'] === option.dataset.value));
       } catch (problem) { error.textContent = problem instanceof Error ? problem.message : 'Unable to render this component.'; }
     }
     labelInput.addEventListener('input', update, { signal: detailSignal });
@@ -184,7 +227,7 @@ export function mountPlayground(root: HTMLElement): () => void {
       try { if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable'); await navigator.clipboard.writeText(code.textContent ?? ''); if (!detailSignal.aborted) copyStatus.textContent = 'Code copied.'; }
       catch { if (!detailSignal.aborted) copyStatus.textContent = 'Copy failed. Select and copy the code manually.'; }
     }, { signal: detailSignal });
-    applyPreviewTheme(); update();
+    applyPreviewTheme(); update(); syncPanels(); syncWidth();
   }
   search.addEventListener('input', renderList, { signal });
   renderList(); renderDetail(); syncCatalog();

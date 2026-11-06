@@ -30,6 +30,11 @@ const mobile = window.matchMedia('(max-width: 699px)');
 initializeTokenOverrides();
 initializePwa();
 
+function focusPageHeading(): void {
+  const target = main.querySelector<HTMLElement>('h1') ?? main.querySelector<HTMLElement>('.studio-loading, p') ?? main;
+  target.tabIndex = -1; target.classList.add('studio-route-focus'); target.focus({ preventScroll: true });
+}
+
 function isTheme(value: string | undefined): value is Theme {
   return value === 'light' || value === 'dark' || value === 'system';
 }
@@ -98,11 +103,11 @@ drawer.addEventListener('keydown', event => {
 drawer.addEventListener('close', () => {
   delete document.body.dataset.drawerOpen;
   if (restoreDrawerFocus && mobile.matches) openNavigation.focus();
-  else if (restoreDrawerFocus) main.focus({ preventScroll: true });
+  else if (restoreDrawerFocus) focusPageHeading();
 });
 mobile.addEventListener('change', () => { if (!mobile.matches && drawer.open) drawer.close(); });
 document.querySelector<HTMLAnchorElement>('.studio-skip')?.addEventListener('click', event => {
-  event.preventDefault(); main.focus({ preventScroll: true }); main.scrollIntoView({ block: 'start' });
+  event.preventDefault(); focusPageHeading(); main.scrollIntoView({ block: 'start' });
 });
 
 function node<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text?: string): HTMLElementTagNameMap[K] {
@@ -160,21 +165,22 @@ async function renderRoute(focus = false): Promise<void> {
   const current = resolveRoute(location.hash);
   const route = routes.find(item => item.id === current);
   const name = route?.label ?? 'Page not found';
+  main.dataset.workspace = current ?? 'unknown'; shell.dataset.workspace = current ?? 'unknown';
+  const finishFocus = (): void => { if (focus) focusPageHeading(); };
   title.textContent = name; document.title = `${name} · PWA Design System Studio`;
   for (const item of document.querySelectorAll<HTMLAnchorElement>('[data-studio-nav] a[data-route]')) {
     if (item.dataset.route === current) item.setAttribute('aria-current', 'page'); else item.removeAttribute('aria-current');
   }
   const page = node('div', 'studio-page'); main.replaceChildren(page);
   window.scrollTo({ top: 0, behavior: 'instant' });
-  if (focus) main.focus({ preventScroll: true });
   announcement.textContent = name;
   if (!current) {
     pageHeading(page, 'WORKSPACE', 'Page not found', 'The requested Studio section does not exist.');
-    page.append(link('Return to overview →', 'overview', 'studio-inline-link')); return;
+    page.append(link('Return to overview →', 'overview', 'studio-inline-link')); finishFocus(); return;
   }
-  if (current === 'overview') { renderOverview(page); return; }
-  if (current === 'foundations') { renderFoundations(page); return; }
-  if (current === 'settings') { renderSettings(page); return; }
+  if (current === 'overview') { renderOverview(page); finishFocus(); return; }
+  if (current === 'foundations') { renderFoundations(page); finishFocus(); return; }
+  if (current === 'settings') { renderSettings(page); finishFocus(); return; }
   const loaders: Partial<Record<RouteId, () => Promise<(root: HTMLElement) => Cleanup>>> = {
     'design-tokens': async () => (await import('./features/tokens/index.js')).mountTokenEditor,
     'components': async () => (await import('./features/playground/index.js')).mountPlayground,
@@ -185,15 +191,15 @@ async function renderRoute(focus = false): Promise<void> {
     'ai-agent-rules': async () => (await import('./features/agent/index.js')).mountAgentRules
   };
   const load = loaders[current];
-  if (!load) { renderPending(page, name); return; }
+  if (!load) { renderPending(page, name); finishFocus(); return; }
   page.append(node('p', 'studio-loading', `Loading ${name}…`));
   try {
     const mount = await load();
     if (version !== routeVersion) return;
-    page.replaceChildren(); cleanup = mount(page);
+    page.replaceChildren(); cleanup = mount(page); finishFocus();
   } catch {
     if (version !== routeVersion) return;
-    page.replaceChildren(); pageHeading(page, 'WORKSPACE', name, 'This section could not be loaded. Refresh the page to try again.');
+    page.replaceChildren(); pageHeading(page, 'WORKSPACE', name, 'This section could not be loaded. Refresh the page to try again.'); finishFocus();
   }
 }
 let currentHash = location.hash;
@@ -204,7 +210,7 @@ window.addEventListener('hashchange', () => {
   if (isDraftUnsafe()) {
     history.replaceState(history.state, '', `${location.pathname}${location.search}${currentHash}`);
     reportUnsafeDraft();
-    main.focus({ preventScroll: true });
+    focusPageHeading();
     return;
   }
   currentHash = location.hash;
