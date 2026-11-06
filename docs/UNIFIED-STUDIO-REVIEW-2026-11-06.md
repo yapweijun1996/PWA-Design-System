@@ -41,3 +41,13 @@ No unresolved evidence-supported P0/P1/P2 remained in these bounded final review
 Final source reports and24journey JSON/48PNGs are retained locally under `/tmp/pwa-studio-next/reviews/` and `/tmp/pwa-studio-next/combined/`; these are local evidence paths, not permanent hosted download URLs. The reviewed Linux visual scenarios are committed in `tests/visual/baselines`; environment and strict thresholds are unchanged. The central task/release record must separately report actual CI, Pages, hosted upgrade and offline results.
 
 Physical iOS/Android installation, actual Safari status-bar/safe-area/virtual-keyboard behavior, manual VoiceOver/NVDA interpretation, actual200%/400% zoom, independent human visual approval and field Core Web Vitals are **NOT VERIFIED** by this review.
+
+## CI timing follow-up
+
+Linux Chromium156 CI later exposed an existing Menu lifecycle race: a queued native close event from a previous containing-dialog lifetime could dismiss a newly opened menu. This was reproduced deterministically with real dialog close/showModal operations, fixed by checking the current dialog open state before dismissal, and covered by a new native-event regression that also verifies actual current-dialog closure. No public component API changed. The [HTML dialog closing algorithm](https://html.spec.whatwg.org/multipage/interactive-elements.html#close-the-dialog) describes asynchronous close-event delivery.
+
+The same CI run exposed a Documentation test scrolling before its lazy route had mounted. The test now waits for the actual heading before exercising the original scroll assertions. It does not increase timeouts or remove behavior checks. A held lazy-response reproduction confirmed the precondition problem.
+
+Integrated fixes: `035bde9` and `1ffccaf`. Chromium156 author verification:15/15 targeted repeats and28/28 full navigation/shell cases; parent unit regression161/161. Final Linux CI and the independent quality follow-up must be recorded against the recovered source, rather than treating a previous passing run as proof of this fix.
+
+The independent quality reviewer inspected both recovered-source changes and confirmed that real closure, Escape, Tab, focus restoration and destroy cleanup remain intact. Parent WebKit regression on `1ffccaf` passed39/39 across Components/Token workspace, pane sizing and navigation/feedback, including the new native-close case. This is Playwright WebKit engine evidence, not actual Safari or physical iOS acceptance.

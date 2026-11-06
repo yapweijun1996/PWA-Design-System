@@ -18,19 +18,19 @@ MUST requires implementation or a concrete documented exception. DEFAULT applies
 - [x] WS-02 (P1): Unified toolbar, selected state and editor action model. Place unsaved count next to Commit; separate Studio theme, canvas theme and editing scope. Preserve draft, undo, reset, cancel, import and commit semantics.
 - [x] WS-03 (P2): Compact Token Table with category/search/modified filtering, selected-token Inspector, coherent color/HEX/inheritance display, visible dependency chain, and independent visual preview. Reuse token validation/resolution and stable component preview nodes.
 - [x] WS-04 (P1): Components uses one property control center in Inspector; move Code/copy to a Canvas tab, clarify Examples in Usage, preserve all 21 supported component APIs and preview/code parity.
-- [ ] WS-05 (P2): Typography, spacing, lightweight navigation, hover/focus, empty/error states and accessible tabs/splitters. Review top/middle/bottom, active fields, both themes and responsive panel transitions in real browsers.
+- [x] WS-05 (P2): Typography, spacing, lightweight navigation, hover/focus, empty/error states and accessible tabs/splitters. Review top/middle/bottom, active fields, both themes and responsive panel transitions in real browsers.
 - [ ] WS-06 (P1): Independent functional/accessibility/visual regression, evidence-grounded 13-persona review, documentation, PR/CI/Pages and hosted artifact/offline/update verification. Human/device checks remain NOT VERIFIED without actual evidence.
 
 Execution order: shared layout contract; Token and Component interaction changes; PWA engineering and route-specific defaults; independent verification and release. The user prioritizes layout/interaction over new colors or animation. Reported screenshot risks are not confirmed functional defects until reproduced. Existing PWA tasks below remain in scope; preserve their IDs and evidence boundaries.
 
 ## Current implementation evidence
 
-- Integrated source checkpoint: `6067180`; shared architecture and UI guide: [Unified Studio workspace](docs/UNIFIED-STUDIO-WORKSPACE.md).
+- Integrated product checkpoint: `1ffccaf`; shared architecture and UI guide: [Unified Studio workspace](docs/UNIFIED-STUDIO-WORKSPACE.md).
 - The compact Token Table renders one selected-token override editor, with readable value columns and deliberate table-local horizontal scrolling. Components uses one Inspector and separate Canvas content tabs; phone Canvas and Preview have distinct names.
-- Independent review reproduced and fixed tablet values wrapping vertically, a short-window table header covering the app bar, stale pane drag origins after unblurred width input, and update notices disappearing during deep scrolling. Focused Token layout verification: 9/9 real Chrome before final PWA integration; integrated full regression is pending below.
-- Initial final-source unit/integration checks: 161/161. Typecheck, lint, token/contract generation, SSOT and production artifact checks pass. These do not establish browser or device acceptance.
+- Independent review reproduced and fixed tablet values wrapping vertically, a short-window table header covering the app bar, stale pane drag origins after unblurred width input, and update notices disappearing during deep scrolling. Focused Token layout verification: 9/9 real Chrome before final PWA integration; the integrated132-case Studio suite passed. After final compact-label polish,22 targeted cases passed; a later native Menu lifecycle regression adds one case for final CI.
+- Recovered-source unit/integration checks: 161/161. React6/6, production PWA5/5 and production first-frame/subpath/CSP checks passed before the bounded Menu lifecycle follow-up. Typecheck, lint, token/contract generation, SSOT and production artifact checks pass. These do not establish browser or device acceptance.
 - PWA source implements measured sticky update/offline chrome, focus clearance, safe-area ownership, theme metadata, guarded activation and explicit Reload now. [Central exceptions](docs/PWA-STANDARD-EXCEPTIONS.md) retain the draft-safety reload policy and route-specific header defaults.
-- Draft PR: [#9](https://github.com/yapweijun1996/PWA-Design-System/pull/9). Strict visual comparison remains enabled while candidates are captured for individual review. Merge, deployment and hosted verification are pending.
+- Draft PR: [#9](https://github.com/yapweijun1996/PWA-Design-System/pull/9). All19 fresh Linux candidates were individually reviewed and accepted; the capture job was removed and strict visual comparison passed on `c061cf5`/CI42176891934. Independent13-perspective source/screenshot review and24 real Chrome journeys passed. Independent quality follow-up accepted the recovered Menu lifecycle fix; recovered-source WebKit39/39 passed. Final recovered-source CI, merge, deployment and hosted verification are pending.
 
 A checked engineering item below means its implementation is present with the stated automation; acceptance involving actual OS/device/human observation remains open. No full PWA or WCAG conformance claim is made.
 
@@ -152,7 +152,7 @@ Use [the existing manual checklist](docs/RELEASE-ACCEPTANCE.md). Owner/device ac
 Priority: P1. Dependency: Approved implementation of the preceding in-scope tasks.
 
 - [x] Preserve JSON token SSOT, 21 component contracts, independent appearance axes and optional React boundaries.
-- [ ] Add focused browser coverage for new behavior and rerun relevant existing tests; retain strict visual/environment checks and individually review intentional baseline changes.
+- [x] Add focused browser coverage for new behavior and rerun relevant existing tests; retain strict visual/environment checks and individually review intentional baseline changes.
 - [ ] Recheck cache freshness, mixed-version refusal, scoped cleanup, offline tools, import security, CSP and dependency advisories without weakening gates.
 - [x] Update PWA/installation/acceptance documentation and maintain one central exception record for the update policy and route-specific DEFAULT exceptions.
 - [ ] Complete normal feature-branch/PR/CI review before deployment under the existing session authorization; verify the actual hosted build, assets, console/network, offline and update journeys afterward.
