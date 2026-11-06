@@ -1,0 +1,58 @@
+[
+  {
+    "id": "native200-document-fit",
+    "pass": true,
+    "evidence": {
+      "density": "comfortable",
+      "dpr": 4,
+      "innerHeight": 394,
+      "innerWidth": 720,
+      "mode": "compact",
+      "outerHeight": 436,
+      "outerWidth": 720,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 720,
+      "theme": "light",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "native200-search",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-code-sync-and-local-overflow",
+    "pass": true,
+    "evidence": {
+      "clientWidth": 170,
+      "code": "import { createButton } from \"@pwa-design-system/core/button\";\n\nconst component = createButton({\n  \"label\": \"Native 200\",\n  \"size\": \"medium\",\n  \"variant\": \"primary\",\n  \"type\": \"button\",\n  \"disabled\": false,\n  \"loading\": false\n});\ndocument.body.append(component.element);",
+      "doc": 720,
+      "overflow": "auto",
+      "scrollWidth": 555,
+      "width": 720
+    }
+  },
+  {
+    "id": "native200-valid-edit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-commit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-interruption",
+    "pass": false,
+    "step": "click Commit changes",
+    "error": "HTTP Error 500: Internal Server Error",
+    "traceback": "Traceback (most recent call last):\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 49, in <module>\n    if js('return document.querySelector(\".ws-workspace\").dataset.mode')=='phone':clickname('Details')\n       ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 6, in js\n  File \"<string>\", line 5, in cmd\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 187, in urlopen\n    return opener.open(url, data, timeout)\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 495, in open\n    response = meth(req, response)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 604, in http_response\n    response = self.parent.error(\n        'http', request, response, code, msg, hdrs)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 533, in error\n    return self._call_chain(*args)\n           ~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 466, in _call_chain\n    result = func(*args)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 613, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 500: Internal Server Error\n",
+    "dom": {
+      "active": "<body>\n    <a class=\"studio-skip\" href=\"#main\">Skip to content</a>\n    <div class=\"studio-layout\" data-workspace=\"design-tokens\">\n      <aside id=\"desktop-sidebar\" class=\"studio-sidebar\" aria-label=\"Studio sidebar\">\n        <a class=\"studio-brand\" href=\"#overview\"><span class=\"studio-brand-mark\" aria-hidden=\"true\">P</span><span><strong>PWA Design System</strong><small>STUDIO</small></span></a>\n        <nav class=\"studio-nav\" aria-label=\"Studio navigation\" data-studio-nav=\"\"><p class=\"studio-nav-heading\">WORKSPACE</p><div class=\"studio-nav-list\"><a class=\"studio-nav-link\" href=\"#overview\" data-route=\"overview\" title=\"Overview\"><span class=\"studio-nav-number\" aria-hidden=\"true\">01</span><span>Overview</span></a><a class=\"studio-nav-link\" href=\"#foundations\" data-route=\"foundations\" title=\"Foundations\"><span class=\"studio-nav-number\" aria-hidden=\"true\">02</span><span>Foundations</span></a><a class=\"studio-nav-link\" href=\"#design-tokens\" data-route=\"design-tokens\" title=\"Design Tokens\" aria-current=\"page\"><span class=\"studio-nav-number\" aria-hidden=\"true\">03</span><span>Design Tokens</span></a><a class=\"studio-nav-link\" href=\"#components\" data-route=\"components\" title=\"Components\"><span class=\"studio-nav-number\" aria-hidden=\"true\">04</span><span>Components</span></a><a class=\"studio-nav-link\" href=\"#layout-playground\" data-route=\"layout-playground\" title=\"Layout Playground\"><span class=\"studio-nav-number\" aria-hidden=\"true\">05</span><span>Layout Playground</span></a><a class=\"studio-nav-link\" href=\"#theme-builder\" data-route=\"theme-builder\" title=\"Theme Builder\"><span class=\"studio-nav-number\" aria-hidden=\"true\">06</span><span>Theme Builder</span></a><a class=\"studio-nav-link\" href=\"#accessibility-lab\" data-route=\"accessibility-lab\" title=\"Accessibility Lab\"><span class=\"studio-nav-number\" aria-hidden=\"true\">07</span><span>Accessibility Lab</span></a><a class=\"studio-nav-link\" href=\"#ai-agent-rules\" data-route=\"ai-agent-rules\" title=\"AI Agent Rules\"><span class=\"studio-nav-number\" aria-hidden=\"true\">08</span><span>AI Agent Rules</span></a><a class=\"studio-nav-link\" href=\"#documentation\" data-route=\"documentation\" title=\"Documentation\"><span class=\"studio-nav-number\" aria-hidden=\"true\">09</span><span>Documentation</span></a><a class=\"studio-nav-link\" href=\"#settings\" data-route=\"settings\" title=\"Settings\"><span class=\"studio-nav-number\" aria-hidden=\"true\">10</span><span>Settings</span></a></div></nav>\n        <div class=\"studio-sidebar-foot\"><span>DESIGN SYSTEM</span><strong>Foundation / v0.1</strong></div>\n      </aside>\n      <div class=\"studio-content\">\n        <header class=\"studio-topbar\">\n          <div class=\"studio-topbar-context\">\n            <button type=\"button\" class=\"studio-menu-button\" id=\"open-navigation\" aria-label=\"Open navigation\" aria-haspopup=\"dialog\" aria-controls=\"mobile-navigation\"><span aria-hidden=\"true\">\u2630</span></button>\n            <div class=\"studio-breadcrumb\"><span>Studio</span><span aria-hidden=\"true\">/</span><strong id=\"current-page\">Design Tokens</strong></div>\n          </div>\n          <div class=\"studio-topbar-actions\"><button type=\"button\" class=\"studio-sidebar-toggle\" id=\"toggle-sidebar\" aria-controls=\"desktop-sidebar\" aria-expanded=\"true\">Collapse sidebar</button><label class=\"studio-theme-label\" for=\"theme-select\">Studio theme</label><span class=\"studio-select-wrap\"><select id=\"theme-select\" class=\"studio-select\" name=\"theme\" aria-label=\"Studio theme\"><option value=\"light\">Light</option><option value=\"dark\">Dark</option><option value=\"system\">System</option></select></span></div>\n        </header>\n        <p id=\"pwa-connectivity\" class=\"studio-connectivity\" role=\"status\" hidden=\"\"></p>\n        <p id=\"preference-status\" class=\"studio-preference-status\" role=\"status\"></p>\n        <section id=\"pwa-update\" hidden=\"\" aria-label=\"Application update\"><div class=\"pwa-update-row\"><span class=\"pwa-update-loader\" aria-hidden=\"true\" hidden=\"\"></span><p id=\"pwa-update-status\" role=\"status\"></p><button type=\"button\" aria-describedby=\"pwa-update-status\">Prepare update</button><button type=\"button\" data-pwa-reload=\"\" hidden=\"\">Reload now</button><details><summary>Update details</summary><p>Save or cancel token drafts and finish any import. Close other Studio tabs. Preparing does not reload this page; reload only after your work is saved.</p></details></div></section>\n        <button id=\"scroll-to-top\" class=\"studio-scroll-top\" type=\"button\" hidden=\"\">Back to top</button>\n        <main id=\"main\" class=\"studio-main\" tabindex=\"-1\" data-workspace=\"design-tokens\"><div class=\"studio-page\"><p class=\"studio-loading\">Loading Design Tokens\u2026</p></div></main>\n      </div>\n    </div>\n    <dialog id=\"mobile-navigation\" class=\"studio-drawer\" aria-labelledby=\"mobile-navigation-title\">\n      <div class=\"studio-drawer-header\"><div><span class=\"studio-eyebrow\">WORKSPACE</span><h2 id=\"mobile-navigation-title\">Navigation</h2></div><button id=\"close-navigation\" type=\"button\" class=\"studio-close-button\" aria-label=\"Close navigation\">\u00d7</button></div>\n      <nav class=\"studio-nav studio-drawer-nav\" aria-label=\"Mobile navigation\" data-studio-nav=\"\"><p class=\"studio-nav-heading\">WORKSPACE</p><div class=\"studio-nav-list\"><a class=\"studio-nav-link\" href=\"#overview\" data-route=\"overview\" title=\"Overview\"><span class=\"studio-nav-number\" aria-hidden=\"true\">01</span><span>Overview</span></a><a class=\"studio-nav-link\" href=\"#foundations\" data-route=\"foundations\" title=\"Foundations\"><span class=\"studio-nav-number\" aria-hidden=\"true\">02</span><span>Foundations</span></a><a class=\"studio-nav-link\" href=\"#design-tokens\" data-route=\"design-tokens\" title=\"Design Tokens\" aria-current=\"page\"><span class=\"studio-nav-number\" aria-hidden=\"true\">03</span><span>Design Tokens</span></a><a class=\"studio-nav-link\" href=\"#components\" data-route=\"components\" title=\"Components\"><span class=\"studio-nav-number\" aria-hidden=\"true\">04</span><span>Components</span></a><a class=\"studio-nav-link\" href=\"#layout-playground\" data-route=\"layout-playground\" title=\"Layout Playground\"><span class=\"studio-nav-number\" aria-hidden=\"true\">05</span><span>Layout Playground</span></a><a class=\"studio-nav-link\" href=\"#theme-builder\" data-route=\"theme-builder\" title=\"Theme Builder\"><span class=\"studio-nav-number\" aria-hidden=\"true\">06</span><span>Theme Builder</span></a><a class=\"studio-nav-link\" href=\"#accessibility-lab\" data-route=\"accessibility-lab\" title=\"Accessibility Lab\"><span class=\"studio-nav-number\" aria-hidden=\"true\">07</span><span>Accessibility Lab</span></a><a class=\"studio-nav-link\" href=\"#ai-agent-rules\" data-route=\"ai-agent-rules\" title=\"AI Agent Rules\"><span class=\"studio-nav-number\" aria-hidden=\"true\">08</span><span>AI Agent Rules</span></a><a class=\"studio-nav-link\" href=\"#documentation\" data-route=\"documentation\" title=\"Documentation\"><span class=\"studio-nav-number\" aria-hidden=\"true\">09</span><span>Documentation</span></a><a class=\"studio-nav-link\" href=\"#settings\" data-route=\"settings\" title=\"Settings\"><span class=\"studio-nav-number\" aria-hidden=\"true\">10</span><span>Settings</span></a></div></nav>\n    </dialog>\n    <p id=\"route-announcement\" class=\"studio-sr-only\" role=\"status\" aria-live=\"polite\">Design Tokens</p>\n  \n\n</body>",
+      "body": "Loading Design Tokens\u2026",
+      "mode": null
+    }
+  }
+]

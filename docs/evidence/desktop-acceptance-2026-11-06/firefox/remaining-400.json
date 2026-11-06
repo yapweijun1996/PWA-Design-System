@@ -1,0 +1,51 @@
+[
+  {
+    "id": "native400-document-fit",
+    "pass": true,
+    "evidence": {
+      "density": "compact",
+      "dpr": 7.5,
+      "innerHeight": 210,
+      "innerWidth": 384,
+      "mode": "phone",
+      "outerHeight": 218,
+      "outerWidth": 360,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 384,
+      "theme": "dark",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "native400-search",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native400-code-sync-and-local-overflow",
+    "pass": true,
+    "evidence": {
+      "clientWidth": 332,
+      "code": "import { createButton } from \"@pwa-design-system/core/button\";\n\nconst component = createButton({\n  \"label\": \"Native 400\",\n  \"size\": \"medium\",\n  \"variant\": \"primary\",\n  \"type\": \"button\",\n  \"disabled\": false,\n  \"loading\": false\n});\ndocument.body.append(component.element);",
+      "doc": 384,
+      "overflow": "auto",
+      "scrollWidth": 547,
+      "width": 384
+    }
+  },
+  {
+    "id": "native400-valid-edit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native400-commit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native400-commit-persist",
+    "pass": true,
+    "evidence": null
+  }
+]

@@ -1,0 +1,145 @@
+{
+  "started": "2026-11-06T09:16:33.217793+00:00",
+  "sourceSHA": "40459855467830a988cb6bcf148e7ae4af21c8ce",
+  "expectedRuntime": "1170b641fcdfe7977a19",
+  "checks": [
+    {
+      "id": "tokens-single-inspector",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "token-invalid-blocks-commit",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "token-undo",
+      "pass": false,
+      "evidence": null
+    },
+    {
+      "id": "token-valid-draft",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "token-cancel",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "token-commit",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "token-persist-reload",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "token-scope-canvas-studio-separation",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "actual-narrow-measurement",
+      "pass": true,
+      "evidence": {
+        "density": "comfortable",
+        "dpr": 2,
+        "innerHeight": 759,
+        "innerWidth": 500,
+        "mode": "phone",
+        "outerHeight": 844,
+        "outerWidth": 500,
+        "runtime": "1170b641fcdfe7977a19",
+        "scrollWidth": 500,
+        "theme": "dark",
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+      }
+    },
+    {
+      "id": "narrow-dialog-escape",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "narrow-token-edit-access",
+      "pass": true,
+      "evidence": {
+        "density": "comfortable",
+        "dpr": 2,
+        "innerHeight": 759,
+        "innerWidth": 500,
+        "mode": "phone",
+        "outerHeight": 844,
+        "outerWidth": 500,
+        "runtime": "1170b641fcdfe7977a19",
+        "scrollWidth": 500,
+        "theme": "dark",
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+      }
+    },
+    {
+      "id": "tokens-error-listener",
+      "pass": true,
+      "evidence": []
+    }
+  ],
+  "limits": [
+    "Synthetic WebDriver interactions do not establish manual screen-reader, human or physical device acceptance.",
+    "Console collection limited to injected page error/unhandledrejection listeners after navigation; HTTP statuses unavailable through this classic WebDriver harness."
+  ],
+  "capabilities": {
+    "acceptInsecureCerts": false,
+    "browserName": "firefox",
+    "browserVersion": "159.0.1",
+    "moz:accessibilityChecks": false,
+    "moz:buildID": "20261102144711",
+    "moz:geckodriverVersion": "0.37.1",
+    "moz:headless": false,
+    "moz:platformVersion": "27.0.0",
+    "moz:processID": 81647,
+    "moz:profile": "/var/folders/tx/dx_7t0r56svcjld4fx5j_pwr0000gn/T/rust_mozprofile3CuDUz",
+    "moz:shutdownTimeout": 73000,
+    "moz:webdriverClick": true,
+    "moz:windowless": false,
+    "pageLoadStrategy": "normal",
+    "platformName": "mac",
+    "proxy": {},
+    "setWindowRect": true,
+    "strictFileInteractability": false,
+    "timeouts": {
+      "implicit": 0,
+      "pageLoad": 300000,
+      "script": 30000
+    },
+    "unhandledPromptBehavior": "dismiss and notify",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:159.0) Gecko/20100101 Firefox/159.0"
+  },
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "browserSource": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/159.0.1/mac/en-US/Firefox%20159.0.1.dmg",
+  "gatekeeper": "/tmp/pwa-acceptance-next/firefox/Firefox.app: accepted\nsource=Notarized Developer ID\n",
+  "binarySHA256": "3d3cf77b6e1e545ec9595a3122a53f498f1a3945ee290008c49cb3c41785a37b  /tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/firefox\n",
+  "initial": {
+    "density": "comfortable",
+    "dpr": 2,
+    "innerHeight": 699,
+    "innerWidth": 1280,
+    "mode": null,
+    "outerHeight": 784,
+    "outerWidth": 1280,
+    "runtime": "1170b641fcdfe7977a19",
+    "scrollWidth": 1280,
+    "theme": "light",
+    "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview"
+  },
+  "sessionClosed": true,
+  "finished": "2026-11-06T09:22:06.479873+00:00",
+  "summary": {
+    "pass": 11,
+    "fail": 1
+  }
+}

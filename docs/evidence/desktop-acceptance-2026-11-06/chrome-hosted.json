@@ -1,0 +1,128 @@
+{
+  "status": "passed",
+  "browser": "157.0.8103.38",
+  "navigationErrors": [],
+  "failedResources": [],
+  "externalRequests": [],
+  "results": [
+    {
+      "kind": "navigation",
+      "route": "overview",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "foundations",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "design-tokens",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "components",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "layout-playground",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "theme-builder",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "accessibility-lab",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "ai-agent-rules",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "documentation",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "navigation",
+      "route": "settings",
+      "version": "1170b641fcdfe7977a19"
+    },
+    {
+      "kind": "workspace",
+      "route": "components",
+      "width": 390,
+      "theme": "light",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "workspace",
+      "route": "design-tokens",
+      "width": 390,
+      "theme": "light",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "workspace",
+      "route": "components",
+      "width": 390,
+      "theme": "dark",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "workspace",
+      "route": "design-tokens",
+      "width": 390,
+      "theme": "dark",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "workspace",
+      "route": "components",
+      "width": 1440,
+      "theme": "light",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "workspace",
+      "route": "design-tokens",
+      "width": 1440,
+      "theme": "light",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "workspace",
+      "route": "components",
+      "width": 1440,
+      "theme": "dark",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "workspace",
+      "route": "design-tokens",
+      "width": 1440,
+      "theme": "dark",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    },
+    {
+      "kind": "transactional-import-persist",
+      "version": "1170b641fcdfe7977a19",
+      "errors": []
+    }
+  ]
+}

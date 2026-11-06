@@ -1,0 +1,2 @@
+/tmp/pwa-acceptance-next/firefox/Firefox.app: accepted
+source=Notarized Developer ID

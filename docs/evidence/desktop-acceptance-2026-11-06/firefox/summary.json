@@ -1,0 +1,203 @@
+{
+  "status": "BOUNDED_STABLE_FIREFOX_ACCEPTANCE_COMPLETE_WITH_LIMITS",
+  "recordedAt": "2026-11-06T09:31:37.614123+00:00",
+  "browser": "Firefox Stable 159.0.1",
+  "browserBuild": "20261102144711",
+  "browserSourceStamp": "7b34a03a910d0385299f4a9f27aa585a786862d8",
+  "sourceSHA": "40459855467830a988cb6bcf148e7ae4af21c8ce",
+  "runtime": "1170b641fcdfe7977a19",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "uniqueAtomicPasses": 81,
+  "successfulAttempts": 91,
+  "failedOrInterruptedAttempts": 5,
+  "attemptReports": {
+    "report.json": {
+      "pass": 53,
+      "failOrInterruption": 1
+    },
+    "focused-report.json": {
+      "pass": 11,
+      "failOrInterruption": 1
+    },
+    "zoom-flow-report.json": {
+      "pass": 6,
+      "failOrInterruption": 1
+    },
+    "remaining-200-attempt1.json": {
+      "pass": 4,
+      "failOrInterruption": 1
+    },
+    "remaining-200-attempt2.json": {
+      "pass": 5,
+      "failOrInterruption": 1
+    },
+    "remaining-200.json": {
+      "pass": 6,
+      "failOrInterruption": 0
+    },
+    "remaining-400.json": {
+      "pass": 6,
+      "failOrInterruption": 0
+    }
+  },
+  "passedIds": [
+    "route-overview-1440-light-comfortable",
+    "route-foundations-1440-light-comfortable",
+    "route-design-tokens-1440-light-comfortable",
+    "route-components-1440-light-comfortable",
+    "route-layout-playground-1440-light-comfortable",
+    "route-theme-builder-1440-light-comfortable",
+    "route-accessibility-lab-1440-light-comfortable",
+    "route-ai-agent-rules-1440-light-comfortable",
+    "route-documentation-1440-light-comfortable",
+    "route-settings-1440-light-comfortable",
+    "route-overview-1440-dark-compact",
+    "route-foundations-1440-dark-compact",
+    "route-design-tokens-1440-dark-compact",
+    "route-components-1440-dark-compact",
+    "route-layout-playground-1440-dark-compact",
+    "route-theme-builder-1440-dark-compact",
+    "route-accessibility-lab-1440-dark-compact",
+    "route-ai-agent-rules-1440-dark-compact",
+    "route-documentation-1440-dark-compact",
+    "route-settings-1440-dark-compact",
+    "route-overview-390-light-compact",
+    "route-foundations-390-light-compact",
+    "route-design-tokens-390-light-compact",
+    "route-components-390-light-compact",
+    "route-layout-playground-390-light-compact",
+    "route-theme-builder-390-light-compact",
+    "route-accessibility-lab-390-light-compact",
+    "route-ai-agent-rules-390-light-compact",
+    "route-documentation-390-light-compact",
+    "route-settings-390-light-compact",
+    "route-overview-390-dark-comfortable",
+    "route-foundations-390-dark-comfortable",
+    "route-design-tokens-390-dark-comfortable",
+    "route-components-390-dark-comfortable",
+    "route-layout-playground-390-dark-comfortable",
+    "route-theme-builder-390-dark-comfortable",
+    "route-accessibility-lab-390-dark-comfortable",
+    "route-ai-agent-rules-390-dark-comfortable",
+    "route-documentation-390-dark-comfortable",
+    "route-settings-390-dark-comfortable",
+    "component-search",
+    "component-category",
+    "component-preview-code-sync",
+    "component-size-state",
+    "component-code-tab",
+    "component-canvas-studio-separation",
+    "menu-keyboard",
+    "menu-escape-restores-focus",
+    "dialog-open",
+    "dialog-tab-trapped",
+    "dialog-escape-restores-focus",
+    "components-error-listener",
+    "tokens-single-inspector",
+    "token-invalid-blocks-commit",
+    "token-valid-draft",
+    "token-cancel",
+    "token-commit",
+    "token-persist-reload",
+    "token-scope-canvas-studio-separation",
+    "actual-narrow-measurement",
+    "narrow-dialog-escape",
+    "narrow-token-edit-access",
+    "tokens-error-listener",
+    "native400-token-invalid",
+    "native400-invalid-input-focus-visible",
+    "native400-undo-last-typed-edit",
+    "native400-cancel",
+    "native400-dialog-tab-trap",
+    "native400-dialog-escape",
+    "native200-document-fit",
+    "native200-search",
+    "native200-code-sync-and-local-overflow",
+    "native200-valid-edit",
+    "native200-commit",
+    "native200-commit-persist",
+    "native400-document-fit",
+    "native400-search",
+    "native400-code-sync-and-local-overflow",
+    "native400-valid-edit",
+    "native400-commit",
+    "native400-commit-persist"
+  ],
+  "errors": [
+    {
+      "report": "report.json",
+      "failedCases": [
+        {
+          "id": "tokens",
+          "pass": false,
+          "evidence": "{\"value\":{\"error\":\"javascript error\",\"message\":\"SyntaxError: missing ) after argument list\",\"stacktrace\":\"@https://yapweijun1996.github.io/PWA-Design-System/#overview:2:57\\n\"}}"
+        }
+      ]
+    },
+    {
+      "report": "focused-report.json",
+      "failedCases": [
+        {
+          "id": "token-undo",
+          "pass": false,
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "report": "zoom-flow-report.json",
+      "failedCases": [
+        {
+          "id": "native400-harness-interruption",
+          "pass": false,
+          "evidence": "HTTP Error 400: Bad Request"
+        }
+      ]
+    },
+    {
+      "report": "remaining-200-attempt1.json",
+      "failedCases": [
+        {
+          "id": "native200-interruption",
+          "pass": false,
+          "step": "click Commit changes",
+          "error": "{\"value\":{\"error\":\"element click intercepted\",\"message\":\"Element <button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\"> is not clickable at point (260,0) because another element <header class=\\\"studio-topbar\\\"> obscures it\",\"stacktrace\":\"RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:14:8\\nWebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:169:5\\nElementClickInterceptedError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:321:5\\nwebdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:178:11\\ninteraction.clickElement@chrome://remote/content/marionette/interaction.sys.mjs:134:11\\nclickElement@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:338:29\\nreceiveMessage@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:210:31\\n\",\"data\":{\"coords\":{\"x\":260,\"y\":0},\"obscuredElement\":\"<button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\">\",\"overlayingElement\":\"<header class=\\\"studio-topbar\\\">\"}}}",
+          "traceback": "Traceback (most recent call last):\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 11, in clickel\n    try:cmd('/element/'+e['element-6066-11e4-a52e-4f735466cecf']+'/click',{})\n        ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 5, in cmd\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 187, in urlopen\n    return opener.open(url, data, timeout)\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 495, in open\n    response = meth(req, response)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 604, in http_response\n    response = self.parent.error(\n        'http', request, response, code, msg, hdrs)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 533, in error\n    return self._call_chain(*args)\n           ~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 466, in _call_chain\n    result = func(*args)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 613, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 400: Bad Request\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 44, in <module>\n    clickname('Commit changes');record('commit',js('return JSON.parse(localStorage.getItem(\"pwa-ds-token-overrides-v1\")).overrides.light[\"color.surface\"]===\"#fafafa\"'))\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 15, in clickname\n    step='click '+name;print(step,flush=True);clickel(named(name,tag,scope));time.sleep(.15)\n                                              ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 12, in clickel\n    except urllib.error.HTTPError as e:raise RuntimeError(e.read().decode())\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: {\"value\":{\"error\":\"element click intercepted\",\"message\":\"Element <button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\"> is not clickable at point (260,0) because another element <header class=\\\"studio-topbar\\\"> obscures it\",\"stacktrace\":\"RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:14:8\\nWebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:169:5\\nElementClickInterceptedError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:321:5\\nwebdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:178:11\\ninteraction.clickElement@chrome://remote/content/marionette/interaction.sys.mjs:134:11\\nclickElement@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:338:29\\nreceiveMessage@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:210:31\\n\",\"data\":{\"coords\":{\"x\":260,\"y\":0},\"obscuredElement\":\"<button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\">\",\"overlayingElement\":\"<header class=\\\"studio-topbar\\\">\"}}}\n",
+          "dom": {
+            "active": "<input type=\"text\" class=\"token-editor__control\" autocomplete=\"off\" spellcheck=\"false\" maxlength=\"128\" data-token=\"color.surface\" aria-label=\"color.surface override\" placeholder=\"Leave empty to inherit\" aria-invalid=\"false\" aria-describedby=\"token-editor-1-inherit-help token-editor-1-selected-purpose token-editor-1-selected-type token-editor-1-selected-values\">",
+            "body": "Design tokens\n\nEmpty override = inherited value. Default is the selected preset; Resolved includes the draft.\n\nEditing scope\nCanvas theme\n1 unsaved change\nCommit\nCancel\nUndo\n\nEditing: Light only \u00b7 Preview: Light\n\nDraft preview updated. Commit to save.\n\nImport, export & reset\nReview changes (1)\nCategories\nTokens\nPreview\nInfo\nToken table\nSearch tokens\nModified only\nSaved overrides and pending removals in this scope.\nSemantic tokens \u2014 select a name to edit its override.\nToken\tDefault\tResolved\tOverride status\ncolor.background\ncolor\n\t#f8fafc\t#f8fafc\tInherited\ncolor.border-control\ncolor\n\t#475569\t#475569\tInherited\ncolor.border-subtle\ncolor\n\t#e2e8f0\t#e2e8f0\tInherited\ncolor.danger\ncolor\n\t#b91c1c\t#b91c1c\tInherited\ncolor.focus\ncolor\n\t#1d4ed8\t#1d4ed8\tInherited\ncolor.link\ncolor\n\t#1d4ed8\t#1d4ed8\tInherited\ncolor.on-primary\ncolor\n\t#ffffff\t#ffffff\tInherited\ncolor.primary\ncolor\n\t#1d4ed8\t#1d4ed8\tInherited\ncolor.primary-hover\ncolor\n\t#1e40af\t#1e40af\tInherited\ncolor.success\ncolor\n\t#15803d\t#15803d\tInherited\ncolor.surface\ncolor\n\t#ffffff\t#fafafa\tModified\ncolor.surface-alt\ncolor\n\t#f1f5f9\t#f1f5f9\tInherited\ncolor.text\ncolor\n\t#0f172a\t#0f172a\tInherited\ncolor.text-muted\ncolor\n\t#475569\t#475569\tInherited\ncolor.warning\ncolor\n\t#92400e\t#92400e\tInherited\nfont.body\nfontFamily\n\tsystem-ui, sans-serif\tsystem-ui, sans-serif\tInherited\nfont.size.body\ndimension\n\t1rem\t1rem\tInherited\nfont.size.heading\ndimension\n\t1.25rem\t1.25rem\tInherited\nfont.size.small\ndimension\n\t0.875rem\t0.875rem\tInherited\nfont.size.title\ndimension\n\t1.75rem\t1.75rem\tInherited\nfont.weight.body\nnumber\n\t400\t400\tInherited\nfont.weight.heading\nnumber\n\t700\t700\tInherited\nfont.weight.label\nnumber\n\t500\t500\tInherited\nspacing.lg\ndimension\n\t1.5rem\t1.5rem\tInherited\nspacing.md\ndimension\n\t1rem\t1rem\tInherited\nspacing.none\ndimension\n\t0px\t0px\tInherited\nspacing.sm\ndimension\n\t0.5rem\t0.5rem\tInherited\nspacing.xl\ndimension\n\t2rem\t2rem\tInherited\nspacing.xs\ndimension\n\t0.25rem\t0.25rem\tInherited\nradius.card\ndimension\n\t0.75rem\t0.75rem\tInherited\nradius.control\ndimension\n\t0.5rem\t0.5rem\tInherited\nradius.pill\ndimension\n\t999px\t999px\tInherited\nshadow.card\nshadow\n\t0 1px 3px #00000033\t0 1px 3px #00000033\tInherited\nshadow.overlay\nshadow\n\t0 8px 24px #00000033\t0 8px 24px #00000033\tInherited\nelevation.card\nshadow\n\t0 1px 3px #00000033\t0 1px 3px #00000033\tInherited\nelevation.overlay\nshadow\n\t0 8px 24px #00000033\t0 8px 24px #00000033\tInherited\nlayer.base\nnumber\n\t0\t0\tInherited\nlayer.overlay\nnumber\n\t100\t100\tInherited\nlayer.sticky\nnumber\n\t10\t10\tInherited\nlayer.toast\nnumber\n\t200\t200\tInherited\nmotion.duration.fast\nduration\n\t120ms\t120ms\tInherited\nmotion.duration.normal\nduration\n\t200ms\t200ms\tInherited\nmotion.easing.standard\neasing\n\tease-in-out\tease-in-out\tInherited\nsize.control.large\ndimension\n\t3rem\t3rem\tInherited\nsize.control.medium\ndimension\n\t2.75rem\t2.75rem\tInherited\nsize.control.small\ndimension\n\t2rem\t2rem\tInherited\nfocus.ring-offset\ndimension\n\t2px\t2px\tInherited\nfocus.ring-width\ndimension\n\t2px\t2px\tInherited\ncolor.surface\ncolor\n\nCards, inputs and other primary surfaces.\n\nDefault\n#ffffff\nResolved\n#fafafa\nOverride (empty = inherited)\nChoose new color\nUse inherited value\nDependency chain\nsemantic.color.surface\nPurpose, source & references",
+            "mode": "compact"
+          }
+        }
+      ]
+    },
+    {
+      "report": "remaining-200-attempt2.json",
+      "failedCases": [
+        {
+          "id": "native200-interruption",
+          "pass": false,
+          "step": "click Commit changes",
+          "error": "HTTP Error 500: Internal Server Error",
+          "traceback": "Traceback (most recent call last):\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 49, in <module>\n    if js('return document.querySelector(\".ws-workspace\").dataset.mode')=='phone':clickname('Details')\n       ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 6, in js\n  File \"<string>\", line 5, in cmd\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 187, in urlopen\n    return opener.open(url, data, timeout)\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 495, in open\n    response = meth(req, response)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 604, in http_response\n    response = self.parent.error(\n        'http', request, response, code, msg, hdrs)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 533, in error\n    return self._call_chain(*args)\n           ~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 466, in _call_chain\n    result = func(*args)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 613, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 500: Internal Server Error\n",
+          "dom": {
+            "active": "<body>\n    <a class=\"studio-skip\" href=\"#main\">Skip to content</a>\n    <div class=\"studio-layout\" data-workspace=\"design-tokens\">\n      <aside id=\"desktop-sidebar\" class=\"studio-sidebar\" aria-label=\"Studio sidebar\">\n        <a class=\"studio-brand\" href=\"#overview\"><span class=\"studio-brand-mark\" aria-hidden=\"true\">P</span><span><strong>PWA Design System</strong><small>STUDIO</small></span></a>\n        <nav class=\"studio-nav\" aria-label=\"Studio navigation\" data-studio-nav=\"\"><p class=\"studio-nav-heading\">WORKSPACE</p><div class=\"studio-nav-list\"><a class=\"studio-nav-link\" href=\"#overview\" data-route=\"overview\" title=\"Overview\"><span class=\"studio-nav-number\" aria-hidden=\"true\">01</span><span>Overview</span></a><a class=\"studio-nav-link\" href=\"#foundations\" data-route=\"foundations\" title=\"Foundations\"><span class=\"studio-nav-number\" aria-hidden=\"true\">02</span><span>Foundations</span></a><a class=\"studio-nav-link\" href=\"#design-tokens\" data-route=\"design-tokens\" title=\"Design Tokens\" aria-current=\"page\"><span class=\"studio-nav-number\" aria-hidden=\"true\">03</span><span>Design Tokens</span></a><a class=\"studio-nav-link\" href=\"#components\" data-route=\"components\" title=\"Components\"><span class=\"studio-nav-number\" aria-hidden=\"true\">04</span><span>Components</span></a><a class=\"studio-nav-link\" href=\"#layout-playground\" data-route=\"layout-playground\" title=\"Layout Playground\"><span class=\"studio-nav-number\" aria-hidden=\"true\">05</span><span>Layout Playground</span></a><a class=\"studio-nav-link\" href=\"#theme-builder\" data-route=\"theme-builder\" title=\"Theme Builder\"><span class=\"studio-nav-number\" aria-hidden=\"true\">06</span><span>Theme Builder</span></a><a class=\"studio-nav-link\" href=\"#accessibility-lab\" data-route=\"accessibility-lab\" title=\"Accessibility Lab\"><span class=\"studio-nav-number\" aria-hidden=\"true\">07</span><span>Accessibility Lab</span></a><a class=\"studio-nav-link\" href=\"#ai-agent-rules\" data-route=\"ai-agent-rules\" title=\"AI Agent Rules\"><span class=\"studio-nav-number\" aria-hidden=\"true\">08</span><span>AI Agent Rules</span></a><a class=\"studio-nav-link\" href=\"#documentation\" data-route=\"documentation\" title=\"Documentation\"><span class=\"studio-nav-number\" aria-hidden=\"true\">09</span><span>Documentation</span></a><a class=\"studio-nav-link\" href=\"#settings\" data-route=\"settings\" title=\"Settings\"><span class=\"studio-nav-number\" aria-hidden=\"true\">10</span><span>Settings</span></a></div></nav>\n        <div class=\"studio-sidebar-foot\"><span>DESIGN SYSTEM</span><strong>Foundation / v0.1</strong></div>\n      </aside>\n      <div class=\"studio-content\">\n        <header class=\"studio-topbar\">\n          <div class=\"studio-topbar-context\">\n            <button type=\"button\" class=\"studio-menu-button\" id=\"open-navigation\" aria-label=\"Open navigation\" aria-haspopup=\"dialog\" aria-controls=\"mobile-navigation\"><span aria-hidden=\"true\">\u2630</span></button>\n            <div class=\"studio-breadcrumb\"><span>Studio</span><span aria-hidden=\"true\">/</span><strong id=\"current-page\">Design Tokens</strong></div>\n          </div>\n          <div class=\"studio-topbar-actions\"><button type=\"button\" class=\"studio-sidebar-toggle\" id=\"toggle-sidebar\" aria-controls=\"desktop-sidebar\" aria-expanded=\"true\">Collapse sidebar</button><label class=\"studio-theme-label\" for=\"theme-select\">Studio theme</label><span class=\"studio-select-wrap\"><select id=\"theme-select\" class=\"studio-select\" name=\"theme\" aria-label=\"Studio theme\"><option value=\"light\">Light</option><option value=\"dark\">Dark</option><option value=\"system\">System</option></select></span></div>\n        </header>\n        <p id=\"pwa-connectivity\" class=\"studio-connectivity\" role=\"status\" hidden=\"\"></p>\n        <p id=\"preference-status\" class=\"studio-preference-status\" role=\"status\"></p>\n        <section id=\"pwa-update\" hidden=\"\" aria-label=\"Application update\"><div class=\"pwa-update-row\"><span class=\"pwa-update-loader\" aria-hidden=\"true\" hidden=\"\"></span><p id=\"pwa-update-status\" role=\"status\"></p><button type=\"button\" aria-describedby=\"pwa-update-status\">Prepare update</button><button type=\"button\" data-pwa-reload=\"\" hidden=\"\">Reload now</button><details><summary>Update details</summary><p>Save or cancel token drafts and finish any import. Close other Studio tabs. Preparing does not reload this page; reload only after your work is saved.</p></details></div></section>\n        <button id=\"scroll-to-top\" class=\"studio-scroll-top\" type=\"button\" hidden=\"\">Back to top</button>\n        <main id=\"main\" class=\"studio-main\" tabindex=\"-1\" data-workspace=\"design-tokens\"><div class=\"studio-page\"><p class=\"studio-loading\">Loading Design Tokens\u2026</p></div></main>\n      </div>\n    </div>\n    <dialog id=\"mobile-navigation\" class=\"studio-drawer\" aria-labelledby=\"mobile-navigation-title\">\n      <div class=\"studio-drawer-header\"><div><span class=\"studio-eyebrow\">WORKSPACE</span><h2 id=\"mobile-navigation-title\">Navigation</h2></div><button id=\"close-navigation\" type=\"button\" class=\"studio-close-button\" aria-label=\"Close navigation\">\u00d7</button></div>\n      <nav class=\"studio-nav studio-drawer-nav\" aria-label=\"Mobile navigation\" data-studio-nav=\"\"><p class=\"studio-nav-heading\">WORKSPACE</p><div class=\"studio-nav-list\"><a class=\"studio-nav-link\" href=\"#overview\" data-route=\"overview\" title=\"Overview\"><span class=\"studio-nav-number\" aria-hidden=\"true\">01</span><span>Overview</span></a><a class=\"studio-nav-link\" href=\"#foundations\" data-route=\"foundations\" title=\"Foundations\"><span class=\"studio-nav-number\" aria-hidden=\"true\">02</span><span>Foundations</span></a><a class=\"studio-nav-link\" href=\"#design-tokens\" data-route=\"design-tokens\" title=\"Design Tokens\" aria-current=\"page\"><span class=\"studio-nav-number\" aria-hidden=\"true\">03</span><span>Design Tokens</span></a><a class=\"studio-nav-link\" href=\"#components\" data-route=\"components\" title=\"Components\"><span class=\"studio-nav-number\" aria-hidden=\"true\">04</span><span>Components</span></a><a class=\"studio-nav-link\" href=\"#layout-playground\" data-route=\"layout-playground\" title=\"Layout Playground\"><span class=\"studio-nav-number\" aria-hidden=\"true\">05</span><span>Layout Playground</span></a><a class=\"studio-nav-link\" href=\"#theme-builder\" data-route=\"theme-builder\" title=\"Theme Builder\"><span class=\"studio-nav-number\" aria-hidden=\"true\">06</span><span>Theme Builder</span></a><a class=\"studio-nav-link\" href=\"#accessibility-lab\" data-route=\"accessibility-lab\" title=\"Accessibility Lab\"><span class=\"studio-nav-number\" aria-hidden=\"true\">07</span><span>Accessibility Lab</span></a><a class=\"studio-nav-link\" href=\"#ai-agent-rules\" data-route=\"ai-agent-rules\" title=\"AI Agent Rules\"><span class=\"studio-nav-number\" aria-hidden=\"true\">08</span><span>AI Agent Rules</span></a><a class=\"studio-nav-link\" href=\"#documentation\" data-route=\"documentation\" title=\"Documentation\"><span class=\"studio-nav-number\" aria-hidden=\"true\">09</span><span>Documentation</span></a><a class=\"studio-nav-link\" href=\"#settings\" data-route=\"settings\" title=\"Settings\"><span class=\"studio-nav-number\" aria-hidden=\"true\">10</span><span>Settings</span></a></div></nav>\n    </dialog>\n    <p id=\"route-announcement\" class=\"studio-sr-only\" role=\"status\" aria-live=\"polite\">Design Tokens</p>\n  \n\n</body>",
+            "body": "Loading Design Tokens\u2026",
+            "mode": null
+          }
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "No import/export acceptance in this bounded Firefox run.",
+    "Classic WebDriver harness does not provide complete browser console or HTTP status/network verification. Error listeners were injected only after navigation.",
+    "Native200 overlays not separately tested;400 Dialog Tab/Escape passed.",
+    "Native200 light/comfortable and400 dark/compact remaining flows passed; exhaustive zoom/theme/density cross-product not tested.",
+    "100% requested390 window clamped to actual500px; not390px or physical-mobile acceptance.",
+    "Native400 UI400% measured384\u00d7210 DPR7.5: report actualmetrics, do not call320px.",
+    "No manual screen-reader, human visual approval, real-device or full WCAG conformance claim.",
+    "Native400-token-error.png was captured after Cancel despite filename."
+  ],
+  "cleanup": "Native Cmd+0 restored100% (zoom indicator removed in AX), then explicit DELETE /session and geckodriver termination. Own isolated browser processes closed. No tracked repository edits, commits, pushes or lockfile changes."
+}

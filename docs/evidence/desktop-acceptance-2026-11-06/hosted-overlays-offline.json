@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-06T09:31:12.887Z",
+  "build": "1170b641fcdfe7977a19",
+  "browser": "157.0.8103.38",
+  "source": "40459855467830a988cb6bcf148e7ae4af21c8ce",
+  "results": [
+    "dialog-tab-escape-restoration",
+    "menu-escape-restoration",
+    "controlled-offline-reload-persisted-token-and-code"
+  ],
+  "errors": [],
+  "http": [],
+  "scope": "Page/console/HTTP>=400 observers span whole journey; controlled offline requests observed separately by offline context. Desktop synthetic profile; no installation or physical device claim."
+}

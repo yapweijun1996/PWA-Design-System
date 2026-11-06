@@ -1,0 +1,52 @@
+[
+  {
+    "id": "native400-token-invalid",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native400-invalid-input-focus-visible",
+    "pass": true,
+    "evidence": {
+      "active": true,
+      "field": {
+        "bottom": 209.86666870117188,
+        "left": 32.93333435058594,
+        "right": 351.06666564941406,
+        "top": 165.86666870117188
+      },
+      "headerBottom": 64,
+      "innerHeight": 210,
+      "innerWidth": 384,
+      "scrollWidth": 384
+    }
+  },
+  {
+    "id": "native400-undo-last-typed-edit",
+    "pass": true,
+    "evidence": {
+      "expected": "last character removed (WebDriver typed individual characters)",
+      "value": "{primitive.color.missing"
+    }
+  },
+  {
+    "id": "native400-cancel",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native400-dialog-tab-trap",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native400-dialog-escape",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native400-harness-interruption",
+    "pass": false,
+    "evidence": "HTTP Error 400: Bad Request"
+  }
+]

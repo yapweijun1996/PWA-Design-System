@@ -1,0 +1,79 @@
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libEGL.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libEGL.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/crashhelper
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/crashhelper
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/pingsender
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/pingsender
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libfreebl3.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libfreebl3.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/liblgpllibs.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/liblgpllibs.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/nmhproxy
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/nmhproxy
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozinference.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/plugin-container.app
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozinference.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libsoftokn3.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/plugin-container.app
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libsoftokn3.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/XUL
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/XUL
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozavutil.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozavutil.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozglue.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozglue.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/gpu-helper.app
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/gpu-helper.app
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/updater.app
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/crashreporter.app
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/media-plugin-helper.app
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/media-plugin-helper.app
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/crashreporter.app
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozavcodec.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libmozavcodec.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libgkcodecs.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libgkcodecs.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libGLESv2.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libGLESv2.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/updater.app/Contents/Frameworks/UpdateSettings.framework
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/updater.app/Contents/Frameworks/UpdateSettings.framework
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/updater.app
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libonnxruntime.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libonnxruntime.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libnss3.dylib
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/libnss3.dylib
+--prepared:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/Frameworks/ChannelPrefs.framework
+--validated:/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/Frameworks/ChannelPrefs.framework
+/tmp/pwa-acceptance-next/firefox/Firefox.app: valid on disk
+/tmp/pwa-acceptance-next/firefox/Firefox.app: satisfies its Designated Requirement
+Executable=/private/tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/firefox
+Identifier=org.mozilla.firefox
+Format=app bundle with Mach-O universal (x86_64 arm64)
+CodeDirectory v=20500 size=927 flags=0x10000(runtime) hashes=18+7 location=embedded
+VersionPlatform=1
+VersionMin=720896
+VersionSDK=1705216
+Hash type=sha256 size=32
+CandidateCDHash sha256=c90d2024f9fd004fe8b77a197c0cd31f28eb7b81
+CandidateCDHashFull sha256=c90d2024f9fd004fe8b77a197c0cd31f28eb7b81d147bebe31b798cd2009ace1
+Hash choices=sha256
+CMSDigest=c90d2024f9fd004fe8b77a197c0cd31f28eb7b81d147bebe31b798cd2009ace1
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=32768
+Executable Segment flags=0x1
+Page size=4096
+CDHash=c90d2024f9fd004fe8b77a197c0cd31f28eb7b81
+Signature size=8988
+Authority=Developer ID Application: Mozilla Corporation (43AQ936H96)
+Authority=Developer ID Certification Authority
+Authority=Apple Root CA
+Timestamp=3 Nov 2026 at 1:01:39 AM
+Notarization Ticket=stapled
+Info.plist entries=39
+TeamIdentifier=43AQ936H96
+Runtime Version=26.5.0
+Sealed Resources version=2 rules=13 files=73
+Internal requirements count=1 size=180
+Total signatures=1
+Chosen signature=1
