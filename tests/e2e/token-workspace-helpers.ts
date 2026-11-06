@@ -1,7 +1,10 @@
 import { expect, type Page, type Locator } from '@playwright/test';
+import primitives from '../../packages/tokens/primitives.json' with { type: 'json' };
 
 export async function tokenCanvas(page: Page, view: 'Tokens' | 'Preview' | 'Info' = 'Tokens'): Promise<void> {
-  const panel = page.getByRole('button', { name: 'Workspace', exact: true });
+  const phone = (page.viewportSize()?.width ?? 0) < Number.parseInt(primitives['breakpoint.mobile'].$value, 10);
+  await expect.poll(async () => (await page.getByRole('group', { name: 'Design token workspace', exact: true }).getAttribute('data-mode')) === 'phone').toBe(phone);
+  const panel = page.getByRole('button', { name: 'Tokens', exact: true });
   if (await panel.isVisible()) await panel.click();
   await page.getByRole('tab', { name: view, exact: true }).click();
 }
@@ -12,7 +15,7 @@ export async function tokenField(page: Page, key: string): Promise<Locator> {
     await tokenCanvas(page);
     await page.getByRole('button', { name: key, exact: true }).click();
   } else if (!(await input.isVisible())) {
-    const panel = page.getByRole('button', { name: 'Token details', exact: true });
+    const panel = page.getByRole('button', { name: 'Details', exact: true });
     if (await panel.isVisible()) await panel.click();
   }
   await expect(input).toBeVisible();

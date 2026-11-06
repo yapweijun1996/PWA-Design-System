@@ -27,7 +27,7 @@ for (const width of [320, 390, 768, 1440, 1920]) test(`selected-token workspace 
 for (const width of [320, 390]) test(`draft feedback keeps the active Inspector input visible at ${width}px`, async ({ page }) => {
   await page.setViewportSize({ width, height: 844 }); await page.goto('./#design-tokens');
   const field = await tokenField(page, 'color.surface');
-  const assertVisibleGeometry = async () => { const input = await field.boundingBox(), header = await page.locator('.studio-topbar').boundingBox(); if (!input || !header) throw new Error('Missing input/header geometry'); expect(input.y).toBeGreaterThanOrEqual(header.y + header.height); expect(input.y + input.height).toBeLessThanOrEqual(844); await expect(field).toBeFocused(); };
+  const assertVisibleGeometry = async () => { await expect.poll(async () => { const input = await field.boundingBox(), header = await page.locator('.studio-topbar').boundingBox(); return !!input && !!header && input.y >= header.y + header.height && input.y + input.height <= 844; }).toBe(true); await expect(field).toBeFocused(); };
   await field.fill('#fafafa'); await assertVisibleGeometry(); await expect(page.getByLabel('Unsaved change count')).toHaveText('1 unsaved change');
   await field.fill('{primitive.color.missing}'); await assertVisibleGeometry(); await expect(page.getByRole('status', { name: 'Draft validation' })).toContainText('Missing reference');
   await page.getByRole('button', { name: 'Undo last change', exact: true }).click(); await expect(field).toHaveValue('#fafafa'); await field.focus(); await assertVisibleGeometry();

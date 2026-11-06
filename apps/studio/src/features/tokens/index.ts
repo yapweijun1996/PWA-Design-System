@@ -30,7 +30,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   const scopeControl = select('Editing scope', [['global', 'All themes'], ['light', 'Light only'], ['dark', 'Dark only']]);
   const scope = scopeControl.input; scope.value = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
   const previewControl = select('Canvas theme', [['light', 'Light'], ['dark', 'Dark']]); const previewTheme = previewControl.input; previewTheme.value = scope.value;
-  const workspace = createWorkspace({ id: 'tokens', label: 'Design token workspace', labels: { explorer: 'Categories', canvas: 'Workspace', inspector: 'Token details' } });
+  const workspace = createWorkspace({ id: 'tokens', label: 'Design token workspace', labels: { explorer: 'Categories', canvas: 'Tokens', inspector: 'Details' } });
   const toolbar = element('div'); toolbar.className = 'token-editor__toolbar'; toolbar.append(scopeControl.label, previewControl.label);
   const canvasScopeHelp = element('p', 'Editing scope writes overrides. Canvas theme affects this canvas only; Studio theme stays unchanged.'); canvasScopeHelp.className = 'token-editor__field-help';
   const context = element('div'); context.className = 'token-editor__context studio-sr-only'; const contextText = element('p'); context.append(contextText);
@@ -107,12 +107,12 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     const changes = draftChanges(baseline, draft); draftCount.value = `${changes.length} unsaved ${changes.length === 1 ? 'change' : 'changes'}`; diffSummary.textContent = `Review changes (${changes.length})`; diff.hidden = changes.length === 0; diffList.replaceChildren(...changes.map(change => element('li', `${scopeNames[change.scope]} · ${change.key}: ${change.before === undefined ? 'inherited' : change.before} → ${change.after === undefined ? 'inherited' : change.after}`))); if (!history.length && document.activeElement === undo) cancel.focus(); undo.disabled = history.length === 0;
   }
   function ensureFocusedInput(): void {
-    if (document.activeElement !== input) return;
-    const bounds = input.getBoundingClientRect(), header = document.querySelector('.studio-topbar')?.getBoundingClientRect().bottom ?? 0;
+    const target = document.activeElement; if (!(target instanceof HTMLInputElement) || !inspector.contains(target)) return;
+    const bounds = target.getBoundingClientRect(), header = document.querySelector('.studio-topbar')?.getBoundingClientRect().bottom ?? 0;
     const bottom = window.visualViewport ? window.visualViewport.offsetTop + window.visualViewport.height : innerHeight;
     if (bounds.top >= header && bounds.bottom <= bottom) return;
-    input.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
-    const top = input.getBoundingClientRect().top; if (top < header && typeof window.scrollBy === 'function') window.scrollBy({ top: top - header, behavior: 'instant' });
+    target.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+    const top = target.getBoundingClientRect().top; if (top < header && typeof window.scrollBy === 'function') window.scrollBy({ top: top - header, behavior: 'instant' });
   }
   function selectToken(key: string, focus = false): void { if (!sources.semantics[key] || key.startsWith('breakpoint.')) return; selectedKey = key; refreshRows(); workspace.showPanel('inspector', false); if (focus) input.focus(); }
   function filterRows(): void {
@@ -179,7 +179,9 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     catch (error) { if (!destroyed && revision === importRevision) status.textContent = `Import rejected: ${error instanceof Error ? error.message : 'Invalid file'}. Existing draft and committed tokens are unchanged.`; }
     finally { if (!destroyed && revision === importRevision) { importPending = false; file.value = ''; } }
   }, { signal });
+  window.addEventListener('resize', ensureFocusedInput, { signal });
+  const layoutObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(ensureFocusedInput) : null; layoutObserver?.observe(inspector);
   const appearanceObserver = new MutationObserver(() => { refreshRows(); renderPreview(); }); appearanceObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-palette', 'data-density', 'data-kit'] });
   refreshRows(); renderPreview(); updateDraftSummary(); activateView(0); status.textContent = getStorageNotice();
-  return () => { destroyed = true; importRevision++; clearDraftGuard(); appearanceObserver.disconnect(); controller.abort(); primaryScene.destroy(); comparisonScene.destroy(); workspace.destroy(); section.remove(); };
+  return () => { destroyed = true; importRevision++; clearDraftGuard(); layoutObserver?.disconnect(); appearanceObserver.disconnect(); controller.abort(); primaryScene.destroy(); comparisonScene.destroy(); workspace.destroy(); section.remove(); };
 }

@@ -28,7 +28,7 @@ Manual screen-reader testing, additional browser/device testing, contrast checks
 
 ## Visual workspace
 
-The Studio uses the shared Explorer / Canvas / Inspector workspace. Desktop pane widths are adjustable with pointer or keyboard separators when three readable panes fit. The category Explorer collapses at intermediate widths; phones switch Categories / Workspace / Token details panels. Resizing and switching panels retain the selected token and draft.
+The Studio uses the shared Explorer / Canvas / Inspector workspace. Desktop pane widths are adjustable with pointer or keyboard separators when three readable panes fit. The category Explorer collapses at intermediate widths; phones switch Categories / Tokens / Details panels. Resizing and switching panels retain the selected token and draft.
 
 The Canvas starts with a compact table of all 48 editable semantic tokens. Search matches names, types, declared sources, resolved values and overrides. Category and Modified only filters combine without changing the draft or selected Inspector token. Modified only includes saved overrides and pending removals in the current scope. A selected token outside the current filter remains editable and is explicitly identified as outside the results. The table owns one bounded vertical/horizontal scroll region with a sticky header; selecting a bottom row brings its Inspector into the editing path.
 
