@@ -103,7 +103,7 @@ for (const scenario of [
     await page.setViewportSize({ width: scenario.width, height: scenario.height });
     await open(page, 'components', scenario.theme, scenario.density);
     await expect(page.getByRole('heading', { name: 'Button', level: 2, exact: true })).toBeVisible();
-    const toggle = page.getByRole('button', { name: 'Explorer: Button', exact: true });
+    const toggle = page.getByRole('button', { name: 'Explorer', exact: true });
     if (scenario.picker) {
       await toggle.click(); await expect(toggle).toHaveAttribute('aria-expanded', 'true');
       await expect(page.getByRole('searchbox', { name: 'Search components' })).toBeFocused();

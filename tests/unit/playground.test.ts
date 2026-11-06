@@ -13,7 +13,7 @@ let media: MediaQueryList;
 beforeEach(() => {
   // jsdom omits matchMedia; EventTarget supplies real signal-aware listener cleanup.
   media = Object.assign(new EventTarget(), { matches: false, media: '(max-width: 768px)', onchange: null }) as MediaQueryList;
-  vi.stubGlobal('matchMedia', vi.fn(() => media));
+  vi.stubGlobal('matchMedia', vi.fn(() => media)); vi.stubGlobal('innerWidth', 1440);
 });
 afterEach(() => { document.body.replaceChildren(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 function click(root: HTMLElement, selector: string): void {
@@ -22,32 +22,34 @@ function click(root: HTMLElement, selector: string): void {
 describe('component playground', () => {
   it('responds to the catalog breakpoint and releases its listener on teardown', () => {
     const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);
-    const catalog = root.querySelector<HTMLElement>('#pg-catalog'), toggle = root.querySelector<HTMLButtonElement>('.pg-catalog-toggle');
+    const catalog = root.querySelector<HTMLElement>('#components-explorer'), toggle = root.querySelector<HTMLButtonElement>('[aria-controls=components-explorer]');
     if (!catalog || !toggle) throw new Error('Missing catalog');
     expect(catalog.hidden).toBe(false);
-    Object.defineProperty(media, 'matches', { configurable: true, value: true }); media.dispatchEvent(new Event('change'));
+    vi.stubGlobal('innerWidth', 390); window.dispatchEvent(new Event('resize'));
     expect(catalog.hidden).toBe(true); expect(toggle.getAttribute('aria-expanded')).toBe('false');
-    destroy(); Object.defineProperty(media, 'matches', { configurable: true, value: false }); media.dispatchEvent(new Event('change'));
+    destroy(); vi.stubGlobal('innerWidth', 1440); window.dispatchEvent(new Event('resize'));
     expect(catalog.hidden).toBe(true); expect(toggle.getAttribute('aria-expanded')).toBe('false');
   });
-  it('filters real registry groups, synchronizes quick options and resets without losing focus', () => {
+  it('filters real registry groups, edits through one Inspector and resets without losing focus', () => {
     const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);
-    const forms = [...root.querySelectorAll<HTMLButtonElement>('.pg-category')].find(node => node.textContent === 'Forms 7');
-    forms?.click(); expect(root.querySelectorAll('.pg-catalog-item')).toHaveLength(7);
-    click(root, '.pg-category'); click(root, '[data-choice=variant][data-value=secondary]');
-    expect(root.querySelector<HTMLSelectElement>('#pg-variant')?.value).toBe('secondary'); expect(root.querySelector('pre code')?.textContent).toContain('"variant": "secondary"');
-    click(root, '.pg-toolbar button:last-child'); expect(root.querySelector<HTMLSelectElement>('#pg-variant')?.value).toBe('primary'); expect(document.activeElement?.textContent).toBe('Reset properties');
+    const category = root.querySelector<HTMLSelectElement>('#pg-category'); if (!category) throw new Error('Category missing');
+    category.value = 'Forms'; category.dispatchEvent(new Event('change')); expect(root.querySelectorAll('.pg-catalog-item')).toHaveLength(7);
+    category.value = 'All'; category.dispatchEvent(new Event('change'));
+    const variant = root.querySelector<HTMLSelectElement>('#pg-variant'); if (!variant) throw new Error('Variant missing'); variant.value = 'secondary'; variant.dispatchEvent(new Event('change'));
+    expect(root.querySelectorAll('#pg-variant')).toHaveLength(1); expect(root.querySelector('.pg-options')).toBeNull(); expect(root.querySelector('.pg-settings pre')).toBeNull();
+    click(root, '#pg-tab-Code'); expect(root.querySelector('#pg-panel-Code')?.hasAttribute('hidden')).toBe(false); expect(root.querySelector('pre code')?.textContent).toContain('"variant": "secondary"');
+    click(root, '.pg-reset'); expect(root.querySelector<HTMLSelectElement>('#pg-variant')?.value).toBe('primary'); expect(document.activeElement?.textContent).toBe('Reset properties'); expect(root.querySelector('#pg-panel-Code')?.hasAttribute('hidden')).toBe(false);
     click(root, '#pg-tab-API'); expect(root.querySelector('#pg-panel-API')?.hasAttribute('hidden')).toBe(false); expect(root.querySelector('#pg-panel-Preview')?.hasAttribute('hidden')).toBe(true);
     root.querySelector('#pg-tab-API')?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true })); expect(document.activeElement?.id).toBe('pg-tab-Preview');
     destroy();
   });
   it('shows only the selected phone workspace panel while preserving configuration', () => {
-    Object.defineProperty(media, 'matches', { configurable: true, value: true });
+    vi.stubGlobal('innerWidth', 390);
     const root = document.createElement('div'); document.body.append(root); const destroy = mountPlayground(root);
-    click(root, '.pg-catalog-toggle'); expect(root.querySelector<HTMLElement>('.pg-stage')?.hidden).toBe(true); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(true);
-    click(root, '.pg-panel-nav > button:last-child'); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(false); expect(root.querySelector<HTMLElement>('.pg-catalog')?.hidden).toBe(true);
+    click(root, '[aria-controls=components-explorer]'); expect(root.querySelector<HTMLElement>('.pg-stage')?.hidden).toBe(true); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(true);
+    click(root, '[aria-controls=components-inspector]'); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(false); expect(root.querySelector<HTMLElement>('.pg-catalog')?.hidden).toBe(true);
     const label = root.querySelector<HTMLInputElement>('#pg-label'); if (!label) throw new Error('Label missing'); label.value = 'Retained'; label.dispatchEvent(new Event('input'));
-    click(root, '.pg-panel-nav > button:nth-child(2)'); expect(root.querySelector('.pg-preview button')?.textContent).toBe('Retained'); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(true); destroy();
+    click(root, '[aria-controls=components-canvas]'); expect(root.querySelector('.pg-preview button')?.textContent).toBe('Retained'); expect(root.querySelector<HTMLElement>('.pg-settings')?.hidden).toBe(true); destroy();
   });
   it('keeps workspace selected text and indicators legible across all token combinations', () => {
     const combinations = validateProject(sources, getCommitted()); expect(Object.keys(combinations)).toHaveLength(96);
