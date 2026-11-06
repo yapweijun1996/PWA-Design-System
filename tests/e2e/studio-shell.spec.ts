@@ -6,7 +6,7 @@ test('mobile shell and representative routes pass whole-page accessibility check
   for (const [route, heading] of [['overview', 'A shared foundation for better interfaces.'], ['accessibility-lab', 'Accessibility Lab'], ['documentation', 'Documentation']] as const) {
     await page.goto(`/PWA-Design-System/#${route}`);
     await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
-    await expect(page.getByRole('combobox', { name: 'Theme', exact: true })).toBeVisible();
+    await expect(page.getByRole('combobox', { name: 'Studio theme', exact: true })).toBeVisible();
     const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
     expect(results.violations).toEqual([]);
   }
@@ -34,7 +34,7 @@ test('Theme select keeps a 44px target and works with the keyboard at mobile and
   for (const width of [390, 768, 1440]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto('/PWA-Design-System/#settings');
-    const theme = page.getByRole('combobox', { name: 'Theme' });
+    const theme = page.getByRole('combobox', { name: 'Studio theme' });
     const box = await theme.boundingBox();
     if (!box) throw new Error('Theme select has no geometry');
     expect(box.width).toBeGreaterThanOrEqual(44); expect(box.height).toBeGreaterThanOrEqual(44);
@@ -139,7 +139,7 @@ test('mobile drawer traps focus, scrolls and restores focus on close, Escape and
 
 test('theme survives reload and storage failure is announced', async ({ page }) => {
   await page.goto('/PWA-Design-System/#settings');
-  const theme = page.getByRole('combobox', { name: 'Theme' });
+  const theme = page.getByRole('combobox', { name: 'Studio theme' });
   await theme.selectOption('dark'); await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.reload(); await expect(theme).toHaveValue('dark'); await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.emulateMedia({ colorScheme: 'light' }); await theme.selectOption('system'); await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
@@ -161,4 +161,26 @@ test('skip and route navigation focus a compact heading without outlining the wo
   await expect(page.locator('#main')).not.toBeFocused();
   const full = await page.locator('#main').boundingBox(), focus = await page.getByRole('heading', { name: 'Components', exact: true }).boundingBox();
   expect((focus?.width ?? 9999)).toBeLessThan(full?.width ?? 0);
+});
+
+
+test('system chrome follows resolved theme and committed surfaces without broad preview restyling', async ({ page }) => {
+  await page.addInitScript(() => { localStorage.setItem('pwa-ds-theme', 'dark'); localStorage.setItem('pwa-ds-token-overrides-v1', JSON.stringify({ schema: 'pwa-design-system/token-overrides', version: 1, overrides: { global: {}, light: { 'color.surface': '#fafafa' }, dark: { 'color.surface': '#111827' } } })); });
+  await page.goto('./#settings');
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#111827');
+  await expect(page.locator('meta[name="apple-mobile-web-app-status-bar-style"]')).toHaveAttribute('content', 'black');
+  await page.getByRole('combobox', { name: 'Studio theme', exact: true }).selectOption('light');
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#fafafa');
+  await expect(page.locator('meta[name="apple-mobile-web-app-status-bar-style"]')).toHaveAttribute('content', 'default');
+  await expect(page.locator('meta[name="viewport"]')).toHaveAttribute('content', /viewport-fit=cover/);
+});
+
+test('long documentation scroll reveals contextual top action and preserves keyboard/reduced-motion navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 }); await page.goto('./#documentation');
+  const header = page.locator('.studio-topbar'), top = page.getByRole('button', { name: 'Back to top', exact: true });
+  await page.evaluate(() => window.scrollTo(0, innerHeight + 100)); await expect(top).toBeVisible(); await expect(header).toHaveAttribute('data-scroll-hidden', 'true');
+  await page.getByRole('combobox', { name: 'Studio theme', exact: true }).focus(); await expect(header).not.toHaveAttribute('data-scroll-hidden', 'true');
+  await page.emulateMedia({ reducedMotion: 'reduce' }); await page.evaluate(() => window.scrollTo(0, 0)); await page.evaluate(() => window.scrollTo(0, innerHeight + 100)); await expect(header).not.toHaveAttribute('data-scroll-hidden', 'true');
+  await top.click(); await expect(page.getByRole('heading', { name: 'Documentation', exact: true })).toBeFocused(); await expect.poll(() => page.evaluate(() => scrollY)).toBe(0); await expect(top).toBeHidden();
+  await page.evaluate(() => location.hash = 'components'); await expect(page.getByRole('heading', { name: 'Components', exact: true })).toBeVisible(); await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight)); await expect(header).not.toHaveAttribute('data-scroll-hidden', 'true');
 });

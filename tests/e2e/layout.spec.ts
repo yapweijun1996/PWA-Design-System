@@ -55,7 +55,7 @@ test('all seven local examples render, the table scrolls locally, and appearance
   expect(overflow.scroll).toBeGreaterThan(overflow.client);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   const before = await frame.locator('body').evaluate(element => getComputedStyle(element).backgroundColor);
-  await page.getByRole('combobox', { name: 'Theme' }).selectOption('dark');
+  await page.getByRole('combobox', { name: 'Studio theme' }).selectOption('dark');
   await expect.poll(() => frame.locator('body').evaluate(element => getComputedStyle(element).backgroundColor)).not.toBe(before);
   await example.selectOption('dialog'); await expect(frame.getByRole('dialog', { name: 'Example dialog' })).toBeVisible();
   await example.selectOption('mobile-navigation'); await expect(frame.getByRole('navigation', { name: 'Example navigation' })).toBeVisible();
@@ -65,15 +65,16 @@ test('Studio layout switches at the authoritative build-time breakpoints', async
   const source = JSON.parse(readFileSync(resolve('packages/tokens/primitives.json'), 'utf8')) as Record<string, { $value: string }>;
   const mobile = Number.parseInt(source['breakpoint.mobile'].$value, 10), desktop = Number.parseInt(source['breakpoint.desktop'].$value, 10);
   await page.setViewportSize({ width: mobile - 1, height: 900 }); await page.goto('./#components');
-  const layout = page.locator('.pg-layout'), catalog = page.locator('.pg-catalog'), preview = page.locator('.pg-stage'), inspector = page.locator('.pg-settings');
+  const layout = page.locator('.ws-layout'), catalog = page.locator('.pg-catalog'), preview = page.locator('.pg-stage'), inspector = page.locator('.pg-settings');
   await expect(layout).toBeVisible();
-  for (const [width, columns] of [[mobile - 1, 1], [mobile, 2], [desktop, 2], [desktop + 1, 3]]) {
+  for (const [width, columns] of [[mobile - 1, 1], [mobile, 2], [desktop, 2], [desktop + 1, 2], [1440, 5]]) {
     await page.setViewportSize({ width, height: 900 });
     await expect.poll(() => layout.evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length)).toBe(columns);
+    await expect(page.locator('.ws-workspace')).toHaveAttribute('data-mode', width < mobile ? 'phone' : width <= desktop + 1 ? 'compact' : 'wide');
     await expect(preview).toBeVisible();
     if (width < mobile) await expect(inspector).toBeHidden(); else await expect(inspector).toBeVisible();
-    const explorer = page.getByRole('button', { name: /^Explorer:/ });
-    if (width <= desktop) {
+    const explorer = page.getByRole('button', { name: 'Explorer', exact: true });
+    if (width <= desktop + 1) {
       await expect(catalog).toBeHidden(); await expect(explorer).toBeVisible(); await explorer.click();
       await expect(catalog).toBeVisible(); await expect(page.getByRole('searchbox', { name: 'Search components' })).toBeFocused();
       if (width < mobile) { await expect(preview).toBeHidden(); await expect(inspector).toBeHidden(); }

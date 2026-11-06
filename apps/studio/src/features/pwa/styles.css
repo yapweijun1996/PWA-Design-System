@@ -10,3 +10,8 @@
 #pwa-update details p { max-width: 65ch; padding-block-end: var(--ds-spacing-sm); line-height: 1.5; }
 #pwa-update .pwa-update-row > p { flex: 1 1 16rem; min-width: 0; }
 #pwa-update summary:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
+
+.pwa-update-loader { flex: none; width: 1rem; height: 1rem; border: var(--ds-focus-ring-width) solid var(--ds-color-border-subtle); border-top-color: var(--ds-color-link); border-radius: var(--ds-radius-pill); animation: pwa-updating var(--ds-motion-duration-normal) linear infinite; }
+.pwa-update-loader[hidden], #pwa-update button[hidden] { display: none; }
+@keyframes pwa-updating { to { transform: rotate(1turn); } }
+@media (prefers-reduced-motion: reduce) { .pwa-update-loader { animation: none; } }

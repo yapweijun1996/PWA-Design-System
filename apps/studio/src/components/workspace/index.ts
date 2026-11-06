@@ -8,7 +8,7 @@ const primitives = JSON.parse(primitiveText) as Record<string, { $value: string 
 const mobile = Number.parseInt(primitives['breakpoint.mobile'].$value, 10);
 const desktop = Number.parseInt(primitives['breakpoint.desktop'].$value, 10);
 const limits = { explorer: [220, 260], inspector: [280, 320] } as const;
-const clamp = (value: number, minimum: number, maximum: number): number => Math.min(maximum, Math.max(minimum, value));
+const clamp = (value: number, minimum: number, maximum: number): number => Math.min(maximum, Math.max(minimum, Math.round(value)));
 function node<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text = ''): HTMLElementTagNameMap[K] { const value = document.createElement(tag); value.className = className; value.textContent = text; return value; }
 
 /** Studio-only pane layout. Component data and document scrolling remain consumer-owned. */

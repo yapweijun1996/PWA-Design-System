@@ -35,6 +35,24 @@ function focusPageHeading(): void {
   target.tabIndex = -1; target.classList.add('studio-route-focus'); target.focus({ preventScroll: true });
 }
 
+// Editing routes keep stable navigation; only the long-form reader uses smart hiding.
+const topbar = requiredElement<HTMLElement>('.studio-topbar');
+const backToTop = requiredElement<HTMLButtonElement>('#scroll-to-top');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let previousScroll = window.scrollY;
+function resetScrollTools(): void { delete topbar.dataset.scrollHidden; backToTop.hidden = window.scrollY < window.innerHeight; previousScroll = window.scrollY; }
+window.addEventListener('scroll', () => {
+  const current = window.scrollY, movement = current - previousScroll;
+  backToTop.hidden = current < window.innerHeight;
+  if (main.dataset.workspace !== 'documentation' || drawer.open || reducedMotion.matches || topbar.contains(document.activeElement) || current < topbar.offsetHeight * 2) delete topbar.dataset.scrollHidden;
+  else if (Math.abs(movement) >= 12) { if (movement > 0) topbar.dataset.scrollHidden = 'true'; else delete topbar.dataset.scrollHidden; }
+  if (Math.abs(movement) >= 12) previousScroll = current;
+}, { passive: true });
+window.addEventListener('resize', resetScrollTools);
+reducedMotion.addEventListener('change', resetScrollTools);
+topbar.addEventListener('focusin', () => { delete topbar.dataset.scrollHidden; });
+backToTop.addEventListener('click', () => { focusPageHeading(); window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'instant' : 'smooth' }); });
+
 function isTheme(value: string | undefined): value is Theme {
   return value === 'light' || value === 'dark' || value === 'system';
 }
@@ -172,7 +190,7 @@ async function renderRoute(focus = false): Promise<void> {
     if (item.dataset.route === current) item.setAttribute('aria-current', 'page'); else item.removeAttribute('aria-current');
   }
   const page = node('div', 'studio-page'); main.replaceChildren(page);
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  window.scrollTo({ top: 0, behavior: 'instant' }); resetScrollTools();
   announcement.textContent = name;
   if (!current) {
     pageHeading(page, 'WORKSPACE', 'Page not found', 'The requested Studio section does not exist.');

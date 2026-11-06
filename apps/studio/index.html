@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="A framework-independent design system workspace.">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="studio-version" content="__STUDIO_VERSION__">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="/manifest.webmanifest">
@@ -30,10 +31,12 @@
             <button type="button" class="studio-menu-button" id="open-navigation" aria-label="Open navigation" aria-haspopup="dialog" aria-controls="mobile-navigation"><span aria-hidden="true">☰</span></button>
             <div class="studio-breadcrumb"><span>Studio</span><span aria-hidden="true">/</span><strong id="current-page">Overview</strong></div>
           </div>
-          <div class="studio-topbar-actions"><button type="button" class="studio-sidebar-toggle" id="toggle-sidebar" aria-controls="desktop-sidebar" aria-expanded="true">Collapse sidebar</button><label class="studio-theme-label" for="theme-select">Theme</label><span class="studio-select-wrap"><select id="theme-select" class="studio-select" name="theme" aria-label="Theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></span></div>
+          <div class="studio-topbar-actions"><button type="button" class="studio-sidebar-toggle" id="toggle-sidebar" aria-controls="desktop-sidebar" aria-expanded="true">Collapse sidebar</button><label class="studio-theme-label" for="theme-select">Studio theme</label><span class="studio-select-wrap"><select id="theme-select" class="studio-select" name="theme" aria-label="Studio theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></select></span></div>
         </header>
+        <p id="pwa-connectivity" class="studio-connectivity" role="status" hidden></p>
         <p id="preference-status" class="studio-preference-status" role="status"></p>
-        <section id="pwa-update" hidden aria-label="Application update"><div class="pwa-update-row"><p id="pwa-update-status" role="status"></p><button type="button" aria-describedby="pwa-update-status">Prepare update</button><details><summary>Update details</summary><p>Save or cancel token drafts and finish any import. Close other Studio tabs. Preparing does not reload this page; reload only after your work is saved.</p></details></div></section>
+        <section id="pwa-update" hidden aria-label="Application update"><div class="pwa-update-row"><span class="pwa-update-loader" aria-hidden="true" hidden></span><p id="pwa-update-status" role="status"></p><button type="button" aria-describedby="pwa-update-status">Prepare update</button><button type="button" data-pwa-reload hidden>Reload now</button><details><summary>Update details</summary><p>Save or cancel token drafts and finish any import. Close other Studio tabs. Preparing does not reload this page; reload only after your work is saved.</p></details></div></section>
+        <button id="scroll-to-top" class="studio-scroll-top" type="button" hidden>Back to top</button>
         <main id="main" class="studio-main" tabindex="-1"><p>Loading workspace…</p></main>
       </div>
     </div>

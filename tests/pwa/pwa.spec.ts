@@ -80,6 +80,9 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   expect(await page.evaluate(async () => (await Promise.all((await caches.keys()).map(async name => (await (await caches.open(name)).keys()).map(request => request.url)))).flat().some(url => url.includes('private.json')))).toBe(false);
   await context.setOffline(true);
   await page.reload();
+  // Chrome request blocking does not necessarily change navigator.onLine; exercise its separate hint explicitly.
+  await page.evaluate(() => { Object.defineProperty(navigator, 'onLine', { configurable: true, value: false }); window.dispatchEvent(new Event('offline')); });
+  await expect(page.locator('#pwa-connectivity')).toContainText('Previously cached Studio tools');
   await page.goto(`${origin}${base}#documentation`);
   await expect(page.getByRole('heading', { name: 'Documentation', exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Open Accessibility Lab' }).click();
@@ -88,9 +91,12 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   await page.getByRole('link', { name: /Components/ }).first().click();
   await expect(page.getByRole('heading', { name: 'Components', exact: true })).toBeVisible();
   await page.getByRole('link', { name: /Design Tokens/ }).first().click();
+  await page.getByRole('button', { name: 'color.background', exact: true }).click();
   const token = page.getByRole('textbox', { name: 'color.background override' });
   await expect(token).toBeVisible();
   await context.setOffline(false);
+  await page.evaluate(() => { Reflect.deleteProperty(navigator, 'onLine'); window.dispatchEvent(new Event('online')); });
+  await expect(page.locator('#pwa-connectivity')).toBeHidden();
   site = join(temporary, 'b');
   await page.evaluate(() => {
     const original = ServiceWorkerRegistration.prototype.update;
@@ -126,6 +132,7 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   await expect(update.getByRole('status')).toContainText('Save or cancel');
   await expect(token).toHaveValue('invalid color');
   await page.getByRole('button', { name: 'Cancel draft' }).click();
+  await page.getByRole('button', { name: 'color.surface', exact: true }).click();
   const surface = page.getByRole('textbox', { name: 'color.surface override' });
   await surface.fill('#fafafa');
   await page.getByRole('link', { name: /Overview/ }).first().click();
@@ -140,9 +147,30 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   await update.getByRole('button', { name: 'Prepare update' }).click();
   await expect(update.getByRole('status')).toContainText('Close all other');
   await other.close();
+  // Hold the real activation request so immediate loader feedback is observable independently of worker speed.
+  await page.evaluate(() => {
+    const original = ServiceWorker.prototype.postMessage;
+    Object.defineProperty(ServiceWorker.prototype, 'postMessage', { configurable: true, writable: true, value: function (this: ServiceWorker, message: unknown, transfer: Transferable[] = []) {
+      if (message && typeof message === 'object' && 'type' in message && message.type === 'ACTIVATE_UPDATE') {
+        Object.defineProperty(window, 'releasePwaPreparation', { configurable: true, value: () => { Object.defineProperty(ServiceWorker.prototype, 'postMessage', { configurable: true, writable: true, value: original }); original.call(this, message, { transfer }); } });
+      } else original.call(this, message, { transfer });
+    } });
+  });
   await update.getByRole('button', { name: 'Prepare update' }).click();
+  await expect(update).toHaveAttribute('aria-busy', 'true');
+  await expect(update.locator('.pwa-update-loader')).toBeVisible();
+  await page.evaluate(() => { const release: unknown = Reflect.get(window, 'releasePwaPreparation'); if (typeof release !== 'function') throw new Error('Activation request was not held'); release(); });
   await expect(update.getByRole('status')).toContainText('Update prepared');
+  await expect(update).toHaveAttribute('aria-busy', 'false');
+  await expect(update.locator('.pwa-update-loader')).toBeHidden();
+  await expect(update.getByRole('button', { name: 'Reload now' })).toBeVisible();
   expect(await page.locator('meta[name="studio-version"]').getAttribute('content')).toBe(oldVersion);
+  await surface.fill('#f8fafc');
+  await update.getByRole('button', { name: 'Reload now' }).click();
+  await expect(update.getByRole('status')).toContainText('before reloading');
+  await expect(surface).toHaveValue('#f8fafc');
+  expect(await page.locator('meta[name="studio-version"]').getAttribute('content')).toBe(oldVersion);
+  await page.getByRole('button', { name: 'Cancel draft' }).click();
   const lateTab = await context.newPage();
   await lateTab.goto(`${origin}${base}`);
   await context.setOffline(true);
@@ -150,12 +178,29 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   await expect(page.getByRole('heading', { name: 'Layout Playground', exact: true })).toBeVisible();
   await context.setOffline(false);
   await lateTab.close();
-  await page.reload();
+  await update.getByRole('button', { name: 'Reload now' }).click();
   await expect.poll(() => page.locator('meta[name="studio-version"]').getAttribute('content')).not.toBe(oldVersion);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('pwa-ds-token-overrides-v1') ?? '{}').overrides.light['color.surface'])).toBe('#fafafa');
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByRole('heading', { name: /Layout playground updated/i })).toBeVisible();
+});
+
+test('a missing activation reply releases editing and allows a guarded real retry', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(`${origin}${base}#design-tokens`); await page.evaluate(() => navigator.serviceWorker.ready); await page.reload();
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+  site = join(temporary, 'b'); await page.evaluate(async () => { const registration = await navigator.serviceWorker.getRegistration(); await registration?.update(); });
+  const update = page.locator('#pwa-update'); await expect(update).toBeVisible();
+  await page.evaluate(() => {
+    const original = ServiceWorker.prototype.postMessage;
+    Object.defineProperty(window, 'restorePwaTransport', { configurable: true, value: () => Object.defineProperty(ServiceWorker.prototype, 'postMessage', { configurable: true, writable: true, value: original }) });
+    Object.defineProperty(ServiceWorker.prototype, 'postMessage', { configurable: true, writable: true, value: function (this: ServiceWorker, message: unknown, transfer: Transferable[] = []) { if (message && typeof message === 'object' && 'type' in message && message.type === 'ACTIVATE_UPDATE') return; original.call(this, message, { transfer }); } });
+  });
+  await update.getByRole('button', { name: 'Prepare update' }).click(); await expect(update.locator('.pwa-update-loader')).toBeVisible(); await expect(page.locator('#main')).toHaveJSProperty('inert', true);
+  await page.clock.fastForward(5001); await expect(update.getByRole('status')).toContainText('Could not prepare'); await expect(update.locator('.pwa-update-loader')).toBeHidden(); await expect(page.locator('#main')).toHaveJSProperty('inert', false); await expect(update.getByRole('button', { name: 'Prepare update' })).toBeEnabled();
+  await page.evaluate(() => { const restore: unknown = Reflect.get(window, 'restorePwaTransport'); if (typeof restore !== 'function') throw new Error('Missing transport restoration'); restore(); });
+  await update.getByRole('button', { name: 'Prepare update' }).click(); await expect(update.getByRole('status')).toContainText('Update prepared'); await expect(update.getByRole('button', { name: 'Reload now' })).toBeVisible();
 });
 
 test('cache cleanup defers for unknown clients and only removes obsolete Studio caches', async ({ page, context }) => {
