@@ -40,15 +40,23 @@ const topbar = requiredElement<HTMLElement>('.studio-topbar');
 const backToTop = requiredElement<HTMLButtonElement>('#scroll-to-top');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let previousScroll = window.scrollY;
-function resetScrollTools(): void { delete topbar.dataset.scrollHidden; backToTop.hidden = window.scrollY < window.innerHeight; previousScroll = window.scrollY; }
+function updateBackToTop(): void {
+  const active = document.activeElement;
+  const interacting = active instanceof HTMLElement && main.contains(active)
+    && (active.tabIndex >= 0 || active.isContentEditable || active.matches('input, textarea, select'));
+  backToTop.hidden = window.scrollY < window.innerHeight || interacting;
+}
+function resetScrollTools(): void { delete topbar.dataset.scrollHidden; updateBackToTop(); previousScroll = window.scrollY; }
 window.addEventListener('scroll', () => {
   const current = window.scrollY, movement = current - previousScroll;
-  backToTop.hidden = current < window.innerHeight;
+  updateBackToTop();
   if (main.dataset.workspace !== 'documentation' || document.querySelector('#pwa-update:not([hidden]), #pwa-connectivity:not([hidden])') || drawer.open || reducedMotion.matches || topbar.contains(document.activeElement) || current < topbar.offsetHeight * 2) delete topbar.dataset.scrollHidden;
   else if (Math.abs(movement) >= 12) { if (movement > 0) topbar.dataset.scrollHidden = 'true'; else delete topbar.dataset.scrollHidden; }
   if (Math.abs(movement) >= 12) previousScroll = current;
 }, { passive: true });
 window.addEventListener('resize', resetScrollTools);
+main.addEventListener('focusin', updateBackToTop);
+main.addEventListener('focusout', () => queueMicrotask(updateBackToTop));
 reducedMotion.addEventListener('change', resetScrollTools);
 topbar.addEventListener('focusin', () => { delete topbar.dataset.scrollHidden; });
 backToTop.addEventListener('click', () => { focusPageHeading(); window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'instant' : 'smooth' }); });

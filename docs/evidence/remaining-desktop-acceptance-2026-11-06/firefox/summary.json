@@ -1,0 +1,238 @@
+{
+  "status": "BOUNDED_FIREFOX_ACCEPTANCE_COMPLETE_CANDIDATE_RETEST_PASS",
+  "recordedAt": "2026-11-06T10:35:38.662351+00:00",
+  "browserVersion": "159.0.1",
+  "browserBuild": "20261102144711",
+  "baselineSHA": "48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76",
+  "baselineRuntime": "1170b641fcdfe7977a19",
+  "candidateRuntime": "5e5a75b079fb8b2648f2",
+  "candidateSource": {
+    "base": "48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76",
+    "kind": "Root-owned final uncommitted candidate production build; final commit binding pending root verification",
+    "mainSHA256": "5eb8d8ce06ccce06acd71bbfe9a90a5ecfecef02592b9cd44565ee9bda7c157b",
+    "tokenStylesSHA256": "fab896b3b0780083fda76cff8811c50681c8289aa201e41d41f07e4dfb6afa9b"
+  },
+  "candidateSourceBoundary": "Root supplied source file hashes; this agent independently observed served candidate runtime and compiled CSS CQ behavior. Final commit binding/artifact parity/release remain root responsibility.",
+  "baselineMechanicalChecks": {
+    "uniquePass": 44,
+    "failedAssertions": 0,
+    "importantContraryEvidence": "Actual text200 input occlusion was independently confirmed despite viewport-bounds assertions passing; see originalDefect. These44 mechanical passes alone did not closeH6."
+  },
+  "candidateRetestChecks": {
+    "uniquePass": 16,
+    "failedAssertions": 0,
+    "files": [
+      "final-candidate/text200-final.json",
+      "final-candidate/candidate-regressions.json"
+    ]
+  },
+  "functionalObservation": {
+    "subscriptionAcknowledged": true,
+    "subscribedAt": "2026-11-06T09:58:35.552Z",
+    "endedAt": "2026-11-06T09:58:43.629Z",
+    "responseEventCount": 38,
+    "schemes": {
+      "https": 36,
+      "data": 2
+    },
+    "httpStatuses": [
+      200
+    ],
+    "logs": [],
+    "fetchErrors": [],
+    "scope": "All contexts of this fresh synthetic-profile BiDi session; subscribe before first Studio navigation; completed responses only, no inferred pending or post-window coverage."
+  },
+  "nativeAndCandidateObservation": {
+    "subscriptionAcknowledged": true,
+    "subscribedAt": "2026-11-06T10:09:31.524Z",
+    "endedAt": "2026-11-06T10:27:56.842Z",
+    "responseEventCount": 72,
+    "schemes": {
+      "https": 41,
+      "data": 5,
+      "http": 26
+    },
+    "httpStatuses": [
+      200
+    ],
+    "logs": [],
+    "fetchErrors": [],
+    "scope": "All contexts of this fresh synthetic-profile BiDi session; subscribe before first Studio navigation; completed responses only, no inferred pending or post-window coverage."
+  },
+  "originalDefect": {
+    "status": "CONFIRMED in hosted1170",
+    "evidence": "text200-collision.json",
+    "intersection": {
+      "area": 8103.9990234375,
+      "height": 40,
+      "width": 202.5999755859375
+    },
+    "hitTest": {
+      "point": {
+        "x": 1273.7000122070312,
+        "y": 719
+      },
+      "top": "<button id=\"scroll-to-top\" class=\"studio-scroll-top\" type=\"button\">Back to top</button>"
+    }
+  },
+  "candidateFixVerification": {
+    "status": "PASS in final local candidate5e5a75b079fb8b2648f2",
+    "evidence": "final-candidate/text200-fixed-collision.json + candidate-regressions.json",
+    "backToTopHidden": true,
+    "intersection": {
+      "area": 0,
+      "height": 0,
+      "width": 0
+    },
+    "actualCQGrid": "234px",
+    "actualCQFont": "28px",
+    "actualCQRule": [
+      "@container token-inspector (width < 14em) {\n  .token-editor__values { grid-template-columns: minmax(0px, 1fr); }\n  .token-editor__values dd { flex-wrap: wrap; }\n}"
+    ]
+  },
+  "retainedHarnessInterruptions": [
+    {
+      "evidence": "functional-attempt1/report.json",
+      "cause": "Readiness incorrectly searched whole main text for Loading, including legitimate Loading option; heading readiness corrected;16/16 affected run retested."
+    },
+    {
+      "evidence": "text200-attempt1.json",
+      "cause": "Retained button search correctly filtered Menu out; missing filter reset in harness."
+    },
+    {
+      "evidence": "text200-attempt2.json",
+      "cause": "WebDriver clear + empty value did not emit search input transition; actual Space/Backspace keystrokes corrected harness; same text flow then14/14."
+    }
+  ],
+  "observationalMetricsNotCountedAsAcceptance": [
+    "baseline.json",
+    "restored-page-mode110.json",
+    "candidate-restored100.json",
+    "hosted-restored100.json"
+  ],
+  "settingsRestore": {
+    "nativeMenu": "Zoom Text Only selected to enable before native200; selected again to restore normal mode, on each test cycle. Native AX menu lacks checkmark state; actual font/viewport/DPR distinguishes mode.",
+    "nativeZoom": "Actual200% and400% reset indicators observed; Cmd+0 removed indicator after tests.",
+    "localOrigin": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 2,
+      "headingFont": "32px",
+      "headingHeight": 38,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "2ff66fc76609a1dde1d0",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "transform": "none",
+      "url": "http://127.0.0.1:4195/PWA-Design-System/#design-tokens"
+    },
+    "hostedOrigin": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 2,
+      "headingFont": "32px",
+      "headingHeight": 38,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    },
+    "finalCandidate": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 2,
+      "headingFont": "32px",
+      "headingHeight": 38,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "5e5a75b079fb8b2648f2",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "transform": "none",
+      "url": "http://127.0.0.1:4195/PWA-Design-System/#design-tokens"
+    }
+  },
+  "cleanup": {
+    "headlessSessionClosed": true,
+    "headedSessionClosed": true,
+    "noRepositoryEdits": true,
+    "noSecurityBypass": true,
+    "finalCandidateSessionClosed": true
+  },
+  "recommendedClosures": {
+    "PWA-07-B3": "Bounded stable Firefox primary-flow/import/export/log/network evidence now available; combine explicitly with prior source-identical runtime critical-flow records.",
+    "PWA-07-H1": "Missing representative native200 Menu/Dialog/Cancel now verified; combine with prior native200 search/edit/Code/Commit evidence.",
+    "PWA-07-H2": "Representative native400 Menu/Dialog/Cancel verified; combine with prior native400 primary flows.",
+    "PWA-07-H6": "Actual browser text enlargement + all14 primary flows + explicit2 regressions PASS on final5e5 candidate (14em CQ); close with root final commit/artifact binding, not an unverified release claim."
+  },
+  "limits": [
+    "Physical iPhone/iPad/Android, human VoiceOver/NVDA interpretation and independent human visual approval remain NOT VERIFIED.",
+    "No exhaustive Cartesian zoom/theme/density or minimum supported version matrix.",
+    "Firefox installation/offline/update not covered by this gap-closing run.",
+    "Current candidate is local production artifact; deployment verification and source binding are root responsibility.",
+    "BiDi bounded observations classify completed data-font responses separately: functional36HTTPS+2data; initial headed41HTTPS+26HTTP+5data; final candidate28HTTP+2data."
+  ],
+  "intermediateCandidate": {
+    "runtime": "2ff66fc76609a1dde1d0",
+    "source": {
+      "base": "48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76",
+      "kind": "Uncommitted root-owned candidate production build",
+      "mainSHA256": "5eb8d8ce06ccce06acd71bbfe9a90a5ecfecef02592b9cd44565ee9bda7c157b",
+      "tokenStylesSHA256": "1a153a3419e7dcbfe5c80c492369aadfe613a831835d07e74a2f1e62e7ae474f"
+    },
+    "checks": {
+      "uniquePass": 16,
+      "failedAssertions": 0,
+      "files": [
+        "text200-fixed.json",
+        "candidate-regressions.json"
+      ]
+    },
+    "observation": {
+      "subscriptionAcknowledged": true,
+      "subscribedAt": "2026-11-06T10:09:31.524Z",
+      "endedAt": "2026-11-06T10:27:56.842Z",
+      "responseEventCount": 72,
+      "schemes": {
+        "https": 41,
+        "data": 5,
+        "http": 26
+      },
+      "httpStatuses": [
+        200
+      ],
+      "logs": [],
+      "fetchErrors": [],
+      "scope": "All contexts of this fresh synthetic-profile BiDi session; subscribe before first Studio navigation; completed responses only, no inferred pending or post-window coverage."
+    },
+    "evidenceDirectory": "."
+  },
+  "finalCandidateObservation": {
+    "subscriptionAcknowledged": true,
+    "subscribedAt": "2026-11-06T10:32:31.288Z",
+    "endedAt": "2026-11-06T10:34:20.338Z",
+    "responseEventCount": 30,
+    "schemes": {
+      "http": 28,
+      "data": 2
+    },
+    "httpStatuses": [
+      200
+    ],
+    "logs": [],
+    "fetchErrors": []
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "commit": "80b632ed1a0d62b87515737f44f97ab52dbd15e1",
+  "base": "48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76",
+  "runtime": "5e5a75b079fb8b2648f2",
+  "preview": "http://127.0.0.1:4195/PWA-Design-System/",
+  "files": {
+    "apps/studio/src/main.ts": "5eb8d8ce06ccce06acd71bbfe9a90a5ecfecef02592b9cd44565ee9bda7c157b",
+    "apps/studio/src/features/tokens/styles.css": "fab896b3b0780083fda76cff8811c50681c8289aa201e41d41f07e4dfb6afa9b",
+    "tests/e2e/token-workspace-layout.spec.ts": "b8d82c25906c24f70b9dd1fa77828263ef099f29f0403cd24204fa58a89c7c05"
+  },
+  "recordedAt": "2026-11-06T10:35:17.592616+00:00",
+  "checks": {
+    "unit": {
+      "passed": 161,
+      "files": 23,
+      "log": "fix-unit.log"
+    },
+    "targetedWholeFiles": {
+      "passed": 22,
+      "log": "fix-targeted-final.log"
+    },
+    "finalNewRegressions": {
+      "passed": 2,
+      "log": "fix-final-regressions.log"
+    },
+    "baselineNewRegressions": {
+      "failed": 2,
+      "reason": "active field point obscured; short HEX wraps to2lines",
+      "log": "fix-baseline-final-regressions.log"
+    },
+    "static": [
+      "typecheck",
+      "lint144files",
+      "tokens:check",
+      "contracts:check21families",
+      "ssot:check"
+    ],
+    "buildArtifact": "29precache digests/bootstrap/base-path validation passed"
+  },
+  "limits": [
+    "Native Firefox text-only acceptance is owned by separate QA agent; do not infer native pass from font-fixture tests.",
+    "Strict Linux visual comparison not run by this worker; no baselines modified.",
+    "One initial16em-candidate full targeted run had21pass/1immediate320resize-overflow failure; exact cause NOT VERIFIED. The unchanged failing case passed twice alone before14em refinement; final14em complete22passed with original assertions.",
+    "No push/merge/deploy by worker."
+  ]
+}

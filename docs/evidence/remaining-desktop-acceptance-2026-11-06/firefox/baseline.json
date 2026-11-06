@@ -1,0 +1,23 @@
+[
+  {
+    "id": "baseline-metrics",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 2,
+      "headingFont": "32px",
+      "headingHeight": 38,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  }
+]

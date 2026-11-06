@@ -1,0 +1,79 @@
+[
+  {
+    "id": "text200-identity-fit",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "32px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 2,
+      "headingFont": "64px",
+      "headingHeight": 75.5,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "text200-actual-font-enlargement",
+    "pass": true,
+    "evidence": {
+      "before": {
+        "bodyFont": "16px",
+        "cssZoom": "1",
+        "density": "comfortable",
+        "dpr": 2,
+        "headingFont": "32px",
+        "headingHeight": 38,
+        "innerHeight": 787,
+        "innerWidth": 1440,
+        "outerHeight": 872,
+        "outerWidth": 1440,
+        "runtime": "1170b641fcdfe7977a19",
+        "scrollWidth": 1440,
+        "theme": "light",
+        "transform": "none",
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+      },
+      "after": {
+        "bodyFont": "32px",
+        "cssZoom": "1",
+        "density": "comfortable",
+        "dpr": 2,
+        "headingFont": "64px",
+        "headingHeight": 75.5,
+        "innerHeight": 787,
+        "innerWidth": 1440,
+        "outerHeight": 872,
+        "outerWidth": 1440,
+        "runtime": "1170b641fcdfe7977a19",
+        "scrollWidth": 1440,
+        "theme": "light",
+        "transform": "none",
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+      }
+    }
+  },
+  {
+    "id": "text200-search",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-component-code",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-interruption",
+    "pass": false,
+    "error": "Missing Menu",
+    "stack": "Traceback (most recent call last):\n  File \"/tmp/pwa-final-acceptance/firefox/native.py\", line 47, in <module>\n    choose('Menu');click('Actions',scope='document.querySelector(\".pg-preview\")');key('\\ue015');record('menu-arrow-focus',js('return document.activeElement.getAttribute(\"role\")===\"menuitem\"'));key('\\ue00c');record('menu-escape-restores',js('return document.activeElement.textContent.trim()===\"Actions\"'))\n    ~~~~~~^^^^^^^^\n  File \"/tmp/pwa-final-acceptance/firefox/native.py\", line 35, in choose\n    click(n,scope='document.querySelector(\".pg-catalog\")')\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/pwa-final-acceptance/firefox/native.py\", line 25, in click\n    if not e:raise RuntimeError('Missing '+n)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Missing Menu\n"
+  }
+]

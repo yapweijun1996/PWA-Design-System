@@ -1,0 +1,69 @@
+[
+  {
+    "id": "zoom200-identity-fit",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 4,
+      "headingFont": "32px",
+      "headingHeight": 37.75,
+      "innerHeight": 394,
+      "innerWidth": 720,
+      "outerHeight": 436,
+      "outerWidth": 720,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 720,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "zoom200-menu-arrow-focus",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom200-menu-escape-restores",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom200-dialog-tab-trap",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom200-dialog-escape-restores",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom200-token-cancel",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom200-final-fit",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 4,
+      "headingFont": "32px",
+      "headingHeight": 37.75,
+      "innerHeight": 394,
+      "innerWidth": 720,
+      "outerHeight": 436,
+      "outerWidth": 720,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 720,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+    }
+  }
+]

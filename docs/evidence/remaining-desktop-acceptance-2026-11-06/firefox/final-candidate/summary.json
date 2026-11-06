@@ -1,0 +1,50 @@
+{
+  "runtime": "5e5a75b079fb8b2648f2",
+  "source": {
+    "base": "48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76",
+    "kind": "Root-owned final uncommitted candidate production build; final commit binding pending root verification",
+    "mainSHA256": "5eb8d8ce06ccce06acd71bbfe9a90a5ecfecef02592b9cd44565ee9bda7c157b",
+    "tokenStylesSHA256": "fab896b3b0780083fda76cff8811c50681c8289aa201e41d41f07e4dfb6afa9b"
+  },
+  "checks": {
+    "uniquePass": 16,
+    "failedAssertions": 0,
+    "files": [
+      "final-candidate/text200-final.json",
+      "final-candidate/candidate-regressions.json"
+    ]
+  },
+  "observation": {
+    "subscriptionAcknowledged": true,
+    "subscribedAt": "2026-11-06T10:32:31.288Z",
+    "endedAt": "2026-11-06T10:34:20.338Z",
+    "responseEventCount": 30,
+    "schemes": {
+      "http": 28,
+      "data": 2
+    },
+    "httpStatuses": [
+      200
+    ],
+    "logs": [],
+    "fetchErrors": []
+  },
+  "restored": {
+    "bodyFont": "16px",
+    "cssZoom": "1",
+    "density": "comfortable",
+    "dpr": 2,
+    "headingFont": "32px",
+    "headingHeight": 38,
+    "innerHeight": 787,
+    "innerWidth": 1440,
+    "outerHeight": 872,
+    "outerWidth": 1440,
+    "runtime": "5e5a75b079fb8b2648f2",
+    "scrollWidth": 1440,
+    "theme": "light",
+    "transform": "none",
+    "url": "http://127.0.0.1:4195/PWA-Design-System/#design-tokens"
+  },
+  "sessionClosed": true
+}

@@ -1,0 +1,69 @@
+[
+  {
+    "id": "zoom400-identity-fit",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 7.5,
+      "headingFont": "32px",
+      "headingHeight": 37.866668701171875,
+      "innerHeight": 210,
+      "innerWidth": 384,
+      "outerHeight": 218,
+      "outerWidth": 360,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 384,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "zoom400-menu-arrow-focus",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom400-menu-escape-restores",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom400-dialog-tab-trap",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom400-dialog-escape-restores",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom400-token-cancel",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "zoom400-final-fit",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "16px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 7.5,
+      "headingFont": "32px",
+      "headingHeight": 37.866668701171875,
+      "innerHeight": 210,
+      "innerWidth": 384,
+      "outerHeight": 218,
+      "outerWidth": 360,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 384,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+    }
+  }
+]

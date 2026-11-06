@@ -1,0 +1,25 @@
+{
+  "source": "fe1f675",
+  "runtime": "5e5a75b079fb8b2648f2",
+  "browser": "Actual Safari27.0.1 (22625.1.29.11.28)",
+  "method": "Native CUA private window, final production candidate http://127.0.0.1:4195/PWA-Design-System/#design-tokens; existing Web Inspector only. Read-only observer snapshots input events; app state changed only through native input, scrolling and Cancel.",
+  "recordedAt": "2026-11-06T10:41:12.866493+00:00",
+  "observed": {
+    "active": true,
+    "hidden": true,
+    "hit": true,
+    "scrollY": 357,
+    "width": 1324,
+    "height": 320,
+    "top": 129,
+    "bottom": 173,
+    "build": "5e5a75b079fb8b2648f2"
+  },
+  "result": "PASS: actual scrollY357 exceeds height320; focused invalid input remains topmost and floating action hidden.",
+  "limits": [
+    "Native100% Safari short-window focus regression only; not nativeSafari200/400 or text-only zoom.",
+    "One native AX prompt focus attempt left input active, so a read-only query string was appended to the synthetic invalid override. Cancel restored draft; Develop\u2192Show JavaScript Console then explicitly verified focused prompt before actual metadata query. No code execution or committed edit resulted.",
+    "Initial scroll pixels option rejected by macOS surface; native0.25page scroll used as documented."
+  ],
+  "cleanup": "Cancel draft and close QA-only private window; original non-private Start Page observed restored. No owner profile or security setting modified."
+}

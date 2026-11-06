@@ -1,0 +1,77 @@
+
+Running 2 tests using 1 worker
+
+(node:19867) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/e2e/token-workspace-layout.spec.ts:13:1 › enlarged text editing stays above floating navigation and recovers after focus leaves (5.6s)
+(node:19893) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 tests/e2e/token-workspace-layout.spec.ts:36:1 › enlarged Inspector values keep short colors and recovery text readable (542ms)
+
+
+  1) tests/e2e/token-workspace-layout.spec.ts:13:1 › enlarged text editing stays above floating navigation and recovers after focus leaves
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      23 |       const rect = node.getBoundingClientRect(), x = rect.right - 4, y = rect.top + Math.min(8, rect.height / 2);
+      24 |       return document.elementFromPoint(x, y) === node;
+    > 25 |     })).toBe(true);
+         |         ^
+      26 |     await expect(top).toBeHidden();
+      27 |   }
+      28 |   await page.getByRole('button', { name: 'Cancel draft', exact: true }).click();
+        at /private/tmp/pwa-final-acceptance/fix/tests/e2e/token-workspace-layout.spec.ts:25:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/token-workspace-layout-enl-7714f-recovers-after-focus-leaves/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/token-workspace-layout-enl-7714f-recovers-after-focus-leaves/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/token-workspace-layout-enl-7714f-recovers-after-focus-leaves/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/token-workspace-layout-enl-7714f-recovers-after-focus-leaves/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests/e2e/token-workspace-layout.spec.ts:36:1 › enlarged Inspector values keep short colors and recovery text readable
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      43 |     return tops.size;
+      44 |   });
+    > 45 |   await expect(values.first()).toHaveText('#ffffff'); expect(await textLines(0)).toBe(1);
+         |                                                                                  ^
+      46 |   await field.fill('{primitive.color.missing}'); await expect(values.nth(1)).toContainText('Last valid: #ffffff'); expect(await textLines(1)).toBeLessThanOrEqual(2);
+      47 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      48 | });
+        at /private/tmp/pwa-final-acceptance/fix/tests/e2e/token-workspace-layout.spec.ts:45:82
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/token-workspace-layout-enl-d25ec--and-recovery-text-readable/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/token-workspace-layout-enl-d25ec--and-recovery-text-readable/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/token-workspace-layout-enl-d25ec--and-recovery-text-readable/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/token-workspace-layout-enl-d25ec--and-recovery-text-readable/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests/e2e/token-workspace-layout.spec.ts:13:1 › enlarged text editing stays above floating navigation and recovers after focus leaves
+    tests/e2e/token-workspace-layout.spec.ts:36:1 › enlarged Inspector values keep short colors and recovery text readable

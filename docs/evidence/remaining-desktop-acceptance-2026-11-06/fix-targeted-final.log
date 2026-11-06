@@ -1,0 +1,29 @@
+
+Running 22 tests using 1 worker
+
+(node:19409) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/e2e/studio-shell.spec.ts:4:1 › mobile shell and representative routes pass whole-page accessibility checks (1.4s)
+  ✓   2 tests/e2e/studio-shell.spec.ts:16:3 › Studio sidebar navigation works at 768px (495ms)
+  ✓   3 tests/e2e/studio-shell.spec.ts:16:3 › Studio sidebar navigation works at 1440px (502ms)
+  ✓   4 tests/e2e/studio-shell.spec.ts:33:1 › Theme select keeps a 44px target and works with the keyboard at mobile and desktop widths (488ms)
+  ✓   5 tests/e2e/studio-shell.spec.ts:50:1 › hash links, back navigation, old links and unknown pages resolve under the Pages subpath (726ms)
+  ✓   6 tests/e2e/studio-shell.spec.ts:62:1 › desktop sidebar collapses accessibly without changing tablet or mobile navigation (898ms)
+  ✓   7 tests/e2e/studio-shell.spec.ts:91:1 › mobile drawer traps focus, scrolls and restores focus on close, Escape and backdrop (1.2s)
+  ✓   8 tests/e2e/studio-shell.spec.ts:140:1 › theme survives reload and storage failure is announced (993ms)
+  ✓   9 tests/e2e/studio-shell.spec.ts:152:1 › skip and route navigation focus a compact heading without outlining the workspace (767ms)
+  ✓  10 tests/e2e/studio-shell.spec.ts:167:1 › system chrome follows resolved theme and committed surfaces without broad preview restyling (658ms)
+  ✓  11 tests/e2e/studio-shell.spec.ts:178:1 › long documentation scroll reveals contextual top action and preserves keyboard/reduced-motion navigation (924ms)
+  ✓  12 tests/e2e/token-workspace-layout.spec.ts:13:1 › enlarged text editing stays above floating navigation and recovers after focus leaves (1.3s)
+  ✓  13 tests/e2e/token-workspace-layout.spec.ts:36:1 › enlarged Inspector values keep short colors and recovery text readable (891ms)
+  ✓  14 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 320px (3.4s)
+  ✓  15 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 390px (3.1s)
+  ✓  16 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 768px (2.5s)
+  ✓  17 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 1440px (2.4s)
+  ✓  18 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 1920px (2.3s)
+  ✓  19 tests/e2e/token-workspace-layout.spec.ts:73:33 › draft feedback keeps the active Inspector input visible at 320px (1.2s)
+  ✓  20 tests/e2e/token-workspace-layout.spec.ts:73:33 › draft feedback keeps the active Inspector input visible at 390px (1.2s)
+  ✓  21 tests/e2e/token-workspace-layout.spec.ts:87:1 › tablet token values stay readable inside the deliberate horizontal table scroller (721ms)
+  ✓  22 tests/e2e/token-workspace-layout.spec.ts:102:1 › short-window Token table header stays behind the Studio app bar (631ms)
+
+  22 passed (29.5s)

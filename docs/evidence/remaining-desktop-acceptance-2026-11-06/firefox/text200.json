@@ -1,0 +1,148 @@
+[
+  {
+    "id": "text200-identity-fit",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "32px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 2,
+      "headingFont": "64px",
+      "headingHeight": 75.5,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "text200-actual-font-enlargement",
+    "pass": true,
+    "evidence": {
+      "before": {
+        "bodyFont": "16px",
+        "cssZoom": "1",
+        "density": "comfortable",
+        "dpr": 2,
+        "headingFont": "32px",
+        "headingHeight": 38,
+        "innerHeight": 787,
+        "innerWidth": 1440,
+        "outerHeight": 872,
+        "outerWidth": 1440,
+        "runtime": "1170b641fcdfe7977a19",
+        "scrollWidth": 1440,
+        "theme": "light",
+        "transform": "none",
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+      },
+      "after": {
+        "bodyFont": "32px",
+        "cssZoom": "1",
+        "density": "comfortable",
+        "dpr": 2,
+        "headingFont": "64px",
+        "headingHeight": 75.5,
+        "innerHeight": 787,
+        "innerWidth": 1440,
+        "outerHeight": 872,
+        "outerWidth": 1440,
+        "runtime": "1170b641fcdfe7977a19",
+        "scrollWidth": 1440,
+        "theme": "light",
+        "transform": "none",
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+      }
+    }
+  },
+  {
+    "id": "text200-search",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-component-code",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-menu-arrow-focus",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-menu-escape-restores",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-dialog-tab-trap",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-dialog-escape-restores",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-token-cancel",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-invalid-feedback",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-invalid-focus-visible",
+    "pass": true,
+    "evidence": {
+      "active": true,
+      "bottom": 787,
+      "headerBottom": 68,
+      "height": 787,
+      "left": 1141,
+      "right": 1375,
+      "top": 699,
+      "width": 1440
+    }
+  },
+  {
+    "id": "text200-commit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-persist",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "text200-final-fit",
+    "pass": true,
+    "evidence": {
+      "bodyFont": "32px",
+      "cssZoom": "1",
+      "density": "comfortable",
+      "dpr": 2,
+      "headingFont": "64px",
+      "headingHeight": 75.5,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "transform": "none",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+    }
+  }
+]
