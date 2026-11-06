@@ -1,0 +1,9 @@
+# Studio workspace layout
+
+`createWorkspace({ id, label, labels? })` returns `element`, `toolbar`, `explorer`, `canvas`, `inspector`, `showPanel(panel, focus?)` and `destroy()`. Append feature-owned controls/content to those slots and append `element` to the page. Call `destroy()` during route teardown. Features retain their own data, validation, tabs and deliberate table/code/list scrolling; this module creates no extra vertical scroll container.
+
+Panel names are `explorer`, `canvas`, `inspector`. `element.dataset.mode` is `wide`, `compact` or `phone`. Mobile and desktop viewport boundaries are read from authoritative primitive token JSON. Three columns additionally require at least 924px of usable workspace width: the maximum approved Explorer/Inspector widths, 320px Canvas and two 12px splitter hit areas. The owner's panel dimensions are layout constraints, not new visual design tokens.
+
+Explorer starts at240px, bounded220–260px; Inspector starts300px, bounded280–320px. Pointer/touch dragging and ArrowLeft/ArrowRight move the actual divider; Home/End choose the pane's bounds. The right divider therefore reduces Inspector width when moved right. Width preferences are bounded and stored per workspace with storage failure tolerated. This is an intentionally non-collapsing bounded splitter; Enter collapse is not offered and full conformance to the draft APG Window Splitter pattern is not claimed.
+
+Compact mode collapses Explorer but retains Canvas/Inspector; phone mode shows one selected panel. `showPanel` never changes consumer configuration. Breakpoint changes reveal the panel containing the currently focused descendant. Explorer Escape closes it and returns focus to its navigation trigger. Focus remains visible, and resizing does not clone fields or previews. Splitter callbacks, global listeners and the ResizeObserver are released by `destroy()`.
