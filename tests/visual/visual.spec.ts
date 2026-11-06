@@ -51,7 +51,7 @@ for (const scenario of [
     await catalog.getByRole('button', { name: scenario.component, exact: true }).click();
     const detail = page.getByRole('region', { name: 'Component playground' });
     if (scenario.component === 'Button') {
-      await detail.getByLabel('State').selectOption('disabled');
+      await detail.getByLabel('State', { exact: true }).selectOption('disabled');
       await expect(detail.locator('.pg-preview button')).toBeDisabled();
     } else if (scenario.component === 'Menu') {
       await detail.locator('.pg-preview').getByRole('button', { name: 'Actions' }).click();
