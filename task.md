@@ -23,7 +23,7 @@ MUST requires implementation or a concrete documented exception. DEFAULT applies
 
 Execution order: shared layout contract; Token and Component interaction changes; PWA engineering and route-specific defaults; independent verification and release. The user prioritizes layout/interaction over new colors or animation. Reported screenshot risks are not confirmed functional defects until reproduced. Existing PWA tasks below remain in scope; preserve their IDs and evidence boundaries.
 
-## Current implementation evidence
+## Historical implementation evidence
 
 - The authorized workspace and PWA engineering is implemented. [PR9](https://github.com/yapweijun1996/PWA-Design-System/pull/9) merged as `a046515`; [PR10](https://github.com/yapweijun1996/PWA-Design-System/pull/10) merged as `3163663` and adds accurate bundled help.
 - Both pages reuse one resizable workspace. Tokens has one selected-token editor; Components has one property Inspector and independent Canvas tabs. Public component APIs, token resolution and React boundaries remain intact. A confirmed native Menu close-event race was corrected without an API change.
@@ -72,8 +72,13 @@ Priority: P1. Rule: MUST. Owner: Frontend engineer; physical validation by devic
 - [x] Map safe-area ownership for the header, sidebar/drawer, content, update notice, overlays and future floating controls; prevent duplicate inset padding.
 - [x] Add the required viewport integration and token-compatible safe-area handling during this implementation.
 - [ ] Check virtual-keyboard open/closed behavior, portrait/landscape, focused fields and scroll-to-focused-control behavior.
+  - [ ] PWA-01-K1: Actual iPhone Safari browser and installed mode: open/close the keyboard on component properties, Token override and search; retain visible focus and access to actions (case D3).
+  - [ ] PWA-01-K2: Repeat on actual iPad Safari, including tablet window/split view and hardware keyboard when available (case D3).
+  - [ ] PWA-01-K3: Rotate with a focused field and keyboard open, then close it; verify scroll recovery and reachable commit/navigation controls in both modes (case D3).
 - [x] Implement and check a 16px minimum for representative Studio host fields, including compact host styles, without disabling user zoom. Core component previews retain their approved tokens; physical iOS focus zoom remains NOT VERIFIED.
 - [ ] Verify content and controls remain clear of the notch/home indicator and have no document horizontal overflow.
+  - [ ] PWA-01-S1: Actual iPhone browser/installed portrait and landscape: top/middle/bottom, drawer, Dialog, Menu and update notice clear system insets (case D2).
+  - [ ] PWA-01-S2: Repeat on actual iPad browser/installed and tablet window sizes; distinguish intentional Canvas/code scrolling from document overflow (case D2).
 
 Acceptance: Actual iPhone/iPad browser and installed-mode evidence, plus desktop/tablet/phone regression. CSS viewport emulation alone cannot close this task.
 
@@ -141,12 +146,29 @@ Acceptance: First visit without a usable cache, controlled offline reload, recon
 Priority: P1 for release evidence. Status: NOT VERIFIED; missing evidence is not a product failure.
 
 - [ ] Actual iPhone/iPad Safari: browser and home-screen installation, standalone launch, status bar, safe areas, keyboard, rotation and offline relaunch.
+  - [ ] PWA-07-I1: Actual iPhone Safari browser and home-screen cold/warm launches, Light/Dark/System and status-bar readability (cases D1–D2).
+  - [ ] PWA-07-I2: Actual iPad Safari browser/home-screen modes and tablet window sizes (cases D1–D3).
+  - [ ] PWA-07-I3: Both devices: committed local editing, offline relaunch and controlled N→N+1 guarded update (cases D4–D5).
 - [ ] Actual Android: installation, standalone launch, theme, touch and offline/update behavior.
+  - [ ] PWA-07-A1: Actual Android Chrome browser and installed cold/warm launch, themes, touch, keyboard and rotation (cases D1–D3).
+  - [ ] PWA-07-A2: Actual Android installed offline relaunch and controlled N→N+1, including draft/import/other-tab guards and retained committed configuration (cases D4–D5).
 - [ ] Real Safari and supported stable browser compatibility; keep WebKit and Firefox Nightly evidence labeled separately.
+  - [x] PWA-07-B1: Stable Chrome desktop primary flows with per-tab source/runtime identity and measured CSS viewport (case B1).
+  - [ ] PWA-07-B2: Actual native Safari desktop flows, bounded console/network observation and per-tab runtime/viewport evidence; historical UI smoke is insufficient (case B1).
+  - [ ] PWA-07-B3: Supported stable Firefox desktop flows, with exact version/channel; Nightly is supplementary and cannot close this subcase (case B1).
 - [ ] VoiceOver/NVDA task interpretation, actual 200%/400% zoom, text enlargement and independent human visual approval.
+  - [ ] PWA-07-H1: Native browser 200% zoom primary flows, actual CSS viewport and source/runtime identity (case Z1).
+  - [ ] PWA-07-H2: Native browser 400% zoom primary flows with the same identity/geometry evidence; a 320px emulation alone does not close this (case Z1).
+  - [ ] PWA-07-H6: Actual OS/browser text enlargement primary flows with recorded settings and restored starting values (case Z1); native page zoom does not close this subcase.
+  - [ ] PWA-07-H3: Human-operated VoiceOver task interpretation and findings/retest (case H1).
+  - [ ] PWA-07-H4: Human-operated NVDA task interpretation and findings/retest (case H1).
+  - [ ] PWA-07-H5: Independent human visual decision across main tasks, themes and densities (case H2). AI review is separate evidence, not this approval.
 - [ ] Record tester, device/OS/browser/assistive technology, build, date, screenshots/observations, findings and retests in the existing acceptance record.
+  - [x] PWA-07-E1: Attach current-version desktop case evidence with SHA, runtime build, actual viewport/zoom, tester kind, steps and bounded console/network results.
+  - [ ] PWA-07-E2: Attach executed physical-device records for each required platform and browser/installed mode.
+  - [ ] PWA-07-E3: Attach actual human assistive-technology and visual decisions plus unresolved findings and retests. A prepared template does not close an execution record.
 
-Supplemental actual desktop Safari 27.0.1 native checks verified narrow/wide panels, property→preview→code parity,200% reflow, invalid token blocking and Cancel restoration, without enabling Remote Automation. Zoom was restored to 100%; the task tab was closed. Per-tab build identity and exact viewport were not captured, so this is bounded smoke evidence rather than complete Safari acceptance. Actual400% remains NOT VERIFIED.
+Supplemental actual desktop Safari 27.0.1 native checks verified narrow/wide panels, property→preview→code parity,200% reflow, invalid token blocking and Cancel restoration, without enabling Remote Automation. Zoom was restored to 100%; the task tab was closed. Per-tab build identity and exact viewport were not captured, so this is bounded smoke evidence rather than complete Safari acceptance. Current stable Firefox native200%/400% focused flows subsequently passed within the bounded scope in [desktop acceptance](docs/DESKTOP-ACCEPTANCE-2026-11-06.md). Native200 overlays, full zoom cross-product and text enlargement remain NOT VERIFIED; do not close the compound zoom/manual parent.
 
 Use [the existing manual checklist](docs/RELEASE-ACCEPTANCE.md). Owner/device access may be required; do not enable browser automation permissions automatically. Field Core Web Vitals remain a separate evidence task if production field-performance claims are intended; no telemetry backend is authorized here.
 
@@ -175,14 +197,17 @@ Priority: P1. Dependency: Approved implementation of the preceding in-scope task
 | PWA-07 | PARTIAL: actual Safari 27.0.1 native UI and 200% zoom smoke passed, plus Chrome157 and WebKit27.2 evidence | Physical iOS/Android, Safari full-suite/console/offline/install, actual 400% zoom, manual screen reader and human visual approval remain NOT VERIFIED |
 | PWA-08 | PASS for engineering regression/security review, reviewed strict visual baselines, documentation and product release provenance | Full conformance remains conditional on the manual evidence above |
 
-Final evidence: [Unified Studio delivery](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md). The unchecked physical/manual subitems are deliberately retained. A passing engineering release does not certify every PWA Standard or WCAG requirement.
+Final engineering evidence: [Unified Studio delivery](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md). Current acceptance execution: [Desktop acceptance](docs/DESKTOP-ACCEPTANCE-2026-11-06.md). The unchecked physical/manual subitems are deliberately retained. A passing engineering release does not certify every PWA Standard or WCAG requirement.
 
-## Recommended execution order
+## Current acceptance execution order
 
-1. Confirm the PWA-03 update-policy exception/design while mapping safe areas and lifecycle ownership.
-2. Implement PWA-01, PWA-02, PWA-03 and PWA-06 in controlled changes under the current implementation authorization.
-3. Apply PWA-04 and PWA-05 only on relevant routes, with documented exceptions.
-4. Complete PWA-07 and PWA-08; preserve existing working behavior and report unresolved verification limits.
+This round starts from merge `40459855467830a988cb6bcf148e7ae4af21c8ce`. The preceding 324-case result belongs to its recorded historical product source; it is not a new result for this round. Use the [current-version matrix and execution packet](docs/RELEASE-ACCEPTANCE.md#current-version-acceptance-matrix) for case status and evidence. Parent checkboxes above remain unchecked until all required subcases pass.
+
+1. Identify source/runtime build and browser environment; run available desktop primary flows, actual browser zoom, keyboard and automated accessibility checks. Fix only reproduced in-scope failures, then retest.
+2. Obtain an independent AI review against actual code/browser evidence and record its tester kind. It cannot replace H1/H2 human approval.
+3. Execute D1–D5 when actual iPhone, iPad and Android hardware is supplied; no real devices are currently available. Keep their results NOT VERIFIED until execution.
+4. Execute H1/H2 with actual human testers. Keep missing human evidence NOT VERIFIED; do not label it N/A or infer a defect.
+5. Reconcile evidence against the candidate SHA/runtime build; complete normal PR/CI/Pages and hosted verification when engineering changes require delivery. A documentation packet alone is not a production conformance claim.
 
 ## Inspected sources
 

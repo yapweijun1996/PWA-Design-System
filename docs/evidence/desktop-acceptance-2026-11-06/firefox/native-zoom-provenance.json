@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-11-06T09:23:05.292797+00:00",
+  "mechanism": "Native CUA app.pressKey(super+plus / super+minus), isolated Firefox Stable app; W3C WebDriver accelerator attempt did not work and is separately retained. No CSS/pageScale/DPR injection.",
+  "appPath": "/tmp/pwa-acceptance-next/firefox/Firefox.app",
+  "nativeAXObservations": [
+    {
+      "displayed": "200%",
+      "role": "button",
+      "description": "Reset zoom level",
+      "source": "CUA getAXState tool response during isolated Marionette Components window",
+      "metricsArtifact": "native200-components.json"
+    },
+    {
+      "displayed": "400%",
+      "role": "button",
+      "description": "Reset zoom level",
+      "source": "CUA getAXState tool response following native super+minus from observed500%",
+      "metricsArtifact": "native400-components.json"
+    }
+  ],
+  "limits": [
+    "400% covers Components/Tokens document fit, invalid token feedback/field focus, Undo, Cancel, Dialog Tab/Escape.",
+    "Full native zoom matrix across all theme/density combinations NOT VERIFIED.",
+    "Requested390px at100% clamped to actual500px; not physical mobile or390 acceptance.",
+    "After test session timed out, final CUA observation found own app Welcome window rather than QA session; no owner data read. Own relaunch PID83057 terminated.",
+    "No import/export acceptance in this bounded Firefox run.",
+    "Classic WebDriver harness does not provide complete browser console or HTTP status/network verification. Error listeners were injected only after navigation.",
+    "Native200 overlays not separately tested;400 Dialog Tab/Escape passed.",
+    "Native200 light/comfortable and400 dark/compact remaining flows passed; exhaustive zoom/theme/density cross-product not tested.",
+    "100% requested390 window clamped to actual500px; not390px or physical-mobile acceptance.",
+    "Native400 UI400% measured384\u00d7210 DPR7.5: report actualmetrics, do not call320px.",
+    "No manual screen-reader, human visual approval, real-device or full WCAG conformance claim.",
+    "Native400-token-error.png was captured after Cancel despite filename."
+  ],
+  "cleanup": "Both geckodriver sessions closed; isolated app relaunch PID83057 terminated; no app security settings bypassed or owner profiles intentionally accessed.",
+  "focusedRetest": {
+    "native200": "CUA AX button200%, Reset zoom level on Components; remaining-200.json metrics light/comfortable720x394 DPR4",
+    "native400": "CUA AX button400%, Reset zoom level on Design Tokens before remaining-400.json; dark/compact384x210 DPR7.5",
+    "restored100": "Native CUA Cmd+0 removed Reset zoom level button; then explicit session cleanup",
+    "results": "remaining-200.json6/6 and remaining-400.json6/6",
+    "scrollRecovery": "Explicit scrollIntoView(block:center,inline:nearest) before WebDriver click; preserves real DOM click/interactability checks, no pointer bypass",
+    "loadRecovery": "Wait for rendered .ws-workspace/.theme-builder within12s after reload, replacing premature fixed700ms readiness assumption"
+  }
+}

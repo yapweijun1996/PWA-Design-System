@@ -15,7 +15,7 @@ This document describes the implemented boundaries and known limitations. It is 
 | `apps/studio/` | Vite shell, fragment routing, interactive tools, browser persistence and production PWA. |
 | `examples/vanilla/`, `examples/react/` | Runnable local integration examples. |
 | `tests/`, `apps/studio/tests/` | Unit, browser, integration and PWA checks for implemented behaviors. |
-| `.github/workflows/` | Quality workflow and a prepared Pages workflow that is deliberately disabled. |
+| `.github/workflows/` | Quality workflow and an enabled, guarded Pages workflow that deploys the artifact from the exact successful main push run. |
 
 Core, tokens and React are private, unpublished packages. Core owns component behavior without depending on React, Studio routing, storage or PWA infrastructure. Consumers mount and remove factory elements and call `destroy()` to release component resources. The [core guide](../packages/core/README.md) and family guides describe the 21 implemented families, options and limitations.
 

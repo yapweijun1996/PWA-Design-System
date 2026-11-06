@@ -1,0 +1,1 @@
+0c214da4439c1eb4cea28a3c141ff112d511aa32c67f9d12e91116569c8d8dda  /tmp/pwa-acceptance-next/firefox/Firefox.dmg

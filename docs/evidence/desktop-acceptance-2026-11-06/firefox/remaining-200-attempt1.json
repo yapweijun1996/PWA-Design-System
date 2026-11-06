@@ -1,0 +1,53 @@
+[
+  {
+    "id": "native200-document-fit",
+    "pass": true,
+    "evidence": {
+      "density": "comfortable",
+      "dpr": 4,
+      "innerHeight": 394,
+      "innerWidth": 720,
+      "mode": "compact",
+      "outerHeight": 436,
+      "outerWidth": 720,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 720,
+      "theme": "light",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "native200-search",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-code-sync-and-local-overflow",
+    "pass": true,
+    "evidence": {
+      "clientWidth": 170,
+      "code": "import { createButton } from \"@pwa-design-system/core/button\";\n\nconst component = createButton({\n  \"label\": \"Native 200\",\n  \"size\": \"medium\",\n  \"variant\": \"primary\",\n  \"type\": \"button\",\n  \"disabled\": false,\n  \"loading\": false\n});\ndocument.body.append(component.element);",
+      "doc": 720,
+      "overflow": "auto",
+      "scrollWidth": 555,
+      "width": 720
+    }
+  },
+  {
+    "id": "native200-valid-edit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-interruption",
+    "pass": false,
+    "step": "click Commit changes",
+    "error": "{\"value\":{\"error\":\"element click intercepted\",\"message\":\"Element <button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\"> is not clickable at point (260,0) because another element <header class=\\\"studio-topbar\\\"> obscures it\",\"stacktrace\":\"RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:14:8\\nWebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:169:5\\nElementClickInterceptedError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:321:5\\nwebdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:178:11\\ninteraction.clickElement@chrome://remote/content/marionette/interaction.sys.mjs:134:11\\nclickElement@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:338:29\\nreceiveMessage@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:210:31\\n\",\"data\":{\"coords\":{\"x\":260,\"y\":0},\"obscuredElement\":\"<button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\">\",\"overlayingElement\":\"<header class=\\\"studio-topbar\\\">\"}}}",
+    "traceback": "Traceback (most recent call last):\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 11, in clickel\n    try:cmd('/element/'+e['element-6066-11e4-a52e-4f735466cecf']+'/click',{})\n        ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 5, in cmd\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 187, in urlopen\n    return opener.open(url, data, timeout)\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 495, in open\n    response = meth(req, response)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 604, in http_response\n    response = self.parent.error(\n        'http', request, response, code, msg, hdrs)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 533, in error\n    return self._call_chain(*args)\n           ~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 466, in _call_chain\n    result = func(*args)\n  File \"/opt/homebrew/Cellar/python@3.15/3.15.0_1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/urllib/request.py\", line 613, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 400: Bad Request\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 44, in <module>\n    clickname('Commit changes');record('commit',js('return JSON.parse(localStorage.getItem(\"pwa-ds-token-overrides-v1\")).overrides.light[\"color.surface\"]===\"#fafafa\"'))\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 15, in clickname\n    step='click '+name;print(step,flush=True);clickel(named(name,tag,scope));time.sleep(.15)\n                                              ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/pwa-acceptance-next/firefox/remaining.py\", line 12, in clickel\n    except urllib.error.HTTPError as e:raise RuntimeError(e.read().decode())\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: {\"value\":{\"error\":\"element click intercepted\",\"message\":\"Element <button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\"> is not clickable at point (260,0) because another element <header class=\\\"studio-topbar\\\"> obscures it\",\"stacktrace\":\"RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:14:8\\nWebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:169:5\\nElementClickInterceptedError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:321:5\\nwebdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:178:11\\ninteraction.clickElement@chrome://remote/content/marionette/interaction.sys.mjs:134:11\\nclickElement@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:338:29\\nreceiveMessage@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:210:31\\n\",\"data\":{\"coords\":{\"x\":260,\"y\":0},\"obscuredElement\":\"<button class=\\\"token-editor__control token-editor__commit\\\" type=\\\"button\\\">\",\"overlayingElement\":\"<header class=\\\"studio-topbar\\\">\"}}}\n",
+    "dom": {
+      "active": "<input type=\"text\" class=\"token-editor__control\" autocomplete=\"off\" spellcheck=\"false\" maxlength=\"128\" data-token=\"color.surface\" aria-label=\"color.surface override\" placeholder=\"Leave empty to inherit\" aria-invalid=\"false\" aria-describedby=\"token-editor-1-inherit-help token-editor-1-selected-purpose token-editor-1-selected-type token-editor-1-selected-values\">",
+      "body": "Design tokens\n\nEmpty override = inherited value. Default is the selected preset; Resolved includes the draft.\n\nEditing scope\nCanvas theme\n1 unsaved change\nCommit\nCancel\nUndo\n\nEditing: Light only \u00b7 Preview: Light\n\nDraft preview updated. Commit to save.\n\nImport, export & reset\nReview changes (1)\nCategories\nTokens\nPreview\nInfo\nToken table\nSearch tokens\nModified only\nSaved overrides and pending removals in this scope.\nSemantic tokens \u2014 select a name to edit its override.\nToken\tDefault\tResolved\tOverride status\ncolor.background\ncolor\n\t#f8fafc\t#f8fafc\tInherited\ncolor.border-control\ncolor\n\t#475569\t#475569\tInherited\ncolor.border-subtle\ncolor\n\t#e2e8f0\t#e2e8f0\tInherited\ncolor.danger\ncolor\n\t#b91c1c\t#b91c1c\tInherited\ncolor.focus\ncolor\n\t#1d4ed8\t#1d4ed8\tInherited\ncolor.link\ncolor\n\t#1d4ed8\t#1d4ed8\tInherited\ncolor.on-primary\ncolor\n\t#ffffff\t#ffffff\tInherited\ncolor.primary\ncolor\n\t#1d4ed8\t#1d4ed8\tInherited\ncolor.primary-hover\ncolor\n\t#1e40af\t#1e40af\tInherited\ncolor.success\ncolor\n\t#15803d\t#15803d\tInherited\ncolor.surface\ncolor\n\t#ffffff\t#fafafa\tModified\ncolor.surface-alt\ncolor\n\t#f1f5f9\t#f1f5f9\tInherited\ncolor.text\ncolor\n\t#0f172a\t#0f172a\tInherited\ncolor.text-muted\ncolor\n\t#475569\t#475569\tInherited\ncolor.warning\ncolor\n\t#92400e\t#92400e\tInherited\nfont.body\nfontFamily\n\tsystem-ui, sans-serif\tsystem-ui, sans-serif\tInherited\nfont.size.body\ndimension\n\t1rem\t1rem\tInherited\nfont.size.heading\ndimension\n\t1.25rem\t1.25rem\tInherited\nfont.size.small\ndimension\n\t0.875rem\t0.875rem\tInherited\nfont.size.title\ndimension\n\t1.75rem\t1.75rem\tInherited\nfont.weight.body\nnumber\n\t400\t400\tInherited\nfont.weight.heading\nnumber\n\t700\t700\tInherited\nfont.weight.label\nnumber\n\t500\t500\tInherited\nspacing.lg\ndimension\n\t1.5rem\t1.5rem\tInherited\nspacing.md\ndimension\n\t1rem\t1rem\tInherited\nspacing.none\ndimension\n\t0px\t0px\tInherited\nspacing.sm\ndimension\n\t0.5rem\t0.5rem\tInherited\nspacing.xl\ndimension\n\t2rem\t2rem\tInherited\nspacing.xs\ndimension\n\t0.25rem\t0.25rem\tInherited\nradius.card\ndimension\n\t0.75rem\t0.75rem\tInherited\nradius.control\ndimension\n\t0.5rem\t0.5rem\tInherited\nradius.pill\ndimension\n\t999px\t999px\tInherited\nshadow.card\nshadow\n\t0 1px 3px #00000033\t0 1px 3px #00000033\tInherited\nshadow.overlay\nshadow\n\t0 8px 24px #00000033\t0 8px 24px #00000033\tInherited\nelevation.card\nshadow\n\t0 1px 3px #00000033\t0 1px 3px #00000033\tInherited\nelevation.overlay\nshadow\n\t0 8px 24px #00000033\t0 8px 24px #00000033\tInherited\nlayer.base\nnumber\n\t0\t0\tInherited\nlayer.overlay\nnumber\n\t100\t100\tInherited\nlayer.sticky\nnumber\n\t10\t10\tInherited\nlayer.toast\nnumber\n\t200\t200\tInherited\nmotion.duration.fast\nduration\n\t120ms\t120ms\tInherited\nmotion.duration.normal\nduration\n\t200ms\t200ms\tInherited\nmotion.easing.standard\neasing\n\tease-in-out\tease-in-out\tInherited\nsize.control.large\ndimension\n\t3rem\t3rem\tInherited\nsize.control.medium\ndimension\n\t2.75rem\t2.75rem\tInherited\nsize.control.small\ndimension\n\t2rem\t2rem\tInherited\nfocus.ring-offset\ndimension\n\t2px\t2px\tInherited\nfocus.ring-width\ndimension\n\t2px\t2px\tInherited\ncolor.surface\ncolor\n\nCards, inputs and other primary surfaces.\n\nDefault\n#ffffff\nResolved\n#fafafa\nOverride (empty = inherited)\nChoose new color\nUse inherited value\nDependency chain\nsemantic.color.surface\nPurpose, source & references",
+      "mode": "compact"
+    }
+  }
+]

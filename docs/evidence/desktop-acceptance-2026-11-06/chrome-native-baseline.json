@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-06T09:11:08.358Z",
+  "url": "https://yapweijun1996.github.io/PWA-Design-System/#components",
+  "title": "PWA Acceptance — Components",
+  "build": "1170b641fcdfe7977a19",
+  "viewport": {
+    "innerWidth": 1280,
+    "innerHeight": 729,
+    "outerWidth": 1280,
+    "outerHeight": 872,
+    "dpr": 2,
+    "visual": {
+      "width": 1280,
+      "height": 729,
+      "scale": 1
+    }
+  },
+  "cssZoom": "1",
+  "transform": "none",
+  "overflow": false,
+  "mode": "wide",
+  "active": {
+    "tag": "BODY",
+    "name": null
+  },
+  "header": {
+    "x": 250,
+    "y": 0,
+    "width": 1030,
+    "height": 68,
+    "top": 0,
+    "right": 1280,
+    "bottom": 68,
+    "left": 250
+  },
+  "input": [
+    {
+      "name": "pg-label",
+      "value": "Save",
+      "rect": {
+        "x": 973,
+        "y": 388,
+        "width": 266,
+        "height": 44,
+        "top": 388,
+        "right": 1239,
+        "bottom": 432,
+        "left": 973
+      }
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Explorer",
+      "hidden": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    {
+      "label": "Canvas",
+      "hidden": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    {
+      "label": "Properties",
+      "hidden": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    }
+  ],
+  "browser": "157.0.8103.38",
+  "errors": [],
+  "failedRequests": []
+}

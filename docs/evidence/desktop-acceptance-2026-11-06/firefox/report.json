@@ -1,0 +1,964 @@
+{
+  "started": "2026-11-06T09:15:07.748961+00:00",
+  "sourceSHA": "40459855467830a988cb6bcf148e7ae4af21c8ce",
+  "expectedRuntime": "1170b641fcdfe7977a19",
+  "checks": [
+    {
+      "id": "route-overview-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "A shared foundation for better interfaces.",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview"
+        }
+      }
+    },
+    {
+      "id": "route-foundations-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Foundations",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#foundations"
+        }
+      }
+    },
+    {
+      "id": "route-design-tokens-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Design tokens",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": "wide",
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+        }
+      }
+    },
+    {
+      "id": "route-components-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Components",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": "wide",
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+        }
+      }
+    },
+    {
+      "id": "route-layout-playground-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Layout Playground",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#layout-playground"
+        }
+      }
+    },
+    {
+      "id": "route-theme-builder-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Theme Builder",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#theme-builder"
+        }
+      }
+    },
+    {
+      "id": "route-accessibility-lab-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Accessibility Lab",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#accessibility-lab"
+        }
+      }
+    },
+    {
+      "id": "route-ai-agent-rules-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "AI Agent Rules",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#ai-agent-rules"
+        }
+      }
+    },
+    {
+      "id": "route-documentation-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Documentation",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#documentation"
+        }
+      }
+    },
+    {
+      "id": "route-settings-1440-light-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Settings",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#settings"
+        }
+      }
+    },
+    {
+      "id": "route-overview-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "A shared foundation for better interfaces.",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview"
+        }
+      }
+    },
+    {
+      "id": "route-foundations-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Foundations",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#foundations"
+        }
+      }
+    },
+    {
+      "id": "route-design-tokens-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Design tokens",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": "wide",
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+        }
+      }
+    },
+    {
+      "id": "route-components-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Components",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": "wide",
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+        }
+      }
+    },
+    {
+      "id": "route-layout-playground-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Layout Playground",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#layout-playground"
+        }
+      }
+    },
+    {
+      "id": "route-theme-builder-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Theme Builder",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#theme-builder"
+        }
+      }
+    },
+    {
+      "id": "route-accessibility-lab-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Accessibility Lab",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#accessibility-lab"
+        }
+      }
+    },
+    {
+      "id": "route-ai-agent-rules-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "AI Agent Rules",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#ai-agent-rules"
+        }
+      }
+    },
+    {
+      "id": "route-documentation-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Documentation",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#documentation"
+        }
+      }
+    },
+    {
+      "id": "route-settings-1440-dark-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Settings",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 1440,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#settings"
+        }
+      }
+    },
+    {
+      "id": "route-overview-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "A shared foundation for better interfaces.",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview"
+        }
+      }
+    },
+    {
+      "id": "route-foundations-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Foundations",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#foundations"
+        }
+      }
+    },
+    {
+      "id": "route-design-tokens-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Design tokens",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": "phone",
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+        }
+      }
+    },
+    {
+      "id": "route-components-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Components",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": "phone",
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+        }
+      }
+    },
+    {
+      "id": "route-layout-playground-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Layout Playground",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#layout-playground"
+        }
+      }
+    },
+    {
+      "id": "route-theme-builder-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Theme Builder",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#theme-builder"
+        }
+      }
+    },
+    {
+      "id": "route-accessibility-lab-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Accessibility Lab",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#accessibility-lab"
+        }
+      }
+    },
+    {
+      "id": "route-ai-agent-rules-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "AI Agent Rules",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#ai-agent-rules"
+        }
+      }
+    },
+    {
+      "id": "route-documentation-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Documentation",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#documentation"
+        }
+      }
+    },
+    {
+      "id": "route-settings-390-light-compact",
+      "pass": true,
+      "evidence": {
+        "heading": "Settings",
+        "metrics": {
+          "density": "compact",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#settings"
+        }
+      }
+    },
+    {
+      "id": "route-overview-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "A shared foundation for better interfaces.",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview"
+        }
+      }
+    },
+    {
+      "id": "route-foundations-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Foundations",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#foundations"
+        }
+      }
+    },
+    {
+      "id": "route-design-tokens-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Design tokens",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": "phone",
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+        }
+      }
+    },
+    {
+      "id": "route-components-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Components",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": "phone",
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+        }
+      }
+    },
+    {
+      "id": "route-layout-playground-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Layout Playground",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#layout-playground"
+        }
+      }
+    },
+    {
+      "id": "route-theme-builder-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Theme Builder",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#theme-builder"
+        }
+      }
+    },
+    {
+      "id": "route-accessibility-lab-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Accessibility Lab",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#accessibility-lab"
+        }
+      }
+    },
+    {
+      "id": "route-ai-agent-rules-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "AI Agent Rules",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#ai-agent-rules"
+        }
+      }
+    },
+    {
+      "id": "route-documentation-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Documentation",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#documentation"
+        }
+      }
+    },
+    {
+      "id": "route-settings-390-dark-comfortable",
+      "pass": true,
+      "evidence": {
+        "heading": "Settings",
+        "metrics": {
+          "density": "comfortable",
+          "dpr": 2,
+          "innerHeight": 787,
+          "innerWidth": 500,
+          "mode": null,
+          "outerHeight": 872,
+          "outerWidth": 500,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 500,
+          "theme": "dark",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#settings"
+        }
+      }
+    },
+    {
+      "id": "component-search",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "component-category",
+      "pass": true,
+      "evidence": 7
+    },
+    {
+      "id": "component-preview-code-sync",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "component-size-state",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "component-code-tab",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "component-canvas-studio-separation",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "menu-keyboard",
+      "pass": true,
+      "evidence": {
+        "active": "<button type=\"button\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">Unavailable</button>",
+        "menu": true
+      }
+    },
+    {
+      "id": "menu-escape-restores-focus",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "dialog-open",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "dialog-tab-trapped",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "dialog-escape-restores-focus",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "components-error-listener",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "tokens-single-inspector",
+      "pass": true,
+      "evidence": null
+    },
+    {
+      "id": "tokens",
+      "pass": false,
+      "evidence": "{\"value\":{\"error\":\"javascript error\",\"message\":\"SyntaxError: missing ) after argument list\",\"stacktrace\":\"@https://yapweijun1996.github.io/PWA-Design-System/#overview:2:57\\n\"}}"
+    }
+  ],
+  "limits": [
+    "Synthetic WebDriver interactions do not establish manual screen-reader, human or physical device acceptance.",
+    "Console collection limited to injected page error/unhandledrejection listeners after navigation; HTTP statuses unavailable through this classic WebDriver harness.",
+    "Native Firefox zoom NOT VERIFIED: WebDriver Meta+plus did not change CSS viewport; no fake CSS zoom used."
+  ],
+  "capabilities": {
+    "acceptInsecureCerts": false,
+    "browserName": "firefox",
+    "browserVersion": "159.0.1",
+    "moz:accessibilityChecks": false,
+    "moz:buildID": "20261102144711",
+    "moz:geckodriverVersion": "0.37.1",
+    "moz:headless": false,
+    "moz:platformVersion": "27.0.0",
+    "moz:processID": 80894,
+    "moz:profile": "/var/folders/tx/dx_7t0r56svcjld4fx5j_pwr0000gn/T/rust_mozprofileWyE5bc",
+    "moz:shutdownTimeout": 73000,
+    "moz:webdriverClick": true,
+    "moz:windowless": false,
+    "pageLoadStrategy": "normal",
+    "platformName": "mac",
+    "proxy": {},
+    "setWindowRect": true,
+    "strictFileInteractability": false,
+    "timeouts": {
+      "implicit": 0,
+      "pageLoad": 300000,
+      "script": 30000
+    },
+    "unhandledPromptBehavior": "dismiss and notify",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:159.0) Gecko/20100101 Firefox/159.0"
+  },
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "browserSource": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/159.0.1/mac/en-US/Firefox%20159.0.1.dmg",
+  "gatekeeper": "/tmp/pwa-acceptance-next/firefox/Firefox.app: accepted\nsource=Notarized Developer ID\n",
+  "binarySHA256": "3d3cf77b6e1e545ec9595a3122a53f498f1a3945ee290008c49cb3c41785a37b  /tmp/pwa-acceptance-next/firefox/Firefox.app/Contents/MacOS/firefox\n",
+  "initial": {
+    "density": "comfortable",
+    "dpr": 2,
+    "innerHeight": 699,
+    "innerWidth": 1280,
+    "mode": null,
+    "outerHeight": 784,
+    "outerWidth": 1280,
+    "runtime": "1170b641fcdfe7977a19",
+    "scrollWidth": 1280,
+    "theme": "light",
+    "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview"
+  },
+  "zoomExperiment": {
+    "before": {
+      "density": "comfortable",
+      "dpr": 2,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "mode": "wide",
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+    },
+    "after4CmdPlus": {
+      "density": "comfortable",
+      "dpr": 2,
+      "innerHeight": 787,
+      "innerWidth": 1440,
+      "mode": "wide",
+      "outerHeight": 872,
+      "outerWidth": 1440,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 1440,
+      "theme": "light",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+    },
+    "method": "WebDriver W3C keyboard Meta + plus browser accelerator; no CSS/scale/DPR injection"
+  },
+  "sessionClosed": true,
+  "finished": "2026-11-06T09:15:57.907204+00:00",
+  "summary": {
+    "pass": 53,
+    "fail": 1
+  }
+}

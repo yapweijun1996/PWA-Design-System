@@ -1,0 +1,51 @@
+[
+  {
+    "id": "native200-document-fit",
+    "pass": true,
+    "evidence": {
+      "density": "comfortable",
+      "dpr": 4,
+      "innerHeight": 394,
+      "innerWidth": 720,
+      "mode": "compact",
+      "outerHeight": 436,
+      "outerWidth": 720,
+      "runtime": "1170b641fcdfe7977a19",
+      "scrollWidth": 720,
+      "theme": "light",
+      "url": "https://yapweijun1996.github.io/PWA-Design-System/#components"
+    }
+  },
+  {
+    "id": "native200-search",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-code-sync-and-local-overflow",
+    "pass": true,
+    "evidence": {
+      "clientWidth": 170,
+      "code": "import { createButton } from \"@pwa-design-system/core/button\";\n\nconst component = createButton({\n  \"label\": \"Native 200\",\n  \"size\": \"medium\",\n  \"variant\": \"primary\",\n  \"type\": \"button\",\n  \"disabled\": false,\n  \"loading\": false\n});\ndocument.body.append(component.element);",
+      "doc": 720,
+      "overflow": "auto",
+      "scrollWidth": 555,
+      "width": 720
+    }
+  },
+  {
+    "id": "native200-valid-edit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-commit",
+    "pass": true,
+    "evidence": null
+  },
+  {
+    "id": "native200-commit-persist",
+    "pass": true,
+    "evidence": null
+  }
+]
