@@ -177,6 +177,7 @@ test('system chrome follows resolved theme and committed surfaces without broad 
 
 test('long documentation scroll reveals contextual top action and preserves keyboard/reduced-motion navigation', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('./#documentation');
+  await expect(page.getByRole('heading', { name: 'Documentation', exact: true })).toBeVisible();
   const header = page.locator('.studio-topbar'), top = page.getByRole('button', { name: 'Back to top', exact: true });
   await page.evaluate(() => window.scrollTo(0, innerHeight + 100)); await expect(top).toBeVisible(); await expect(header).toHaveAttribute('data-scroll-hidden', 'true');
   await page.getByRole('combobox', { name: 'Studio theme', exact: true }).focus(); await expect(header).not.toHaveAttribute('data-scroll-hidden', 'true');
