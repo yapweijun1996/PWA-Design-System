@@ -10,6 +10,6 @@ Canvas separates Preview, Code, Usage, API and Accessibility. Tabs use native bu
 
 The toolbar's Canvas theme is isolated from Studio appearance and is not emitted in the component snippet. Preview width supports Fit workspace and actual CSS canvas widths of 390/768/1440px. The measured visible width is reported; an oversized canvas scrolls inside its own region. These dimensions do not emulate browser media queries or move portaled overlays into a separate viewport. Use Layout Playground or browser device tools for viewport-level testing.
 
-Normal document scrolling owns the workspace and documentation. Explorer has the only bounded vertical list; Code and deliberately oversized canvas content support horizontal scrolling. A phone uses Explorer / Preview / Properties panels, while shared responsive behavior preserves focused descendants across resizing and supports Escape from Explorer.
+Normal document scrolling owns the workspace and documentation. Explorer has the only bounded vertical list; Code and deliberately oversized canvas content support horizontal scrolling. A phone uses Explorer / Canvas / Properties panels, while shared responsive behavior preserves focused descendants across resizing and supports Escape from Explorer.
 
 Verification is provided by `tests/unit/playground.test.ts`, the shared Workspace tests, and the `playground`, `components-usability` and `components-workspace` browser suites. Automated checks do not establish manual screen-reader, physical-device, actual browser zoom or complete WCAG conformance.

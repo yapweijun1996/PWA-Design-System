@@ -21,7 +21,7 @@ for (const width of [320, 390, 768, 1440, 1920]) test(`workspace panels, canvas 
   if (width < 700) { await expect(choose).toHaveAttribute('aria-expanded', 'false'); await expect(preview).toBeVisible(); await expect(inspector).toBeHidden(); await page.getByRole('button', { name: 'Properties', exact: true }).click(); }
   await page.getByLabel('Variant', { exact: true }).selectOption('secondary'); await expect(page.getByLabel('Variant', { exact: true })).toHaveCount(1); await expect(page.locator('.pg-options')).toHaveCount(0);
   await expect(page.locator('.pg-preview .ds-button')).toHaveAttribute('data-variant', 'secondary'); await expect(page.locator('pre code')).toContainText('"variant": "secondary"');
-  if (width < 700) await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  if (width < 700) await page.getByRole('button', { name: 'Canvas', exact: true }).click();
   for (const target of ['390', '768', '1440']) { await page.getByLabel('Preview width', { exact: true }).selectOption(target); await expect.poll(() => page.locator('.pg-preview').evaluate(node => Math.round(node.getBoundingClientRect().width))).toBe(Number(target)); }
   await expect(page.getByRole('status', { name: 'Preview canvas width' })).toHaveText('1440px canvas'); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.getByLabel('Preview width', { exact: true }).selectOption('fit');
@@ -31,13 +31,13 @@ for (const width of [320, 390, 768, 1440, 1920]) test(`workspace panels, canvas 
   await page.keyboard.press('Home'); await expect(page.getByRole('tab', { name: 'Preview', exact: true })).toBeFocused();
   if (width < 700) await page.getByRole('button', { name: 'Properties', exact: true }).click();
   await page.getByLabel('Label or message').fill('Publish'); await expect(page.locator('pre code')).toContainText('Publish'); await expect(inspector.locator('pre')).toHaveCount(0);
-  if (width < 700) await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  if (width < 700) await page.getByRole('button', { name: 'Canvas', exact: true }).click();
   await page.getByRole('tab', { name: 'Code', exact: true }).click();
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: () => Promise.resolve() } }));
   await page.getByRole('button', { name: 'Copy code', exact: true }).click(); await expect(page.locator('.pg-copy-status')).toHaveText('Code copied.');
   if (width < 700) await page.getByRole('button', { name: 'Properties', exact: true }).click();
   await page.getByRole('button', { name: 'Reset properties', exact: true }).click(); await expect(page.getByRole('button', { name: 'Reset properties', exact: true })).toBeFocused(); await expect(page.locator('.pg-preview button')).toHaveText('Save');
-  if (width < 700) await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  if (width < 700) await page.getByRole('button', { name: 'Canvas', exact: true }).click();
   await expect(page.getByRole('tab', { name: 'Code', exact: true })).toHaveAttribute('aria-selected', 'true'); await page.getByRole('tab', { name: 'Preview', exact: true }).click(); await expect(page.locator('.pg-preview button')).toBeVisible();
   expect((await new AxeBuilder({ page }).include('.pg-page').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]); expect(errors).toEqual([]);
 });

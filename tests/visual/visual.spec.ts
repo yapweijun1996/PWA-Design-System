@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { visualEnvironment } from './environment.mjs';
+import { tokenCanvas, tokenField } from '../e2e/token-workspace-helpers';
 
 const smoke = process.env.VISUAL_SMOKE === '1';
 const capture = process.env.VISUAL_CAPTURE === '1';
@@ -78,15 +79,16 @@ for (const scenario of [
     await expect(page.getByRole('heading', { name: 'Design tokens', level: 1 })).toBeVisible();
     const editor = page.locator('.token-editor');
     if (scenario.view === 'preview') {
-      await editor.getByRole('button', { name: /^preview$/i }).click();
+      await tokenCanvas(page, 'Preview');
       await expect(page.getByLabel('Token preview')).toBeVisible();
     } else if (scenario.view === 'draft') {
-      await page.getByLabel('color.surface override').fill('#fafafa');
+      await (await tokenField(page, 'color.surface')).fill('#fafafa');
       await editor.getByLabel(/search tokens/i).fill('color.surface');
       await expect(page.getByLabel('color.surface override')).toHaveValue('#fafafa');
       await editor.getByText(/review changes\s*\(1\)/i).click();
     } else {
-      await expect(page.getByLabel('color.surface override')).toBeVisible();
+      if (scenario.width < 700) await tokenField(page, 'color.surface');
+      else await tokenCanvas(page);
     }
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
     await snapshot(page, scenario.name, false);
@@ -122,4 +124,20 @@ test('components-mobile-properties', async ({ page }) => {
   await expect(page.locator('.pg-stage')).toBeHidden();
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   await snapshot(page, 'components-mobile-properties', false);
+});
+
+for (const width of [390, 1440]) test(`components-code-${width}`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 900 });
+  await open(page, 'components', 'dark', 'comfortable');
+  await expect(page.getByRole('heading', { name: 'Button', level: 2, exact: true })).toBeVisible();
+  if (width === 1440) {
+    await page.getByText('Pane sizes', { exact: true }).click();
+    await page.getByRole('button', { name: 'Increase Explorer width', exact: true }).click();
+    await page.getByRole('button', { name: 'Increase Properties width', exact: true }).click();
+    await page.getByText('Pane sizes', { exact: true }).click();
+  }
+  await page.getByRole('tab', { name: 'Code', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Copy code', exact: true })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await snapshot(page, `components-code-${width}`, false);
 });

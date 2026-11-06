@@ -37,10 +37,11 @@
 .token-editor__check input { flex: none; width: var(--ds-spacing-md); height: var(--ds-spacing-md); accent-color: var(--ds-color-primary); }
 .token-editor__fields { max-width: 100%; max-height: 60dvh; overflow: auto; overscroll-behavior: contain; }
 .token-editor__fields thead { position: sticky; top: 0; z-index: var(--ds-layer-sticky); background: var(--ds-color-surface); }
-.token-editor__fields table { width: 100%; border-collapse: collapse; font-size: var(--ds-font-size-small); }
+.token-editor__fields table { width: 100%; min-width: 36rem; border-collapse: collapse; font-size: var(--ds-font-size-small); }
 .token-editor__fields caption { text-align: start; padding-block-end: var(--ds-spacing-sm); color: var(--ds-color-text-muted); }
 .token-editor__fields :is(th,td) { padding: var(--ds-spacing-xs) var(--ds-spacing-sm); text-align: start; border-bottom: 1px solid var(--ds-color-border-subtle); vertical-align: middle; overflow-wrap: anywhere; }
-.token-editor__fields td { font-family: monospace; }
+.token-editor__fields td { min-width: 8rem; font-family: monospace; }
+.token-editor__fields thead th { white-space: nowrap; }
 .token-editor__fields th[scope='row'] { min-width: 10rem; }
 .token-editor__fields td:last-child { min-width: 6rem; white-space: nowrap; font-family: var(--ds-font-body); }
 .token-editor__fields th small { display: block; font-weight: var(--ds-font-weight-body); }

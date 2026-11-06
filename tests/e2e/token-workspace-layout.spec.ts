@@ -36,3 +36,18 @@ for (const width of [320, 390]) test(`draft feedback keeps the active Inspector 
   await page.setViewportSize({ width: 1440, height: 844 }); await page.setViewportSize({ width, height: 844 }); await assertVisibleGeometry();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
+
+
+test('tablet token values stay readable inside the deliberate horizontal table scroller', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1000 }); await page.goto('./#design-tokens'); await tokenCanvas(page);
+  const table = page.getByRole('region', { name: 'Token table', exact: true });
+  const geometry = await table.evaluate(node => {
+    const table = node.querySelector('table'), row = table?.querySelector('tbody tr'); if (!table || !row) throw new Error('Token table row missing'); const cells = Array.from(row.querySelectorAll('td'));
+    return { horizontal: node.scrollWidth > node.clientWidth, tableWidth: table.getBoundingClientRect().width, rowHeight: row.getBoundingClientRect().height, valueWidths: cells.slice(0, 2).map(cell => cell.getBoundingClientRect().width) };
+  });
+  expect(geometry.horizontal).toBe(true); expect(geometry.tableWidth).toBeGreaterThanOrEqual(576); expect(geometry.rowHeight).toBeLessThan(100);
+  for (const width of geometry.valueWidths) expect(width).toBeGreaterThanOrEqual(128);
+  await table.evaluate(node => { node.scrollLeft = node.scrollWidth; });
+  await expect(page.getByRole('columnheader', { name: 'Override', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
