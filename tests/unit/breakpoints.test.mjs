@@ -9,7 +9,7 @@ describe('build-time breakpoint sources', () => {
   it('rejects stale CSS and inconsistent source dimensions', async () => {
     const stale = async (path, encoding) => {
       const text = await readFile(path, encoding);
-      return path.endsWith('/apps/studio/src/features/playground/playground.css') ? text.replace('max-width: 699px', 'max-width: 698px') : text;
+      return path.endsWith('/apps/studio/src/styles.css') ? text.replace('max-width: 699px', 'max-width: 698px') : text;
     };
     await expect(generateBreakpoints(true, { read: stale })).rejects.toThrow(/stale/);
     const invalid = async (path, encoding) => {

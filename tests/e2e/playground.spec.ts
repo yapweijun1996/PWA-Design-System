@@ -26,7 +26,7 @@ test('supported options and escaped labels update preview and code together', as
 });
 test('copy permission failure gives usable feedback', async ({ page }) => {
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: () => Promise.reject(new Error('denied')) } }));
-  const detail = page.getByRole('region', { name: 'Component playground' }); await detail.getByRole('button', { name: 'Copy code' }).click(); await expect(detail.locator('.pg-copy-status')).toContainText('Copy failed');
+  const detail = page.getByRole('region', { name: 'Component playground' }); await detail.getByRole('tab', { name: 'Code', exact: true }).click(); await detail.getByRole('button', { name: 'Copy code' }).click(); await expect(detail.locator('.pg-copy-status')).toContainText('Copy failed');
 });
 test('API reference and supported scalar and list controls match their previews', async ({ page }) => {
   const catalog = page.getByRole('region', { name: 'Component catalog' }); const detail = page.getByRole('region', { name: 'Component playground' });
@@ -57,13 +57,13 @@ test('invalid extra stays in a form-level summary and assertive alert updates af
 });
 test('preview theme is isolated and inherited by a top-layer tooltip', async ({ page }) => {
   const detail = page.getByRole('region', { name: 'Component playground' });
-  const select = detail.getByLabel('Preview theme'); const preview = detail.locator('.pg-preview'); const code = detail.locator('pre code');
+  const select = detail.getByLabel('Canvas theme'); const preview = detail.locator('.pg-preview'); const code = detail.locator('pre code');
   const rootTheme = await page.locator('html').getAttribute('data-theme'); const originalCode = await code.textContent();
   await select.selectOption('dark'); const dark = await preview.evaluate(node => getComputedStyle(node).backgroundColor);
   expect(await page.locator('html').getAttribute('data-theme')).toBe(rootTheme); await expect(code).toHaveText(originalCode ?? '');
   await select.selectOption('light'); const light = await preview.evaluate(node => getComputedStyle(node).backgroundColor); expect(light).not.toBe(dark);
   await select.selectOption('studio'); await expect(preview).toHaveAttribute('data-preview-theme', 'studio');
-  await page.getByRole('button', { name: 'Tooltip', exact: true }).click(); await detail.getByLabel('Preview theme').selectOption('dark');
+  await page.getByRole('button', { name: 'Tooltip', exact: true }).click(); await detail.getByLabel('Canvas theme').selectOption('dark');
   await detail.locator('.pg-preview').getByRole('button', { name: 'More information' }).focus();
   const tip = page.getByRole('tooltip'); await expect(tip).toBeVisible();
   const colors = await detail.locator('.pg-preview').evaluate(node => ({ preview: getComputedStyle(node).getPropertyValue('--ds-color-surface').trim(), tip: getComputedStyle(node.querySelector('[role=tooltip]') as Element).getPropertyValue('--ds-color-surface').trim() }));
@@ -78,10 +78,10 @@ test('mobile catalog scroll is discoverable and preview is visible near the top'
   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('./#components');
   const preview = page.locator('.pg-preview'); await expect(preview).toBeVisible(); const box = await preview.boundingBox();
   expect(box).not.toBeNull(); if (!box) throw new Error('Preview has no bounds'); expect(box.y).toBeGreaterThanOrEqual(0); expect(box.y + box.height).toBeLessThanOrEqual(844);
-  await page.getByRole('button', { name: 'Explorer: Button', exact: true }).click();
+  await page.getByRole('button', { name: 'Explorer', exact: true }).click();
   const list = page.getByRole('region', { name: 'Scrollable component list' }); await expect(list).toHaveAttribute('tabindex', '0'); await expect(page.getByText('21 of 21 components · Search or scroll to explore.')).toBeVisible();
-  const end = await list.evaluate(node => node.scrollHeight - node.clientHeight);
-  await list.focus(); await page.keyboard.press('End'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(end); await page.keyboard.press('Home'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(0);
+  // Panel reflow can change the list height; test the current scroll boundary.
+  await list.focus(); await page.keyboard.press('End'); await expect.poll(() => list.evaluate(node => node.scrollHeight - node.clientHeight - node.scrollTop)).toBe(0); await page.keyboard.press('Home'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(0);
   const scroll = await list.evaluate(node => { const max = node.scrollHeight - node.clientHeight; node.scrollTop = 0; const top = node.scrollTop; node.scrollTop = max / 2; const middle = node.scrollTop; node.scrollTop = max; return { top, middle, bottom: node.scrollTop, max }; });
   expect(scroll.top).toBe(0); expect(scroll.middle).toBeGreaterThan(0); expect(scroll.bottom).toBeGreaterThan(scroll.middle); expect(scroll.bottom).toBeCloseTo(scroll.max, 0);
   await page.getByRole('searchbox', { name: 'Search components' }).fill('menu'); const menu = list.getByRole('button', { name: 'Menu', exact: true }); await menu.focus(); await page.keyboard.press('Enter');

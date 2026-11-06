@@ -27,7 +27,6 @@ export async function generateBreakpoints(check = false, { read = readFile, writ
     ['apps/studio/src/features/layout/layout.css', [[/@media \(max-width: [^)]+\)/, `@media (max-width: ${mobile}px)`]]],
     ['apps/studio/src/features/accessibility/styles.css', [[/@media \(max-width: [^)]+\)/, `@media (max-width: ${mobile}px)`]]],
     ['apps/studio/src/features/tokens/styles.css', [[/@media \(min-width: [^)]+\)/, `@media (min-width: ${preview}px)`]]],
-    ['apps/studio/src/features/tokens/index.ts', [[/matchMedia\('\(min-width: [^)]+\)'\)/, `matchMedia('(min-width: ${preview}px)')`]]],
     ['apps/studio/src/main.ts', [[/matchMedia\('\(max-width: [^)]+\)'\)/, `matchMedia('(max-width: ${mobile - 1}px)')`]]]
   ];
   let stale = false;

@@ -86,7 +86,7 @@ describe('token override validation', () => {
     const field = container.querySelector<HTMLInputElement>('[data-token="color.surface"]');
     const preview = container.querySelector<HTMLElement>('.token-editor__preview');
     if (!field || !preview) throw new Error('Editor fixture missing');
-    const click = (label: string) => { const node = [...container.querySelectorAll('button')].find(item => item.textContent === label); if (!node) throw new Error('Button missing'); node.click(); };
+    const click = (label: string) => { const node = [...container.querySelectorAll('button')].find(item => item.textContent === label || item.getAttribute('aria-label') === label); if (!node) throw new Error('Button missing'); node.click(); };
     field.value = '#fafafa'; field.dispatchEvent(new Event('input', { bubbles: true }));
     expect(preview.style.getPropertyValue('--ds-color-surface')).toBe('#fafafa');
     expect(localStorage.getItem('pwa-ds-token-overrides-v1')).toBeNull();
@@ -96,7 +96,7 @@ describe('token override validation', () => {
     expect(document.documentElement.style.getPropertyValue('--ds-color-surface')).toBe('#fafafa');
     click('Reset draft to defaults'); expect(document.documentElement.style.getPropertyValue('--ds-color-surface')).toBe('#fafafa');
     click('Commit changes'); expect(document.documentElement.style.getPropertyValue('--ds-color-surface')).toBe('');
-    expect(container.querySelectorAll('[data-token]').length).toBe(Object.keys(sources.semantics).filter(key => !key.startsWith('breakpoint.')).length);
+    expect(container.querySelectorAll('[data-token]')).toHaveLength(1); expect(container.querySelectorAll('[data-select-token]')).toHaveLength(Object.keys(sources.semantics).filter(key => !key.startsWith('breakpoint.')).length);
     destroy(); teardown(); container.remove(); localStorage.clear();
   });
   it('revalidates a prepaint snapshot if storage becomes unavailable before app initialization', () => {
@@ -166,26 +166,41 @@ describe('visual token workspace', () => {
   function fixture() {
     localStorage.clear(); commitProject(configuration()); document.documentElement.dataset.theme = 'light';
     const teardown = initializeTokenOverrides(), root = document.createElement('main'); document.body.append(root); const destroy = mountTokenEditor(root);
-    const edit = (key: string, value: string) => { const input = root.querySelector<HTMLInputElement>(`[data-token="${key}"]`); if (!input) throw new Error(`Missing ${key}`); input.value = value; input.dispatchEvent(new Event('input', { bubbles: true })); return input; };
+    const edit = (key: string, value: string) => { root.querySelector<HTMLButtonElement>(`[data-select-token="${key}"]`)?.click(); const input = root.querySelector<HTMLInputElement>(`[data-token="${key}"]`); if (!input) throw new Error(`Missing ${key}`); input.value = value; input.dispatchEvent(new Event('input', { bubbles: true })); return input; };
     const click = (name: string) => { const control = [...root.querySelectorAll('button')].find(button => button.textContent === name || button.getAttribute('aria-label') === name); if (!control) throw new Error(`Missing ${name}`); control.click(); return control; };
     const select = (name: string, value: string) => { const label = [...root.querySelectorAll('label')].find(label => label.firstChild?.textContent === name); const control = label?.querySelector('select'); if (!control) throw new Error(`Missing ${name}`); control.value = value; control.dispatchEvent(new Event('change', { bubbles: true })); };
     const count = () => root.querySelector<HTMLOutputElement>('[aria-label="Unsaved change count"]')?.value;
     return { root, edit, click, select, count, close() { destroy(); root.remove(); commitProject(configuration()); teardown(); localStorage.clear(); } };
   }
-  it('keeps preview theme independent, displays current values and preserves aliases through filtering', () => {
+  it('keeps a single editable Inspector while selecting tokens and following reference chains', () => {
+    const f = fixture();
+    try {
+      const original = f.root.querySelector<HTMLInputElement>('input[data-token]');
+      expect(f.root.querySelectorAll('input[data-token]')).toHaveLength(1);
+      expect(f.root.querySelectorAll('[data-select-token]')).toHaveLength(48);
+      f.edit('color.link', '{semantic.color.primary}');
+      expect(f.root.querySelector('input[data-token]')).toBe(original);
+      expect(f.root.querySelector('[aria-label="Token dependency chain"]')?.textContent).toContain('semantic.color.primary');
+      const dependency = f.root.querySelector<HTMLButtonElement>('[data-reference="color.primary"]'); if (!dependency) throw new Error('Missing semantic dependency'); dependency.click();
+      expect(original?.dataset.token).toBe('color.primary'); expect(document.activeElement).toBe(original);
+      expect(f.count()).toBe('1 unsaved change');
+      f.edit('color.link', '{semantic.color.primary}'); expect(original?.value).toBe('{semantic.color.primary}');
+    } finally { f.close(); }
+  });
+  it('keeps canvas theme independent, displays current values and preserves aliases through filtering', () => {
     const f = fixture();
     try {
       f.edit('color.surface', '#fafafa'); f.edit('color.link', '{semantic.color.primary}');
-      f.select('Preview theme', 'dark');
+      f.select('Canvas theme', 'dark');
       expect(document.documentElement.dataset.theme).toBe('light');
       expect(f.root.querySelector('.token-editor__context')?.textContent).toContain('Editing: Light only · Preview: Dark');
       const row = f.root.querySelector('[data-token-row="color.surface"]');
-      expect(row?.querySelector('.token-editor__values')?.textContent).toContain('#0f172a');
+      expect(row?.querySelector('.token-editor__table-resolved')?.textContent).toContain('#0f172a');
       expect(f.root.querySelector('[aria-label="Token preview"]')?.getAttribute('style')).toContain('--ds-color-surface: #0f172a');
       const search = f.root.querySelector<HTMLInputElement>('input[type="search"]'); if (!search) throw new Error('Missing search');
       search.value = 'font'; search.dispatchEvent(new Event('input', { bubbles: true }));
       expect((row as HTMLElement).hidden).toBe(true);
-      f.click('Clear filters'); f.select('Preview theme', 'light');
+      f.click('Clear filters'); f.select('Canvas theme', 'light');
       expect(f.root.querySelector<HTMLInputElement>('[data-token="color.link"]')?.value).toBe('{semantic.color.primary}');
       const picker = f.root.querySelector<HTMLInputElement>('[aria-label="Choose new color for color.link"]'); if (!picker) throw new Error('Missing picker');
       picker.value = '#123456'; picker.dispatchEvent(new Event('input', { bubbles: true }));
@@ -198,7 +213,7 @@ describe('visual token workspace', () => {
       f.edit('color.surface', ''); expect(f.count()).toBe('0 unsaved changes'); expect(isDraftUnsafe()).toBe(false);
       f.edit('color.surface', '#fafafa'); f.select('Editing scope', 'dark'); f.edit('color.surface', '#101827');
       expect(f.count()).toBe('2 unsaved changes'); expect(isDraftUnsafe()).toBe(true);
-      f.select('Preview theme', 'dark'); f.click('Undo last change'); expect(f.count()).toBe('1 unsaved change');
+      f.select('Canvas theme', 'dark'); f.click('Undo last change'); expect(f.count()).toBe('1 unsaved change');
       expect(f.root.querySelector<HTMLInputElement>('[data-token="color.surface"]')?.value).toBe('');
       f.select('Editing scope', 'light'); f.click('Undo last change'); expect(f.count()).toBe('0 unsaved changes'); expect(isDraftUnsafe()).toBe(false);
       expect(f.root.querySelector<HTMLInputElement>('[data-token="color.surface"]')?.value).toBe('');
@@ -209,7 +224,7 @@ describe('visual token workspace', () => {
     try {
       f.edit('color.surface', '#fafafa'); const field = f.edit('color.surface', 'not-a-color');
       expect(field.getAttribute('aria-invalid')).toBe('true');
-      expect(f.root.querySelector('[data-token-row="color.surface"] .token-editor__values')?.textContent).toContain('Last valid: #fafafa');
+      expect(f.root.querySelector('[data-token-row="color.surface"] .token-editor__table-resolved')?.textContent).toContain('Last valid: #fafafa');
       expect(f.root.querySelector('[aria-label="Token preview"]')?.textContent).toContain('last valid preview retained');
       f.select('Category', 'font');
       expect((f.root.querySelector('[data-token-row="color.surface"]') as HTMLElement).hidden).toBe(true);

@@ -1,18 +1,19 @@
 import { expect, test, type Page } from '@playwright/test';
+import { tokenCanvas, tokenField } from './token-workspace-helpers';
 
 async function openEditor(page: Page): Promise<void> {
   await page.goto('./#design-tokens');
   await expect(page.getByRole('heading', { name: 'Design tokens', level: 1 })).toBeVisible();
-  await expect(page.getByLabel('color.surface override')).toBeVisible();
+  await tokenField(page, 'color.surface');
 }
 
-test('a hidden invalid draft still blocks commit and survives filtering', async ({ page }) => {
+test('an invalid draft outside table filters stays editable and blocks commit', async ({ page }) => {
   await openEditor(page);
   const surface = page.getByLabel('color.surface override');
   await surface.fill('#not-a-color');
   await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
   await page.getByLabel(/search tokens/i).fill('radius.card');
-  await expect(surface).toBeHidden();
+  await expect(page.locator('[data-token-row="color.surface"]')).toBeHidden(); await expect(surface).toHaveValue('#not-a-color');
   await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
   await page.getByLabel(/search tokens/i).fill('no-such-token-987');
   await expect(page.getByText(/no .*tokens|no results/i)).toBeVisible();
@@ -25,8 +26,8 @@ test('searches type, source reference and resolved value without changing the dr
   await openEditor(page);
   const search = page.getByLabel(/search tokens/i);
   await search.fill('dimension');
-  await expect(page.getByLabel('spacing.md override')).toBeVisible();
-  await expect(page.getByLabel('color.surface override')).toBeHidden();
+  await expect(page.locator('[data-token-row="spacing.md"]')).toBeVisible();
+  await expect(page.locator('[data-token-row="color.surface"]')).toBeHidden();
   await search.fill('{primitive.color.white}');
   await expect(page.getByLabel('color.surface override')).toBeVisible();
   await search.fill('#ffffff');
@@ -36,10 +37,10 @@ test('searches type, source reference and resolved value without changing the dr
   expect(await page.evaluate(() => localStorage.getItem('pwa-ds-token-overrides-v1'))).toBeNull();
 });
 
-test('preview theme is local and editing scope survives global theme changes', async ({ page }) => {
+test('canvas theme is local and editing scope survives global theme changes', async ({ page }) => {
   await openEditor(page);
   const scope = page.getByLabel(/editing scope/i);
-  const previewTheme = page.getByLabel(/preview theme/i);
+  const previewTheme = page.getByLabel(/canvas theme/i);
   await scope.selectOption('light');
   await page.getByLabel('color.surface override').fill('#fafafa');
   const before = await page.evaluate(() => ({ dataset: { ...document.documentElement.dataset }, style: document.documentElement.getAttribute('style'), saved: localStorage.getItem('pwa-ds-token-overrides-v1'), theme: localStorage.getItem('pwa-ds-theme') }));
@@ -58,8 +59,8 @@ test('an alias survives filters and theme changes until the picker explicitly ch
   const surface = page.getByLabel('color.surface override');
   await surface.fill('{primitive.color.white}');
   await page.getByLabel(/search tokens/i).fill('color.surface');
-  await page.getByLabel(/preview theme/i).selectOption('dark');
-  await page.getByLabel(/preview theme/i).selectOption('light');
+  await page.getByLabel(/canvas theme/i).selectOption('dark');
+  await page.getByLabel(/canvas theme/i).selectOption('light');
   await expect(surface).toHaveValue('{primitive.color.white}');
   await page.getByText('Import, export & reset', { exact: true }).click();
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export JSON' }).click()]);
@@ -114,11 +115,11 @@ test('diffs span scopes and modified-only includes a pending removal', async ({ 
   await page.getByLabel(/modified only/i).check();
   await expect(page.locator('[data-token-row="color.surface"]')).toBeVisible();
   await scope.selectOption('global');
-  await page.getByLabel('spacing.md override').fill('2rem');
+  await (await tokenField(page, 'spacing.md')).fill('2rem');
   await expect(count).toContainText('2');
   await page.getByLabel(/modified only/i).uncheck();
   await scope.selectOption('dark');
-  await page.getByLabel('radius.card override').fill('2rem');
+  await (await tokenField(page, 'radius.card')).fill('2rem');
   await expect(count).toContainText('3');
   await page.getByText(/review changes\s*\(3\)/i).click();
   const review = page.locator('details').filter({ has: page.getByText('Review changes (3)', { exact: true }) });
@@ -133,7 +134,7 @@ test('diffs span scopes and modified-only includes a pending removal', async ({ 
 
 test('preview controls keep node identity, focus and state when a token changes', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 }); await openEditor(page);
-  const preview = page.getByLabel('Token preview');
+  await tokenCanvas(page, 'Preview'); const preview = page.getByLabel('Token preview');
   const sort = preview.getByRole('button', { name: 'Sort by Item' });
   await sort.click(); await expect(preview.getByRole('columnheader', { name: /item/i })).toHaveAttribute('aria-sort', 'ascending');
   await sort.focus();
@@ -171,20 +172,20 @@ test('undo cancels a pending import and late completion cannot restore its draft
 test('mobile view switching and breakpoint resize preserve edits without document overflow', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 }); await openEditor(page);
   await page.getByLabel('color.surface override').fill('#fafafa');
-  await page.getByRole('button', { name: /^preview$/i }).click();
+  await tokenCanvas(page, 'Preview');
   await expect(page.getByLabel('Token preview')).toBeVisible();
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   await page.setViewportSize({ width: 900, height: 844 });
   await expect(page.getByLabel('color.surface override')).toHaveValue('#fafafa');
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole('button', { name: /^editor$/i }).click();
+  await tokenField(page, 'color.surface');
   await expect(page.getByLabel('color.surface override')).toHaveValue('#fafafa');
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 });
 
 test('narrowing from desktop keeps the focused editor field visible', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 }); await openEditor(page);
-  await page.getByRole('button', { name: /^preview$/i }).click();
+  await tokenCanvas(page, 'Preview');
   await expect(page.getByLabel('Token preview')).toBeVisible();
   await page.setViewportSize({ width: 1000, height: 844 });
   const field = page.getByLabel('color.surface override');
@@ -198,7 +199,7 @@ test('narrowing from desktop keeps the focused preview control visible', async (
   await page.setViewportSize({ width: 390, height: 844 }); await openEditor(page);
   await page.setViewportSize({ width: 1000, height: 844 });
   const preview = page.getByLabel('Token preview');
-  const control = preview.getByRole('button', { name: 'Preview action' });
+  await tokenCanvas(page, 'Preview'); const control = preview.getByRole('button', { name: 'Preview action' });
   await expect(control).toBeVisible(); await control.focus(); await expect(control).toBeFocused();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(preview).toBeVisible(); await expect(control).toBeFocused();

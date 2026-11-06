@@ -217,6 +217,27 @@ for (const modal of [false, true]) {
   });
 }
 
+test('a queued native dialog close does not dismiss a menu after the dialog reopens', async ({ page }) => {
+  await useStandaloneStyles(page);
+  const result = await page.evaluate(async path => {
+    const { createMenu } = await import(/* @vite-ignore */ path);
+    const dialog = document.createElement('dialog'); dialog.id = 'reopened-menu-dialog'; document.body.append(dialog);
+    const component = createMenu({ label: 'Reopened actions', items: [{ label: 'Run', onSelect() {} }] }); dialog.append(component.element); dialog.showModal();
+    const trigger = component.element.querySelector('button'); const menu = component.element.querySelector('[role="menu"]');
+    if (!(trigger instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) throw new Error('Missing standalone menu');
+    // Keep closing and reopening in one task so the browser delivers the old native close afterwards.
+    const closed = new Promise<void>(resolve => dialog.addEventListener('close', () => { requestAnimationFrame(() => resolve()); }, { once: true }));
+    dialog.close(); dialog.showModal(); trigger.focus(); trigger.click();
+    const immediatelyOpen = !menu.hidden;
+    await closed; return { immediatelyOpen, dialogOpen: dialog.open, remainsOpen: !menu.hidden };
+  }, navPath);
+  expect(result).toEqual({ immediatelyOpen: true, dialogOpen: true, remainsOpen: true });
+  const trigger = page.getByRole('button', { name: 'Reopened actions', exact: true, includeHidden: true });
+  await expect(page.getByRole('menu')).toBeVisible(); await expect(page.getByRole('menuitem', { name: 'Run', exact: true })).toBeFocused();
+  await page.locator('#reopened-menu-dialog').evaluate(element => { if (!(element instanceof HTMLDialogElement)) throw new Error('Missing containing dialog'); element.close(); });
+  await expect(page.getByRole('menu')).toBeHidden(); await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+});
+
 test('destroy closes an open menu and removes its interactions', async ({ page }) => {
   await useStandaloneStyles(page);
   await page.evaluate(async path => {
