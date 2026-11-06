@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:18804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/e2e/token-workspace-layout.spec.ts:73:33 › draft feedback keeps the active Inspector input visible at 320px (1.2s)
+
+  1 passed (1.9s)

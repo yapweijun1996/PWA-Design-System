@@ -1,0 +1,212 @@
+{
+  "sourceSHA": "48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76",
+  "runtime": "1170b641fcdfe7977a19",
+  "recordedAt": "2026-11-06T10:11:02.000080+00:00",
+  "tester": "Root AI operating native Safari via CUA; no human signoff",
+  "os": "macOS27.0.1",
+  "browser": "Actual Safari27.0.1 (22625.1.29.11.28)",
+  "mode": "Fresh QA-only private window; initial Start Page restored after own private window closed",
+  "initialMetadata": {
+    "at": "2026-11-06T09:53:43.526Z",
+    "build": "1170b641fcdfe7977a19",
+    "innerWidth": 1324,
+    "innerHeight": 320,
+    "dpr": 2,
+    "cssZoom": "1",
+    "transform": "none",
+    "overflow": false,
+    "mode": "wide"
+  },
+  "interactiveViewport": {
+    "width": 1324,
+    "height": 820,
+    "dpr": 2,
+    "source": "QA observer resize/click/input events while Inspector closed"
+  },
+  "finalMetadata": {
+    "at": "2026-11-06T10:08:05.016Z",
+    "build": "1170b641fcdfe7977a19",
+    "width": 1324,
+    "height": 320,
+    "dpr": 2,
+    "overflow": false,
+    "saved": "#f9fafb",
+    "value": "#f9fafb"
+  },
+  "checks": [
+    {
+      "id": "SA-route-overview",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 A shared foundation for better interfaces. observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-foundations",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Foundations observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-components",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Components observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-design-tokens",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Design tokens observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-layout-playground",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Layout Playground observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-theme-builder",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Theme Builder observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-accessibility-lab",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Accessibility Lab observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-ai-agent-rules",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 AI Agent Rules observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-documentation",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Documentation observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-route-settings",
+      "result": "PASS",
+      "steps": "Native sidebar link, then fresh AX state",
+      "observed": "H1 Settings observed; route headings receive focus after native navigation where recorded."
+    },
+    {
+      "id": "SA-label-preview-code",
+      "result": "PASS",
+      "steps": "Native edit Button Label; inspect Preview then Code",
+      "observed": "Safari verified appears on live Button and generated createButton label."
+    },
+    {
+      "id": "SA-variant-code",
+      "result": "PASS",
+      "steps": "Native Variant popup Primary \u2192 Secondary",
+      "observed": "Inspector Secondary and generated variant secondary agree."
+    },
+    {
+      "id": "SA-component-search",
+      "result": "PASS",
+      "steps": "Native search Dialog, then Menu",
+      "observed": "Each produces 1 of 21 matching catalog entries; native paste used for exact Menu query after typing/timing interruption."
+    },
+    {
+      "id": "SA-dialog-tab-escape",
+      "result": "PASS",
+      "steps": "Select Dialog, Open dialog, Tab, Escape",
+      "observed": "Screenshot shows Example dialog and visible focus on Close after Tab; Escape restores focused Open dialog. Native AX provider omitted page subtree while modal open, so no screen-reader semantics claim."
+    },
+    {
+      "id": "SA-menu-keyboard-escape",
+      "result": "PASS",
+      "steps": "Select Menu; open Actions; Down; Escape",
+      "observed": "Native menu focus moves to Unavailable item; Escape restores Actions. Native AX marks the item disabled; activation was not exercised."
+    },
+    {
+      "id": "SA-invalid-draft",
+      "result": "PASS",
+      "steps": "Paste missing primitive alias",
+      "observed": "Commit disabled; Draft validation says Missing reference and previous preview retained; field remains focused."
+    },
+    {
+      "id": "SA-undo",
+      "result": "PASS",
+      "steps": "Undo the single pasted invalid edit",
+      "observed": "Override becomes empty; 0 unsaved changes; Undo disabled; Commit enabled."
+    },
+    {
+      "id": "SA-cancel",
+      "result": "PASS",
+      "steps": "Paste valid #fafafa then Cancel draft",
+      "observed": "Valid draft reports 1 unsaved change; Cancel returns empty inherited override and 0 changes."
+    },
+    {
+      "id": "SA-commit-reload",
+      "result": "PASS",
+      "steps": "Paste #fafafa; Commit; real native reload",
+      "observed": "Token overrides committed and saved message; override #fafafa survives reload."
+    },
+    {
+      "id": "SA-reject-prototype-import",
+      "result": "PASS",
+      "steps": "Native Choose Files to Upload selects only /tmp synthetic invalid.json",
+      "observed": "Import rejected: Forbidden JSON key. Existing draft and committed tokens are unchanged; saved #fafafa and 0 unsaved changes remain visible."
+    },
+    {
+      "id": "SA-valid-staged-import",
+      "result": "PASS",
+      "steps": "Native file picker selects synthetic valid.json",
+      "observed": "Imported configuration previewed. Commit to save; #f9fafb draft and 1 unsaved change."
+    },
+    {
+      "id": "SA-import-transaction-boundary",
+      "result": "PASS",
+      "steps": "Read-only native Web Inspector Console queries saved storage and actual input",
+      "observed": "saved #fafafa, draft #f9fafb; build1170b641fcdfe7977a19; actual1324x320."
+    },
+    {
+      "id": "SA-import-commit-reload",
+      "result": "PASS",
+      "steps": "Native Commit then real reload",
+      "observed": "0 changes and saved confirmation; actual override #f9fafb after reload. Final read-only Console reports saved and input both #f9fafb."
+    },
+    {
+      "id": "SA-route-error-observer",
+      "result": "PASS",
+      "steps": "Read-only error/unhandledrejection listeners after corrected QA observer setup",
+      "observed": "From2026-11-06T09:55:46.150Z through summary2026-11-06T10:01:52.398Z, errors[] and all10routes observed; unique viewport1324x820 DPR2, laterInspector1324x320; no document overflow in recorded events."
+    },
+    {
+      "id": "SA-native-network-har",
+      "result": "PASS",
+      "steps": "Existing Network Inspector active across final real reload; native HAR Export",
+      "observed": "10 resources all status200, only public project origin; service-worker/memory responses included, not all remote network transfers. HAR covers final reload, not original10route startup requests."
+    }
+  ],
+  "nativeConsoleObserved": "No application error observed in retained native Console snapshots after the inspected reloads; full unfiltered browser-process logging is NOT VERIFIED. Initial QA Console observer expression had SyntaxError from quoting; corrected before observational error window. This is not an application error. Console history resets on reload/Inspector closure; scopes above are explicit.",
+  "network": {
+    "entries": 10,
+    "statuses": {
+      "200": 10
+    },
+    "firstEntry": "2026-11-06T10:06:42.968Z",
+    "cookies": 0,
+    "authenticationHeaders": [],
+    "file": "safari-final.har"
+  },
+  "retainedHarnessIssues": [
+    "First read-only observer expression failed with SyntaxError: Unexpected identifier Unsaved; corrected quotes and confirmed actual result before use.",
+    "Native typing/timing temporarily changed the search query and stale AX target; fresh AX state plus native paste used before selecting Menu.",
+    "File-chooser Go To Folder shortcut/paste initially did not set intended path; fresh native PathTextField setValue verified exact synthetic path before Upload. No unrelated file uploaded."
+  ],
+  "limits": [
+    "Actual Safari primary desktop flows only; private-window storage is isolated and session-scoped, not proof of long-term normal-profile durability.",
+    "Native Safari install/standalone, physical device behavior, full accessibility interpretation, exhaustive zoom/theme/density matrix and full browser-process console/network remain NOT VERIFIED.",
+    "Console observers do not replace human VoiceOver/NVDA.",
+    "HAR covers final inspected reload only; several responses served by service worker or memory cache.",
+    "Safari component export Copy code/JSON/CSS download and offline/update not separately exercised in this round."
+  ],
+  "cleanup": "Only QA-owned private window closed; original non-private Start Page observed restored. Remote Automation/Apple Events permissions, personal profile and security settings not changed."
+}

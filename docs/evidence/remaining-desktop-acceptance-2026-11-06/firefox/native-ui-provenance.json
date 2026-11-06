@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-11-06T10:30:40.378127+00:00",
+  "mechanism": "Native CUA Firefox159.0.1 app menu and Command+plus/0; no CSS/font/page-scale/DPR injection",
+  "observedNativeIndicators": [
+    {
+      "value": "200%",
+      "mode": "page zoom",
+      "evidence": "zoom200.json"
+    },
+    {
+      "value": "400%",
+      "mode": "page zoom",
+      "evidence": "zoom400.json"
+    },
+    {
+      "value": "200%",
+      "mode": "Zoom Text Only selected through View\u2192Zoom native menu",
+      "evidence": "text200.json and text200-fixed.json"
+    }
+  ],
+  "nativeMenuCheckmark": "Not exposed by CUA AX; menu screenshot unavailable. Mode established by actual command selection and body16\u219232/heading32\u219264 with unchanged1440\u00d7787/DPR2.",
+  "candidateNativeIndicator": "Actual200%, Reset zoom level observed for http://127.0.0.1:4195/PWA-Design-System/ before fixed14-flow rerun",
+  "restored": "Zoom Text Only toggled off; Cmd+0 on both origins; final indicator absent. candidate-restored100.json + hosted-restored100.json show font16/DPR2/1440\u00d7787.",
+  "sessionsClosed": true,
+  "finalCandidate": {
+    "runtime": "5e5a75b079fb8b2648f2",
+    "source": "final-candidate/source-context.json",
+    "nativeIndicator": "Actual200%, Reset zoom level observed on local candidate after native Zoom Text Only selection, fresh synthetic profile",
+    "fontAndGeometry": "Actual16\u219232px body,32\u219264px heading, unchanged1440\u00d7787/DPR2; final-candidate/text200-final.json",
+    "result": "14/14 primary flows +2/2 explicit occlusion/legibility regressions",
+    "CQ": "Actual compiled14em query; grid234px single column; values nooverflow",
+    "restored": "Native Cmd+0 + Zoom Text Only toggled off, indicator absent; final-candidate/restored100.json font16/DPR2/1440\u00d7787",
+    "sessionClosed": true
+  }
+}

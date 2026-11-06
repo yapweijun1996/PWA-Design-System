@@ -1,0 +1,64 @@
+
+Running 22 tests using 1 worker
+
+(node:18048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/e2e/studio-shell.spec.ts:4:1 › mobile shell and representative routes pass whole-page accessibility checks (2.2s)
+  ✓   2 tests/e2e/studio-shell.spec.ts:16:3 › Studio sidebar navigation works at 768px (596ms)
+  ✓   3 tests/e2e/studio-shell.spec.ts:16:3 › Studio sidebar navigation works at 1440px (627ms)
+  ✓   4 tests/e2e/studio-shell.spec.ts:33:1 › Theme select keeps a 44px target and works with the keyboard at mobile and desktop widths (692ms)
+  ✓   5 tests/e2e/studio-shell.spec.ts:50:1 › hash links, back navigation, old links and unknown pages resolve under the Pages subpath (678ms)
+  ✓   6 tests/e2e/studio-shell.spec.ts:62:1 › desktop sidebar collapses accessibly without changing tablet or mobile navigation (1.2s)
+  ✓   7 tests/e2e/studio-shell.spec.ts:91:1 › mobile drawer traps focus, scrolls and restores focus on close, Escape and backdrop (1.7s)
+  ✓   8 tests/e2e/studio-shell.spec.ts:140:1 › theme survives reload and storage failure is announced (868ms)
+  ✓   9 tests/e2e/studio-shell.spec.ts:152:1 › skip and route navigation focus a compact heading without outlining the workspace (607ms)
+  ✓  10 tests/e2e/studio-shell.spec.ts:167:1 › system chrome follows resolved theme and committed surfaces without broad preview restyling (519ms)
+  ✓  11 tests/e2e/studio-shell.spec.ts:178:1 › long documentation scroll reveals contextual top action and preserves keyboard/reduced-motion navigation (806ms)
+  ✓  12 tests/e2e/token-workspace-layout.spec.ts:13:1 › enlarged text editing stays above floating navigation and recovers after focus leaves (1.1s)
+  ✓  13 tests/e2e/token-workspace-layout.spec.ts:36:1 › enlarged Inspector values keep short colors and recovery text readable (728ms)
+  ✓  14 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 320px (3.1s)
+  ✓  15 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 390px (3.0s)
+  ✓  16 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 768px (2.7s)
+  ✓  17 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 1440px (2.8s)
+  ✓  18 tests/e2e/token-workspace-layout.spec.ts:50:50 › selected-token workspace remains usable at 1920px (2.8s)
+  ✘  19 tests/e2e/token-workspace-layout.spec.ts:73:33 › draft feedback keeps the active Inspector input visible at 320px (1.3s)
+(node:18217) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  20 tests/e2e/token-workspace-layout.spec.ts:73:33 › draft feedback keeps the active Inspector input visible at 390px (1.5s)
+  ✓  21 tests/e2e/token-workspace-layout.spec.ts:87:1 › tablet token values stay readable inside the deliberate horizontal table scroller (742ms)
+  ✓  22 tests/e2e/token-workspace-layout.spec.ts:102:1 › short-window Token table header stays behind the Studio app bar (664ms)
+
+
+  1) tests/e2e/token-workspace-layout.spec.ts:73:33 › draft feedback keeps the active Inspector input visible at 320px
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      81 |   await page.getByRole('combobox', { name: 'Editing scope', exact: true }).selectOption('dark'); await expect(field).toHaveValue(''); await page.getByRole('combobox', { name: 'Editing scope', exact: true }).selectOption('light'); await expect(field).toHaveValue('#fafafa'); await field.focus(); await assertVisibleGeometry();
+      82 |   await page.setViewportSize({ width: 1440, height: 844 }); await page.setViewportSize({ width, height: 844 }); await assertVisibleGeometry();
+    > 83 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+         |                                                                                         ^
+      84 | });
+      85 |
+      86 |
+        at /private/tmp/pwa-final-acceptance/fix/tests/e2e/token-workspace-layout.spec.ts:83:89
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/token-workspace-layout-dra-c4343-ctor-input-visible-at-320px/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/token-workspace-layout-dra-c4343-ctor-input-visible-at-320px/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/token-workspace-layout-dra-c4343-ctor-input-visible-at-320px/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/token-workspace-layout-dra-c4343-ctor-input-visible-at-320px/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/e2e/token-workspace-layout.spec.ts:73:33 › draft feedback keeps the active Inspector input visible at 320px
+  21 passed (33.1s)

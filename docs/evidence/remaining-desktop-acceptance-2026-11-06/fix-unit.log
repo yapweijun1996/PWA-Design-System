@@ -1,0 +1,12 @@
+
+> pwa-design-system@0.1.0 test
+> vitest run --exclude 'tests/e2e/**' --exclude 'tests/pwa/**' --exclude 'tests/visual/**' --exclude 'examples/react/**' --maxWorkers=1
+
+
+ RUN  v4.1.12 /private/tmp/pwa-final-acceptance/fix
+
+
+ Test Files  23 passed (23)
+      Tests  161 passed (161)
+   Start at  18:32:11
+   Duration  32.65s (transform 859ms, setup 0ms, import 2.01s, tests 22.75s, environment 4.79s)

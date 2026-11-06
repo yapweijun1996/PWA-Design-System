@@ -1,8 +1,14 @@
 # Studio workspace redesign and PWA Standard alignment
 
-Status: Authorized engineering delivery completed and product deployment verified. Physical/manual acceptance remains partly NOT VERIFIED; the full production-release definition of done is not claimed. The latest user request authorizes KB auto-manager implementation and the supplied workspace review.
+Status: The earlier authorized engineering delivery was deployed and verified. The current text-enlargement fix is locally/native verified; independent review and normal CI are pending. Physical/manual acceptance remains partly NOT VERIFIED; the full production-release definition of done is not claimed. The latest user request authorizes KB auto-manager implementation and the supplied workspace review.
 Recorded: 6 November 2026.
 Inspected baseline: `4b1b74566c5f05b2564c7cfa4e7a65ddd6994fe0`.
+
+## Current follow-up verification
+
+The pre-fix source `48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76` / runtime `1170b641fcdfe7977a19` reproduced a P1 text-enlargement regression: Back to top overlapped the focused Token input by 8,104 CSS px². The integrated fix `fe1f675` was rebuilt as final candidate runtime `5e5a75b079fb8b2648f2`. Actual stable Firefox 159.0.1 native Zoom Text Only at 200% passed 14 primary-flow checks and two explicit regressions: overlap is zero, Back to top is hidden while the editor has focus, the input is the topmost hit target, and enlarged Token values fit a single 234px column. Measured viewport is 1440×787 CSS px, DPR 2; body text grows 16→32px and heading 32→64px with CSS zoom 1 and no transform. Native settings were restored to 100% / Zoom Text Only off, and the QA-owned profile was closed.
+
+PWA-07-H1/H2/H6 now pass their defined bounded desktop cases: the previously recorded native page-zoom 200%/400% primary flows plus seven overlay/Cancel checks at each zoom, and the final-candidate text-enlargement retest. The original P1 is corrected and locally/native retested; independent review and normal CI are still pending, so this candidate is not yet claimed as released. See [remaining desktop acceptance](docs/REMAINING-DESKTOP-ACCEPTANCE-2026-11-06.md) for source/build bindings, failed baseline, fixes and retests. No complete cross-browser/state certification is implied.
 
 ## Goal and scope
 
@@ -33,7 +39,7 @@ Execution order: shared layout contract; Token and Component interaction changes
 - Final Pages run [42180666846](https://github.com/yapweijun1996/PWA-Design-System/actions/runs/42180666846) serves build `1170b641fcdfe7977a19`. All 30 files match its CI artifact and all 29 precache digests match. Actual old 652→A→B draft/other-tab/activation/reload guards, committed configuration preservation and offline reload/Code passed.
 - [Architecture/workflow guide](docs/UNIFIED-STUDIO-WORKSPACE.md), [independent review](docs/UNIFIED-STUDIO-REVIEW-2026-11-06.md), [PWA exceptions](docs/PWA-STANDARD-EXCEPTIONS.md) and [full delivery report](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md) record evidence, recovery and limitations.
 
-A checked engineering item means its implementation is present with the stated verification. Physical installation, OS chrome/virtual keyboard, actual 400% zoom, manual assistive technology and independent human visual acceptance remain open. No complete PWA or WCAG conformance claim is made.
+A checked engineering item means its implementation is present with the stated verification. Physical installation, OS chrome/virtual keyboard, manual assistive technology and independent human visual acceptance remain open. Current bounded native 200%/400% zoom and browser text-enlargement results are recorded separately above. No complete PWA or WCAG conformance claim is made.
 
 ## Existing behavior to preserve
 
@@ -152,14 +158,14 @@ Priority: P1 for release evidence. Status: NOT VERIFIED; missing evidence is not
 - [ ] Actual Android: installation, standalone launch, theme, touch and offline/update behavior.
   - [ ] PWA-07-A1: Actual Android Chrome browser and installed cold/warm launch, themes, touch, keyboard and rotation (cases D1–D3).
   - [ ] PWA-07-A2: Actual Android installed offline relaunch and controlled N→N+1, including draft/import/other-tab guards and retained committed configuration (cases D4–D5).
-- [ ] Real Safari and supported stable browser compatibility; keep WebKit and Firefox Nightly evidence labeled separately.
+- [x] Real Safari and supported stable browser compatibility; keep WebKit and Firefox Nightly evidence labeled separately.
   - [x] PWA-07-B1: Stable Chrome desktop primary flows with per-tab source/runtime identity and measured CSS viewport (case B1).
-  - [ ] PWA-07-B2: Actual native Safari desktop flows, bounded console/network observation and per-tab runtime/viewport evidence; historical UI smoke is insufficient (case B1).
-  - [ ] PWA-07-B3: Supported stable Firefox desktop flows, with exact version/channel; Nightly is supplementary and cannot close this subcase (case B1).
+  - [x] PWA-07-B2: Actual native Safari desktop flows, bounded console/network observation and per-tab runtime/viewport evidence; historical UI smoke is insufficient (case B1).
+  - [x] PWA-07-B3: Supported stable Firefox desktop flows, with exact version/channel; Nightly is supplementary and cannot close this subcase (case B1).
 - [ ] VoiceOver/NVDA task interpretation, actual 200%/400% zoom, text enlargement and independent human visual approval.
-  - [ ] PWA-07-H1: Native browser 200% zoom primary flows, actual CSS viewport and source/runtime identity (case Z1).
-  - [ ] PWA-07-H2: Native browser 400% zoom primary flows with the same identity/geometry evidence; a 320px emulation alone does not close this (case Z1).
-  - [ ] PWA-07-H6: Actual OS/browser text enlargement primary flows with recorded settings and restored starting values (case Z1); native page zoom does not close this subcase.
+  - [x] PWA-07-H1: Native browser 200% zoom primary flows, actual CSS viewport and source/runtime identity (case Z1).
+  - [x] PWA-07-H2: Native browser 400% zoom primary flows with the same identity/geometry evidence; a 320px emulation alone does not close this (case Z1).
+  - [x] PWA-07-H6: Actual OS/browser text enlargement primary flows with recorded settings and restored starting values (case Z1); native page zoom does not close this subcase.
   - [ ] PWA-07-H3: Human-operated VoiceOver task interpretation and findings/retest (case H1).
   - [ ] PWA-07-H4: Human-operated NVDA task interpretation and findings/retest (case H1).
   - [ ] PWA-07-H5: Independent human visual decision across main tasks, themes and densities (case H2). AI review is separate evidence, not this approval.
@@ -168,7 +174,11 @@ Priority: P1 for release evidence. Status: NOT VERIFIED; missing evidence is not
   - [ ] PWA-07-E2: Attach executed physical-device records for each required platform and browser/installed mode.
   - [ ] PWA-07-E3: Attach actual human assistive-technology and visual decisions plus unresolved findings and retests. A prepared template does not close an execution record.
 
+Historical desktop-acceptance snapshot (its missing-case statements are superseded only by the explicitly scoped follow-up above):
+
 Supplemental actual desktop Safari 27.0.1 native checks verified narrow/wide panels, property→preview→code parity,200% reflow, invalid token blocking and Cancel restoration, without enabling Remote Automation. Zoom was restored to 100%; the task tab was closed. Per-tab build identity and exact viewport were not captured, so this is bounded smoke evidence rather than complete Safari acceptance. Current stable Firefox native200%/400% focused flows subsequently passed within the bounded scope in [desktop acceptance](docs/DESKTOP-ACCEPTANCE-2026-11-06.md). Native200 overlays, full zoom cross-product and text enlargement remain NOT VERIFIED; do not close the compound zoom/manual parent.
+
+The gap-closing desktop browser observations on source `48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76`, runtime `1170b641fcdfe7977a19`, complete the defined primary-flow browser subcases: actual native Safari 27.0.1 recorded 25 primary-flow checks with per-tab build/viewport, transactional import/reload and bounded Console/HAR observation; stable Firefox 159.0.1 adds 16/16 import/export/transaction checks with BiDi observation to the earlier runtime-identical desktop checks. See [remaining desktop acceptance](docs/REMAINING-DESKTOP-ACCEPTANCE-2026-11-06.md). Safari's private-session storage result is not long-term normal-profile persistence, and its final-reload HAR is not full-process network coverage. These scoped desktop passes do not close installation, physical-device or human acceptance.
 
 Use [the existing manual checklist](docs/RELEASE-ACCEPTANCE.md). Owner/device access may be required; do not enable browser automation permissions automatically. Field Core Web Vitals remain a separate evidence task if production field-performance claims are intended; no telemetry backend is authorized here.
 
@@ -194,14 +204,14 @@ Priority: P1. Dependency: Approved implementation of the preceding in-scope task
 | PWA-04 | PASS: Documentation hide/reveal with focus/reduced-motion/system-notice handling | Always-sticky editing routes are justified DEFAULT exceptions |
 | PWA-05 | PASS: contextual document Back to top with safe areas/focus; local scrollers remain independent | N/A for short utilities and local Explorer/code scrolling |
 | PWA-06 | PASS: local startup/offline/update/error feedback and useful cached tools | navigator.onLine is only a browser hint; no first-visit offline or service-availability claim |
-| PWA-07 | PARTIAL: actual Safari 27.0.1 native UI and 200% zoom smoke passed, plus Chrome157 and WebKit27.2 evidence | Physical iOS/Android, Safari full-suite/console/offline/install, actual 400% zoom, manual screen reader and human visual approval remain NOT VERIFIED |
+| PWA-07 | PASS for the defined bounded desktop browser, native 200%/400% zoom and browser text-enlargement subcases; final candidate runtime `5e5a75b079fb8b2648f2` fixes and retests the text-enlargement P1 | Physical iOS/Android, installation, human VoiceOver/NVDA and independent human visual approval remain NOT VERIFIED; independent AI review passed within recorded scope; release CI/deployment provenance is reported separately |
 | PWA-08 | PASS for engineering regression/security review, reviewed strict visual baselines, documentation and product release provenance | Full conformance remains conditional on the manual evidence above |
 
-Final engineering evidence: [Unified Studio delivery](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md). Current acceptance execution: [Desktop acceptance](docs/DESKTOP-ACCEPTANCE-2026-11-06.md). The unchecked physical/manual subitems are deliberately retained. A passing engineering release does not certify every PWA Standard or WCAG requirement.
+Final engineering evidence: [Unified Studio delivery](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md). Current acceptance execution: [Desktop acceptance](docs/DESKTOP-ACCEPTANCE-2026-11-06.md) and [remaining desktop follow-up](docs/REMAINING-DESKTOP-ACCEPTANCE-2026-11-06.md). The unchecked physical/manual subitems are deliberately retained. A passing engineering release does not certify every PWA Standard or WCAG requirement.
 
 ## Current acceptance execution order
 
-This round starts from merge `40459855467830a988cb6bcf148e7ae4af21c8ce`. The preceding 324-case result belongs to its recorded historical product source; it is not a new result for this round. Use the [current-version matrix and execution packet](docs/RELEASE-ACCEPTANCE.md#current-version-acceptance-matrix) for case status and evidence. Parent checkboxes above remain unchecked until all required subcases pass.
+The first acceptance round started from merge `40459855467830a988cb6bcf148e7ae4af21c8ce`; the remaining-desktop follow-up starts from `48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76` with baseline runtime `1170b641fcdfe7977a19`, followed by corrected candidate `fe1f675` / runtime `5e5a75b079fb8b2648f2`. The preceding 324-case result belongs to its recorded historical product source; it is not a new result for this round. Use the [current-version matrix and execution packet](docs/RELEASE-ACCEPTANCE.md#current-version-acceptance-matrix) for case status and evidence. Parent checkboxes above remain unchecked until all required subcases pass. **task.md is not fully complete:** actual iPhone/iPad/Android access, human VoiceOver/NVDA interpretation and independent human visual approval are missing prerequisites, not confirmed code failures; the engineering release does not waive this definition of done.
 
 1. Identify source/runtime build and browser environment; run available desktop primary flows, actual browser zoom, keyboard and automated accessibility checks. Fix only reproduced in-scope failures, then retest.
 2. Obtain an independent AI review against actual code/browser evidence and record its tester kind. It cannot replace H1/H2 human approval.

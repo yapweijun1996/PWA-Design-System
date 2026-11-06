@@ -1,0 +1,19 @@
+{
+  "Version": "159.0.1",
+  "BuildID": "20261102144711",
+  "SourceRepository": "https://hg.mozilla.org/releases/mozilla-release",
+  "SourceStamp": "7b34a03a910d0385299f4a9f27aa585a786862d8",
+  "installerSHA256": "0c214da4439c1eb4cea28a3c141ff112d511aa32c67f9d12e91116569c8d8dda",
+  "binarySHA256": "3d3cf77b6e1e545ec9595a3122a53f498f1a3945ee290008c49cb3c41785a37b",
+  "gatekeeper": "/tmp/pwa-final-acceptance/firefox/Firefox.app: accepted\nsource=Notarized Developer ID",
+  "geckodriver": "geckodriver 0.37.1",
+  "officialDownload": "https://archive.mozilla.org/pub/firefox/releases/159.0.1/mac/en-US/Firefox%20159.0.1.dmg",
+  "technicalSources": [
+    "https://developer.mozilla.org/en-US/docs/Web/WebDriver/How_to/Create_BiDi_connection",
+    "https://developer.mozilla.org/en-US/docs/Web/WebDriver/Reference/Capabilities/webSocketUrl",
+    "https://www.w3.org/TR/2026/WD-webdriver-bidi-20261103/",
+    "https://support.mozilla.org/en-US/kb/font-size-and-zoom-increase-size-of-web-pages"
+  ],
+  "nodeVersion": "v24.21.0",
+  "webSocketClient": "Native global WebSocket; no npm dependency installed"
+}

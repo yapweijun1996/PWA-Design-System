@@ -1,0 +1,17 @@
+{
+  "bodyFont": "16px",
+  "cssZoom": "1",
+  "density": "comfortable",
+  "dpr": 2,
+  "headingFont": "32px",
+  "headingHeight": 38,
+  "innerHeight": 787,
+  "innerWidth": 1440,
+  "outerHeight": 872,
+  "outerWidth": 1440,
+  "runtime": "5e5a75b079fb8b2648f2",
+  "scrollWidth": 1440,
+  "theme": "light",
+  "transform": "none",
+  "url": "http://127.0.0.1:4195/PWA-Design-System/#design-tokens"
+}

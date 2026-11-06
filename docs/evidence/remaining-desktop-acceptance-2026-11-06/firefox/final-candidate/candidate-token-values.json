@@ -1,0 +1,70 @@
+{
+  "containerRules": [
+    "@container token-inspector (width < 14em) {\n  .token-editor__values { grid-template-columns: minmax(0px, 1fr); }\n  .token-editor__values dd { flex-wrap: wrap; }\n}"
+  ],
+  "font": "28px",
+  "grid": "234px",
+  "rects": [
+    {
+      "clientWidth": 234,
+      "rect": {
+        "bottom": 400.5,
+        "height": 33.5,
+        "left": 1141,
+        "right": 1375,
+        "top": 367,
+        "width": 234,
+        "x": 1141,
+        "y": 367
+      },
+      "scrollWidth": 234,
+      "text": "Default"
+    },
+    {
+      "clientWidth": 234,
+      "rect": {
+        "bottom": 441.5,
+        "height": 33,
+        "left": 1141,
+        "right": 1375,
+        "top": 408.5,
+        "width": 234,
+        "x": 1141,
+        "y": 408.5
+      },
+      "scrollWidth": 234,
+      "text": "#ffffff"
+    },
+    {
+      "clientWidth": 234,
+      "rect": {
+        "bottom": 483,
+        "height": 33.5,
+        "left": 1141,
+        "right": 1375,
+        "top": 449.5,
+        "width": 234,
+        "x": 1141,
+        "y": 449.5
+      },
+      "scrollWidth": 234,
+      "text": "Resolved"
+    },
+    {
+      "clientWidth": 234,
+      "rect": {
+        "bottom": 599,
+        "height": 108,
+        "left": 1141,
+        "right": 1375,
+        "top": 491,
+        "width": 234,
+        "x": 1141,
+        "y": 491
+      },
+      "scrollWidth": 234,
+      "text": "Last valid: #f9f9f9"
+    }
+  ],
+  "width": 234
+}

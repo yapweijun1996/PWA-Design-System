@@ -1,0 +1,432 @@
+{
+  "started": "2026-11-06T09:58:32.761Z",
+  "sourceSHA": "48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76",
+  "runtimeExpected": "1170b641fcdfe7977a19",
+  "checks": [
+    {
+      "id": "FF-BIDI-IDENTITY",
+      "pass": true,
+      "evidence": {
+        "bodyFont": "16px",
+        "density": "comfortable",
+        "dpr": 1,
+        "innerHeight": 915,
+        "innerWidth": 1440,
+        "outerHeight": 1000,
+        "outerWidth": 1440,
+        "runtime": "1170b641fcdfe7977a19",
+        "scrollWidth": 1440,
+        "theme": "light",
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview"
+      }
+    },
+    {
+      "id": "FF-NAV-OBSERVED-PRIMARY-ROUTES",
+      "pass": true,
+      "evidence": {
+        "routes": 10,
+        "metrics": {
+          "bodyFont": "16px",
+          "density": "comfortable",
+          "dpr": 1,
+          "innerHeight": 915,
+          "innerWidth": 1440,
+          "outerHeight": 1000,
+          "outerWidth": 1440,
+          "runtime": "1170b641fcdfe7977a19",
+          "scrollWidth": 1440,
+          "theme": "light",
+          "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+        }
+      }
+    },
+    {
+      "id": "FF-IMPORT-BASELINE-COMMITTED",
+      "pass": true
+    },
+    {
+      "id": "FF-IMPORT-REJECT-prototype.json",
+      "pass": true,
+      "evidence": {
+        "status": "Import rejected: Forbidden JSON key. Existing draft and committed tokens are unchanged.",
+        "savedUnchanged": true
+      }
+    },
+    {
+      "id": "FF-IMPORT-REJECT-oversized.json",
+      "pass": true,
+      "evidence": {
+        "status": "Import rejected: file exceeds 64 KiB. Existing draft and committed tokens are unchanged.",
+        "savedUnchanged": true
+      }
+    },
+    {
+      "id": "FF-IMPORT-REJECT-invalid-schema.json",
+      "pass": true,
+      "evidence": {
+        "status": "Import rejected: Unsupported token configuration schema or version. Existing draft and committed tokens are unchanged.",
+        "savedUnchanged": true
+      }
+    },
+    {
+      "id": "FF-VALID-IMPORT-STAGED",
+      "pass": true,
+      "evidence": {
+        "savedUnchanged": true,
+        "status": "Imported configuration previewed. Commit to save."
+      }
+    },
+    {
+      "id": "FF-JSON-EXPORT-PARITY",
+      "pass": true,
+      "evidence": {
+        "schema": "pwa-design-system/token-overrides",
+        "version": 1,
+        "overrides": {
+          "global": {},
+          "light": {
+            "color.surface": "#fafafa"
+          },
+          "dark": {}
+        }
+      }
+    },
+    {
+      "id": "FF-CSS-EXPORT-PARITY",
+      "pass": true,
+      "evidence": {
+        "bytes": 175794,
+        "containsLightSurface": true
+      }
+    },
+    {
+      "id": "FF-CANCEL-STAGED-IMPORT",
+      "pass": true
+    },
+    {
+      "id": "FF-UNDO-STAGED-IMPORT",
+      "pass": true
+    },
+    {
+      "id": "FF-IMPORT-COMMIT",
+      "pass": true
+    },
+    {
+      "id": "FF-IMPORT-RELOAD-PERSIST",
+      "pass": true
+    },
+    {
+      "id": "FF-RESET-STAGED",
+      "pass": true
+    },
+    {
+      "id": "FF-UNDO-RESET",
+      "pass": true
+    },
+    {
+      "id": "FF-CANCEL-RESET",
+      "pass": true
+    }
+  ],
+  "limits": [
+    "AI-operated desktop tests; no physical device, human visual signoff or human assistive-technology acceptance.",
+    "BiDi observation covers this fresh synthetic-profile session from subscription acknowledgement through cleanup; it is bounded primary-flow evidence, not complete network/security certification."
+  ],
+  "capabilities": {
+    "acceptInsecureCerts": false,
+    "browserName": "firefox",
+    "browserVersion": "159.0.1",
+    "moz:accessibilityChecks": false,
+    "moz:buildID": "20261102144711",
+    "moz:geckodriverVersion": "0.37.1",
+    "moz:headless": true,
+    "moz:platformVersion": "27.0.0",
+    "moz:processID": "[REDACTED ephemeral test profile/endpoint/process]",
+    "moz:profile": "[REDACTED ephemeral test profile/endpoint/process]",
+    "moz:shutdownTimeout": 73000,
+    "moz:webdriverClick": true,
+    "moz:windowless": false,
+    "pageLoadStrategy": "normal",
+    "platformName": "mac",
+    "proxy": {},
+    "setWindowRect": true,
+    "strictFileInteractability": false,
+    "timeouts": {
+      "implicit": 0,
+      "pageLoad": 300000,
+      "script": 30000
+    },
+    "unhandledPromptBehavior": "dismiss and notify",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:159.0) Gecko/20100101 Firefox/159.0",
+    "webSocketUrl": "[REDACTED ephemeral test profile/endpoint/process]"
+  },
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "subscription": {
+    "type": "success",
+    "id": 1,
+    "result": {
+      "subscription": "7f4b8493-9d9c-4720-8042-69df7b2f2864"
+    }
+  },
+  "subscribedAt": "2026-11-06T09:58:35.552Z",
+  "afterImport": {
+    "bodyFont": "16px",
+    "density": "comfortable",
+    "dpr": 1,
+    "innerHeight": 915,
+    "innerWidth": 1440,
+    "outerHeight": 1000,
+    "outerWidth": 1440,
+    "runtime": "1170b641fcdfe7977a19",
+    "scrollWidth": 1440,
+    "theme": "light",
+    "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens"
+  },
+  "observationEndedAt": "2026-11-06T09:58:43.629Z",
+  "bidi": {
+    "events": 38,
+    "logs": [],
+    "responses": [
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#overview",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/theme-init.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/token-prepaint.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-CjHFdpv_.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BE9x9WiK.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/icons/apple-touch-icon.png",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/favicon.svg",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-HWZDDjrf.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/component-contracts-CkDaA9mA.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/input-DQm9eKl_.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-e8ErESGj.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/form-field-m9yKirg0.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BKAa0yvl.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "data:font/woff2;base64,d09GMgABAAAAAAScAAsAAAAACfAAAARNAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAAhBIRCAqGMIRJATYCJAMsCxgABCAFhF4HaBsuCMgehXEsLOlXaXd7sgbPQ172fjLwdhYFM92mABaiTuRVdO5/mx9I5UJiJom3phLRQw/TSF2M/vo25+pNyWkNws81NrUDAAf0QOdfcf7nmPEyBPZtCbbZEDuosskKZG922ZhBenh05qcSXktf6s3Oy9dAkWsyDzMoM5QTKcwKNjFayUPSREGFhUMrdE8MJsH052qGcYNO3pbEaYIBoDTItIKGAqhDdKHRD0kkKg6QGSCWEfueTNr3P6OvYaIbDH/8ULEAbjQtUt+hT/qmX/SH/twwMLDqN4jxzXjy4PHtltSA6lINqkpRd7N7onVBP20y7YBWyDIHFEBjqKBFMmECfQcTZtD3MmEB/SATVtCPM2ED/TQTdtCfS0/pEsN4ySin3r8q8xHE+0D0XMg8gJi4YrNpNv3qetXuDyeo6OBNZrq5gi7ouC1zcmB2Fd+FewIhcUIfszpF1hzXhrmMCwxaznRyZjig6Y2W7+bBn2DL8fJu/2oHbWc6X80+LUTXcVzv8O3IOy4qKVyFw/DHaMtfzNQEi5gbFT/EDpiofbpkYq2dQui6WcpfxrVBEJ/KxbLA4ZroZoVx+iE+QeTIiI7oKuoUIk/a1ekEOoNFjozm0suYYUelq13/88K1c3PTH9O9Q0d5LZbu7+J2aT7XP23KyQs+34WTU7r8d/k0l6dLl98Dn+/BSUZc7U0mm7FqhSMO9EHV/j5FB4qYX4aXNaKwz/4RRfAWsW8xGW+hvr8PTAf6IP9mRpkDwwv7QFz9HRuOeGWfd8rkyYsWTVy4vpG/pgVNWzBx0aTeIgeq58XFVfZXVduwuOq51a77aT0XLVw4v1PBFjRsQzO+tVeVp3KIwqfKbd6sdjzGvFSuPMquGpMT29lkrhwbE5uz6cGHhIETB06oUk+6tHLJgfnu/3nVnJzYxiXNjQNjYqsu+vCgYKDla5uUOzTNDZg46eCBd3d3gSk9Kz/bFiv8hvOzCT5eqyjBGerT+EiG/JGqwbC+UQ6Bv9bmKGWMj8Yn+fPVRJxKBGqTFXQyM9DhHSlvEHmLVxyYjY/Fdd3hACfLyP3VVZLvVR7B0pxSsGIBqHhwT5sSMOMkRG0BJhpsWMkEO24KwE0pqp3tIYTWCIjJjuBiGNTKTj8JoBLKAn4TmPFnj9oywZwFGx4egp1g3oObeLHdwUO2pFcYTITZCa2c1GQbNg6RCsu9bpikThhAWnLaBi3LM8+5VbMU6rUn30owOC83ULcfBlClb5BBre46BinaWRal85SUvlCbUx1Nbyj2HWCxBTkEgWScQKzsTioJW0IanAYRZqET4mZLSKU2JABII9np01lQ7lOt3srtM1KAeqgQPhYJSMCZJRuAukRZB1CF35gB1MJBr4ilIPZchNyIlDkpRt+3s96cz9K8XKQvCdZfcqWxgtLoXZ2AoKAyVSRRxSRmsYjVOriP089q3z6gdMjE5KI7kzumWzpnAwAAAA==",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-DDqGXYnM.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BE-1bRvc.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BBec2CbF.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BnW-qF_n.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-CUTkjOqZ.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/contrast-BMN8STlA.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-DhvRDFR5.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BRGGJFGv.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-yyK828S3.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-D3SPKC4P.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-FuSjSnED.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-Cc7t3Apv.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-CjHFdpv_.css",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/theme-init.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/token-prepaint.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BE9x9WiK.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-Cc7t3Apv.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/input-DQm9eKl_.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/index-BKAa0yvl.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/assets/contrast-BMN8STlA.js",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/icons/apple-touch-icon.png",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "https://yapweijun1996.github.io/PWA-Design-System/favicon.svg",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      },
+      {
+        "url": "data:font/woff2;base64,d09GMgABAAAAAAScAAsAAAAACfAAAARNAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAAhBIRCAqGMIRJATYCJAMsCxgABCAFhF4HaBsuCMgehXEsLOlXaXd7sgbPQ172fjLwdhYFM92mABaiTuRVdO5/mx9I5UJiJom3phLRQw/TSF2M/vo25+pNyWkNws81NrUDAAf0QOdfcf7nmPEyBPZtCbbZEDuosskKZG922ZhBenh05qcSXktf6s3Oy9dAkWsyDzMoM5QTKcwKNjFayUPSREGFhUMrdE8MJsH052qGcYNO3pbEaYIBoDTItIKGAqhDdKHRD0kkKg6QGSCWEfueTNr3P6OvYaIbDH/8ULEAbjQtUt+hT/qmX/SH/twwMLDqN4jxzXjy4PHtltSA6lINqkpRd7N7onVBP20y7YBWyDIHFEBjqKBFMmECfQcTZtD3MmEB/SATVtCPM2ED/TQTdtCfS0/pEsN4ySin3r8q8xHE+0D0XMg8gJi4YrNpNv3qetXuDyeo6OBNZrq5gi7ouC1zcmB2Fd+FewIhcUIfszpF1hzXhrmMCwxaznRyZjig6Y2W7+bBn2DL8fJu/2oHbWc6X80+LUTXcVzv8O3IOy4qKVyFw/DHaMtfzNQEi5gbFT/EDpiofbpkYq2dQui6WcpfxrVBEJ/KxbLA4ZroZoVx+iE+QeTIiI7oKuoUIk/a1ekEOoNFjozm0suYYUelq13/88K1c3PTH9O9Q0d5LZbu7+J2aT7XP23KyQs+34WTU7r8d/k0l6dLl98Dn+/BSUZc7U0mm7FqhSMO9EHV/j5FB4qYX4aXNaKwz/4RRfAWsW8xGW+hvr8PTAf6IP9mRpkDwwv7QFz9HRuOeGWfd8rkyYsWTVy4vpG/pgVNWzBx0aTeIgeq58XFVfZXVduwuOq51a77aT0XLVw4v1PBFjRsQzO+tVeVp3KIwqfKbd6sdjzGvFSuPMquGpMT29lkrhwbE5uz6cGHhIETB06oUk+6tHLJgfnu/3nVnJzYxiXNjQNjYqsu+vCgYKDla5uUOzTNDZg46eCBd3d3gSk9Kz/bFiv8hvOzCT5eqyjBGerT+EiG/JGqwbC+UQ6Bv9bmKGWMj8Yn+fPVRJxKBGqTFXQyM9DhHSlvEHmLVxyYjY/Fdd3hACfLyP3VVZLvVR7B0pxSsGIBqHhwT5sSMOMkRG0BJhpsWMkEO24KwE0pqp3tIYTWCIjJjuBiGNTKTj8JoBLKAn4TmPFnj9oywZwFGx4egp1g3oObeLHdwUO2pFcYTITZCa2c1GQbNg6RCsu9bpikThhAWnLaBi3LM8+5VbMU6rUn30owOC83ULcfBlClb5BBre46BinaWRal85SUvlCbUx1Nbyj2HWCxBTkEgWScQKzsTioJW0IanAYRZqET4mZLSKU2JABII9np01lQ7lOt3srtM1KAeqgQPhYJSMCZJRuAukRZB1CF35gB1MJBr4ilIPZchNyIlDkpRt+3s96cz9K8XKQvCdZfcqWxgtLoXZ2AoKAyVSRRxSRmsYjVOriP089q3z6gdMjE5KI7kzumWzpnAwAAAA==",
+        "status": 200,
+        "fromCache": false,
+        "context": "ccb80f94-d7a3-47c7-b83b-f2ad47a3719c"
+      }
+    ],
+    "fetchErrors": []
+  },
+  "sessionClosed": true,
+  "finished": "2026-11-06T09:58:44.055Z",
+  "summary": {
+    "pass": 16,
+    "fail": 0
+  },
+  "publicationRedactions": [
+    "moz:processID",
+    "moz:profile",
+    "webSocketUrl"
+  ]
+}

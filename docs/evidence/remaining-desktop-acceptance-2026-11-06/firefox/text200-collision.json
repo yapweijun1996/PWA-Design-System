@@ -1,0 +1,39 @@
+{
+  "activeInput": true,
+  "backToTop": {
+    "bottom": 739,
+    "display": "block",
+    "hidden": false,
+    "left": 1172.4000244140625,
+    "opacity": "1",
+    "right": 1392.000030517578,
+    "top": 651
+  },
+  "dpr": 2,
+  "font": "32px",
+  "innerHeight": 787,
+  "innerWidth": 1440,
+  "input": {
+    "bottom": 787,
+    "left": 1141,
+    "right": 1375,
+    "top": 699
+  },
+  "intersection": {
+    "area": 8103.9990234375,
+    "height": 40,
+    "width": 202.5999755859375
+  },
+  "runtime": "1170b641fcdfe7977a19",
+  "scrollY": 868.4500122070312,
+  "topElementAtInputRight": "<input type=\"text\" class=\"token-editor__control\" autocomplete=\"off\" spellcheck=\"false\" maxlength=\"128\" data-token=\"color.surface\" aria-label=\"color.surface override\" placeholder=\"Leave empty to inherit\" aria-invalid=\"true\" aria-describedby=\"token-editor-1-inherit-help token-editor-1-selected-purpose token-editor-1-selected-type token-editor-1-selected-values token-editor-1-validation\">",
+  "url": "https://yapweijun1996.github.io/PWA-Design-System/#design-tokens",
+  "validation": "Invalid draft: Missing reference: primitive.color.missing. Previous preview is retained.",
+  "intersectionHitTest": {
+    "point": {
+      "x": 1273.7000122070312,
+      "y": 719
+    },
+    "top": "<button id=\"scroll-to-top\" class=\"studio-scroll-top\" type=\"button\">Back to top</button>"
+  }
+}

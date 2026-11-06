@@ -1,0 +1,18 @@
+{
+  "integratedCodeCommit": "fe1f67575f0e0959a576e225906864f5774d295c",
+  "workerLocalCommit": "80b632ed1a0d62b87515737f44f97ab52dbd15e1",
+  "runtime": "5e5a75b079fb8b2648f2",
+  "files": {
+    "apps/studio/src/main.ts": "5eb8d8ce06ccce06acd71bbfe9a90a5ecfecef02592b9cd44565ee9bda7c157b",
+    "apps/studio/src/features/tokens/styles.css": "fab896b3b0780083fda76cff8811c50681c8289aa201e41d41f07e4dfb6afa9b",
+    "tests/e2e/token-workspace-layout.spec.ts": "b8d82c25906c24f70b9dd1fa77828263ef099f29f0403cd24204fa58a89c7c05"
+  },
+  "nativeProductionArtifactParity": {
+    "source": "fe1f67575f0e0959a576e225906864f5774d295c",
+    "files": 30,
+    "nativeTestedArtifactFiles": 30,
+    "identical": true,
+    "changed": []
+  },
+  "note": "Native QA began before final commit. Exact source hashes and30-file byte parity bind those original observations to committed integrated source. Documentation-only commits do not alter this runtime."
+}

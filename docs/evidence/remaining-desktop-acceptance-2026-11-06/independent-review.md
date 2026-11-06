@@ -1,0 +1,69 @@
+# Independent AI review — remaining desktop acceptance
+
+Date:6 November2026. Reviewer:`/root/acceptance_review`, independent AI read-only reviewer. No browser launched, source edited, commit created or release action performed by this reviewer. Application baseline:`48ec0d6cec1db78c86ec5e19d7f0d3412f69dc76`; observed runtime:`1170b641fcdfe7977a19`.
+
+## Contract reviewed
+
+Read exact `task.md` PWA-07-B2/B3/H1/H2/H6 and `docs/RELEASE-ACCEPTANCE.md` B1/Z1 execution definitions. They require representative desktop primary flows, bounded console/network scope and source/actual viewport identity; they do not require an unlisted exhaustive Cartesian product or physical installation to close a named desktop subcase. Physical/human parent requirements remain independent.
+
+## Evidence reviewed
+
+- `safari/report.json`:25 recorded native Safari27.0.1 check groups including10 routes, component Label/Variant/Preview/Code/search, Dialog Tab/Escape/focus restoration, Menu Arrow/Escape, Token invalid input/Undo/Cancel/commit/reload, prototype-key rejection and transactional valid import/commit/reload. Runtime1170 was observed per-tab; interactive CSS viewport1324×820,DPR2; docked Inspector1324×320. AI native CUA observations are recorded by the primary operator; this independent reviewer inspected reports, not replayed the tool interactions. Fresh private QA window supports session reload persistence, not normal-profile long-term durability.
+- Independently parsed `safari/safari-final.har`:10 entries, all200, all public project origin, zero request/response cookies and no Cookie/Set-Cookie/Authorization headers. Covers final inspected reload including service-worker/memory responses; it does not establish all10 route startup requests were remotely fetched. Error listener window and native Console observations are bounded; corrected observer quote SyntaxError is retained as a QA issue, not attributed to the application.
+- `firefox/functional/report.json`:16/16 PASS, stable159.0.1/build20261102144711, runtime1170, synthetic profile. Covers negative prototype/oversized/schema imports, staged valid import, JSON/CSS export parity, Cancel/Undo/reset and commit/reload persistence. BiDi subscription acknowledged before navigation;38 response records, all200, no recorded log entries or fetch errors. This is bounded session observation, not browser-process/security certification. Earlier81-case same-runtime evidence supplies the primary-route/component coverage separately.
+- `firefox/zoom200.json` and `zoom400.json`:each7/7 PASS including runtime/document fit, Menu Arrow/Escape restoration, Dialog Tab/Escape trap/restoration and Token Cancel. Actual200 geometry720×394,DPR4; actual400 geometry384×210,DPR7.5. These complement prior same-runtime search/select/edit/Code/commit/reload records and do not redefine the geometry as320px.
+- `firefox/text200.json`:14 passing assertions currently present. Actual viewport remains1440×787,DPR2; computed body16→32px and heading32→64px, CSS zoom1 and transformnone. Browser-native Zoom Text Only provenance/restoration must be finalized before treating this as a completed native-control test; CSS metric changes alone are insufficient.
+- Directly viewed `firefox/text200-code.png`, `text200-invalid.png`, `zoom400-final.png`. No new desktop source changes were present when the review began.
+
+## Findings
+
+1. **P1 candidate, focused-field occlusion at actual text enlargement — requires same-state geometry confirmation and fix/retest before H6 closure.** `text200-invalid.png` visibly shows the floating Back to top button overlapping the focused Token override at the lower-right. The recorded input visibility assertion checks only header/viewport bounds, not floating-control collision. `apps/studio/src/main.ts:43–46` currently controls Back to top visibility solely by scroll threshold. User impact: part of the actively edited/error field is obscured at200% text enlargement. Verification: reproduce exact Text Only200 invalid-token state; compare Back to top and focused-input rectangles and hit testing, correct ownership/visibility if confirmed, then rerun the same scenario with native text settings. Do not close H6 from14 passing coordinate-bounds assertions alone.
+2. **P2, Inspector readability at text enlargement.** The Default/Resolved grid in `text200-invalid.png` wraps the value nearly character by character in the fixed-width Inspector. `apps/studio/src/features/tokens/styles.css:57–59` uses auto/minmax tracks and anywhere wrapping. User impact: harder value comparison. No lost content or separate release blocker established; an appropriate readable stacked fallback may improve usability. Verify with200% text screenshots and full value accessibility before prioritizing a change.
+3. **Evidence-only limitation, not a product failure.** Current Firefox summary still says native pending while final native/text artifacts exist; reconcile final summary/status before committing evidence. Keep original interrupted attempts and exact observer limits. Do not infer human/device/long-term normal-profile acceptance.
+
+## Checkbox recommendation at this snapshot
+
+- **B2 may close for its exact bounded native Safari desktop primary-flow contract**, with explicit private-profile, metadata and observation scopes. No Safari PWA/install/offline/all-state claim follows.
+- **B3 may close for its exact stable Firefox desktop primary-flow contract**, combining prior same-runtime primary flows with fresh import/export/transaction/log records. No Nightly substitution is used.
+- **H1/H2 may close for recorded representative native200/400 primary-flow scope** once final native control/restoration provenance is retained; current overlay/Cancel checks fill the previously identified gaps. Do not add an unlisted exhaustive matrix requirement.
+- **H6 remains pending** until the focused-field overlap finding and native settings restoration are resolved/verified.
+- Full task.md remains incomplete without the separately required physical-device and human checks. No physical or human checkbox can be closed by this AI review.
+
+
+## Confirmed finding and candidate source review
+
+The primary operator supplied actual native geometry in `firefox/text200-collision.json`: positive intersection area about8104CSS-px² and hit testing resolves to `#scroll-to-top`, confirming the screenshot finding. It is now a **confirmed P1 focused-field occlusion**, not merely a candidate. H6 remains open pending same-scenario corrected-runtime retest.
+
+Read-only reviewed candidate worktree `/tmp/pwa-final-acceptance/fix` diff:
+
+- `main.ts`: central `updateBackToTop()` hides the supplementary floating navigation when an interactive element inside `main` has focus. Existing scroll threshold remains; scroll and resize/reset reuse the same predicate. Synchronous `focusin` plus microtask `focusout` checks the final destination without stealing focus. Route reset still scrolls to top; Documentation-specific topbar hiding, reduced motion, notices and drawer exceptions are unchanged. Back to top is outside `main`; focusing the supplementary button does not itself trigger the main-interactive hiding condition. No new focus trap or confirmed P0/P1 issue found in source review.
+- Token CSS: an inline-size named container and `<16em` fallback stack Default/Resolved terms/values, with wrapping within each value. Font-relative containment addresses native text enlargement. At normal wide300px Inspector the266px inner area remains above the normal256px threshold; narrower default containers can intentionally stack as well. Do not claim all normal/default geometry is unchanged; verify representative strict visual baselines and the exact narrow fallback.
+- Two added regressions use an explicitly labeled deterministic font-metric fixture, not falsely described as native zoom. The floating-control regression asserts actual scroll threshold, active field hit testing, hidden floating navigation, restoration after focus exits and route reset. The readability regression checks rendered text-line counts and document fit. Test code retains actual element actions/assertions. Required evidence: old-source same-fixture failure and candidate pass; ensure the scroll threshold remains exercised after stacking changes content height. Root owns execution and native retest.
+
+**Candidate source decision:** the small change addresses the confirmed ownership problem and readable-value fallback without changing token resolution, public components, import/update policy or document routing. No additional source finding blocks the candidate at this snapshot. This is source review only; it does not close native text acceptance or release CI/Pages.
+
+
+## Final corrected-runtime acceptance review
+
+This final section supersedes the pending H6/fix statuses above; earlier observations remain as chronology, not unresolved findings. Read-only review completed against integrated source **`fe1f67575f0e0959a576e225906864f5774d295c`**, runtime **`5e5a75b079fb8b2648f2`**.
+
+### Binding and directly reviewed results
+
+- Recomputed source SHA256 values for integrated `apps/studio/src/main.ts` and Token styles are respectively `5eb8d8ce06ccce06acd71bbfe9a90a5ecfecef02592b9cd44565ee9bda7c157b` and `fab896b3b0780083fda76cff8811c50681c8289aa201e41d41f07e4dfb6afa9b`. They match `firefox/final-candidate/source-context.json`. `integrated-parity.json` binds all30 integrated production files byte-for-byte to the native-tested candidate. The QA report's contemporaneous uncommitted-candidate label is retained; this subsequent verification supplies its final commit binding.
+- Final source uses **14em**, rather than the earlier reviewed16em, for the font-relative Token Inspector fallback. This preserves normal wide value columns while stacking the actual enlarged narrow value layout. No token/palette/public API/persistence dependency changed.
+- `fix-baseline-final-regressions.log` records both new regressions failing on the original source: actual input hit test false and short color taking two rendered lines. `fix-final-regressions.log` records the same two candidate tests passing, with the explicit deep-scroll threshold retained. This is meaningful before/after behavior evidence, not only selector-mirroring tests.
+- `firefox/final-candidate/text200-final.json` has14/14 passing primary-flow assertions; `candidate-regressions.json` adds2/2 explicit regression assertions. Actual browser Zoom Text Only200 provenance is recorded; body16→32px and heading32→64px with1440×787CSS viewport,DPR2,CSS zoom1,transformnone. `summary.json` records restored body16px/heading32px and closed session. BiDi subscription precedes the final observed run;30 response events comprise28HTTP plus2data responses, recorded HTTP statuses200, no log/fetch errors within this bounded observation.
+- Directly inspected `text200-fixed-collision.png` and its JSON. The focused invalid Override is visually clear; Back to top has `hidden:true`/`display:none`, zero intersection, and the input is topmost at the hit-test point. Actual scrollY795.45 exceeds viewport787, proving this was not a pass below the old visibility threshold. The Default/Resolved values now remain readable words/colors, with the measured234px single value column and28px value font. The actual screenshot no longer shows the prior one-character wrapping.
+- `safari/final-candidate.json` adds a native Safari100% short-window same-policy regression: actual1324×320,scrollY357,focused invalid input y129–173,Back to top hidden and input hit true,runtime5e5. It does not claim Safari native200/400 or text-only zoom. Native operator cleanup/Cancel and restored original Start Page are recorded; this independent reviewer did not perform those native actions.
+
+### Final findings and task decisions
+
+**P1 focused-input occlusion: RESOLVED and same-scenario native retested. P2 enlarged-value readability: RESOLVED within the measured representative Inspector scope. No unresolved confirmed P0/P1 defect remains in this independent review's scope.**
+
+The exact named desktop subcases **PWA-07-B2/B3/H1/H2/H6 may be checked**: native Safari primary desktop flow/identity/bounded logs, stable Firefox primary flows with import/export/log gaps filled, native200/400 primary tasks with overlay/Cancel supplementation, and actual browser text enlargement with recorded restoration. The source/runtime identities of prior1170 observations and corrected5e5 retests must remain separate, supported by the source-specific final regressions and normal release gates. No unlisted exhaustive all-browser/all-theme Cartesian requirement has been added or waived.
+
+Physical-device requirements and human interpretation/visual approval remain unchecked. Full PWA Standard/WCAG conformance is not established. Native Safari normal-profile long-term durability/installation and complete browser-process logging remain outside the accepted desktop scope. An initial unrelated320px layout test intermittently failed and passed unchanged on isolated/final reruns according to the primary execution record; retain this uncertainty rather than invent a root cause or silently discard the attempt.
+
+The draft `docs/REMAINING-DESKTOP-ACCEPTANCE-2026-11-06.md` truthfully describes the original failure, private Safari scope, BiDi/HAR limits, real text-vs-page zoom and unreleased candidate boundary. Its remaining placeholder/pending paragraphs must be reconciled to these final commit/runtime/results before submission. CI/main/Pages and actual hosted N→N+1/offline behavior are still release-owner checks at this review snapshot; this review does not claim deployment success.
+
+**Independent review decision: PASS for the corrected source and explicitly bounded desktop acceptance scope, subject to normal required CI and verified release delivery.**
