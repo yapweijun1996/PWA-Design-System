@@ -4,6 +4,8 @@
 .token-editor :is(label, article, section) { min-width: 0; }
 .token-editor__intro, .token-editor__field-help, .token-editor__context, .token-editor small { color: var(--ds-color-text-muted); line-height: 1.5; }
 .token-editor .ws-toolbar { display: grid; }
+.token-editor .ws-explorer { display: grid; align-content: start; gap: var(--ds-spacing-sm); }
+:where(.token-editor) .ws-explorer > h2 { font-size: var(--ds-font-size-body); }
 .token-editor__actions, .token-editor__row-actions, .token-editor__preview-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-sm); }
 .token-editor__toolbar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: var(--ds-spacing-sm) var(--ds-spacing-md); }
 .token-editor__toolbar > .token-editor__actions { grid-column: 1 / -1; }

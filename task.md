@@ -1,6 +1,6 @@
 # Studio workspace redesign and PWA Standard alignment
 
-Status: In progress. The latest user request authorizes KB auto-manager implementation of this task list and the supplied workspace review.
+Status: Implementation integrated; final regression, independent visual review and release verification in progress. Physical/manual acceptance remains NOT VERIFIED. The latest user request authorizes KB auto-manager implementation and the supplied workspace review.
 Recorded: 6 November 2026.
 Inspected baseline: `4b1b74566c5f05b2564c7cfa4e7a65ddd6994fe0`.
 
@@ -14,14 +14,25 @@ MUST requires implementation or a concrete documented exception. DEFAULT applies
 
 ## Approved workspace review and implementation phases
 
-- [ ] WS-01 (P1): One shared resizable Explorer / Canvas / Inspector layout; initial widths 240px / remaining space / 300px, bounded by the recommended 220–260px and 280–320px ranges where desktop space permits. Mouse/touch and keyboard resizing; readable responsive fallbacks; explicit scroll ownership and no document overflow.
-- [ ] WS-02 (P1): Unified toolbar, selected state and editor action model. Place unsaved count next to Commit; separate Studio theme, canvas theme and editing scope. Preserve draft, undo, reset, cancel, import and commit semantics.
-- [ ] WS-03 (P2): Compact Token Table with category/search/modified filtering, selected-token Inspector, coherent color/HEX/inheritance display, visible dependency chain, and independent visual preview. Reuse token validation/resolution and stable component preview nodes.
-- [ ] WS-04 (P1): Components uses one property control center in Inspector; move Code/copy to a Canvas tab, clarify Examples in Usage, preserve all 21 supported component APIs and preview/code parity.
+- [x] WS-01 (P1): One shared resizable Explorer / Canvas / Inspector layout; initial widths 240px / remaining space / 300px, bounded by the recommended 220–260px and 280–320px ranges where desktop space permits. Mouse/touch and keyboard resizing; readable responsive fallbacks; explicit scroll ownership and no document overflow.
+- [x] WS-02 (P1): Unified toolbar, selected state and editor action model. Place unsaved count next to Commit; separate Studio theme, canvas theme and editing scope. Preserve draft, undo, reset, cancel, import and commit semantics.
+- [x] WS-03 (P2): Compact Token Table with category/search/modified filtering, selected-token Inspector, coherent color/HEX/inheritance display, visible dependency chain, and independent visual preview. Reuse token validation/resolution and stable component preview nodes.
+- [x] WS-04 (P1): Components uses one property control center in Inspector; move Code/copy to a Canvas tab, clarify Examples in Usage, preserve all 21 supported component APIs and preview/code parity.
 - [ ] WS-05 (P2): Typography, spacing, lightweight navigation, hover/focus, empty/error states and accessible tabs/splitters. Review top/middle/bottom, active fields, both themes and responsive panel transitions in real browsers.
 - [ ] WS-06 (P1): Independent functional/accessibility/visual regression, evidence-grounded 13-persona review, documentation, PR/CI/Pages and hosted artifact/offline/update verification. Human/device checks remain NOT VERIFIED without actual evidence.
 
 Execution order: shared layout contract; Token and Component interaction changes; PWA engineering and route-specific defaults; independent verification and release. The user prioritizes layout/interaction over new colors or animation. Reported screenshot risks are not confirmed functional defects until reproduced. Existing PWA tasks below remain in scope; preserve their IDs and evidence boundaries.
+
+## Current implementation evidence
+
+- Integrated source checkpoint: `6067180`; shared architecture and UI guide: [Unified Studio workspace](docs/UNIFIED-STUDIO-WORKSPACE.md).
+- The compact Token Table renders one selected-token override editor, with readable value columns and deliberate table-local horizontal scrolling. Components uses one Inspector and separate Canvas content tabs; phone Canvas and Preview have distinct names.
+- Independent review reproduced and fixed tablet values wrapping vertically, a short-window table header covering the app bar, stale pane drag origins after unblurred width input, and update notices disappearing during deep scrolling. Focused Token layout verification: 9/9 real Chrome before final PWA integration; integrated full regression is pending below.
+- Initial final-source unit/integration checks: 161/161. Typecheck, lint, token/contract generation, SSOT and production artifact checks pass. These do not establish browser or device acceptance.
+- PWA source implements measured sticky update/offline chrome, focus clearance, safe-area ownership, theme metadata, guarded activation and explicit Reload now. [Central exceptions](docs/PWA-STANDARD-EXCEPTIONS.md) retain the draft-safety reload policy and route-specific header defaults.
+- Draft PR: [#9](https://github.com/yapweijun1996/PWA-Design-System/pull/9). Strict visual comparison remains enabled while candidates are captured for individual review. Merge, deployment and hosted verification are pending.
+
+A checked engineering item below means its implementation is present with the stated automation; acceptance involving actual OS/device/human observation remains open. No full PWA or WCAG conformance claim is made.
 
 ## Existing behavior to preserve
 
@@ -36,7 +47,7 @@ These checkmarks mean baseline evidence was recorded, not that the complete PWA 
 
 ## Standard coverage and observed gaps
 
-| Standard area | Current source/evidence | Remaining work |
+| Standard area | Inspected baseline evidence (before this amendment) | Task owner |
 | --- | --- | --- |
 | iOS-first / safe areas — MUST | Studio viewport metadata lacks `viewport-fit=cover`; no `safe-area-inset-*` use was found in Studio source. Physical iOS behavior is NOT VERIFIED. | PWA-01, PWA-07 |
 | Solid theme-aware system chrome — MUST | Shell surfaces use semantic tokens. HTML and manifest theme colors are fixed white; appearance bootstrap sets root attributes without synchronizing theme-color metadata. Actual OS chrome is NOT VERIFIED. | PWA-02, PWA-07 |
@@ -57,10 +68,10 @@ These checkmarks mean baseline evidence was recorded, not that the complete PWA 
 
 Priority: P1. Rule: MUST. Owner: Frontend engineer; physical validation by device tester.
 
-- [ ] Map safe-area ownership for the header, sidebar/drawer, content, update notice, overlays and future floating controls; prevent duplicate inset padding.
-- [ ] Add the required viewport integration and token-compatible safe-area handling during this implementation.
+- [x] Map safe-area ownership for the header, sidebar/drawer, content, update notice, overlays and future floating controls; prevent duplicate inset padding.
+- [x] Add the required viewport integration and token-compatible safe-area handling during this implementation.
 - [ ] Check virtual-keyboard open/closed behavior, portrait/landscape, focused fields and scroll-to-focused-control behavior.
-- [ ] Measure iOS-facing input text sizes, including compact density; prevent unwanted focus zoom without disabling user zoom.
+- [x] Measure iOS-facing input text sizes, including compact density; prevent unwanted focus zoom without disabling user zoom.
 - [ ] Verify content and controls remain clear of the notch/home indicator and have no document horizontal overflow.
 
 Acceptance: Actual iPhone/iPad browser and installed-mode evidence, plus desktop/tablet/phone regression. CSS viewport emulation alone cannot close this task.
@@ -69,10 +80,10 @@ Acceptance: Actual iPhone/iPad browser and installed-mode evidence, plus desktop
 
 Priority: P1. Rule: MUST. Dependency: PWA-01 layout ownership.
 
-- [ ] Define opaque top/safe-area surfaces using existing semantic tokens.
-- [ ] Synchronize supported browser theme-color metadata with the resolved Light/Dark/System preference, before first paint and during runtime changes.
-- [ ] Review manifest fallback/startup colors and platform-specific status-bar behavior; document platform limitations rather than assuming metadata proves OS rendering.
-- [ ] Cover saved appearance, system changes and committed token overrides without incorrect-theme flashes.
+- [x] Define opaque top/safe-area surfaces using existing semantic tokens.
+- [x] Synchronize supported browser theme-color metadata with the resolved Light/Dark/System preference, before first paint and during runtime changes.
+- [x] Review manifest fallback/startup colors and platform-specific status-bar behavior; document platform limitations rather than assuming metadata proves OS rendering.
+- [x] Cover saved appearance, system changes and committed token overrides without incorrect-theme flashes.
 
 Acceptance: Light/dark cold and warm launches, readable status icons and coherent shell/system surfaces on actual target devices.
 
@@ -82,12 +93,12 @@ Priority: P1. Rule: MUST. Owner: PWA engineer.
 
 The KB default describes user-confirmed update, loader, activation and reload. The existing Studio deliberately separates **Prepare update** from manual reload to protect editing. Do not silently replace this behavior.
 
-- [ ] Write the update-state contract and document the concrete draft/data-loss reason for any exception to the standard's reload sequence.
-- [ ] Prefer preserving the two-step flow, with an explicit safe reload action after preparation; finalize that design before implementation.
-- [ ] Show accessible immediate updating/loading feedback, block duplicate actions and expose success, failure, timeout and retry states.
-- [ ] Verify actual activation readiness before announcing success or enabling reload; a request-accepted message alone must not be treated as activation completion.
-- [ ] Preserve pending-import, valid/invalid draft, other-tab, unresponsive-client and previous-build asset protections; recheck unsafe work before any reload.
-- [ ] Reuse an approved loader only when its accessibility, license, dependencies and integration fit; an external loader dependency is not assumed necessary.
+- [x] Write the update-state contract and document the concrete draft/data-loss reason for any exception to the standard's reload sequence.
+- [x] Prefer preserving the two-step flow, with an explicit safe reload action after preparation; finalize that design before implementation.
+- [x] Show accessible immediate updating/loading feedback, block duplicate actions and expose success, failure, timeout and retry states.
+- [x] Verify actual activation readiness before announcing success or enabling reload; a request-accepted message alone must not be treated as activation completion.
+- [x] Preserve pending-import, valid/invalid draft, other-tab, unresponsive-client and previous-build asset protections; recheck unsafe work before any reload.
+- [x] Reuse an approved loader only when its accessibility, license, dependencies and integration fit; an external loader dependency is not assumed necessary.
 
 Acceptance: Real browser version N to N+1 tests covering notification, loader, activation, explicit reload, failures and preservation of committed configuration. No unsolicited refresh or weakened draft guards.
 
@@ -95,10 +106,10 @@ Acceptance: Real browser version N to N+1 tests covering notification, loader, a
 
 Priority: P2. Rule: DEFAULT. Dependency: PWA-01 and PWA-02.
 
-- [ ] Identify the actual scroll owner per route and decide where hide-on-down/reveal-on-up is useful; record route-specific exceptions.
-- [ ] Use movement thresholds and stable geometry; prevent jitter and layout shifts.
-- [ ] Keep keyboard-focused controls and open navigation/overlays usable; reveal the bar when focus requires it.
-- [ ] Respect reduced motion and clean up listeners when ownership changes.
+- [x] Identify the actual scroll owner per route and decide where hide-on-down/reveal-on-up is useful; record route-specific exceptions.
+- [x] Use movement thresholds and stable geometry; prevent jitter and layout shifts.
+- [x] Keep keyboard-focused controls and open navigation/overlays usable; reveal the bar when focus requires it.
+- [x] Respect reduced motion and clean up listeners when ownership changes.
 
 Acceptance: Top/middle/bottom, both scroll directions, route changes, keyboard focus, open drawer/dialog and reduced-motion checks. Do not apply hiding indiscriminately to a no-scroll utility.
 
@@ -106,10 +117,10 @@ Acceptance: Top/middle/bottom, both scroll directions, route changes, keyboard f
 
 Priority: P2. Rule: DEFAULT. Dependency: PWA-01.
 
-- [ ] Decide which long routes need it and which already provide an adequate return path; document N/A cases.
-- [ ] Where useful, provide a labeled keyboard-accessible control after meaningful document scrolling, hidden near the top.
-- [ ] Respect bottom/right safe areas, touch size, focused forms, update notices and reduced motion.
-- [ ] Keep Explorer, code and deliberate canvas scrolling independent; avoid an unnecessary additional scroll container.
+- [x] Decide which long routes need it and which already provide an adequate return path; document N/A cases.
+- [x] Where useful, provide a labeled keyboard-accessible control after meaningful document scrolling, hidden near the top.
+- [x] Respect bottom/right safe areas, touch size, focused forms, update notices and reduced motion.
+- [x] Keep Explorer, code and deliberate canvas scrolling independent; avoid an unnecessary additional scroll container.
 
 Acceptance: Threshold, document-scroll ownership, focus destination, overlap, keyboard and reduced-motion checks across supported sizes.
 
@@ -117,10 +128,10 @@ Acceptance: Threshold, document-scroll ownership, focus destination, overlap, ke
 
 Priority: P1. Rule: Applicable MUST.
 
-- [ ] Map STARTING, READY, OFFLINE, UPDATE AVAILABLE, UPDATING, RELOADING and ERROR states to concise visible/accessibly announced feedback where useful.
-- [ ] Explain which local tools remain usable offline and distinguish unavailable offline support from a temporary loss of connectivity.
-- [ ] Avoid treating `navigator.onLine` alone as proof of service availability or announcing successful server transactions.
-- [ ] Preserve existing offline tools, saved appearance and token configuration; avoid disruptive overlays during normal local work.
+- [x] Map STARTING, READY, OFFLINE, UPDATE AVAILABLE, UPDATING, RELOADING and ERROR states to concise visible/accessibly announced feedback where useful.
+- [x] Explain which local tools remain usable offline and distinguish unavailable offline support from a temporary loss of connectivity.
+- [x] Avoid treating `navigator.onLine` alone as proof of service availability or announcing successful server transactions.
+- [x] Preserve existing offline tools, saved appearance and token configuration; avoid disruptive overlays during normal local work.
 
 Acceptance: First visit without a usable cache, controlled offline reload, reconnect, registration failure, interrupted update and locally persisted editing scenarios.
 
@@ -140,10 +151,10 @@ Use [the existing manual checklist](docs/RELEASE-ACCEPTANCE.md). Owner/device ac
 
 Priority: P1. Dependency: Approved implementation of the preceding in-scope tasks.
 
-- [ ] Preserve JSON token SSOT, 21 component contracts, independent appearance axes and optional React boundaries.
+- [x] Preserve JSON token SSOT, 21 component contracts, independent appearance axes and optional React boundaries.
 - [ ] Add focused browser coverage for new behavior and rerun relevant existing tests; retain strict visual/environment checks and individually review intentional baseline changes.
 - [ ] Recheck cache freshness, mixed-version refusal, scoped cleanup, offline tools, import security, CSP and dependency advisories without weakening gates.
-- [ ] Update PWA/installation/acceptance documentation and maintain one central exception record for the update policy and route-specific DEFAULT exceptions.
+- [x] Update PWA/installation/acceptance documentation and maintain one central exception record for the update policy and route-specific DEFAULT exceptions.
 - [ ] Complete normal feature-branch/PR/CI review before deployment under the existing session authorization; verify the actual hosted build, assets, console/network, offline and update journeys afterward.
 - [ ] Report every standard item as PASS, FAIL, NOT VERIFIED or justified N/A with source/build evidence. Declare full conformance only after required evidence or documented exceptions exist.
 

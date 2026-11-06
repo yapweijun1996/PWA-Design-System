@@ -17,7 +17,7 @@
 .ws-workspace[data-mode='compact'] .ws-explorer { grid-column: 1 / -1; }
 .ws-workspace[data-mode='phone'] .ws-layout { grid-template-columns: minmax(0, 1fr); }
 .ws-workspace[data-mode='phone'] .ws-panel-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.ws-workspace[data-mode='phone'] .ws-panel-button { padding-inline: var(--ds-spacing-xs); overflow-wrap: anywhere; }
+.ws-workspace[data-mode='phone'] .ws-panel-button { padding-inline: var(--ds-spacing-xs); font-size: var(--ds-font-size-small); white-space: nowrap; }
 
 .ws-header { display: flex; flex-wrap: wrap; align-items: end; gap: var(--ds-spacing-md); min-width: 0; }
 .ws-header > .ws-toolbar { flex: 1 1 auto; }

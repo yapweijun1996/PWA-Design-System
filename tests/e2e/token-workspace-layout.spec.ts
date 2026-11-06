@@ -5,6 +5,7 @@ import { tokenCanvas, tokenField } from './token-workspace-helpers';
 for (const width of [320, 390, 768, 1440, 1920]) test(`selected-token workspace remains usable at ${width}px`, async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
   await page.setViewportSize({ width, height: 1000 }); await page.goto('./#design-tokens');
+  if (width < 700) { for (const button of await page.locator('.ws-panel-button').all()) { const box = await button.boundingBox(); if (!box) throw new Error('Missing panel button'); expect(box.height).toBe(44); expect(await button.evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true); } }
   await expect(page.locator('[data-select-token]')).toHaveCount(48); await expect(page.locator('input[data-token]')).toHaveCount(1);
   const field = await tokenField(page, 'color.surface'); await field.fill('#fafafa'); const editedRect = await field.boundingBox(); if (!editedRect) throw new Error('Focused edit missing'); expect(editedRect.y).toBeGreaterThanOrEqual(0); expect(editedRect.y + editedRect.height).toBeLessThanOrEqual(1000); await expect(page.getByLabel('Unsaved change count')).toHaveText('1 unsaved change');
   await tokenCanvas(page); const table = page.getByRole('region', { name: 'Token table', exact: true });
