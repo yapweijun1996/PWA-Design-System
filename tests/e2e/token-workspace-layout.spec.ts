@@ -1,6 +1,51 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { tokenCanvas, tokenField } from './token-workspace-helpers';
+
+async function doubleFontMetrics(page: Page): Promise<void> {
+  // Deterministic font-only fixture supplements the separately recorded native Firefox text-zoom check.
+  await page.evaluate(() => {
+    const fonts = Array.from(document.querySelectorAll<HTMLElement>('*')).map(node => ({ node, size: Number.parseFloat(getComputedStyle(node).fontSize) }));
+    for (const { node, size } of fonts) node.style.fontSize = `${size * 2}px`;
+  });
+}
+
+test('enlarged text editing stays above floating navigation and recovers after focus leaves', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 600 }); await page.goto('./#design-tokens');
+  const field = page.getByLabel('color.surface override', { exact: true }); await expect(field).toBeVisible();
+  await doubleFontMetrics(page);
+  const top = page.getByRole('button', { name: 'Back to top', exact: true });
+  for (const value of ['#fafafa', '{primitive.color.missing}']) {
+    await field.fill(value); await field.evaluate(node => node.scrollIntoView({ block: 'end' }));
+    await expect.poll(() => page.evaluate(() => scrollY >= innerHeight)).toBe(true);
+    await expect(field).toBeFocused();
+    await expect.poll(() => field.evaluate(node => {
+      const rect = node.getBoundingClientRect(), header = document.querySelector('.studio-topbar')?.getBoundingClientRect(), x = rect.right - 4, y = rect.top + Math.min(8, rect.height / 2);
+      return !!header && rect.top >= header.bottom && rect.bottom <= innerHeight && document.elementFromPoint(x, y) === node;
+    })).toBe(true);
+    await expect(top).toBeHidden();
+  }
+  await page.getByRole('button', { name: 'Cancel draft', exact: true }).click();
+  await page.getByRole('heading', { name: 'Design tokens', level: 1, exact: true }).focus();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight)); await expect(top).toBeVisible();
+  await page.getByRole('combobox', { name: 'Studio theme', exact: true }).focus(); await expect(top).toBeVisible();
+  await page.evaluate(() => location.hash = 'documentation'); await expect(page.getByRole('heading', { name: 'Documentation', exact: true })).toBeVisible();
+  await expect(top).toBeHidden();
+});
+
+test('enlarged Inspector values keep short colors and recovery text readable', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 787 }); await page.goto('./#design-tokens');
+  const field = page.getByLabel('color.surface override', { exact: true }); await expect(field).toBeVisible(); await doubleFontMetrics(page);
+  const values = page.locator('.token-editor__values dd');
+  const textLines = async (index: number) => values.nth(index).evaluate(node => {
+    const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT), tops = new Set<number>();
+    while (walker.nextNode()) { const range = document.createRange(); range.selectNodeContents(walker.currentNode); for (const rect of range.getClientRects()) tops.add(Math.round(rect.top)); }
+    return tops.size;
+  });
+  await expect(values.first()).toHaveText('#ffffff'); expect(await textLines(0)).toBe(1);
+  await field.fill('{primitive.color.missing}'); await expect(values.nth(1)).toContainText('Last valid: #ffffff'); expect(await textLines(1)).toBeLessThanOrEqual(2);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
 
 for (const width of [320, 390, 768, 1440, 1920]) test(`selected-token workspace remains usable at ${width}px`, async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
