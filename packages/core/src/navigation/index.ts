@@ -108,7 +108,8 @@ export function createMenu(options: MenuOptions): Component<HTMLDivElement> {
     menu.style.left = `${Math.min(Math.max(anchor.left, margin), maxLeft)}px`;
     menu.style.top = `${Math.min(Math.max(preferred, margin), maxTop)}px`;
   };
-  const onDialogClose = (): void => close(false);
+  // Native close events are queued: an earlier close must not dismiss a menu after its dialog reopens.
+  const onDialogClose = (): void => { if (!ownerDialog?.open) close(false); };
   const close = (restore: boolean): void => {
     if (!menu.hidden) { menu.hidePopover(); menu.hidden = true; }
     trigger.setAttribute('aria-expanded', 'false');
