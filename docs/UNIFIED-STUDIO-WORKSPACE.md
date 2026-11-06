@@ -16,7 +16,7 @@ Pane widths are optional local preferences, not exported design tokens. Unavaila
 
 Choose a category, search by token name/type/value/reference, or filter to saved overrides and pending removals. The table displays default and resolved values plus override status. Selecting a token opens its single editor in Details/Inspector. Other drafts remain in memory even when the selected token falls outside a filter.
 
-The Inspector groups the override, inherited/resolved values, color picker where supported, and dependency chain. It calls the existing reference inspection and validation functions; it does not introduce a second resolver. Empty overrides inherit. An invalid draft retains the last valid preview and blocks saving and export under existing project-wide validation, including all 96 supported appearance combinations.
+The Inspector groups the override, inherited/resolved values, color picker where supported, and dependency chain. It calls the existing reference inspection and validation functions; it does not introduce a second resolver. Empty overrides inherit. An unresolvable draft retains the last valid preview. A resolvable draft with contrast failures remains visible with validation warnings; invalid drafts block saving and export under existing project-wide validation, including all 96 supported appearance combinations.
 
 **Editing scope** controls the override destination; **Canvas theme** controls the isolated preview. **Studio theme** controls the application shell. A mismatch message explains when scope and preview differ. Commit, Cancel, Undo and unsaved count share the action area. Import/reset and change details remain available without occupying every token row.
 
