@@ -57,7 +57,7 @@ The first visit requires a connection. After service-worker installation and a s
 
 When an update is waiting, finish any pending import, commit or cancel a token draft, and close other Studio tabs before choosing **Prepare update**. Preparation does not reload the page. Unsaved drafts are held in memory: route changes are guarded and the browser is asked to confirm reload or closure, but a crash, forced termination or suppressed prompt can still lose a draft. Browser storage and caches may be evicted. The [PWA guide](apps/studio/src/features/pwa/README.md) explains update and cache cleanup limits.
 
-Local Chromium tests cover offline reload and version updates. The [hosted verification record](docs/DEPLOYMENT-VERIFICATION.md) covers Chrome page loading, navigation, appearance persistence and offline token editing on Pages. Actual OS installation, iOS standalone behavior and offline operation in other browsers remain **NOT VERIFIED**.
+Local Chromium tests cover offline reload and version updates. The [hosted verification record](docs/DEPLOYMENT-VERIFICATION.md) covers Chrome page loading, navigation, appearance persistence and offline token editing on Pages. Actual OS installation and iOS standalone behavior remain **NOT VERIFIED**. Bounded WebKit/native Safari checks and remaining full-browser/device limits are recorded in the later unified Studio delivery report.
 
 ## Checks
 
@@ -90,3 +90,5 @@ See [Installation](docs/INSTALLATION.md), [Component API](docs/COMPONENT-API.md)
 The [Components workspace delivery record](docs/COMPONENTS-WORKSPACE-DELIVERY-2026-11-06.md) links the 6 November browser, visual, security, performance and deployment evidence, including remaining manual acceptance work.
 
 The [unified Studio guide](docs/UNIFIED-STUDIO-WORKSPACE.md) covers the shared Token/Component editing model, [independent13-perspective review](docs/UNIFIED-STUDIO-REVIEW-2026-11-06.md) records observed findings and fixes, and [PWA exceptions](docs/PWA-STANDARD-EXCEPTIONS.md) defines guarded reload and system-chrome behavior.
+
+The later [unified Studio delivery record](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md) records the completed shared workspace, 324 CI cases, actual protected hosted upgrades/offline operation and remaining manual acceptance.

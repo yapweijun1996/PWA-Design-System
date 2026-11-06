@@ -20,7 +20,7 @@ Update and offline notices remain sticky below the measured app bar and each oth
 
 The shell owns viewport-fit and top/left/right/bottom safe-area padding for the app bar, drawer, page and contextual actions. Features do not add duplicate shell insets. Resolved semantic surface tokens feed browser theme-color metadata in the blocking bootstrap, including validated saved overrides; root appearance/style changes synchronize supported runtime metadata. Light defaults remain unchanged. Apple status-bar metadata selects the supported opaque default/black modes instead of translucent mode.
 
-The static manifest retains its intentional light fallback for initial OS launch presentation. Platform launch/splash behavior and whether iOS applies runtime metadata require actual device evidence; metadata alone is not proof. Browser UI, Safari, installed iOS launch, keyboard/safe-area rendering and theme coherence remain NOT VERIFIED until device testing is recorded.
+The static manifest retains its intentional light fallback for initial OS launch presentation. Platform launch/splash behavior and whether iOS applies runtime metadata require actual device evidence; metadata alone is not proof. Installed iOS launch, physical keyboard/safe-area rendering, OS chrome and theme coherence remain NOT VERIFIED until device testing is recorded. A bounded native desktop Safari UI/200% smoke is recorded in the unified delivery report; it does not establish full Safari or iOS acceptance.
 
 Studio host inputs should retain at least 16px readable text on iOS. Core component previews intentionally demonstrate their approved typography/density tokens and are not globally restyled to hide a sizing issue; verify consuming-device behavior separately.
 

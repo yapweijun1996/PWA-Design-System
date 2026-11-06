@@ -1,6 +1,6 @@
 # Studio workspace redesign and PWA Standard alignment
 
-Status: Implementation integrated; final regression, independent visual review and release verification in progress. Physical/manual acceptance remains NOT VERIFIED. The latest user request authorizes KB auto-manager implementation and the supplied workspace review.
+Status: Authorized engineering delivery completed and product deployment verified. Physical/manual acceptance remains partly NOT VERIFIED; the full production-release definition of done is not claimed. The latest user request authorizes KB auto-manager implementation and the supplied workspace review.
 Recorded: 6 November 2026.
 Inspected baseline: `4b1b74566c5f05b2564c7cfa4e7a65ddd6994fe0`.
 
@@ -19,20 +19,21 @@ MUST requires implementation or a concrete documented exception. DEFAULT applies
 - [x] WS-03 (P2): Compact Token Table with category/search/modified filtering, selected-token Inspector, coherent color/HEX/inheritance display, visible dependency chain, and independent visual preview. Reuse token validation/resolution and stable component preview nodes.
 - [x] WS-04 (P1): Components uses one property control center in Inspector; move Code/copy to a Canvas tab, clarify Examples in Usage, preserve all 21 supported component APIs and preview/code parity.
 - [x] WS-05 (P2): Typography, spacing, lightweight navigation, hover/focus, empty/error states and accessible tabs/splitters. Review top/middle/bottom, active fields, both themes and responsive panel transitions in real browsers.
-- [ ] WS-06 (P1): Independent functional/accessibility/visual regression, evidence-grounded 13-persona review, documentation, PR/CI/Pages and hosted artifact/offline/update verification. Human/device checks remain NOT VERIFIED without actual evidence.
+- [x] WS-06 (P1): Independent functional/accessibility/visual regression, evidence-grounded 13-persona review, documentation, PR/CI/Pages and hosted artifact/offline/update verification. Human/device checks remain NOT VERIFIED without actual evidence.
 
 Execution order: shared layout contract; Token and Component interaction changes; PWA engineering and route-specific defaults; independent verification and release. The user prioritizes layout/interaction over new colors or animation. Reported screenshot risks are not confirmed functional defects until reproduced. Existing PWA tasks below remain in scope; preserve their IDs and evidence boundaries.
 
 ## Current implementation evidence
 
-- Integrated product checkpoint: `1ffccaf`; shared architecture and UI guide: [Unified Studio workspace](docs/UNIFIED-STUDIO-WORKSPACE.md).
-- The compact Token Table renders one selected-token override editor, with readable value columns and deliberate table-local horizontal scrolling. Components uses one Inspector and separate Canvas content tabs; phone Canvas and Preview have distinct names.
-- Independent review reproduced and fixed tablet values wrapping vertically, a short-window table header covering the app bar, stale pane drag origins after unblurred width input, and update notices disappearing during deep scrolling. Focused Token layout verification: 9/9 real Chrome before final PWA integration; the integrated132-case Studio suite passed. After final compact-label polish,22 targeted cases passed; a later native Menu lifecycle regression adds one case for final CI.
-- Recovered-source unit/integration checks: 161/161. React6/6, production PWA5/5 and production first-frame/subpath/CSP checks passed before the bounded Menu lifecycle follow-up. Typecheck, lint, token/contract generation, SSOT and production artifact checks pass. These do not establish browser or device acceptance.
-- PWA source implements measured sticky update/offline chrome, focus clearance, safe-area ownership, theme metadata, guarded activation and explicit Reload now. [Central exceptions](docs/PWA-STANDARD-EXCEPTIONS.md) retain the draft-safety reload policy and route-specific header defaults.
-- Draft PR: [#9](https://github.com/yapweijun1996/PWA-Design-System/pull/9). All19 fresh Linux candidates were individually reviewed and accepted; the capture job was removed and strict visual comparison passed on `c061cf5`/CI42176891934. Independent13-perspective source/screenshot review and24 real Chrome journeys passed. Independent quality follow-up accepted the recovered Menu lifecycle fix; recovered-source WebKit39/39 passed. Recovered-source CI42177808402 passed324/324 (161 unit/integration,133 Studio,6 React,5 PWA,19 visual). PR#9 merged as `a046515`; main CI42178963197 and Pages42179274244 passed. Hosted build `bc33df665683dc92506b`:30 exact artifact files and29 precache digests verified. The new-client hosted upgrade journey and final evidence recording remain in progress.
+- The authorized workspace and PWA engineering is implemented. [PR9](https://github.com/yapweijun1996/PWA-Design-System/pull/9) merged as `a046515`; [PR10](https://github.com/yapweijun1996/PWA-Design-System/pull/10) merged as `3163663` and adds accurate bundled help.
+- Both pages reuse one resizable workspace. Tokens has one selected-token editor; Components has one property Inspector and independent Canvas tabs. Public component APIs, token resolution and React boundaries remain intact. A confirmed native Menu close-event race was corrected without an API change.
+- Final product main CI [42180325282](https://github.com/yapweijun1996/PWA-Design-System/actions/runs/42180325282) passed 324/324: 161 unit/integration, 133 Studio E2E, 6 React, 5 PWA and 19 strict visual cases. Typecheck, lint, generated consistency, SSOT, build/artifact and production CSP checks passed.
+- Supplemental evidence: 39 recovered-source WebKit cases, 24 independent Chrome route/width/theme journeys and 18 final hosted navigation/workspace journeys passed. Actual native Safari 27.0.1 UI and 200% zoom smoke is partial evidence, not full Safari/iOS acceptance.
+- All 19 Linux visual candidates were individually inspected; the temporary capture job was removed. The environment and 0.001 comparison threshold remain unchanged.
+- Final Pages run [42180666846](https://github.com/yapweijun1996/PWA-Design-System/actions/runs/42180666846) serves build `1170b641fcdfe7977a19`. All 30 files match its CI artifact and all 29 precache digests match. Actual old 652→A→B draft/other-tab/activation/reload guards, committed configuration preservation and offline reload/Code passed.
+- [Architecture/workflow guide](docs/UNIFIED-STUDIO-WORKSPACE.md), [independent review](docs/UNIFIED-STUDIO-REVIEW-2026-11-06.md), [PWA exceptions](docs/PWA-STANDARD-EXCEPTIONS.md) and [full delivery report](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md) record evidence, recovery and limitations.
 
-A checked engineering item below means its implementation is present with the stated automation; acceptance involving actual OS/device/human observation remains open. No full PWA or WCAG conformance claim is made.
+A checked engineering item means its implementation is present with the stated verification. Physical installation, OS chrome/virtual keyboard, actual 400% zoom, manual assistive technology and independent human visual acceptance remain open. No complete PWA or WCAG conformance claim is made.
 
 ## Existing behavior to preserve
 
@@ -71,7 +72,7 @@ Priority: P1. Rule: MUST. Owner: Frontend engineer; physical validation by devic
 - [x] Map safe-area ownership for the header, sidebar/drawer, content, update notice, overlays and future floating controls; prevent duplicate inset padding.
 - [x] Add the required viewport integration and token-compatible safe-area handling during this implementation.
 - [ ] Check virtual-keyboard open/closed behavior, portrait/landscape, focused fields and scroll-to-focused-control behavior.
-- [x] Measure iOS-facing input text sizes, including compact density; prevent unwanted focus zoom without disabling user zoom.
+- [x] Implement and check a 16px minimum for representative Studio host fields, including compact host styles, without disabling user zoom. Core component previews retain their approved tokens; physical iOS focus zoom remains NOT VERIFIED.
 - [ ] Verify content and controls remain clear of the notch/home indicator and have no document horizontal overflow.
 
 Acceptance: Actual iPhone/iPad browser and installed-mode evidence, plus desktop/tablet/phone regression. CSS viewport emulation alone cannot close this task.
@@ -145,6 +146,8 @@ Priority: P1 for release evidence. Status: NOT VERIFIED; missing evidence is not
 - [ ] VoiceOver/NVDA task interpretation, actual 200%/400% zoom, text enlargement and independent human visual approval.
 - [ ] Record tester, device/OS/browser/assistive technology, build, date, screenshots/observations, findings and retests in the existing acceptance record.
 
+Supplemental actual desktop Safari 27.0.1 native checks verified narrow/wide panels, property→preview→code parity,200% reflow, invalid token blocking and Cancel restoration, without enabling Remote Automation. Zoom was restored to 100%; the task tab was closed. Per-tab build identity and exact viewport were not captured, so this is bounded smoke evidence rather than complete Safari acceptance. Actual400% remains NOT VERIFIED.
+
 Use [the existing manual checklist](docs/RELEASE-ACCEPTANCE.md). Owner/device access may be required; do not enable browser automation permissions automatically. Field Core Web Vitals remain a separate evidence task if production field-performance claims are intended; no telemetry backend is authorized here.
 
 ### PWA-08 — Regression, documentation and future release
@@ -153,10 +156,26 @@ Priority: P1. Dependency: Approved implementation of the preceding in-scope task
 
 - [x] Preserve JSON token SSOT, 21 component contracts, independent appearance axes and optional React boundaries.
 - [x] Add focused browser coverage for new behavior and rerun relevant existing tests; retain strict visual/environment checks and individually review intentional baseline changes.
-- [ ] Recheck cache freshness, mixed-version refusal, scoped cleanup, offline tools, import security, CSP and dependency advisories without weakening gates.
+- [x] Recheck cache freshness, mixed-version refusal, scoped cleanup, offline tools, import security, CSP and dependency advisories without weakening gates.
 - [x] Update PWA/installation/acceptance documentation and maintain one central exception record for the update policy and route-specific DEFAULT exceptions.
-- [ ] Complete normal feature-branch/PR/CI review before deployment under the existing session authorization; verify the actual hosted build, assets, console/network, offline and update journeys afterward.
-- [ ] Report every standard item as PASS, FAIL, NOT VERIFIED or justified N/A with source/build evidence. Declare full conformance only after required evidence or documented exceptions exist.
+- [x] Complete normal feature-branch/PR/CI review before deployment under the existing session authorization; verify the actual hosted build, assets, console/network, offline and update journeys afterward.
+- [x] Report every standard item as PASS, FAIL, NOT VERIFIED or justified N/A with source/build evidence. Declare full conformance only after required evidence or documented exceptions exist.
+
+## Delivery status by standard item
+
+| Item | Engineering result | Remaining acceptance |
+| --- | --- | --- |
+| WS-01–WS-06 | PASS: shared layout/interaction, Token Table/Inspector, single Components editor, focused recovery, independent review, normal CI/PR/Pages and hosted verification | Independent human visual acceptance is NOT VERIFIED |
+| PWA-01 | PASS for implemented viewport-fit/safe-area ownership, host input sizing and automated responsive/focus checks | Physical notch/home indicator, mobile virtual keyboard, rotation and standalone behavior are NOT VERIFIED |
+| PWA-02 | PASS for opaque semantic surfaces and prepaint/runtime theme metadata | Actual installed OS/status-bar presentation is NOT VERIFIED; manifest light fallback is documented |
+| PWA-03 | PASS: real activated readiness, loader/edit lock, timeout/retry, explicit Reload now, draft/import/other-tab protections, actual hosted A→B upgrade and offline recovery | Manual-reload editing-safety exception documented; no automatic refresh claimed |
+| PWA-04 | PASS: Documentation hide/reveal with focus/reduced-motion/system-notice handling | Always-sticky editing routes are justified DEFAULT exceptions |
+| PWA-05 | PASS: contextual document Back to top with safe areas/focus; local scrollers remain independent | N/A for short utilities and local Explorer/code scrolling |
+| PWA-06 | PASS: local startup/offline/update/error feedback and useful cached tools | navigator.onLine is only a browser hint; no first-visit offline or service-availability claim |
+| PWA-07 | PARTIAL: actual Safari 27.0.1 native UI and 200% zoom smoke passed, plus Chrome157 and WebKit27.2 evidence | Physical iOS/Android, Safari full-suite/console/offline/install, actual 400% zoom, manual screen reader and human visual approval remain NOT VERIFIED |
+| PWA-08 | PASS for engineering regression/security review, reviewed strict visual baselines, documentation and product release provenance | Full conformance remains conditional on the manual evidence above |
+
+Final evidence: [Unified Studio delivery](docs/UNIFIED-STUDIO-DELIVERY-2026-11-06.md). The unchecked physical/manual subitems are deliberately retained. A passing engineering release does not certify every PWA Standard or WCAG requirement.
 
 ## Recommended execution order
 
