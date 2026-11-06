@@ -51,3 +51,15 @@ test('tablet token values stay readable inside the deliberate horizontal table s
   await expect(page.getByRole('columnheader', { name: 'Override status', exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
+
+
+test('short-window Token table header stays behind the Studio app bar', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 300 }); await page.goto('./#design-tokens'); await tokenCanvas(page);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expect.poll(() => page.evaluate(() => {
+    const bar = document.querySelector('.studio-topbar'), head = document.querySelector('.token-editor__fields thead'); if (!bar || !head) return false;
+    const a = bar.getBoundingClientRect(), b = head.getBoundingClientRect(), x = b.x + b.width / 2, y = a.y + a.height / 2;
+    return b.top < a.bottom && b.bottom > a.top && !!document.elementFromPoint(x, y)?.closest('.studio-topbar');
+  })).toBe(true);
+  await page.getByRole('combobox', { name: 'Studio theme', exact: true }).selectOption('dark'); await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+});
