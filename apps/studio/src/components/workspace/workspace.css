@@ -18,3 +18,14 @@
 .ws-workspace[data-mode='phone'] .ws-layout { grid-template-columns: minmax(0, 1fr); }
 .ws-workspace[data-mode='phone'] .ws-panel-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .ws-workspace[data-mode='phone'] .ws-panel-button { padding-inline: var(--ds-spacing-xs); overflow-wrap: anywhere; }
+
+.ws-header { display: flex; flex-wrap: wrap; align-items: end; gap: var(--ds-spacing-md); min-width: 0; }
+.ws-header > .ws-toolbar { flex: 1 1 auto; }
+.ws-sizes { color: var(--ds-color-text); }
+.ws-sizes summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; padding-inline: var(--ds-spacing-sm); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); background: var(--ds-color-surface); }
+.ws-size-fields { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-md); padding-block-start: var(--ds-spacing-sm); }
+.ws-size-field { display: grid; grid-template-columns: minmax(44px, auto) 5rem minmax(44px, auto); gap: var(--ds-spacing-xs); }
+.ws-size-field label { grid-column: 1 / -1; font-size: var(--ds-font-size-small); }
+.ws-size-input, .ws-size-step { min-width: 0; min-height: 44px; border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); background: var(--ds-color-surface); color: var(--ds-color-text); font: inherit; }
+.ws-size-input { width: 100%; box-sizing: border-box; padding-inline: var(--ds-spacing-xs); }
+.ws-size-step { cursor: pointer; }
