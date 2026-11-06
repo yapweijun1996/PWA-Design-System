@@ -61,12 +61,25 @@ test('all seven local examples render, the table scrolls locally, and appearance
   await example.selectOption('mobile-navigation'); await expect(frame.getByRole('navigation', { name: 'Example navigation' })).toBeVisible();
 });
 
-test('Studio layout switches at the authoritative build-time breakpoint', async ({ page }) => {
+test('Studio layout switches at the authoritative build-time breakpoints', async ({ page }) => {
   const source = JSON.parse(readFileSync(resolve('packages/tokens/primitives.json'), 'utf8')) as Record<string, { $value: string }>;
-  const tablet = Number.parseInt(source['breakpoint.tablet'].$value, 10);
-  await page.setViewportSize({ width: tablet, height: 900 }); await page.goto('./#components');
-  const layout = page.locator('.pg-layout'); await expect(layout).toBeVisible();
-  expect(await layout.evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length)).toBe(1);
-  await page.setViewportSize({ width: tablet + 1, height: 900 });
-  await expect.poll(() => layout.evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length)).toBe(2);
+  const mobile = Number.parseInt(source['breakpoint.mobile'].$value, 10), desktop = Number.parseInt(source['breakpoint.desktop'].$value, 10);
+  await page.setViewportSize({ width: mobile - 1, height: 900 }); await page.goto('./#components');
+  const layout = page.locator('.pg-layout'), catalog = page.locator('.pg-catalog'), preview = page.locator('.pg-stage'), inspector = page.locator('.pg-settings');
+  await expect(layout).toBeVisible();
+  for (const [width, columns] of [[mobile - 1, 1], [mobile, 2], [desktop, 2], [desktop + 1, 3]]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect.poll(() => layout.evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length)).toBe(columns);
+    await expect(preview).toBeVisible();
+    if (width < mobile) await expect(inspector).toBeHidden(); else await expect(inspector).toBeVisible();
+    const explorer = page.getByRole('button', { name: /^Explorer:/ });
+    if (width <= desktop) {
+      await expect(catalog).toBeHidden(); await expect(explorer).toBeVisible(); await explorer.click();
+      await expect(catalog).toBeVisible(); await expect(page.getByRole('searchbox', { name: 'Search components' })).toBeFocused();
+      if (width < mobile) { await expect(preview).toBeHidden(); await expect(inspector).toBeHidden(); }
+      else { await expect(preview).toBeVisible(); await expect(inspector).toBeVisible(); }
+      await page.keyboard.press('Escape'); await expect(explorer).toBeFocused(); await expect(catalog).toBeHidden(); await expect(preview).toBeVisible();
+    } else { await expect(catalog).toBeVisible(); await expect(explorer).toBeHidden(); }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
 });
