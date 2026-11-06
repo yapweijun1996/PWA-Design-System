@@ -2,7 +2,7 @@
 .pg-page { display: grid; gap: var(--ds-spacing-md); padding-bottom: var(--ds-spacing-xl); }
 .pg-page :is(h1,h2,h3,h4,p) { margin: 0; }
 .pg-intro, .pg-api, .pg-empty, .pg-width-status, .pg-list-help { color: var(--ds-color-text-muted); }
-.pg-detail, .pg-catalog, .pg-stage, .pg-settings { min-width: 0; }
+.pg-detail, .pg-catalog, .pg-stage, .pg-settings, .pg-stage > [role='tabpanel'] { min-width: 0; }
 .pg-stage, .pg-settings, .pg-catalog-header, .pg-preview-panel, .pg-code-panel { display: grid; align-content: start; gap: var(--ds-spacing-md); }
 .pg-catalog h2, .pg-settings h2 { font-size: var(--ds-font-size-body); }
 .pg-catalog-header { gap: var(--ds-spacing-sm); }
@@ -10,7 +10,7 @@
 .pg-input, .pg-select { box-sizing: border-box; width: 100%; min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-sm); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); background: var(--ds-color-surface); color: var(--ds-color-text); font: inherit; font-size: max(1rem, var(--ds-font-size-body)); }
 .pg-select { appearance: auto; }
 .pg-list-help, .pg-width-status { font-size: var(--ds-font-size-small); }
-.pg-list { display: grid; gap: var(--ds-spacing-xs); margin-top: var(--ds-spacing-md); max-height: clamp(8rem, calc(100dvh - 30rem), 32rem); overflow: auto; overscroll-behavior: contain; }
+.pg-list { display: grid; gap: var(--ds-spacing-xs); margin-top: var(--ds-spacing-md); max-height: clamp(8rem, 28dvh, 24rem); overflow: auto; overscroll-behavior: contain; }
 .pg-catalog-item, .pg-copy, .pg-tool, .pg-tab { min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-sm); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); color: var(--ds-color-text); background: var(--ds-color-surface); font: inherit; cursor: pointer; }
 .pg-catalog-item { width: 100%; border-color: transparent; text-align: start; }
 .pg-catalog-item:hover { background: var(--ds-color-surface-alt); }
@@ -22,14 +22,14 @@
 .pg-tab[aria-selected='true'] { color: var(--ds-color-link); border-bottom-color: var(--ds-color-link); background: var(--ds-color-surface-alt); font-weight: var(--ds-font-weight-label); }
 .pg-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-spacing-sm); }
 .pg-field { min-width: 0; }
-.pg-field:first-child, .pg-field:has(textarea) { grid-column: 1 / -1; }
+.pg-controls > .pg-field:first-child, .pg-controls > .pg-field:has(textarea) { grid-column: 1 / -1; }
 .pg-error { color: var(--ds-color-danger); }
 .pg-reset { justify-self: start; }
-.pg-canvas-scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-card); }
+.pg-canvas-scroll { box-sizing: border-box; min-width: 0; max-width: 100%; overflow-x: auto; border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-card); }
 .pg-preview { box-sizing: border-box; padding: var(--ds-spacing-lg); min-height: clamp(12rem, 32vh, 22rem); color: var(--ds-color-text); background: var(--ds-color-surface-alt); display: grid; align-content: center; justify-items: start; }
 .pg-preview > * { max-width: 100%; }
 .pg-code-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ds-spacing-sm); }
-.pg-code { margin: 0; max-width: 100%; overflow-x: auto; padding: var(--ds-spacing-md); background: var(--ds-color-background); color: var(--ds-color-text); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-control); font-size: var(--ds-font-size-small); }
+.pg-code { box-sizing: border-box; min-width: 0; margin: 0; max-width: 100%; overflow-x: auto; padding: var(--ds-spacing-md); background: var(--ds-color-background); color: var(--ds-color-text); border: 1px solid var(--ds-color-border-subtle); border-radius: var(--ds-radius-control); font-size: var(--ds-font-size-small); }
 .pg-properties { display: grid; gap: var(--ds-spacing-xs); }
 .pg-properties dt { font-weight: var(--ds-font-weight-label); overflow-wrap: anywhere; }
 .pg-properties dd { margin: 0 0 var(--ds-spacing-sm); overflow-wrap: anywhere; color: var(--ds-color-text-muted); }
@@ -49,7 +49,6 @@
  .pg-width-status { grid-column: auto; }
 }
 @media (max-width: 699px) {
- .pg-list { max-height: 16rem; }
  .pg-controls { grid-template-columns: minmax(0, 1fr); }
  .pg-preview { padding: var(--ds-spacing-md); }
 }

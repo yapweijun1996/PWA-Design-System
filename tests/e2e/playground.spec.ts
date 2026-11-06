@@ -80,8 +80,8 @@ test('mobile catalog scroll is discoverable and preview is visible near the top'
   expect(box).not.toBeNull(); if (!box) throw new Error('Preview has no bounds'); expect(box.y).toBeGreaterThanOrEqual(0); expect(box.y + box.height).toBeLessThanOrEqual(844);
   await page.getByRole('button', { name: 'Explorer', exact: true }).click();
   const list = page.getByRole('region', { name: 'Scrollable component list' }); await expect(list).toHaveAttribute('tabindex', '0'); await expect(page.getByText('21 of 21 components · Search or scroll to explore.')).toBeVisible();
-  const end = await list.evaluate(node => node.scrollHeight - node.clientHeight);
-  await list.focus(); await page.keyboard.press('End'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(end); await page.keyboard.press('Home'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(0);
+  // Panel reflow can change the list height; test the current scroll boundary.
+  await list.focus(); await page.keyboard.press('End'); await expect.poll(() => list.evaluate(node => node.scrollHeight - node.clientHeight - node.scrollTop)).toBe(0); await page.keyboard.press('Home'); await expect.poll(() => list.evaluate(node => node.scrollTop)).toBe(0);
   const scroll = await list.evaluate(node => { const max = node.scrollHeight - node.clientHeight; node.scrollTop = 0; const top = node.scrollTop; node.scrollTop = max / 2; const middle = node.scrollTop; node.scrollTop = max; return { top, middle, bottom: node.scrollTop, max }; });
   expect(scroll.top).toBe(0); expect(scroll.middle).toBeGreaterThan(0); expect(scroll.bottom).toBeGreaterThan(scroll.middle); expect(scroll.bottom).toBeCloseTo(scroll.max, 0);
   await page.getByRole('searchbox', { name: 'Search components' }).fill('menu'); const menu = list.getByRole('button', { name: 'Menu', exact: true }); await menu.focus(); await page.keyboard.press('Enter');

@@ -28,6 +28,7 @@ for (const width of [320, 768, 1440]) test(`component workbench fits ${width}px 
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message)); await page.setViewportSize({ width, height: 900 }); await page.goto('./#components');
   if (width <= 768) await page.getByRole('button', { name: 'Explorer', exact: true }).click();
   const list = page.getByRole('region', { name: 'Scrollable component list' });
+  await expect.poll(() => list.evaluate(node => node.getBoundingClientRect().bottom)).toBeLessThanOrEqual(900);
   await list.evaluate(node => { node.scrollTop = node.scrollHeight; }); await expect(list.getByRole('button', { name: 'Data Table', exact: true })).toBeInViewport(); await list.getByRole('button', { name: 'Data Table', exact: true }).click();
   await page.getByRole('tab', { name: 'Usage', exact: true }).click(); await expect(page.locator('.pg-usage')).toHaveAttribute('open', ''); await page.getByRole('tab', { name: 'API', exact: true }).click(); await expect(page.locator('.pg-api-details')).toHaveAttribute('open', '');
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight / 2)); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
