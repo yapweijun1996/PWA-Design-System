@@ -108,7 +108,7 @@ export function mountTokenEditor(root: HTMLElement): () => void {
   }
   function ensureFocusedInput(): void {
     const target = document.activeElement; if (!(target instanceof HTMLInputElement) || !inspector.contains(target)) return;
-    const bounds = target.getBoundingClientRect(), header = document.querySelector('.studio-topbar')?.getBoundingClientRect().bottom ?? 0;
+    const bounds = target.getBoundingClientRect(), header = Math.max(0, ...Array.from(document.querySelectorAll<HTMLElement>('.studio-topbar, #pwa-connectivity:not([hidden]), #pwa-update:not([hidden])'), region => Math.max(0, region.getBoundingClientRect().bottom)));
     const bottom = window.visualViewport ? window.visualViewport.offsetTop + window.visualViewport.height : innerHeight;
     if (bounds.top >= header && bounds.bottom <= bottom) return;
     target.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
@@ -180,8 +180,10 @@ export function mountTokenEditor(root: HTMLElement): () => void {
     finally { if (!destroyed && revision === importRevision) { importPending = false; file.value = ''; } }
   }, { signal });
   window.addEventListener('resize', ensureFocusedInput, { signal });
-  const layoutObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(ensureFocusedInput) : null; layoutObserver?.observe(inspector);
+  let layoutFrame = 0;
+  const layoutObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { cancelAnimationFrame(layoutFrame); layoutFrame = requestAnimationFrame(ensureFocusedInput); }) : null;
+  for (const region of [inspector, ...document.querySelectorAll<HTMLElement>('.studio-topbar, #pwa-connectivity, #pwa-update')]) layoutObserver?.observe(region);
   const appearanceObserver = new MutationObserver(() => { refreshRows(); renderPreview(); }); appearanceObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-palette', 'data-density', 'data-kit'] });
   refreshRows(); renderPreview(); updateDraftSummary(); activateView(0); status.textContent = getStorageNotice();
-  return () => { destroyed = true; importRevision++; clearDraftGuard(); layoutObserver?.disconnect(); appearanceObserver.disconnect(); controller.abort(); primaryScene.destroy(); comparisonScene.destroy(); workspace.destroy(); section.remove(); };
+  return () => { destroyed = true; importRevision++; clearDraftGuard(); cancelAnimationFrame(layoutFrame); layoutObserver?.disconnect(); appearanceObserver.disconnect(); controller.abort(); primaryScene.destroy(); comparisonScene.destroy(); workspace.destroy(); section.remove(); };
 }

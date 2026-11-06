@@ -1,4 +1,4 @@
-#pwa-update:not([hidden]) { padding: var(--ds-spacing-sm) var(--ds-spacing-lg); background: var(--ds-color-surface-alt); color: var(--ds-color-text); border-bottom: 1px solid var(--ds-color-border-subtle); }
+#pwa-update:not([hidden]) { position: sticky; top: calc(var(--studio-system-header-height, 68px) + var(--studio-system-connectivity-height, 0px)); z-index: var(--ds-layer-sticky); padding: var(--ds-spacing-sm) var(--ds-spacing-lg); background: var(--ds-color-surface-alt); color: var(--ds-color-text); border-bottom: 1px solid var(--ds-color-border-subtle); }
 #pwa-update p { margin: 0; }
 #pwa-update button { min-height: var(--ds-size-control-medium); padding: var(--ds-spacing-sm) var(--ds-spacing-md); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); color: var(--ds-color-text); background: var(--ds-color-surface); font: inherit; cursor: pointer; }
 #pwa-update button:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }

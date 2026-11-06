@@ -109,6 +109,28 @@ test('production offline shell, protected update and old lazy chunks', async ({ 
   const update = page.locator('#pwa-update');
   await expect(update).toBeVisible();
   await expect(update.getByRole('status')).toHaveText('Update available. Save drafts before preparing.');
+  // Measure without a locator action that could scroll an off-screen notification into view.
+  await page.evaluate(() => { if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); window.scrollTo(0, document.documentElement.scrollHeight); });
+  await expect.poll(() => update.evaluate(node => { const bounds = node.getBoundingClientRect(), header = document.querySelector('.studio-topbar')?.getBoundingClientRect().bottom ?? 0; return bounds.top >= header && bounds.bottom <= innerHeight && scrollY > 0; })).toBe(true);
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 844 });
+    await expect(page.locator('.ws-workspace')).toHaveAttribute('data-mode', width === 390 ? 'phone' : 'wide');
+    if (width === 390) await page.evaluate(() => { Object.defineProperty(navigator, 'onLine', { configurable: true, value: false }); window.dispatchEvent(new Event('offline')); });
+    // Resize to the actual Inspector rather than assuming the desktop panel remains selected.
+    const details = page.getByRole('button', { name: 'Details', exact: true }); if (await details.isVisible()) await details.click();
+    await token.focus();
+    await token.evaluate(node => { if (!(node instanceof HTMLInputElement)) throw new Error('Missing active token input'); window.scrollTo(0, node.getBoundingClientRect().top + scrollY - 70); node.value = '#f8fafc'; node.dispatchEvent(new Event('input', { bubbles: true })); });
+    await update.locator('details').evaluate(node => { node.setAttribute('open', ''); });
+    await expect.poll(() => token.evaluate(node => { const bounds = node.getBoundingClientRect(), chrome = Math.max(...Array.from(document.querySelectorAll('.studio-topbar, #pwa-update, #pwa-connectivity:not([hidden])'), item => item.getBoundingClientRect().bottom)); return document.activeElement === node && bounds.top >= chrome && bounds.bottom <= innerHeight; })).toBe(true);
+    await update.locator('details').evaluate(node => { node.removeAttribute('open'); });
+  }
+  await page.evaluate(() => { Reflect.deleteProperty(navigator, 'onLine'); window.dispatchEvent(new Event('online')); });
+  await page.getByRole('button', { name: 'Cancel draft' }).click();
+  await page.evaluate(() => location.hash = 'documentation'); await expect(page.getByRole('heading', { name: 'Documentation', exact: true })).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, innerHeight + 100)); await expect(page.locator('.studio-topbar')).not.toHaveAttribute('data-scroll-hidden', 'true');
+  await expect.poll(() => update.evaluate(node => node.getBoundingClientRect().top >= 0 && node.getBoundingClientRect().bottom <= innerHeight)).toBe(true);
+  await page.evaluate(() => location.hash = 'design-tokens'); await page.getByRole('button', { name: 'color.background', exact: true }).click();
+
   await expect(update.locator('details')).not.toHaveAttribute('open', '');
   await update.getByText('Update details', { exact: true }).click();
   await expect(update.locator('details')).toHaveAttribute('open', '');

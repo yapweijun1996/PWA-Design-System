@@ -10,11 +10,13 @@ The worker deliberately does not add `clients.claim()`. An old document can keep
 
 ## Top app bar and return to top
 
-Editing workspaces, navigation, settings, theme tools and application previews retain an always-sticky top app bar: users need stable theme/navigation access, and hiding focused controls or moving editing chrome would damage task continuity. These are justified DEFAULT exceptions. The long-form Documentation route hides the bar after meaningful downward scrolling and reveals it on upward scrolling or keyboard focus, without reflow. An open navigation drawer or reduced-motion preference suppresses hiding. Returning to a route resets its scroll tools.
+Editing workspaces, navigation, settings, theme tools and application previews retain an always-sticky top app bar: users need stable theme/navigation access, and hiding focused controls or moving editing chrome would damage task continuity. These are justified DEFAULT exceptions. The long-form Documentation route hides the bar after meaningful downward scrolling and reveals it on upward scrolling or keyboard focus, without reflow. An open navigation drawer, visible system notice or reduced-motion preference suppresses hiding. Returning to a route resets its scroll tools.
 
 Back to top appears only after a meaningful document scroll. It operates on the document, leaves Explorer/code/canvas local scrolling independent, respects safe areas and reduced motion, and focuses the current route heading. Short routes do not display an unnecessary action.
 
 ## Chrome and safe areas
+
+Update and offline notices remain sticky below the measured app bar and each other, including while reading long pages. Focused Token Inspector inputs use the measured visible chrome boundary when notices appear, expand or resize; notification updates never force a page-top jump.
 
 The shell owns viewport-fit and top/left/right/bottom safe-area padding for the app bar, drawer, page and contextual actions. Features do not add duplicate shell insets. Resolved semantic surface tokens feed browser theme-color metadata in the blocking bootstrap, including validated saved overrides; root appearance/style changes synchronize supported runtime metadata. Light defaults remain unchanged. Apple status-bar metadata selects the supported opaque default/black modes instead of translucent mode.
 

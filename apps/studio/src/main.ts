@@ -44,7 +44,7 @@ function resetScrollTools(): void { delete topbar.dataset.scrollHidden; backToTo
 window.addEventListener('scroll', () => {
   const current = window.scrollY, movement = current - previousScroll;
   backToTop.hidden = current < window.innerHeight;
-  if (main.dataset.workspace !== 'documentation' || drawer.open || reducedMotion.matches || topbar.contains(document.activeElement) || current < topbar.offsetHeight * 2) delete topbar.dataset.scrollHidden;
+  if (main.dataset.workspace !== 'documentation' || document.querySelector('#pwa-update:not([hidden]), #pwa-connectivity:not([hidden])') || drawer.open || reducedMotion.matches || topbar.contains(document.activeElement) || current < topbar.offsetHeight * 2) delete topbar.dataset.scrollHidden;
   else if (Math.abs(movement) >= 12) { if (movement > 0) topbar.dataset.scrollHidden = 'true'; else delete topbar.dataset.scrollHidden; }
   if (Math.abs(movement) >= 12) previousScroll = current;
 }, { passive: true });

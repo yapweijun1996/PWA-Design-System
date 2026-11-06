@@ -100,7 +100,7 @@ body[data-drawer-open='true'] { overflow: hidden; }
 .studio-layout[data-workspace='design-tokens'] .studio-topbar { padding-inline: clamp(var(--ds-spacing-md), 2vw, var(--ds-spacing-lg)); }
 .studio-scroll-top { position: fixed; right: calc(var(--ds-spacing-lg) + env(safe-area-inset-right, 0px)); bottom: calc(var(--ds-spacing-lg) + env(safe-area-inset-bottom, 0px)); z-index: var(--ds-layer-sticky); min-height: max(44px, var(--ds-size-control-medium)); padding: var(--ds-spacing-sm) var(--ds-spacing-md); border: 1px solid var(--ds-color-border-control); border-radius: var(--ds-radius-control); background: var(--ds-color-surface); color: var(--ds-color-text); font: inherit; cursor: pointer; }
 .studio-scroll-top:focus-visible { outline: var(--ds-focus-ring-width) solid var(--ds-color-focus); outline-offset: var(--ds-focus-ring-offset); }
-.studio-connectivity:not([hidden]) { margin: 0; padding: var(--ds-spacing-sm) var(--ds-spacing-lg); background: var(--ds-color-surface-alt); color: var(--ds-color-text); border-bottom: 1px solid var(--ds-color-border-subtle); }
+.studio-connectivity:not([hidden]) { position: sticky; top: var(--studio-system-header-height, 68px); z-index: var(--ds-layer-sticky); margin: 0; padding: var(--ds-spacing-sm) var(--ds-spacing-lg); background: var(--ds-color-surface-alt); color: var(--ds-color-text); border-bottom: 1px solid var(--ds-color-border-subtle); }
 @media (prefers-reduced-motion: reduce) { .studio-topbar { transition: none; } }
 
 .studio-main[data-workspace='components'] { padding-block-end: calc(max(44px, var(--ds-size-control-medium)) + var(--ds-spacing-lg) + var(--ds-spacing-md) + env(safe-area-inset-bottom, 0px)); }
