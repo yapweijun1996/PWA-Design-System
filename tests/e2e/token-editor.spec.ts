@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { tokenCanvas, tokenField } from './token-workspace-helpers';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('./#design-tokens');
   await expect(page.getByRole('heading', { name: 'Design tokens', level: 1 })).toBeVisible();
-  await expect(page.getByLabel('color.surface override')).toBeVisible();
+  await tokenField(page, 'color.surface');
 });
 
 test('edits preview, cancels, commits and resets without mutating saved state prematurely', async ({ page }) => {
@@ -106,7 +107,7 @@ test('malicious saved configuration cannot change the first frame or be executed
 });
 
 test('rejects muted text that fails the actual page background despite passing on white', async ({ page }) => {
-  const muted = page.getByLabel('color.text-muted override');
+  const muted = await tokenField(page, 'color.text-muted');
   await muted.fill('#757575');
   await expect(page.getByRole('status').filter({ hasText: 'color.text-muted / color.background requires 4.5:1' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
@@ -140,27 +141,17 @@ test('prepaint rejects saved colors failing actual page background contrast', as
 });
 
 
-test('mobile editor starts with editable tokens and keeps optional information accessible', async ({ page }) => {
+test('mobile workspace selects one token, keeps optional information accessible and previews its draft', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 }); await page.reload();
-  const first = page.getByLabel('color.background override');
-  const position = await first.boundingBox();
-  expect(position).not.toBeNull();
-  if (!position) throw new Error('First token is not rendered');
-  expect(position.y).toBeLessThan(844);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
-  const help = page.getByText('How token overrides work', { exact: true }); await help.focus(); await page.keyboard.press('Enter');
-  await expect(page.getByText(/Theme-specific overrides take precedence/)).toBeVisible();
-  await page.keyboard.press('Enter'); await expect(page.getByText(/Theme-specific overrides take precedence/)).toBeHidden();
-  await page.getByRole('button', { name: 'Preview', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Workspace preview' }).first()).toBeVisible();
-  await page.getByRole('button', { name: 'Editor', exact: true }).click();
-  await first.fill('#f7fafc');
-  await page.getByRole('button', { name: 'Preview', exact: true }).click();
-  await expect(page.getByLabel('Token preview', { exact: true })).toBeVisible();
-  await expect.poll(() => page.getByLabel('Token preview', { exact: true }).evaluate(node => node.style.getPropertyValue('--ds-color-background'))).toBe('#f7fafc');
-  await page.getByRole('button', { name: 'Editor', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Workspace preview' }).first()).toBeHidden();
-  await expect(first).toHaveValue('#f7fafc');
+  const first = await tokenField(page, 'color.background');
+  const position = await first.boundingBox(); if (!position) throw new Error('Selected token is not rendered'); expect(position.y).toBeLessThan(844);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await tokenCanvas(page, 'Info'); const help = page.getByText('How token overrides work', { exact: true }); await help.focus(); await page.keyboard.press('Enter');
+  await expect(page.getByText(/Theme-specific overrides take precedence/)).toBeVisible(); await page.keyboard.press('Enter'); await expect(page.getByText(/Theme-specific overrides take precedence/)).toBeHidden();
+  await tokenCanvas(page, 'Preview'); await expect(page.getByRole('heading', { name: 'Workspace preview' }).first()).toBeVisible();
+  await tokenField(page, 'color.background'); await first.fill('#f7fafc'); await tokenCanvas(page, 'Preview');
+  await expect(page.getByLabel('Token preview', { exact: true })).toBeVisible(); await expect.poll(() => page.getByLabel('Token preview', { exact: true }).evaluate(node => node.style.getPropertyValue('--ds-color-background'))).toBe('#f7fafc');
+  await tokenField(page, 'color.background'); await expect(first).toHaveValue('#f7fafc'); await expect(page.getByRole('heading', { name: 'Workspace preview' }).first()).toBeHidden();
 });
 
 test('legacy saved breakpoint overrides migrate without losing other values before paint', async ({ page }) => {
@@ -169,7 +160,7 @@ test('legacy saved breakpoint overrides migrate without losing other values befo
   await page.reload();
   await expect(page.getByLabel('color.surface override')).toHaveValue('#fafafa');
   await expect(page.locator('.token-editor__status')).toContainText('Legacy breakpoint overrides are no longer applied');
-  await expect(page.getByText('Layout breakpoints and viewport presets (read-only)')).toBeVisible();
+  await tokenCanvas(page, 'Info'); await expect(page.getByText('Layout breakpoints and viewport presets (read-only)')).toBeVisible();
   await expect(page.getByLabel('breakpoint.tablet override')).toHaveCount(0);
   await expect.poll(() => page.evaluate(() => (window as unknown as { firstSurface?: string }).firstSurface)).toBe('#fafafa');
   expect(await page.evaluate(() => localStorage.getItem('pwa-ds-token-overrides-v1'))).toBe(saved);
@@ -191,11 +182,11 @@ test('pending imports announce progress and Commit explicitly cancels the unread
 });
 
 test('a passing local preview explains project-wide contrast failures in another theme', async ({ page }) => {
-  await page.getByLabel('Editing scope').selectOption('global'); await page.getByLabel('Preview theme').selectOption('light');
+  await page.getByLabel('Editing scope').selectOption('global'); await page.getByLabel('Canvas theme').selectOption('light');
   const surface = page.getByLabel('color.surface override'); await surface.fill('#fafafa');
   const status = page.getByRole('status', { name: 'Draft validation' }); await expect(status).toContainText('project-wide checks (96 combinations)'); await expect(status).toContainText('example: dark/'); await expect(status).toContainText('even when this preview passes');
   await expect(surface).toHaveAttribute('aria-invalid', 'false');
-  await expect(page.getByLabel('Token preview', { exact: true }).getByLabel('Preview contrast checks', { exact: true }).getByRole('listitem').first()).toContainText('Pass');
+  await tokenCanvas(page, 'Preview'); await expect(page.getByLabel('Token preview', { exact: true }).getByLabel('Preview contrast checks', { exact: true }).getByRole('listitem').first()).toContainText('Pass');
   await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
   const statusId = await status.getAttribute('id'); expect(statusId).toBeTruthy(); await expect(surface).toHaveAttribute('aria-describedby', new RegExp(statusId ?? 'missing-status-id'));
 });
@@ -204,7 +195,7 @@ test('alias validation persists through primitive copying, pending imports and n
   await page.evaluate(() => { Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => {} } }); File.prototype.text = () => new Promise<string>(() => {}); });
   const surface = page.getByLabel('color.surface override'), validation = page.getByRole('status', { name: 'Draft validation' }), feedback = page.locator('.token-editor__status');
   await surface.fill('{primitive.color.missing}'); await expect(validation).toContainText('Missing reference: primitive.color.missing'); const diagnostic = await validation.textContent(), id = await validation.getAttribute('id'); expect(id).toBeTruthy(); await expect(surface).toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id'));
-  await page.getByText('View primitive source tokens', { exact: true }).click(); await page.locator('.token-editor__help').filter({ has: page.getByText('View primitive source tokens', { exact: true }) }).locator('details > summary').filter({ hasText: /^color$/ }).click();
+  await tokenCanvas(page, 'Info'); await page.getByText('View primitive source tokens', { exact: true }).click(); await page.locator('.token-editor__help').filter({ has: page.getByText('View primitive source tokens', { exact: true }) }).locator('details > summary').filter({ hasText: /^color$/ }).click();
   await page.getByRole('button', { name: 'Copy color.white name', exact: true }).click(); await expect(feedback).toHaveText('Copied color.white.'); await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic');
   await page.getByText('Import, export & reset', { exact: true }).click(); await page.getByLabel('Import token configuration').setInputFiles({ name: 'pending.json', mimeType: 'application/json', buffer: Buffer.from('{}') }); await expect(feedback).toContainText('Reading token configuration'); await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic');
   await page.getByRole('link', { name: 'Overview', exact: true }).click(); await expect(feedback).toContainText('before leaving this page'); await expect(page).toHaveURL(/#design-tokens$/); await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic'); await expect(validation).toBeVisible(); await expect(page.getByRole('button', { name: 'Commit changes' })).toBeDisabled();
@@ -212,13 +203,13 @@ test('alias validation persists through primitive copying, pending imports and n
 });
 
 test('rejected contrast imports describe the imported combinations while retaining the invalid draft diagnosis', async ({ page }) => {
-  const muted = page.getByLabel('color.text-muted override'), validation = page.getByRole('status', { name: 'Draft validation' }), feedback = page.locator('.token-editor__status');
+  const muted = await tokenField(page, 'color.text-muted'), validation = page.getByRole('status', { name: 'Draft validation' }), feedback = page.locator('.token-editor__status');
   await muted.fill('#757575'); await expect(validation).toContainText('color.text-muted / color.background requires 4.5:1'); const diagnostic = await validation.textContent(), id = await validation.getAttribute('id'); expect(id).toBeTruthy();
   const before = await page.evaluate(() => ({ stored: localStorage.getItem('pwa-ds-token-overrides-v1'), style: document.documentElement.getAttribute('style') }));
   const incoming = { schema: 'pwa-design-system/token-overrides', version: 1, overrides: { global: { 'color.surface': '#fafafa' }, light: {}, dark: {} } };
   await page.getByText('Import, export & reset', { exact: true }).click(); await page.getByLabel('Import token configuration').setInputFiles({ name: 'contrast.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(incoming)) });
   await expect(feedback).toContainText('Import rejected: Configuration fails project-wide contrast checks'); await expect(feedback).toContainText('color.text / color.surface requires 4.5:1 (example: dark/'); await expect(feedback).not.toContainText('color.text-muted / color.background');
-  await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic'); await expect(validation).toBeVisible(); await expect(muted).toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id')); await expect(muted).toHaveAttribute('aria-invalid', 'false'); await expect(muted).toHaveValue('#757575'); await expect(page.getByLabel('color.surface override')).toHaveValue(''); await expect(page.getByLabel('Unsaved change count')).toContainText('1 unsaved change');
+  await expect(validation).toHaveText(diagnostic ?? 'missing diagnostic'); await expect(validation).toBeVisible(); await expect(muted).toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id')); await expect(muted).toHaveAttribute('aria-invalid', 'false'); await expect(muted).toHaveValue('#757575'); await expect(page.locator('[data-token-row="color.surface"] td').last()).toHaveText('Inherited'); await expect(page.getByLabel('Unsaved change count')).toContainText('1 unsaved change');
   expect(await page.evaluate(() => ({ stored: localStorage.getItem('pwa-ds-token-overrides-v1'), style: document.documentElement.getAttribute('style') }))).toEqual(before);
   for (const name of ['Commit changes', 'Export JSON', 'Export CSS']) await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
   await page.getByRole('button', { name: 'Cancel draft' }).click(); await expect(page.locator('.token-editor__validation')).toBeHidden(); await expect(page.locator('.token-editor__validation')).toBeEmpty(); await expect(muted).not.toHaveAttribute('aria-describedby', new RegExp(id ?? 'missing-validation-id'));
